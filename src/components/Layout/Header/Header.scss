@@ -1,0 +1,9 @@
+@import "../../../sass/abstracts/variables";
+
+.header {
+    position: fixed;
+    width: 100%;
+    height: $header-height;
+    top: 0;
+    background-color: red;
+}
