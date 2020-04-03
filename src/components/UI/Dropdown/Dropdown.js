@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./Dropdown.scss";
 
-export const SMALL = "small";
-export const MEDIUM = "medium";
-export const LARGE = "large";
+export const smallDropDown = "small";
+export const mediumDropDown = "medium";
+export const largeDropDown = "large";
 
 const Dropdown = props => {
   return (

@@ -1,57 +1,110 @@
 import React, { Component } from "react";
 import "./ItemBox.scss";
 import Dropdown from "../Dropdown/Dropdown";
-import { SMALL, MEDIUM, LARGE } from "../Dropdown/Dropdown";
+import {
+  smallDropDown,
+  mediumDropDown,
+  largeDropDown
+} from "../Dropdown/Dropdown";
 import Button from "../Button/Button";
+import {
+  crustPriceMapping,
+  sizePriceMapping
+} from "../../../metadata/priceMappings";
+import {
+  HAND_TOSSED,
+  THIN_N_CRISPY,
+  ORIGINAL_PAN
+} from "../../../metadata/pizzaMetadata";
+import { LARGE, MEDIUM, PERSONAL } from "../../../metadata/pizzaMetadata";
+import { toppingMapping } from "../../../metadata/pizzaMetadata";
 
 class ItemBox extends Component {
   state = {
-    price: this.props.price
+    price:
+      crustPriceMapping[LARGE][HAND_TOSSED] +
+      sizePriceMapping[this.props.priceType][LARGE],
+    crust: HAND_TOSSED,
+    size: LARGE,
+    toppings: toppingMapping[this.props.pizzaType],
+    quantity: 1
   };
 
   handleChangeQuantity = event => {
-    const price = this.props.price * event.target.value;
-    this.setState({ price: price.toFixed(2) });
+    const singlePrice =
+      crustPriceMapping[this.state.size][this.state.crust] +
+      sizePriceMapping[this.props.priceType][this.state.size];
+    const totalPrice = singlePrice * event.target.value;
+    this.setState({
+      quantity: event.target.value,
+      price: totalPrice.toFixed(2)
+    });
+  };
+
+  handleChangeCrust = event => {
+    const singlePrice =
+      crustPriceMapping[this.state.size][event.target.value] +
+      sizePriceMapping[this.props.priceType][this.state.size];
+    const totalPrice = singlePrice * this.state.quantity;
+    this.setState({ crust: event.target.value, price: totalPrice.toFixed(2) });
+  };
+
+  handleChangeSize = event => {
+    const singlePrice =
+      sizePriceMapping[this.props.priceType][event.target.value] +
+      crustPriceMapping[event.target.value][this.state.crust];
+    const totalPrice = singlePrice * this.state.quantity;
+    this.setState({ size: event.target.value, price: totalPrice.toFixed(2) });
   };
 
   render() {
-    const crustOptions = [
-      "Hand Tossed Pizza",
-      "Thin 'N Crispy Pizza",
-      "Original Pan Pizza",
-      "Original Stuffed Crust"
-    ];
+    const crustOptions = [HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN];
 
-    const sizeOptions = ["Large", "Medium", "Personal"];
+    const sizeOptions = [LARGE, MEDIUM, PERSONAL];
     const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    let itemAdd = null;
+    let itemName = null;
+    if (this.props.buildPizza) {
+      itemAdd = <Button buttonName="Get Started" />;
+      itemName = "Build Your Own";
+    } else {
+      itemAdd = (
+        <React.Fragment>
+          <div className="item__quantity">
+            <Dropdown
+              onChange={this.handleChangeQuantity}
+              size={smallDropDown}
+              options={quantityOptions}
+            />
+          </div>
+          <Button buttonName="Add to Order" />
+        </React.Fragment>
+      );
+      itemName = this.props.pizzaType;
+    }
+
     return (
       <div className="item">
         <div className="item__details">
           <div className="item__name-price">
-            <h2 className="item__name">{this.props.itemName}</h2>
+            <h2 className="item__name">{itemName}</h2>
             <h3>${this.state.price}</h3>
           </div>
           <div className="item__options">
             <Dropdown
-              size={LARGE}
+              size={largeDropDown}
               className="item__crust"
               options={crustOptions}
+              onChange={this.handleChangeCrust}
             />
             <Dropdown
-              size={LARGE}
+              size={largeDropDown}
               className="item__size"
               options={sizeOptions}
+              onChange={this.handleChangeSize}
             />
-            <div className="item__add">
-              <div className="item__quantity">
-                <Dropdown
-                  onChange={this.handleChangeQuantity}
-                  size={SMALL}
-                  options={quantityOptions}
-                />
-              </div>
-              <Button buttonName="Add to Order" />
-            </div>
+            <div className="item__add">{itemAdd}</div>
           </div>
         </div>
         <img
