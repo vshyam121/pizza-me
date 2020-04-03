@@ -2,8 +2,9 @@
 
 .header {
     position: fixed;
+    top: 0;
     width: 100%;
     height: $header-height;
-    top: 0;
-    background-color: red;
+    background-color: $primary-color;
+    z-index: 1000;
 }
