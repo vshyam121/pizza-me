@@ -2,6 +2,7 @@ import { LARGE, MEDIUM, PERSONAL } from "./pizzaMetadata";
 import { HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN } from "./pizzaMetadata";
 import { REGULAR, COMBO } from "./pizzaMetadata";
 
+/* Holds price mappings for various pizza properties */
 export const crustPriceMapping = {
   [LARGE]: {
     [HAND_TOSSED]: 0.0,
@@ -32,7 +33,5 @@ export const sizePriceMapping = {
     [PERSONAL]: 15.99
   }
 };
-
-
 
 export const topping = 2.64;

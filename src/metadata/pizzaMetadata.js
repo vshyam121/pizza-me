@@ -1,3 +1,5 @@
+/* Holds various pizza related metadata used in multiple components */
+
 export const HAND_TOSSED = "Hand Tossed Pizza";
 export const THIN_N_CRISPY = "Thin 'N Crispy Pizza";
 export const ORIGINAL_PAN = "Original Pan Pizza";

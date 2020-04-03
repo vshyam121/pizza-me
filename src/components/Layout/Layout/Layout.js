@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "./Layout.scss";
 
+/* Overall app layout */
 const Layout = props => {
   return (
     <div className="layout">
