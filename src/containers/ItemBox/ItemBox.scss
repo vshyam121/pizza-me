@@ -1,0 +1,50 @@
+@import "../../../sass/abstracts/variables";
+
+.item {
+    border: .5px solid black;
+    padding: 2rem;
+    border-radius: 1rem;
+    display: inline-flex;
+    justify-content: flex-start;
+    box-shadow: 0 1rem 1rem $color-grey-dark-3;
+    align-items: center;
+    transition: all .2s;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem $color-grey-dark-3;
+
+    }
+
+    &__name-price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+    }
+
+    &__name {
+        margin-bottom: 1rem;
+    }
+
+    &__options {
+        display: flex;
+        flex-direction: column;
+        margin-right: 2rem;
+    }
+
+    &__add {
+        display: flex;
+    }
+
+    &__quantity {
+        margin-right: 2rem;
+    }
+
+    &__image {
+        height: 15rem;
+        border: 1px solid black;
+        border-radius: 20%;
+        box-shadow: 0 1rem 1rem $color-grey-dark-3;
+    }
+}
