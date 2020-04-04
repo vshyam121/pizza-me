@@ -18,12 +18,16 @@ import {
 } from "../../metadata/pizzaMetadata";
 import { LARGE, MEDIUM, PERSONAL } from "../../metadata/pizzaMetadata";
 import { toppingMapping } from "../../metadata/pizzaMetadata";
+import { connect } from "react-redux";
+import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
+import { addToCart } from "../../store/cart/cartActions";
 
 /* UI Box that holds an item and lets user customize various pizza properties.
    Can add item to order and also build your own pizza from here. 
 */
 class ItemBox extends Component {
   state = {
+    showPizzaBuilder: false,
     price:
       crustPriceMapping[LARGE][HAND_TOSSED] +
       sizePriceMapping[this.props.priceType][LARGE],
@@ -60,6 +64,22 @@ class ItemBox extends Component {
     this.setState({ size: event.target.value, price: totalPrice.toFixed(2) });
   };
 
+  handleClickBuild = () => {
+    this.props.initializePizzaBuilder(
+      this.state.crust,
+      this.state.size,
+      this.state.toppings
+    );
+  };
+
+  handleAddToCart = () => {
+    this.props.addToCart({
+      crust: this.state.crust,
+      size: this.state.size,
+      toppings: this.state.toppings
+    });
+  };
+
   render() {
     const crustOptions = [HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN];
 
@@ -69,7 +89,9 @@ class ItemBox extends Component {
     let itemAdd = null;
     let itemName = null;
     if (this.props.buildPizza) {
-      itemAdd = <Button buttonName="Get Started" />;
+      itemAdd = (
+        <Button onClick={this.handleClickBuild} buttonName="Get Started" />
+      );
       itemName = "Build Your Own";
     } else {
       itemAdd = (
@@ -81,7 +103,7 @@ class ItemBox extends Component {
               options={quantityOptions}
             />
           </div>
-          <Button buttonName="Add to Order" />
+          <Button onClick={this.handleAddToCart} buttonName="Add to Order" />
         </React.Fragment>
       );
       itemName = this.props.pizzaType;
@@ -120,4 +142,4 @@ class ItemBox extends Component {
   }
 }
 
-export default ItemBox;
+export default connect(null, { initializePizzaBuilder, addToCart })(ItemBox);

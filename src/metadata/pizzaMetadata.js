@@ -13,6 +13,11 @@ export const PEPPERONI = "Pepperoni Pizza";
 export const MEAT_LOVER = "Meat Lover's Pizza";
 export const SUPREME = "Supreme Pizza";
 
+export const CLASSIC_MARINARA = "Classic Marinara";
+export const REGULAR_CHEESE = "Regular";
+export const REGULAR_SAUCE = "Regular";
+export const NO_CRUST_FLAVOR = "No Crust Flavor";
+
 export const REGULAR = "Regular";
 export const COMBO = "Combo";
 

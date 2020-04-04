@@ -3,7 +3,7 @@ import "./Button.scss";
 
 /* Standard button across entire app */
 const Button = props => {
-    return <button className="button">
+    return <button onClick={props.onClick} className="button">
         {props.buttonName}
     </button>
 }
