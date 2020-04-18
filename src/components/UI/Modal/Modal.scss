@@ -1,23 +1,26 @@
 @import '../../../sass/abstracts/variables';
 
 .modal {
-    position: absolute;
-    width: 70%;
-    height: 100vh;
-    z-index: 500;
-    top: 5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
+    height: auto;
+    z-index: 1500;
     background-color: white;
     box-shadow: 0 1rem 2rem $color-grey-dark-1;
-    border: 1px solid #ccc;
-    padding: 1.6rem;
+    border: 1px solid $border-color;
+    padding: 3rem;
     transition: all .3s ease-out;
     opacity: 1;
+    position: relative;
 
     &--closed {
         transform: translate(-50%, -100vh);
         opacity: 0;
+    }
+
+    &__close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
     }
 }
 

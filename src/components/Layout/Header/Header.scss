@@ -7,4 +7,13 @@
     height: $header-height;
     background-color: $primary-color;
     z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &__icon {
+        height: 3rem;
+        width: 3rem;
+        color: white;
+    }
 }

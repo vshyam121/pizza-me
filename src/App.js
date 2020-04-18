@@ -3,27 +3,19 @@ import "./App.scss";
 import Layout from "./components/Layout/Layout/Layout";
 import Home from "./components/Home/Home";
 import PizzaBuilder from "./containers/PizzaBuilder/PizzaBuilder";
-import { connect } from "react-redux";
+import { Route, Switch } from "react-router-dom";
+import Cart from "./containers/Cart/Cart";
 
-function App(props) {
+function App() {
   return (
     <Layout>
-      <PizzaBuilder
-        show={props.showPizzaBuilder}
-        crust={props.crust}
-        size={props.size}
-        toppings={props.toppings}
-      />
-      <Home />
+      <PizzaBuilder />
+      <Switch>
+        <Route path="/cart" component={Cart} />
+        <Route path="/" exact component={Home} />
+      </Switch>
     </Layout>
   );
 }
 
-const mapStateToProps = state => ({
-  crust: state.pizzaBuilder.crust,
-  size: state.pizzaBuilder.size,
-  toppings: state.pizzaBuilder.toppings,
-  showPizzaBuilder: state.pizzaBuilder.showPizzaBuilder
-});
-
-export default connect(mapStateToProps, null)(App);
+export default App;

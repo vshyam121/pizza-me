@@ -1,6 +1,6 @@
-import { LARGE, MEDIUM, PERSONAL } from "./pizzaMetadata";
-import { HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN } from "./pizzaMetadata";
-import { REGULAR, COMBO } from "./pizzaMetadata";
+import { LARGE, MEDIUM, PERSONAL } from "./sizeMetadata";
+import { HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN } from "./crustMetadata";
+import { REGULAR, COMBO } from "./comboMetadata";
 
 /* Holds price mappings for various pizza properties */
 export const crustPriceMapping = {
@@ -22,16 +22,18 @@ export const crustPriceMapping = {
 };
 
 export const sizePriceMapping = {
-  [REGULAR]: {
-    [LARGE]: 18.29,
-    [MEDIUM]: 15.99,
-    [PERSONAL]: 12.99
+  [LARGE]:{
+    [REGULAR]: 18.29,
+    [COMBO]: 22.99
   },
-  [COMBO]: {
-    [LARGE]: 22.99,
-    [MEDIUM]: 18.99,
-    [PERSONAL]: 15.99
+  [MEDIUM]: {
+    [REGULAR]: 15.99,
+    [COMBO]: 18.99
+  },
+  [PERSONAL]: {
+    [REGULAR]: 12.99,
+    [COMBO]: 15.99
   }
 };
 
-export const topping = 2.64;
+export const toppingPrice = 2.64;

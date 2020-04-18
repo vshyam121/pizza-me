@@ -1,7 +1,7 @@
 @import "../../sass/abstracts/variables";
 
 .item {
-    border: .5px solid black;
+    border: .5px solid $border-color;
     padding: 2rem;
     border-radius: 1rem;
     display: inline-flex;
@@ -14,6 +14,14 @@
         transform: translateY(-5px);
         box-shadow: 0 1rem 2rem $color-grey-dark-3;
 
+    }
+
+    &__crust {
+        margin-bottom: 2rem;
+    }
+
+    &__size {
+        margin-bottom: 2rem;
     }
 
     &__name-price {
@@ -43,8 +51,12 @@
 
     &__image {
         height: 15rem;
-        border: 1px solid black;
         border-radius: 20%;
         box-shadow: 0 1rem 1rem $color-grey-dark-3;
     }
+}
+
+.builder-link {
+    width: 100%;
+    text-decoration: none;
 }

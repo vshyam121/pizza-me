@@ -1,0 +1,12 @@
+@import "../../../sass/abstracts/variables";
+
+.section__topping {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-bottom: 1px solid black;
+
+    &--selected {
+        background-color: $primary-color;
+    }
+}

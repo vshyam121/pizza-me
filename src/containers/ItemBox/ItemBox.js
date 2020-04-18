@@ -9,75 +9,109 @@ import {
 import Button from "../../components/UI/Button/Button";
 import {
   crustPriceMapping,
-  sizePriceMapping
+  sizePriceMapping,
+  toppingPrice
 } from "../../metadata/priceMappings";
 import {
   HAND_TOSSED,
   THIN_N_CRISPY,
   ORIGINAL_PAN
-} from "../../metadata/pizzaMetadata";
-import { LARGE, MEDIUM, PERSONAL } from "../../metadata/pizzaMetadata";
-import { toppingMapping } from "../../metadata/pizzaMetadata";
+} from "../../metadata/crustMetadata";
+import { LARGE, MEDIUM, PERSONAL } from "../../metadata/sizeMetadata";
+import { toppingMapping, COMBO } from "../../metadata/comboMetadata";
 import { connect } from "react-redux";
 import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
 import { addToCart } from "../../store/cart/cartActions";
+import { Link } from "react-router-dom";
+import { SIZE, CRUST, MEATS, VEGGIES } from "../../metadata/pizzaProperties";
 
 /* UI Box that holds an item and lets user customize various pizza properties.
    Can add item to order and also build your own pizza from here. 
 */
 class ItemBox extends Component {
-  state = {
-    showPizzaBuilder: false,
-    price:
-      crustPriceMapping[LARGE][HAND_TOSSED] +
-      sizePriceMapping[this.props.priceType][LARGE],
-    crust: HAND_TOSSED,
-    size: LARGE,
-    toppings: toppingMapping[this.props.pizzaType],
-    quantity: 1
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: {
+        price: this.calculatePrice(LARGE, HAND_TOSSED),
+        priceType: this.props.priceType,
+        [CRUST]: HAND_TOSSED,
+        [SIZE]: LARGE,
+        [MEATS]: toppingMapping[this.props.pizzaType][MEATS],
+        [VEGGIES]: toppingMapping[this.props.pizzaType][VEGGIES],
+        quantity: 1
+      }
+    };
+  }
 
   handleChangeQuantity = event => {
-    const singlePrice =
-      crustPriceMapping[this.state.size][this.state.crust] +
-      sizePriceMapping[this.props.priceType][this.state.size];
-    const totalPrice = singlePrice * event.target.value;
-    this.setState({
-      quantity: event.target.value,
-      price: totalPrice.toFixed(2)
-    });
+    event.persist();
+    const singlePrice = this.calculatePrice(
+      this.state.item.size,
+      this.state.item.crust
+    );
+    this.setState(prevState => ({
+      item: {
+        ...prevState.item,
+        quantity: event.target.value,
+        price: singlePrice
+      }
+    }));
   };
 
   handleChangeCrust = event => {
-    const singlePrice =
-      crustPriceMapping[this.state.size][event.target.value] +
-      sizePriceMapping[this.props.priceType][this.state.size];
-    const totalPrice = singlePrice * this.state.quantity;
-    this.setState({ crust: event.target.value, price: totalPrice.toFixed(2) });
+    event.persist();
+    const singlePrice = this.calculatePrice(
+      this.state.item[SIZE],
+      event.target.value
+    );
+    this.setState(prevState => ({
+      item: {
+        ...prevState.item,
+        [CRUST]: event.target.value,
+        price: singlePrice
+      }
+    }));
   };
 
   handleChangeSize = event => {
-    const singlePrice =
-      sizePriceMapping[this.props.priceType][event.target.value] +
-      crustPriceMapping[event.target.value][this.state.crust];
-    const totalPrice = singlePrice * this.state.quantity;
-    this.setState({ size: event.target.value, price: totalPrice.toFixed(2) });
+    event.persist();
+    const singlePrice = this.calculatePrice(
+      event.target.value,
+      this.state.item[CRUST]
+    );
+    this.setState(prevState => ({
+      item: {
+        ...prevState.item,
+        [SIZE]: event.target.value,
+        price: singlePrice
+      }
+    }));
+  };
+
+  calculatePrice = (size, crust) => {
+    const basePrice =
+      sizePriceMapping[size][this.props.priceType] +
+      crustPriceMapping[size][crust];
+
+    let meatsPrice = 0;
+    let veggiesPrice = 0;
+    if (this.props.priceType !== COMBO) {
+      meatsPrice =
+        toppingMapping[this.props.pizzaType][MEATS].length * toppingPrice;
+      veggiesPrice =
+        toppingMapping[this.props.pizzaType][VEGGIES].length * toppingPrice;
+    }
+
+    return (basePrice + meatsPrice + veggiesPrice).toFixed(2);
   };
 
   handleClickBuild = () => {
-    this.props.initializePizzaBuilder(
-      this.state.crust,
-      this.state.size,
-      this.state.toppings
-    );
+    this.props.initializePizzaBuilder(this.state.item, false);
   };
 
   handleAddToCart = () => {
-    this.props.addToCart({
-      crust: this.state.crust,
-      size: this.state.size,
-      toppings: this.state.toppings
-    });
+    this.props.addToCart(this.state.item);
   };
 
   render() {
@@ -90,7 +124,7 @@ class ItemBox extends Component {
     let itemName = null;
     if (this.props.buildPizza) {
       itemAdd = (
-        <Button onClick={this.handleClickBuild} buttonName="Get Started" />
+          <Button onClick={this.handleClickBuild} buttonName="Get Started" />
       );
       itemName = "Build Your Own";
     } else {
@@ -114,21 +148,26 @@ class ItemBox extends Component {
         <div className="item__details">
           <div className="item__name-price">
             <h2 className="item__name">{itemName}</h2>
-            <h3>${this.state.price}</h3>
+            <h3>
+              ${(this.state.item.quantity * this.state.item.price).toFixed(2)}
+            </h3>
           </div>
           <div className="item__options">
-            <Dropdown
-              size={largeDropDown}
-              className="item__crust"
-              options={crustOptions}
-              onChange={this.handleChangeCrust}
-            />
-            <Dropdown
-              size={largeDropDown}
-              className="item__size"
-              options={sizeOptions}
-              onChange={this.handleChangeSize}
-            />
+            <div className="item__crust">
+              <Dropdown
+                size={largeDropDown}
+                options={crustOptions}
+                onChange={this.handleChangeCrust}
+              />
+            </div>
+            <div className="item__size">
+              <Dropdown
+                size={largeDropDown}
+                className="item__size"
+                options={sizeOptions}
+                onChange={this.handleChangeSize}
+              />
+            </div>
             <div className="item__add">{itemAdd}</div>
           </div>
         </div>

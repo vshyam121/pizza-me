@@ -1,0 +1,45 @@
+@import "../../../sass/abstracts/variables";
+
+.progress {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: $color-grey-dark-1;
+    height: 5rem;
+    width: 100%;
+    border-radius: 50rem;
+    border: none;
+
+    &__button {
+        width: 40%;
+        background-color: blue;
+        border: none;
+        outline: none;
+
+        &--selected{
+            background-color: red;
+        }
+
+        &--selected ~ button {
+            background-color: red;
+        }
+
+        &--size-crust {
+            background-color: red;
+            border-top-left-radius: 50rem;
+            border-bottom-left-radius: 50rem;
+            clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%);
+        }
+
+        &--cheese-sauce {
+            margin-left: -3.4%;
+            clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%, 10% 50%);
+        }
+
+        &--toppings {
+            border-top-right-radius: 50rem;
+            border-bottom-right-radius: 50rem;
+            margin-left: -3.4%;
+            clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%, 10% 50%)
+        }
+    }
+}

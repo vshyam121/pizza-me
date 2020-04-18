@@ -1,0 +1,16 @@
+@import "../../../sass/abstracts/variables";
+
+.button-option {
+    cursor: pointer;
+    height: 5rem;
+    width: 10rem;
+    border: 1px solid $border-color;
+    outline: none;
+    border-radius: 5%;
+
+    &--selected {
+        background-color: $primary-color;
+        color: white;
+    }
+
+}

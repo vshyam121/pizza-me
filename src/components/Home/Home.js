@@ -5,41 +5,35 @@ import CheesePizzaImg from "../../assets/images/pizza_cheese.jpg";
 import PepperoniPizzaImg from "../../assets/images/pizza_pepperoni.jpg";
 import MeatLoversPizzaImg from "../../assets/images/pizza_meat_lovers.webp";
 import SupremePizzaImg from "../../assets/images/pizza_supreme.webp";
-import { REGULAR, COMBO } from "../../metadata/pizzaMetadata";
+import { REGULAR, COMBO } from "../../metadata/comboMetadata";
 import {
   CHEESE,
-  PEPPERONI,
+  PEPPERONI_PIZZA,
   MEAT_LOVER,
   SUPREME
-} from "../../metadata/pizzaMetadata";
-import PizzaBuilder from "../../containers/PizzaBuilder/PizzaBuilder";
+} from "../../metadata/comboMetadata";
 import { connect } from "react-redux";
-import pizzaBuilderReducer from "../../store/pizzaBuilder/pizzaBuilderReducer";
-import Cart from "../Cart/Cart";
 
 /* Home screen containing popular pizza item boxes */
 class Home extends Component {
-  state = {
-  };
+  state = {};
 
   render() {
     return (
       <div className="home">
-          <Cart />
         <ItemBox
           pizzaType={CHEESE}
           priceType={REGULAR}
           buildPizza
           imageSrc={CheesePizzaImg}
         />
-
         <ItemBox
           pizzaType={CHEESE}
           priceType={REGULAR}
           imageSrc={CheesePizzaImg}
         />
         <ItemBox
-          pizzaType={PEPPERONI}
+          pizzaType={PEPPERONI_PIZZA}
           priceType={REGULAR}
           imageSrc={PepperoniPizzaImg}
         />
@@ -59,10 +53,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-    crust: state.pizzaBuilder.crust,
-    size: state.pizzaBuilder.size,
-    toppings: state.pizzaBuilder.toppings,
-    showPizzaBuilder: state.pizzaBuilder.showPizzaBuilder
-})
+  crust: state.pizzaBuilder.crust,
+  size: state.pizzaBuilder.size,
+  toppings: state.pizzaBuilder.toppings,
+  showPizzaBuilder: state.pizzaBuilder.showPizzaBuilder
+});
 
 export default connect(mapStateToProps, null)(Home);

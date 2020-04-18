@@ -8,9 +8,9 @@ export const largeDropDown = "large";
 /* Standard dropdown selectors of various sizes across entire app */
 const Dropdown = props => {
   return (
-    <select onChange={props.onChange} className={"dropdown dropdown--"+props.size}>
+    <select value={props.default ? props.default: 1} onChange={props.onChange} className={"dropdown dropdown--"+props.size}>
       {props.options.map(option => {
-        return <option>{option}</option>;
+        return <option key={option}>{option}</option>;
       })}
     </select>
   );

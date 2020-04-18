@@ -1,0 +1,43 @@
+@import "../../sass/abstracts/variables";
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid $border-color;
+    padding: 2rem;
+    line-height: 1.6rem;
+    height: 20rem;
+
+
+    &__pizza {
+        display: flex;
+        align-items: center;
+    }
+
+    &__preview {
+        width: 14rem;
+        height: 14rem;
+        margin-right: 2rem;
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        width: 15rem;
+    }
+
+    &__price {
+        align-self: center;
+    }
+
+    &__quantity {
+        align-self: center;
+    }
+
+    &__change {
+        display: flex;
+        justify-content: space-between;
+    }
+}
