@@ -2,13 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./PizzaBuilder.scss";
 import PizzaPreview from "../../components/PizzaBuilder/PizzaPreview/PizzaPreview";
-import { toppingPrice } from "../../metadata/priceMappings";
-import {
-  crustPriceMapping,
-  sizePriceMapping
-} from "../../metadata/priceMappings";
-import { COMBO } from "../../metadata/comboMetadata";
-import { SIZE, CRUST, MEATS, VEGGIES } from "../../metadata/pizzaProperties";
 import { addToCart, saveToCart } from "../../store/cart/cartActions";
 import PizzaDetails from "../../components/PizzaBuilder/PizzaDetails/PizzaDetails";
 import PizzaBuilderProgress from "../../components/PizzaBuilder/PizzaBuilderProgress/PizzaBuilderProgress";
@@ -21,6 +14,7 @@ import {
   setProperty,
   toggleTopping
 } from "../../store/pizzaBuilder/pizzaBuilderActions";
+import Button from "../../components/UI/Button/Button";
 
 export const SIZE_CRUST = "SIZE_CRUST";
 export const CHEESE_SAUCE = "CHEESE_SAUCE";
@@ -33,6 +27,10 @@ class PizzaBuilder extends Component {
 
   handleClickStage = event => {
     this.setState({ stage: event.target.value });
+  };
+
+  handleClickAction = stage => {
+    this.setState({ stage: stage });
   };
 
   handleCloseBuilder = () => {
@@ -64,6 +62,16 @@ class PizzaBuilder extends Component {
 
   render() {
     let builder = null;
+    let back = null;
+    let next = null;
+
+    const getActionButton = (stage, buttonName) => {
+      return (
+        <div className="builder-action__step">
+          <Button onClick={() => this.handleClickAction(stage)} buttonName={buttonName} />
+        </div>
+      )
+    }
     if (this.state.stage === SIZE_CRUST) {
       builder = (
         <SizeCrustBuilder
@@ -71,6 +79,7 @@ class PizzaBuilder extends Component {
           onClick={this.handleClickProperty}
         />
       );
+      next = getActionButton(CHEESE_SAUCE, "Next");
     } else if (this.state.stage === CHEESE_SAUCE) {
       builder = (
         <CheeseSauceBuilder
@@ -78,6 +87,8 @@ class PizzaBuilder extends Component {
           onClick={this.handleClickProperty}
         />
       );
+      back = getActionButton(SIZE_CRUST, "Back");
+      next = getActionButton(TOPPINGS, "Next");
     } else if (this.state.stage === TOPPINGS) {
       builder = (
         <ToppingsBuilder
@@ -85,6 +96,7 @@ class PizzaBuilder extends Component {
           onClick={this.handleClickTopping}
         />
       );
+      back = getActionButton(CHEESE_SAUCE, "Back");
     }
 
     return (
@@ -112,6 +124,10 @@ class PizzaBuilder extends Component {
               />
             </div>
             {builder}
+            <div className="builder-action">
+              {back}
+              {next}
+            </div>
           </div>
         </div>
       </Modal>

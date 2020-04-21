@@ -1,0 +1,58 @@
+@import "../../sass/abstracts/variables";
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: $header-height;
+    background-color: $primary-color;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &__cart {
+        position: relative;
+        font-size: 3rem;
+        color: white;
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+        
+    }
+
+    &__cart-items {
+        position: absolute;
+        right: -.25rem;
+        top: -0.25rem;
+        height: 1.5rem;
+        width: 1.5rem;
+        border-radius: 100%;
+        background-color: blue;
+        color: black;
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}
+
+
+.animate {
+    animation: pulsate 1s 3;
+}
+
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.40);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

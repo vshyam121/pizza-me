@@ -6,7 +6,8 @@ import {
   SAUCE,
   SAUCE_AMOUNT,
   CHEESE_AMOUNT,
-  CRUST_FLAVOR
+  CRUST_FLAVOR,
+  COMBO_NAME
 } from "../../../metadata/pizzaProperties";
 import { NO_CHEESE } from "../../../metadata/cheeseMetadata";
 import { NO_SAUCE } from "../../../metadata/sauceMetadata";
@@ -51,7 +52,7 @@ const PizzaDescription = props => {
     <div className="description">
       <div className="description__title">
         <h2>
-          {props.item[SIZE]} {props.item[CRUST]}
+          {props.item[SIZE]} {props.item[CRUST]} {props.item[COMBO_NAME]} Pizza
         </h2>
       </div>
       <div className="description__details">

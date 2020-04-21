@@ -28,20 +28,3 @@
     grid-row-gap: 1rem;
 }
 
-.builder-list {
-  display: flex;
-  flex-direction: column;
-}
-
-
-.list-option {
-  display: flex;
-  align-items: center;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid black;
-
-  &--selected {
-      background-color: $primary-color;
-  }
-}

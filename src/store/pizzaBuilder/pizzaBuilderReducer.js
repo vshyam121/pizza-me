@@ -17,7 +17,8 @@ import {
   CHEESE_AMOUNT,
   CRUST_FLAVOR,
   MEATS,
-  VEGGIES
+  VEGGIES,
+  COMBO_NAME
 } from "../../metadata/pizzaProperties";
 import { REGULAR } from "../../metadata/comboMetadata";
 
@@ -33,6 +34,7 @@ const initialState = {
     [SAUCE_AMOUNT]: REGULAR_SAUCE,
     [CHEESE_AMOUNT]: REGULAR_CHEESE,
     [CRUST_FLAVOR]: NO_CRUST_FLAVOR,
+    [COMBO_NAME]: null,
     alreadyInCart: false
   }
 };
@@ -54,6 +56,7 @@ const pizzaBuilderReducer = (state = initialState, action) => {
           [SAUCE_AMOUNT]: action.item[SAUCE_AMOUNT] ? action.item[SAUCE_AMOUNT] : REGULAR_SAUCE,
           [CHEESE_AMOUNT]: action.item[CHEESE_AMOUNT] ? action.item[CHEESE_AMOUNT] : REGULAR_CHEESE,
           [CRUST_FLAVOR]: action.item[CRUST_FLAVOR] ? action.item[CRUST_FLAVOR] : NO_CRUST_FLAVOR,
+          [COMBO_NAME]: action.item[COMBO_NAME] ? action.item[COMBO_NAME] : null,
           quantity: action.item.quantity,
           alreadyInCart: action.alreadyInCart
         },

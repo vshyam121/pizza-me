@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./ToppingsBuilder.scss";
 import Button from "../../../components/UI/Button/Button";
 import BuilderListOptions from "../../../components/PizzaBuilder/BuilderListOptions/BuilderListOptions";
 import { meatImageMapping } from "../../../metadata/meatMetadata";
@@ -26,6 +27,7 @@ class ToppingsBuilder extends Component {
 
   render() {
     let toppingsBuilder = null;
+    let toppingOption = null;
     if (this.state.showMeatsBuilder) {
       toppingsBuilder = (
         <React.Fragment>
@@ -34,11 +36,10 @@ class ToppingsBuilder extends Component {
             imageMapping={meatImageMapping}
             itemsSelected={this.props.item[MEATS]}
           />
-          <Button
-            onClick={this.handleClickVeggies}
-            buttonName="Continue to Veggies"
-          />
         </React.Fragment>
+      );
+      toppingOption = (
+        <Button onClick={this.handleClickVeggies} buttonName="Veggies" />
       );
     } else {
       toppingsBuilder = (
@@ -48,17 +49,18 @@ class ToppingsBuilder extends Component {
             imageMapping={veggiesImageMapping}
             itemsSelected={this.props.item[VEGGIES]}
           />
-          <Button onClick={this.handleClickMeats} buttonName="Back to Meats" />
         </React.Fragment>
+      );
+      toppingOption = (
+        <Button onClick={this.handleClickMeats} buttonName="Meats" />
       );
     }
     return (
       <div className="builder">
+        <div className="builder__topping">
+          {toppingOption}
+        </div>
         {toppingsBuilder}
-        <Button
-          onClick={this.props.onClick}
-          buttonName="Back to Crust, Sauce, and Cheese"
-        />
       </div>
     );
   }

@@ -2,7 +2,7 @@ import React from "react";
 import "./Modal.scss";
 import Backdrop from "../Backdrop/Backdrop";
 import { useEffect } from "react";
-import Close  from "@material-ui/icons/CloseOutlined";
+import { MdClose } from "react-icons/md";
 
 const Modal = props => {
   useEffect(() => {
@@ -16,7 +16,7 @@ const Modal = props => {
   return (
     <Backdrop show={props.show} clicked={props.modalClosed}>
       <div className={props.show ? "modal" : " modal modal--closed"}>
-        <Close className="modal__close" onClick={props.modalClosed} />
+        <MdClose className="modal__close" onClick={props.modalClosed} />
         {props.children}
       </div>
     </Backdrop>

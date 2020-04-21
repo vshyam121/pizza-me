@@ -8,6 +8,23 @@
 .builder-progress{
     margin: 2rem;
 }
+
+.builder-action {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid $border-color;
+    padding: 1rem;
+
+
+    &__step{
+        width: 10rem;
+
+        &:not(:last-child) {
+            margin-right: 2rem;
+        }
+    }
+}
+
 .totalBuilder {
     display: flex;
     width: 100%;

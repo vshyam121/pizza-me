@@ -24,4 +24,9 @@
         transform: translateY(0);
         box-shadow: 0 1rem 1rem $color-grey-dark-3;
     }
+
+    &:disabled {
+        background-color: #aaa;
+        cursor: not-allowed;
+    }
 }

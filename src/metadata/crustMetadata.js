@@ -5,9 +5,9 @@ import ThinNCrispyIcon from "../assets/images/icon_crust_thin.webp";
 import OriginalPanPreview from "../assets/images/crust_pan_NoFinish.webp";
 import OriginalPanIcon from "../assets/images/icon_crust_pan.webp";
 
-export const HAND_TOSSED = "Hand Tossed Pizza";
-export const THIN_N_CRISPY = "Thin 'N Crispy Pizza";
-export const ORIGINAL_PAN = "Original Pan Pizza";
+export const HAND_TOSSED = "Hand Tossed";
+export const THIN_N_CRISPY = "Thin 'N Crispy";
+export const ORIGINAL_PAN = "Original Pan";
 
 export const crustTypes = [HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN];
 

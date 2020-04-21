@@ -1,12 +1,19 @@
 @import "../../../sass/abstracts/variables";
 
-.section__topping {
+.builder-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .list-option {
     display: flex;
     align-items: center;
     border: none;
-    border-bottom: 1px solid black;
-
+    outline: none;
+    border-top: 1px solid $border-color;
+  
     &--selected {
         background-color: $primary-color;
     }
-}
+  }

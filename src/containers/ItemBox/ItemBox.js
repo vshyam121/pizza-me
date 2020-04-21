@@ -22,8 +22,7 @@ import { toppingMapping, COMBO } from "../../metadata/comboMetadata";
 import { connect } from "react-redux";
 import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
 import { addToCart } from "../../store/cart/cartActions";
-import { Link } from "react-router-dom";
-import { SIZE, CRUST, MEATS, VEGGIES } from "../../metadata/pizzaProperties";
+import { SIZE, CRUST, MEATS, VEGGIES, COMBO_NAME } from "../../metadata/pizzaProperties";
 
 /* UI Box that holds an item and lets user customize various pizza properties.
    Can add item to order and also build your own pizza from here. 
@@ -35,6 +34,7 @@ class ItemBox extends Component {
       item: {
         price: this.calculatePrice(LARGE, HAND_TOSSED),
         priceType: this.props.priceType,
+        [COMBO_NAME]: this.props.priceType === COMBO ? this.props.pizzaType : null,
         [CRUST]: HAND_TOSSED,
         [SIZE]: LARGE,
         [MEATS]: toppingMapping[this.props.pizzaType][MEATS],
@@ -147,7 +147,7 @@ class ItemBox extends Component {
       <div className="item">
         <div className="item__details">
           <div className="item__name-price">
-            <h2 className="item__name">{itemName}</h2>
+            <h2 className="item__name">{itemName} Pizza</h2>
             <h3>
               ${(this.state.item.quantity * this.state.item.price).toFixed(2)}
             </h3>

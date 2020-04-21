@@ -10,10 +10,10 @@ import { MUSHROOMS, BELL_PEPPERS, RED_ONIONS } from "./veggiesMetadata";
 import { MEATS, VEGGIES } from "./pizzaProperties";
 /* Holds various combo related metadata used in multiple components */
 
-export const CHEESE = "Cheese Pizza";
-export const PEPPERONI_PIZZA = "Pepperoni Pizza";
-export const MEAT_LOVER = "Meat Lover's Pizza";
-export const SUPREME = "Supreme Pizza";
+export const CHEESE = "Cheese";
+export const PEPPERONI_PIZZA = "Pepperoni";
+export const MEAT_LOVER = "Meat Lover's";
+export const SUPREME = "Supreme";
 
 export const REGULAR = "Regular";
 export const COMBO = "Combo";
