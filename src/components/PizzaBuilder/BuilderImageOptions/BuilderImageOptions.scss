@@ -5,6 +5,8 @@
     position: relative;
     outline: none;
     border: none;
+    font-family: inherit;
+    font-size: inherit;
 
     &__img {
         width: 85%;
@@ -18,7 +20,7 @@
         background-color: white;
         border-radius: 100%;
         border: 1px solid $border-color;
-        color: $primary-color;
+        color: $primary-red;
     }
 
     &__name {
@@ -33,7 +35,7 @@
         border-top: 3px solid $color-grey-light-4;
 
         &--selected {
-            border-top: 3px solid $primary-color;
+            border-top: 3px solid $primary-red;
         }
     }
 }

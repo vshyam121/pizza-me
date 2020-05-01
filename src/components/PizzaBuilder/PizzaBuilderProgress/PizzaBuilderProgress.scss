@@ -3,7 +3,7 @@
 .progress {
     display: flex;
     flex-direction: row-reverse;
-    background-color: $color-grey-dark-1;
+    background-color: white;
     height: 5rem;
     width: 100%;
     border-radius: 50rem;
@@ -11,20 +11,23 @@
 
     &__button {
         width: 40%;
-        background-color: blue;
+        background-color: $primary-black;
         border: none;
         outline: none;
+        color: white;
+        font-size: inherit;
+        font-family: inherit;
 
         &--selected{
-            background-color: red;
+            background-color: $primary-red;
         }
 
         &--selected ~ button {
-            background-color: red;
+            background-color: $primary-red;
         }
 
         &--size-crust {
-            background-color: red;
+            background-color: $primary-red;
             border-top-left-radius: 50rem;
             border-bottom-left-radius: 50rem;
             clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%);

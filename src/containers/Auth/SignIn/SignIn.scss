@@ -1,0 +1,44 @@
+@import "../../../sass/abstracts/variables";
+
+.signInContainer {
+    display: flex;
+    justify-content: center;
+    min-width: 25rem;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25rem;
+
+    &__submit {
+        margin: 2rem;
+        width: 50%;
+    }
+
+    &__error {
+        color: red;
+        margin-bottom: 2rem;
+    }
+}
+
+.spinner {
+    height: 25rem;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.signin {
+    width: 40rem;
+    padding: 2rem;
+    border: 1px solid $border-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 1rem;
+}

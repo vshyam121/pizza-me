@@ -24,6 +24,7 @@ import { REGULAR } from "../../metadata/comboMetadata";
 
 const initialState = {
   showPizzaBuilder: false,
+  itemId: null,
   item: {
     priceType: REGULAR,
     [CRUST]: HAND_TOSSED,
@@ -35,7 +36,6 @@ const initialState = {
     [CHEESE_AMOUNT]: REGULAR_CHEESE,
     [CRUST_FLAVOR]: NO_CRUST_FLAVOR,
     [COMBO_NAME]: null,
-    alreadyInCart: false
   }
 };
 
@@ -45,8 +45,8 @@ const pizzaBuilderReducer = (state = initialState, action) => {
       return {
         ...state,
         showPizzaBuilder: true,
+        itemId: action.itemId,
         item: {
-          id: action.item.id,
           priceType: action.item.priceType,
           [CRUST]: action.item[CRUST],
           [SIZE]: action.item[SIZE],
@@ -58,7 +58,6 @@ const pizzaBuilderReducer = (state = initialState, action) => {
           [CRUST_FLAVOR]: action.item[CRUST_FLAVOR] ? action.item[CRUST_FLAVOR] : NO_CRUST_FLAVOR,
           [COMBO_NAME]: action.item[COMBO_NAME] ? action.item[COMBO_NAME] : null,
           quantity: action.item.quantity,
-          alreadyInCart: action.alreadyInCart
         },
       };
     case CLOSE_PIZZA_BUILDER:
@@ -75,7 +74,7 @@ const pizzaBuilderReducer = (state = initialState, action) => {
         }
       };
     case TOGGLE_TOPPING:
-      const toppings = [...state.item[action.property]];
+      const toppings = state.item[action.property] ? [...state.item[action.property]] : [];
       const index = toppings.indexOf(action.value);
       if (index < 0) {
         toppings.push(action.value);

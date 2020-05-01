@@ -5,18 +5,19 @@ import BuilderListOptions from "../../../components/PizzaBuilder/BuilderListOpti
 import { meatImageMapping } from "../../../metadata/meatMetadata";
 import { veggiesImageMapping } from "../../../metadata/veggiesMetadata";
 import { MEATS, VEGGIES } from "../../../metadata/pizzaProperties";
+import OptionsButton from "../../UI/OptionsButton/OptionsButton";
 
 class ToppingsBuilder extends Component {
   state = {
-    showMeatsBuilder: true
+    stage: MEATS
   };
 
   handleClickVeggies = () => {
-    this.setState({ showMeatsBuilder: false });
+    this.setState({ stage: VEGGIES });
   };
 
   handleClickMeats = () => {
-    this.setState({ showMeatsBuilder: true });
+    this.setState({ stage: MEATS });
   };
 
   handleClickTopping = (event, property) => {
@@ -28,7 +29,7 @@ class ToppingsBuilder extends Component {
   render() {
     let toppingsBuilder = null;
     let toppingOption = null;
-    if (this.state.showMeatsBuilder) {
+    if (this.state.stage === MEATS) {
       toppingsBuilder = (
         <React.Fragment>
           <BuilderListOptions
@@ -39,7 +40,7 @@ class ToppingsBuilder extends Component {
         </React.Fragment>
       );
       toppingOption = (
-        <Button onClick={this.handleClickVeggies} buttonName="Veggies" />
+        <Button onClick={this.handleClickVeggies}>Veggies</Button>
       );
     } else {
       toppingsBuilder = (
@@ -51,15 +52,17 @@ class ToppingsBuilder extends Component {
           />
         </React.Fragment>
       );
-      toppingOption = (
-        <Button onClick={this.handleClickMeats} buttonName="Meats" />
-      );
+      toppingOption = <Button onClick={this.handleClickMeats}>Meats</Button>;
     }
+
+    const options = [
+      { stage: MEATS, optionName: "Meats", onClick: this.handleClickMeats },
+      { stage: VEGGIES, optionName: "Veggies", onClick: this.handleClickVeggies }
+    ];
     return (
       <div className="builder">
-        <div className="builder__topping">
-          {toppingOption}
-        </div>
+        <OptionsButton selectedOption={this.state.stage} options={options} />
+        <div className="builder__topping"></div>
         {toppingsBuilder}
       </div>
     );

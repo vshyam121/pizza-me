@@ -7,9 +7,11 @@
     border: 1px solid $border-color;
     outline: none;
     border-radius: 5%;
+    font-family: inherit;
+    font-size: inherit;
 
     &--selected {
-        background-color: $primary-color;
+        background-color: $primary-red;
         color: white;
     }
 

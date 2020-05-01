@@ -4,12 +4,29 @@
     display: flex;
     flex-direction: column;
     padding: 2rem;
+    width: 100%;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border-color;
 
     &__description {
         margin-bottom: 2rem;
+        text-align: center;
     }
 
     &__options {
         display: flex;
+        align-items: center;
+    }
+
+    &__price {
+        margin-right: 2rem;
+    }
+
+    &__quantity {
+        margin-right: 2rem;
+    }
+
+    &__save{
+        width: 100%;
     }
 }

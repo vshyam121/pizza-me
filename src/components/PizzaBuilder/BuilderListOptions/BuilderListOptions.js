@@ -1,23 +1,28 @@
 import React from "react";
 import "./BuilderListOptions.scss";
+import { FaCheckCircle } from "react-icons/fa";
 
 const BuilderListOptions = props => {
   return (
     <div className="builder-list">
       {Object.keys(props.imageMapping).map(option => {
-        console.log(option);
+        const selected =
+          props.itemsSelected && props.itemsSelected.includes(option);
         return (
           <button
             key={option}
             onClick={props.onClick}
             className={
-              props.itemsSelected && props.itemsSelected.includes(option)
-                ? "list-option list-option--selected"
-                : "list-option"
+              selected ? "list-option list-option--selected" : "list-option"
             }
             value={option}
           >
-            <img src={props.imageMapping[option].icon} alt={option} />
+            <div className="list-option__img">
+              {selected ? (
+                <FaCheckCircle className="list-option__checkmark" />
+              ) : null}
+              <img src={props.imageMapping[option].icon} alt={option} />
+            </div>
             <span>{option}</span>
           </button>
         );

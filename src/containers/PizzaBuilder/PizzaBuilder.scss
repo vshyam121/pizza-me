@@ -2,7 +2,9 @@
 
 .builder-title {
     text-align: center;
-    margin: 2rem;
+    padding: 2rem;
+    border-bottom: 1px solid $border-color;
+    width: 100%;
 }
 
 .builder-progress{
@@ -28,8 +30,14 @@
 .totalBuilder {
     display: flex;
     width: 100%;
+    height: 100%;
+
+    @media only screen and (max-width: 830px){
+        flex-direction: column;
+    }
 
     &__preview {
+        align-self: flex-start;
         position: relative;
         width: 40%;
         min-width: 25rem;
@@ -38,16 +46,42 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        border: 1px solid $border-color;
+        border-radius: 1rem;
+        @media only screen and (max-width: 830px){
+            width: 100%;
+            margin-bottom: 2rem;
+         }
     }
 
     &__previewImg{
         width: 30rem;
         height: 30rem;
+        margin-bottom: 2rem;
+
+        @media only screen and (max-width: 970px){
+            width: 25rem;
+            height: 25rem;
+        }
+
+        @media only screen and (max-width: 830px){
+           display: none;
+        }
+    }
+
+    &__previewTitle {
+        text-align: center;
+        margin-bottom: 2rem;
     }
     
     &__builder {
+        align-self: flex-start;
         width: 60%;
         border: 1px solid $border-color;
         border-radius: 1rem;
+
+        @media only screen and (max-width: 830px){
+            width: 100%;
+         }
     }
 }

@@ -30,16 +30,16 @@ const CartItem = props => {
             onChange={props.changeItemQuantity}
             size={smallDropDown}
             options={quantityOptions}
-            default={props.item.quantity}
+            value={props.item.quantity}
           />
         </div>
         <div className="cart-item__change">
-          <Link to="/cart" onClick={props.editItem}>
+          <a href="#" className="link" to="/cart" onClick={props.editItem}>
             Edit
-          </Link>
-          <Link to="/cart" onClick={props.removeItem}>
+          </a>
+          <a href="#" className="link" to="/cart" onClick={props.removeItem}>
             Remove
-          </Link>
+          </a>
         </div>
       </div>
     </div>

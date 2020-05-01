@@ -7,8 +7,8 @@ import CartItem from "../../components/CartItem/CartItem";
 
 const Cart = props => {
 
-  const handleEditItem = item => {
-    props.initializePizzaBuilder(item, true);
+  const handleEditItem = (item, itemId) => {
+    props.initializePizzaBuilder(item, itemId);
   };
 
   const handleChangeItemQuantity = (event, itemId) => {
@@ -21,14 +21,15 @@ const Cart = props => {
 
   return (
     <div className="cart">
-      {props.items.map(item => {
+      {Object.keys(props.items).map(itemId => {
+        const item = props.items[itemId];
         return (
           <CartItem
-            key={item.id}
+            key={itemId}
             item={item}
-            changeItemQuantity={e => handleChangeItemQuantity(e, item.id)}
-            removeItem={() => handleRemoveItem(item.id)}
-            editItem={() => handleEditItem(item)}
+            changeItemQuantity={e => handleChangeItemQuantity(e, itemId)}
+            removeItem={() => handleRemoveItem(itemId)}
+            editItem={() => handleEditItem(item, itemId)}
           />
         );
       })}
@@ -37,7 +38,8 @@ const Cart = props => {
 };
 
 const mapStateToProps = state => ({
-  items: state.cart.items
+  items: state.cart.items,
+  cartId: state.cart.cartId
 });
 
 export default connect(mapStateToProps, {

@@ -4,24 +4,24 @@
     border: .5px solid $border-color;
     padding: 2rem;
     border-radius: 1rem;
-    display: inline-flex;
-    justify-content: flex-start;
-    box-shadow: 0 1rem 1rem $color-grey-dark-3;
-    align-items: center;
+    display: flex;
     transition: all .2s;
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1rem 2rem $color-grey-dark-3;
-
-    }
+    background-color: white;
 
     &__crust {
         margin-bottom: 2rem;
+        width: 30rem;
+        @media only screen and (min-width: 880px) and (max-width: 1140px) {
+            width: 20rem;
+        }
     }
 
     &__size {
         margin-bottom: 2rem;
+        width: 30rem;
+        @media only screen and (min-width: 880px) and (max-width: 1140px) {
+            width: 20rem;
+        }
     }
 
     &__name-price {
@@ -49,11 +49,23 @@
         margin-right: 2rem;
     }
 
+    &__right {
+        height: 100%;
+        width: 100%;
+        font-size: 1.5rem;
+        align-self: flex-end;
+    }
+
     &__image {
         height: 15rem;
         border-radius: 20%;
-        box-shadow: 0 1rem 1rem $color-grey-dark-3;
+        margin-bottom: 2rem;
     }
+}
+
+.empty-button {
+    height: 5rem;
+    width: 100%;
 }
 
 .builder-link {

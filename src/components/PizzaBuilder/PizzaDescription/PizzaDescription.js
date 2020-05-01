@@ -1,4 +1,5 @@
 import React from "react";
+import "./PizzaDescription.scss";
 import { NO_CRUST_FLAVOR } from "../../../metadata/crustFlavorMetadata";
 import {
   SIZE,
@@ -31,10 +32,10 @@ const PizzaDescription = props => {
   let meats = props.item.meats;
   let veggies = props.item.veggies;
   let toppings = [];
-  if (meats.length !== 0) {
+  if (meats && meats.length !== 0) {
     toppings.push(...meats);
   }
-  if (veggies.length !== 0) {
+  if (veggies && veggies.length !== 0) {
     toppings.push(...veggies);
   }
   if (toppings.length === 0) {

@@ -14,7 +14,7 @@ import {
   setProperty,
   toggleTopping
 } from "../../store/pizzaBuilder/pizzaBuilderActions";
-import Button from "../../components/UI/Button/Button";
+import Button, { primary } from "../../components/UI/Button/Button";
 
 export const SIZE_CRUST = "SIZE_CRUST";
 export const CHEESE_SAUCE = "CHEESE_SAUCE";
@@ -56,7 +56,7 @@ class PizzaBuilder extends Component {
 
   handleSaveToCart = (price, quantity) => {
     let item = { ...this.props.item, price: price, quantity: quantity };
-    this.props.saveToCart(item);
+    this.props.saveToCart(item, this.props.itemId);
     this.props.closePizzaBuilder();
   };
 
@@ -68,10 +68,12 @@ class PizzaBuilder extends Component {
     const getActionButton = (stage, buttonName) => {
       return (
         <div className="builder-action__step">
-          <Button onClick={() => this.handleClickAction(stage)} buttonName={buttonName} />
+          <Button type={primary} onClick={() => this.handleClickAction(stage)}>
+            {buttonName}
+          </Button>
         </div>
-      )
-    }
+      );
+    };
     if (this.state.stage === SIZE_CRUST) {
       builder = (
         <SizeCrustBuilder
@@ -106,13 +108,18 @@ class PizzaBuilder extends Component {
       >
         <div className="totalBuilder">
           <div className="totalBuilder__preview">
+            <h1 className="builder-title">My Pizza</h1>
             <PizzaDetails
               addToCart={this.handleAddToCart}
               saveToCart={this.handleSaveToCart}
               item={this.props.item}
+              itemId={this.props.itemId}
             />
-            <div className="totalBuilder__previewImg">
-              <PizzaPreview item={this.props.item} />
+            <div>
+              <h2 className="totalBuilder__previewTitle">Preview</h2>
+              <div className="totalBuilder__previewImg">
+                <PizzaPreview item={this.props.item} />
+              </div>
             </div>
           </div>
           <div className="totalBuilder__builder">
@@ -136,6 +143,7 @@ class PizzaBuilder extends Component {
 }
 
 const mapStateToProps = state => ({
+  itemId: state.pizzaBuilder.itemId,
   item: state.pizzaBuilder.item,
   showPizzaBuilder: state.pizzaBuilder.showPizzaBuilder
 });

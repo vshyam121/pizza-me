@@ -1,53 +1,69 @@
-import {
-  ADD_TO_CART,
-  CHANGE_ITEM_QUANTITY,
-  REMOVE_ITEM,
-  SAVE_TO_CART
-} from "./cartActionTypes";
+import * as actionTypes from "./cartActionTypes";
 
 const initialState = {
-  items: []
+  cartId: null,
+  userId: null,
+  items: {}
 };
 
 const getIndexOfMatchingItem = (state, itemId) => {
-    return state.items.findIndex(item => item.id === itemId);
-}
+  return state.items.findIndex(item => item.id === itemId);
+};
 
 const cartReducer = (state = initialState, action) => {
   let items = null;
   let itemIndex = null;
   let item = null;
   switch (action.type) {
-    case ADD_TO_CART:
-      items = [...state.items];
-      items.push({ ...action.item, id: action.itemId });
+    case actionTypes.CREATE_CART:
+      return {
+        ...state,
+        cartId: action.cartId,
+        userId: action.userId
+      };
+    case actionTypes.ADD_TO_CART:
+      items = { ...state.items, ...action.item };
       console.log(items);
       return {
         ...state,
         items: items
       };
-    case CHANGE_ITEM_QUANTITY:
-      itemIndex = getIndexOfMatchingItem(state, action.itemId);
-      item = state.items[itemIndex];
-      item.quantity = action.quantity;
-      items = [...state.items];
-      items.splice(itemIndex, 1, item);
+    case actionTypes.GET_CART:
+      return {
+        ...state,
+        cartId: action.cartId,
+        userId: action.userId,
+        items: action.items
+      };
+    case actionTypes.CLEAR_CART:
+      return {
+        ...state,
+        cartId: null,
+        userId: null,
+        items: {}
+      };
+    case actionTypes.SET_CART_ITEMS:
+      return {
+        ...state,
+        items: action.items
+      }
+    case actionTypes.CHANGE_ITEM_QUANTITY:
+      items = { ...state.items };
+      items[action.itemId] = action.item;
       return {
         ...state,
         items: items
       };
-    case REMOVE_ITEM:
-      itemIndex = getIndexOfMatchingItem(state, action.itemId);
-      items = [...state.items];
-      items.splice(itemIndex, 1);
+    case actionTypes.REMOVE_ITEM:
+      items = { ...state.items };
+      delete items[action.itemId];
       return {
         ...state,
         items: items
       };
-    case SAVE_TO_CART:
-      itemIndex = getIndexOfMatchingItem(state, action.item.id);
-      items = [...state.items];
-      items.splice(itemIndex, 1, action.item);
+    case actionTypes.SAVE_TO_CART:
+      items = { ...state.items };
+      items[action.itemId] = action.item;
       return {
         ...state,
         items: items

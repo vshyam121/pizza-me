@@ -1,19 +1,34 @@
 @import "../../../sass/abstracts/variables";
 
 .builder-list {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-option {
+  display: flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  border-top: 1px solid $border-color;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1rem;
+
+  
+  &__img {
+    position: relative;
+    margin-right: 1rem;
   }
-  
-  
-  .list-option {
-    display: flex;
-    align-items: center;
-    border: none;
-    outline: none;
-    border-top: 1px solid $border-color;
-  
-    &--selected {
-        background-color: $primary-color;
-    }
+
+  &__checkmark {
+    position: absolute;
+    right: 0;
+    height: 3rem;
+    width: 3rem;
+    background-color: white;
+    border-radius: 100%;
+    border: 1px solid $border-color;
+    color: $primary-red;
   }
+}

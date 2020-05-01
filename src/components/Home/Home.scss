@@ -1,11 +1,17 @@
 .home {
   text-align: center;
-  padding: 3rem;
+  //padding: 3rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, 50rem);
   grid-row-gap: 4rem;
   grid-column-gap: 2rem;
-  align-items: start;
-  justify-items: center;
+  //align-items: center;
+  //justify-items: center;
   justify-content: center;
+
+  @media only screen and (min-width: 880px) and (max-width: 1140px){
+    grid-template-columns: repeat(auto-fit, 40rem);
+  }
+
+  
 }
