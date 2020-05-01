@@ -3,12 +3,14 @@
 .cart-item {
     display: flex;
     justify-content: space-between;
-    border: 1px solid $border-color;
     padding: 2rem;
     line-height: 1.6rem;
     height: 20rem;
-    background-color: white;
-    border-radius: 1rem;
+    border-top: 1px solid $border-color;
+
+    &:last-child{
+        border-bottom: 1px solid $border-color;
+    }
 
 
     &__pizza {

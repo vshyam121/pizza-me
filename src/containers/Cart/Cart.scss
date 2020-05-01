@@ -1,11 +1,34 @@
+@import "../../sass/abstracts/variables";
+
 .cart {
     width: 100%;
+    border: 1px solid $border-color;
+    border-radius: 1rem;
+    background-color: white;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
 
-    & > * {
-        margin-bottom: 3rem;
+    &__title {
+        padding: 0 2rem;
+        margin-bottom: 2rem;
     }
 
-    &:last-child {
-        margin-bottom: 0;
+    &__totals{
+        align-self: flex-end;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        border-top: 1px solid $border-color;
+        padding: 2rem;
+        width: 20rem;
+    }
+
+    &__total-line-item {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
     }
 }
+
