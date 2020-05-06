@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./OptionsButton.scss";
+import Button, { tertiary } from "../Button/Button";
 
 class OptionsButton extends Component {
   state = {};
@@ -13,18 +14,27 @@ class OptionsButton extends Component {
     return (
       <div className="optionsButton">
         {this.props.options.map(option => {
-          const classNames = ["optionsButton__option"];
-          if(this.props.selectedOption === option.stage){
-              classNames.push("button");
+          let button = null;
+          if (this.props.selectedOption === option.stage) {
+            button = (
+              <Button
+                onClick={() => this.handleButtonClick(option)}
+                type={tertiary}
+              >
+                {option.optionName}
+              </Button>
+            );
+          } else {
+            button = (
+              <button
+                onClick={() => this.handleButtonClick(option)}
+                className="optionsButton__option"
+              >
+                {option.optionName}
+              </button>
+            );
           }
-          return (
-            <button
-              onClick={() => this.handleButtonClick(option)}
-              className={classNames.join(" ")}
-            >
-              {option.optionName}
-            </button>
-          );
+          return button;
         })}
       </div>
     );

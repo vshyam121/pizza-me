@@ -1,10 +1,6 @@
 @import "../../../sass/abstracts/variables";
 
-
-.form-component__guest {
-    width: 50%;
-}
-/*.form-container {
+.guestContainer {
     display: flex;
     justify-content: center;
     min-width: 25rem;
@@ -29,14 +25,8 @@
     }
 }
 
-.spinner {
-    height: 25rem;
-    display: flex;
-    justify-content: center;
-    align-items:center;
-}
 
-.form-component {
+.guest {
     width: 40rem;
     padding: 2rem;
     border: 1px solid $border-color;
@@ -50,8 +40,4 @@
     &__title {
         margin-bottom: 2rem;
     }
-
-    &__guest {
-        width: 50%;
-    }
-}*/
+}

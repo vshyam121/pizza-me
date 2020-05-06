@@ -20,7 +20,7 @@ class SizeCrustBuilder extends Component {
     return (
       <div className="builder">
         <div className="builder-section">
-          <h2 className="builder-section__title">Size</h2>
+          <h4 className="builder-section__title">Size</h4>
           <BuilderButtonOption
             selectionOptions={sizes}
             itemSelected={this.props.item[SIZE]}
@@ -28,7 +28,7 @@ class SizeCrustBuilder extends Component {
           />
         </div>
         <div className="builder-section">
-          <h2 className="builder-section__title">Crust</h2>
+          <h4 className="builder-section__title">Crust</h4>
           <BuilderImageOptions
             selectionOptions={crustTypes}
             itemSelected={this.props.item[CRUST]}
@@ -38,7 +38,7 @@ class SizeCrustBuilder extends Component {
         </div>
 
         <div className="builder-section">
-          <h2 className="builder-section__title">Crust Flavor</h2>
+          <h4 className="builder-section__title">Crust Flavor</h4>
           <BuilderImageOptions
             selectionOptions={crust_flavors}
             itemSelected={this.props.item[CRUST_FLAVOR]}

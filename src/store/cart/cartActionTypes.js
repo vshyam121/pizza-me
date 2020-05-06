@@ -6,3 +6,4 @@ export const SET_CART_ITEMS = "SET_CART_ITEMS";
 export const CHANGE_ITEM_QUANTITY = "CHANGE_ITEM_QUANTITY";
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export const SAVE_TO_CART = "SAVE_TO_CART";
+export const EMPTY_CART = "EMPTY_CART";

@@ -8,11 +8,11 @@ const BuilderImageOptions = props => {
       {Object.keys(props.imageMapping).map(option => {
         const selected = props.itemSelected === option;
         return (
-          <button
+          <div
             key={option}
             onClick={props.onClick}
             className="option"
-            value={option}
+            data-value={option}
           >
             {selected ? <FaCheckCircle className="option__checkmark" /> : null}
             <img
@@ -29,7 +29,7 @@ const BuilderImageOptions = props => {
             >
               {option}
             </div>
-          </button>
+          </div>
         );
       })}
     </div>

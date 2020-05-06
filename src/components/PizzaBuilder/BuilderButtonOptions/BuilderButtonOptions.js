@@ -8,7 +8,7 @@ const BuilderButtonOptions = props => {
     <div className="builder-options">
       {props.selectionOptions.map(option => {
         return (
-          <button
+          <div
             key={option}
             onClick={props.onClick}
             className={
@@ -16,10 +16,10 @@ const BuilderButtonOptions = props => {
                 ? "button-option button-option--selected"
                 : "button-option"
             }
-            value={option}
+            data-value={option}
           >
             {option}
-          </button>
+          </div>
         );
       })}
     </div>

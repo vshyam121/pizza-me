@@ -7,6 +7,8 @@
     border: none;
     font-family: inherit;
     font-size: inherit;
+    background-color: inherit;
+    text-align: center;
 
     &__img {
         width: 85%;
@@ -25,7 +27,7 @@
 
     &__name {
         position: absolute;
-        background-color: white;
+        background-color: $color-grey-light-1;
         top: 50%;
         height: 50%;
         width: 100%;

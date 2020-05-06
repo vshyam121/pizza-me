@@ -9,6 +9,9 @@ import SignIn from "./containers/Auth/SignIn/SignIn";
 import SignOut from "./containers/Auth/SignOut/SignOut";
 import { checkAuthentication } from "./store/auth/authActions";
 import { connect } from "react-redux";
+import Guest from "./containers/Auth/Guest/Guest";
+import OrderType from "./containers/OrderType/OrderType";
+import Checkout from "./containers/Checkout/Checkout";
 
 class App extends Component {
 
@@ -22,6 +25,9 @@ class App extends Component {
       <Layout>
         <PizzaBuilder />
         <Switch>
+          <Route exact path="/checkout" component={Checkout} />
+          <Route path="/checkout/order-type" component={OrderType} />
+          <Route path="/checkout/guest" component={Guest} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signout" component={SignOut} />
           <Route path="/cart" component={Cart} />

@@ -209,6 +209,36 @@ export const removeItem = itemId => {
   };
 };
 
+export const emptyCart = userId => {
+  return (dispatch, getState) => {
+    console.log("in empty cart");
+    if (getState().cart.cartId) {
+      let emptyCart = {
+        userId: userId
+      };
+      axios
+        .put(
+          "/carts/" +
+            getState().cart.cartId +
+            ".json?auth=" +
+            getState().auth.idToken,
+          emptyCart
+        )
+        .then(res => {
+          dispatch({
+            type: actionTypes.EMPTY_CART
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+      localStorage.setItem("cart-items", JSON.stringify({}));
+      dispatch({
+        type: actionTypes.EMPTY_CART
+      });
+    }
+  };
+};
+
 export const saveToCart = (item, itemId) => {
   return (dispatch, getState) => {
     if (getState().cart.cartId) {
@@ -228,7 +258,8 @@ export const saveToCart = (item, itemId) => {
             itemId: itemId,
             item: item
           });
-        }).catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
     } else {
       let cartItems = JSON.parse(localStorage.getItem("cart-items"));
       cartItems[itemId] = item;

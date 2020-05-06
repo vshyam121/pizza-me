@@ -45,3 +45,15 @@ export const calculatePrice = (item, customized) => {
 
     return (basePrice + meatsPrice + veggiesPrice).toFixed(2);
 };
+
+export const handleEditItem = (props, item, itemId) => {
+  props.initializePizzaBuilder(item, itemId);
+};
+
+export const handleChangeItemQuantity = (props, event, itemId) => {
+  props.changeItemQuantity(event.target.value, itemId);
+};
+
+export const handleRemoveItem = (props, itemId) => {
+  props.removeItem(itemId);
+};

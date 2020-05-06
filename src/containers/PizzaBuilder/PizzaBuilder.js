@@ -39,13 +39,13 @@ class PizzaBuilder extends Component {
   };
 
   handleClickProperty = (event, property) => {
-    this.props.setProperty(property, event.currentTarget.value);
+    this.props.setProperty(property, event.currentTarget.dataset.value);
   };
 
   handleClickTopping = (event, property) => {
     console.log(property);
-    console.log(event.currentTarget.value);
-    this.props.toggleTopping(property, event.currentTarget.value);
+    console.log(event.currentTarget.dataset.value);
+    this.props.toggleTopping(property, event.currentTarget.dataset.value);
   };
 
   handleAddToCart = (price, quantity) => {
@@ -108,7 +108,7 @@ class PizzaBuilder extends Component {
       >
         <div className="totalBuilder">
           <div className="totalBuilder__preview">
-            <h1 className="builder-title">My Pizza</h1>
+            <h3 className="builder-title">My Pizza</h3>
             <PizzaDetails
               addToCart={this.handleAddToCart}
               saveToCart={this.handleSaveToCart}
@@ -123,7 +123,7 @@ class PizzaBuilder extends Component {
             </div>
           </div>
           <div className="totalBuilder__builder">
-            <h1 className="builder-title">Pizza Builder</h1>
+            <h3 className="builder-title">Pizza Builder</h3>
             <div className="builder-progress">
               <PizzaBuilderProgress
                 stage={this.state.stage}

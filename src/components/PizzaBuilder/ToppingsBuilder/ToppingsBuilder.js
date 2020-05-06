@@ -20,15 +20,8 @@ class ToppingsBuilder extends Component {
     this.setState({ stage: MEATS });
   };
 
-  handleClickTopping = (event, property) => {
-    console.log(property);
-    console.log(event.currentTarget.value);
-    this.props.toggleTopping(property, event.currentTarget.value);
-  };
-
   render() {
     let toppingsBuilder = null;
-    let toppingOption = null;
     if (this.state.stage === MEATS) {
       toppingsBuilder = (
         <React.Fragment>
@@ -38,9 +31,6 @@ class ToppingsBuilder extends Component {
             itemsSelected={this.props.item[MEATS]}
           />
         </React.Fragment>
-      );
-      toppingOption = (
-        <Button onClick={this.handleClickVeggies}>Veggies</Button>
       );
     } else {
       toppingsBuilder = (
@@ -52,16 +42,21 @@ class ToppingsBuilder extends Component {
           />
         </React.Fragment>
       );
-      toppingOption = <Button onClick={this.handleClickMeats}>Meats</Button>;
     }
 
     const options = [
       { stage: MEATS, optionName: "Meats", onClick: this.handleClickMeats },
-      { stage: VEGGIES, optionName: "Veggies", onClick: this.handleClickVeggies }
+      {
+        stage: VEGGIES,
+        optionName: "Veggies",
+        onClick: this.handleClickVeggies
+      }
     ];
     return (
       <div className="builder">
-        <OptionsButton selectedOption={this.state.stage} options={options} />
+        <div className="builder__topping-type">
+          <OptionsButton selectedOption={this.state.stage} options={options} />
+        </div>
         <div className="builder__topping"></div>
         {toppingsBuilder}
       </div>

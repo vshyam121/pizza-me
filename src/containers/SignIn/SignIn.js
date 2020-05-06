@@ -3,8 +3,8 @@ import "./SignIn.scss";
 import Button, {
   primary,
   secondary
-} from "../../../components/UI/Button/Button";
-import Input from "../../../components/UI/Input/Input";
+} from "../../UI/Button/Button";
+import Input from "../../UI/Input/Input";
 import { handleInputChange } from "../../../shared/validation.js";
 import { signIn, authReset } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
@@ -89,7 +89,7 @@ class SignIn extends Component {
     let redirect = null;
     if (this.props.isAuthenticated) {
       if (this.props.location.checkout) {
-        redirect = <Redirect to="/checkout/order-type" />;
+        redirect = <Redirect to="/checkout" />;
       } else {
         redirect = <Redirect to="/" />;
       }
@@ -99,7 +99,7 @@ class SignIn extends Component {
     if (this.props.location.checkout) {
       guestButton = (
         <div className="form-component__guest">
-          <Link to="/checkout/guest">
+          <Link to="/guest">
             <Button type={secondary}>Continue as guest</Button>
           </Link>
         </div>

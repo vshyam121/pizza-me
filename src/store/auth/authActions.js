@@ -2,6 +2,12 @@ import * as actionTypes from "./authActionTypes";
 import { clearCart, getCart, getCartFromLocalStorage } from "../cart/cartActions";
 import axios from "axios";
 
+
+export const authReset = () => {
+  return {
+    type: actionTypes.AUTH_RESET
+  }
+}
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START

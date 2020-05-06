@@ -46,7 +46,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         items: action.items
-      }
+      };
     case actionTypes.CHANGE_ITEM_QUANTITY:
       items = { ...state.items };
       items[action.itemId] = action.item;
@@ -64,6 +64,12 @@ const cartReducer = (state = initialState, action) => {
     case actionTypes.SAVE_TO_CART:
       items = { ...state.items };
       items[action.itemId] = action.item;
+      return {
+        ...state,
+        items: items
+      };
+    case actionTypes.EMPTY_CART:
+      items = {};
       return {
         ...state,
         items: items

@@ -16,10 +16,7 @@
   font-family: inherit;
   cursor: pointer;
 
-  
-
   & > * {
-    text-decoration: none;
     color: white;
   }
 
@@ -42,11 +39,26 @@
     color: $primary-red;
     transition: all 0.3s;
 
+    & > * {
+      color: inherit;
+    }
 
     &:hover {
         background-color: transparent;
         border: 2px solid $primary-red;
         font-weight: bold;
+    }
+  }
+
+  &--tertiary {
+    height: 3rem;
+    border: 1px solid $primary-red;
+    background-color: transparent;
+    color: $primary-red;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: transparent;
     }
   }
 }

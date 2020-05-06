@@ -1,10 +1,10 @@
 import React from "react";
 import "./CartItem.scss";
-import PizzaDescription from "../../components/PizzaBuilder/PizzaDescription/PizzaDescription";
-import Dropdown from "../../components/UI/Dropdown/Dropdown";
-import { smallDropDown } from "../../components/UI/Dropdown/Dropdown";
+import PizzaDescription from "../../PizzaBuilder/PizzaDescription/PizzaDescription";
+import Dropdown from "../../UI/Dropdown/Dropdown";
+import { smallDropDown } from "../../UI/Dropdown/Dropdown";
 import { Link } from "react-router-dom";
-import PizzaPreview from "../PizzaBuilder/PizzaPreview/PizzaPreview";
+import PizzaPreview from "../../PizzaBuilder/PizzaPreview/PizzaPreview";
 
 const CartItem = props => {
   const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];

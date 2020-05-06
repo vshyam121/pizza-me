@@ -1,0 +1,26 @@
+@import "../../sass/abstracts/variables";
+
+.order-type {
+    display: flex;
+
+    &__type {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        &:not(:last-child){
+            margin-right: 3rem;
+        }
+    }
+
+    &__icon {
+        color: $primary-black;
+        padding: 2rem;
+        border: 1px solid $primary-black;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: 8rem;
+        margin-bottom: 2rem;
+    }
+}

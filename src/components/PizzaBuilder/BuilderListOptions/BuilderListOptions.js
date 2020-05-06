@@ -9,13 +9,13 @@ const BuilderListOptions = props => {
         const selected =
           props.itemsSelected && props.itemsSelected.includes(option);
         return (
-          <button
+          <div
             key={option}
             onClick={props.onClick}
             className={
               selected ? "list-option list-option--selected" : "list-option"
             }
-            value={option}
+            data-value={option}
           >
             <div className="list-option__img">
               {selected ? (
@@ -24,7 +24,7 @@ const BuilderListOptions = props => {
               <img src={props.imageMapping[option].icon} alt={option} />
             </div>
             <span>{option}</span>
-          </button>
+          </div>
         );
       })}
     </div>

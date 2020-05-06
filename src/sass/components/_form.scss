@@ -1,33 +1,10 @@
-@import "../../../sass/abstracts/variables";
-
-
-.form-component__guest {
-    width: 50%;
-}
-/*.form-container {
+.form-container {
     display: flex;
     justify-content: center;
     min-width: 25rem;
 }
 
-.form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    //height: 25rem;
 
-    &__submit {
-        margin: 2rem;
-        width: 50%;
-    }
-
-    &__error {
-        color: red;
-        margin-bottom: 2rem;
-    }
-}
 
 .spinner {
     height: 25rem;
@@ -51,7 +28,21 @@
         margin-bottom: 2rem;
     }
 
-    &__guest {
+    &__form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__submit {
+        margin: 2rem;
         width: 50%;
     }
-}*/
+
+    &__error {
+        color: red;
+        margin-bottom: 2rem;
+    }
+}
