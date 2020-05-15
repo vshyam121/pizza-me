@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import "./SignIn.scss";
-import Button, {
-  primary,
-  secondary
-} from "../../../components/UI/Button/Button";
-import Input from "../../../components/UI/Input/Input";
+import Button, { secondary } from "../../../components/UI/Button/Button";
 import { handleInputChange } from "../../../shared/validation.js";
 import { signIn, authReset } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
@@ -14,39 +10,15 @@ import { Link, Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
 
 class SignIn extends Component {
-
-  handleInputChange = (event, inputId) => {
-    const updatedFormData = handleInputChange(
-      this.state.signInForm,
-      event,
-      inputId
-    );
-    this.setState({
-      signInForm: updatedFormData.form,
-      formIsValid: updatedFormData.formIsValid
-    });
-  };
-
-  handleSubmit = (event, signInForm) => {
-    event.preventDefault();
-    this.props.signIn(signInForm.email.value, signInForm.password.value);
-  };
-
-  componentDidMount() {
-    if (this.props.error) {
-      this.props.authReset();
-    }
-  }
-
-  render() {
-    const signInForm = {
+  state = {
+    form: {
       email: {
         elementType: "input",
         elementConfig: {
-          type: "email",
           placeholder: "Email"
         },
         value: "",
+        errorMessage: "Please enter a valid email address",
         validation: {
           required: true,
           isEmail: true
@@ -60,15 +32,47 @@ class SignIn extends Component {
           placeholder: "Password"
         },
         value: "",
+        errorMessage: "Password has to be at least 6 characters long",
         validation: {
           required: true,
           minLength: 6
         },
         valid: false
       }
-    };
+    },
+    formIsValid: false,
+    formSubmitted: false
+  };
 
-    let form = <Form form={signInForm} onSubmit={this.handleSubmit} />;
+  handleSubmit = event => {
+    event.preventDefault();
+    this.setState({ formSubmitted: true });
+    if (this.state.formIsValid) {
+      this.props.signIn(
+        this.state.form.email.value,
+        this.state.form.password.value
+      );
+    }
+  };
+
+  updateForm = stateUpdate => {
+    this.setState(stateUpdate);
+  };
+
+  componentDidMount() {
+    if (this.props.error) {
+      this.props.authReset();
+    }
+  }
+
+  render() {
+    let form = (
+      <Form
+        {...this.state}
+        onSubmit={this.handleSubmit}
+        updateForm={this.updateForm}
+      />
+    );
     if (this.props.loading) {
       form = (
         <div className="spinner">

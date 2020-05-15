@@ -4,6 +4,7 @@ import { MdDirectionsCar, MdStore } from "react-icons/md";
 import Form from "../Form/Form";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import AddressForm from "../AddressForm/AddressForm";
 
 class OrderType extends Component {
   state = {
@@ -94,7 +95,8 @@ class OrderType extends Component {
     let form = null;
 
     if (this.state.isDelivery) {
-      form = <Form form={deliveryForm} onSubmit={this.handleSubmit} />;
+      //form = <Form form={deliveryForm} onSubmit={this.handleSubmit} />;
+      form = <AddressForm />
     }
     return (
       <div className="form-container">
@@ -130,7 +132,7 @@ class OrderType extends Component {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.idToken,
-  userInfo: state.order.userInfo
+  userInfo: state.checkout.userInfo
 });
 
 export default connect(mapStateToProps, null)(OrderType);

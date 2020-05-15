@@ -15,28 +15,34 @@ import { NO_CRUST_FLAVOR } from "../../../metadata/crustFlavorMetadata";
 
 class PizzaPreview extends Component {
   render() {
+    let title = null;
+    if (!this.props.inCart) {
+      title = <h4 className="builder-section__title">Preview</h4>;
+    }
+
     return (
       <div className="preview">
-        <div className="preview__properties">
+        {title}
+        <div className={this.props.inCart ? "preview__properties-cart" : "preview__properties"}>
           <img
             className="preview__property"
-            src={crustImageMapping[this.props.item[CRUST]].preview}
-            alt={this.props.item[CRUST]}
+            src={crustImageMapping[this.props.pizza[CRUST]].preview}
+            alt={this.props.pizza[CRUST]}
           />
-          {this.props.item[CRUST_FLAVOR] !== NO_CRUST_FLAVOR ? (
+          {this.props.pizza[CRUST_FLAVOR] !== NO_CRUST_FLAVOR ? (
             <img
               className="preview__property"
               src={
-                crustFlavorImageMapping[this.props.item[CRUST_FLAVOR]][
-                  this.props.item[CRUST]
+                crustFlavorImageMapping[this.props.pizza[CRUST_FLAVOR]][
+                  this.props.pizza[CRUST]
                 ].preview
               }
-              alt={this.props.item[CRUST_FLAVOR]}
+              alt={this.props.pizza[CRUST_FLAVOR]}
             />
           ) : null}
           <img className="preview__property" src={Cheese} alt="Cheese" />
-          {this.props.item[MEATS] &&
-            this.props.item[MEATS].map(meat => {
+          {this.props.pizza[MEATS] &&
+            this.props.pizza[MEATS].map(meat => {
               return (
                 <img
                   key={meat}
@@ -46,8 +52,8 @@ class PizzaPreview extends Component {
                 />
               );
             })}
-          {this.props.item[VEGGIES] &&
-            this.props.item[VEGGIES].map(veggy => {
+          {this.props.pizza[VEGGIES] &&
+            this.props.pizza[VEGGIES].map(veggy => {
               return (
                 <img
                   key={veggy}

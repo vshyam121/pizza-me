@@ -5,15 +5,18 @@ import Dropdown from "../Dropdown/Dropdown";
 const Input = props => {
   let inputElement = null;
   const inputClasses = ["input__element"];
-  if(props.invalid && props.shouldValidate && props.touched){
-      inputClasses.push("input__invalid");
+  let validationError = null;
+  if (props.invalid && props.shouldValidate && props.touched && props.formSubmitted) {
+    inputClasses.push("input__invalid");
+    validationError = <p className="input__error-message">{props.errorMessage}</p>
   }
+
 
   switch (props.elementType) {
     case "input":
       inputElement = (
         <input
-          className={inputClasses.join(' ')}
+          className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.onChange}
@@ -23,7 +26,7 @@ const Input = props => {
     case "textarea":
       inputElement = (
         <textarea
-          className={inputClasses.join(' ')}
+          className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.onChange}
@@ -42,7 +45,7 @@ const Input = props => {
     default:
       inputElement = (
         <input
-          className={inputClasses.join(' ')}
+          className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.onChange}
@@ -53,6 +56,7 @@ const Input = props => {
     <div className="input">
       <label>{props.label}</label>
       {inputElement}
+      {validationError}
     </div>
   );
 };

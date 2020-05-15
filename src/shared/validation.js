@@ -1,3 +1,12 @@
+const formatPhoneNumber = digits => {
+  var cleaned = ("" + digits).replace(/\D/g, "");
+  var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return "(" + match[1] + ") " + match[2] + "-" + match[3];
+  }
+  return digits;
+};
+
 export const handleInputChange = (form, event, inputId) => {
   const updatedForm = {
     ...form
@@ -7,7 +16,11 @@ export const handleInputChange = (form, event, inputId) => {
     ...updatedForm[inputId]
   };
 
-  updatedFormElement.value = event.target.value;
+  if (updatedFormElement.elementType === "phonenumber") {
+    updatedFormElement.value = formatPhoneNumber(event.target.value);
+  } else {
+    updatedFormElement.value = event.target.value;
+  }
   updatedFormElement.valid = checkValidity(
     updatedFormElement.value,
     updatedFormElement.validation
@@ -51,7 +64,8 @@ const checkValidity = (value, rules) => {
     isValid = pattern.test(value) && isValid;
   }
 
-  if(rules.isPhoneNumber){
+  if (rules.isPhoneNumber) {
+    console.log(value);
     const pattern = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
     isValid = pattern.test(value) && isValid;
   }

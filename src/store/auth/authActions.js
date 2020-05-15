@@ -109,9 +109,10 @@ export const signUp = (email, password) => {
 
 export const checkAuthentication = () => {
   return dispatch => {
-    const localCartItems = localStorage.getItem("cart-items");
-    if(!localCartItems){
-      localStorage.setItem("cart-items", JSON.stringify({}));
+    const localCart = localStorage.getItem("cart");
+    if(!localCart){
+      let emptyCart = {items: {}, quantity: 0};
+      localStorage.setItem("cart", JSON.stringify(emptyCart));
     }
     const idToken = localStorage.getItem("idToken");
     if (idToken) {

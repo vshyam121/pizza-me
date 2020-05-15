@@ -6,34 +6,34 @@ import {
     toppingPrice
   } from "../metadata/priceMappings";
 
-export const calculatePrice = (item, customized) => {
+export const calculatePrice = (pizza, customized) => {
     const basePrice =
-      sizePriceMapping[item[SIZE]][item.priceType] +
-      crustPriceMapping[item[SIZE]][item[CRUST]];
+      sizePriceMapping[pizza[SIZE]][pizza.priceType] +
+      crustPriceMapping[pizza[SIZE]][pizza[CRUST]];
 
     let meatsPrice = 0;
     let veggiesPrice = 0;
-    if (item.priceType !== COMBO) {
-      meatsPrice = item[MEATS]
-        ? item[MEATS].length * toppingPrice
+    if (pizza.priceType !== COMBO) {
+      meatsPrice = pizza[MEATS]
+        ? pizza[MEATS].length * toppingPrice
         : 0;
-      veggiesPrice = item[VEGGIES]
-        ? item[VEGGIES].length * toppingPrice
+      veggiesPrice = pizza[VEGGIES]
+        ? pizza[VEGGIES].length * toppingPrice
         : 0;
     } else if(customized){
-      if (item[MEATS]) {
-        item[MEATS].map(meat => {
+      if (pizza[MEATS]) {
+        pizza[MEATS].map(meat => {
           if (
-            !toppingMapping[item[COMBO_NAME]][MEATS].includes(meat)
+            !toppingMapping[pizza[COMBO_NAME]][MEATS].includes(meat)
           ) {
             meatsPrice += toppingPrice;
           }
         });
       }
-      if (item[VEGGIES]) {
-        item[VEGGIES].map(veggy => {
+      if (pizza[VEGGIES]) {
+        pizza[VEGGIES].map(veggy => {
           if (
-            !toppingMapping[item[COMBO_NAME]][VEGGIES].includes(
+            !toppingMapping[pizza[COMBO_NAME]][VEGGIES].includes(
               veggy
             )
           ) {
@@ -46,14 +46,14 @@ export const calculatePrice = (item, customized) => {
     return (basePrice + meatsPrice + veggiesPrice).toFixed(2);
 };
 
-export const handleEditItem = (props, item, itemId) => {
-  props.initializePizzaBuilder(item, itemId);
+export const handleEditItem = (props, pizza, quantity, itemId) => {
+  props.initializePizzaBuilder(pizza, quantity, itemId);
 };
 
-export const handleChangeItemQuantity = (props, event, itemId) => {
-  props.changeItemQuantity(event.target.value, itemId);
+export const handleChangeItemQuantity = (props, itemId, quantity) => {
+  props.changeItemQuantity(itemId, quantity);
 };
 
-export const handleRemoveItem = (props, itemId) => {
-  props.removeItem(itemId);
+export const handleRemoveItem = (props, itemId, pizza) => {
+  props.removeItem(itemId, pizza);
 };

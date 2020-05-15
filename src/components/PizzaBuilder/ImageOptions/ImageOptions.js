@@ -1,8 +1,8 @@
 import React from "react";
-import "./BuilderImageOptions.scss";
+import "./ImageOptions.scss";
 import { FaCheckCircle } from "react-icons/fa";
 
-const BuilderImageOptions = props => {
+const ImageOptions = props => {
   return (
     <div className="builder-options">
       {Object.keys(props.imageMapping).map(option => {
@@ -36,4 +36,4 @@ const BuilderImageOptions = props => {
   );
 };
 
-export default BuilderImageOptions;
+export default ImageOptions;

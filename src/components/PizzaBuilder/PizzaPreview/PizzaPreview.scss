@@ -4,27 +4,49 @@
   position: relative;
   width: 100%;
   height: 100%;
-  text-align: center;
-
+  display: flex;
+  flex-direction: column;
 
   &__title {
+    width: 100%;
+    padding: 2rem;
+    border-bottom: 1px solid $border-color;
     margin-bottom: 2rem;
   }
+
+  &__properties {
+    position: relative;
+    align-self: center;
+    width: 34rem;
+    height: 34rem;
+
+    @media only screen and (max-width: 970px) {
+      width: 29rem;
+      height: 29rem;
+    }
+
+    @media only screen and (max-width: 830px) {
+      display: none;
+    }
+  }
+
+  &__properties-cart {
+    position: relative;
+    width: 18rem;
+    height: 18rem;
+  }
+
 
   &__description {
     margin-bottom: 2rem;
   }
 
-  /*&__properties {
-    width: 30rem;
-    height: 30rem;
-  }*/
-  
   &__property {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     height: 100%;
+    padding: 2rem;
   }
 }

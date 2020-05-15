@@ -22,47 +22,7 @@ import { calculatePrice } from "../../../shared/util";
 
 class PizzaDetails extends Component {
   state = {
-    quantity: this.props.item.quantity
-  };
-
-  calculatePrice = () => {
-    const basePrice =
-      sizePriceMapping[this.props.item[SIZE]][this.props.item.priceType] +
-      crustPriceMapping[this.props.item[SIZE]][this.props.item[CRUST]];
-
-    let meatsPrice = 0;
-    let veggiesPrice = 0;
-    if (this.props.item.priceType !== COMBO) {
-      meatsPrice = this.props.item[MEATS]
-        ? this.props.item[MEATS].length * toppingPrice
-        : 0;
-      veggiesPrice = this.props.item[VEGGIES]
-        ? this.props.item[VEGGIES].length * toppingPrice
-        : 0;
-    } else {
-      if (this.props.item[MEATS]) {
-        this.props.item[MEATS].map(meat => {
-          if (
-            !toppingMapping[this.props.item[COMBO_NAME]][MEATS].includes(meat)
-          ) {
-            meatsPrice += toppingPrice;
-          }
-        });
-      }
-      if (this.props.item[VEGGIES]) {
-        this.props.item[VEGGIES].map(veggy => {
-          if (
-            !toppingMapping[this.props.item[COMBO_NAME]][VEGGIES].includes(
-              veggy
-            )
-          ) {
-            veggiesPrice += toppingPrice;
-          }
-        });
-      }
-    }
-
-    return (basePrice + meatsPrice + veggiesPrice).toFixed(2);
+    quantity: this.props.quantity
   };
 
   handleChangeQuantity = event => {
@@ -70,7 +30,7 @@ class PizzaDetails extends Component {
   };
 
   render() {
-    const price = calculatePrice(this.props.item, true);
+    const price = calculatePrice(this.props.pizza, true);
 
     let save = null;
     if (this.props.itemId) {
@@ -94,24 +54,30 @@ class PizzaDetails extends Component {
     }
 
     return (
-      <div className="pizza">
-        <div className="pizza__description">
-          <PizzaDescription item={this.props.item} />
-        </div>
-        <div className="pizza__options">
-          <div className="pizza__price">
-            ${(price * this.state.quantity).toFixed(2)}
-          </div>
-          <div className="pizza__quantity">
-            <Dropdown
-              size={smallDropDown}
-              className="item__size"
-              options={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
-              value={this.state.quantity}
-              onChange={this.handleChangeQuantity}
+      <div className="pizza-details">
+        <h3 className="builder-title">My Pizza</h3>
+        <div className="pizza-details__details">
+          <div className="pizza-details__description">
+            <PizzaDescription
+              quantity={this.state.quantity}
+              pizza={this.props.pizza}
             />
           </div>
-          <div className="pizza__save">{save}</div>
+          <div className="pizza-details__options">
+            <h2 className="pizza-details__price">
+              ${(price * this.state.quantity).toFixed(2)}
+            </h2>
+            <div className="pizza-details__quantity">
+              <Dropdown
+                size={smallDropDown}
+                className="item__size"
+                options={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+                value={this.state.quantity}
+                onChange={this.handleChangeQuantity}
+              />
+            </div>
+            <div className="pizza-details__save">{save}</div>
+          </div>
         </div>
       </div>
     );

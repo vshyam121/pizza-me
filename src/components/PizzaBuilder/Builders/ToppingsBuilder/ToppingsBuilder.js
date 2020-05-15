@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./ToppingsBuilder.scss";
-import Button from "../../../components/UI/Button/Button";
-import BuilderListOptions from "../../../components/PizzaBuilder/BuilderListOptions/BuilderListOptions";
-import { meatImageMapping } from "../../../metadata/meatMetadata";
-import { veggiesImageMapping } from "../../../metadata/veggiesMetadata";
-import { MEATS, VEGGIES } from "../../../metadata/pizzaProperties";
-import OptionsButton from "../../UI/OptionsButton/OptionsButton";
+import Button from "../../../UI/Button/Button";
+import ListOptions from "../../ListOptions/ListOptions";
+import { meatImageMapping } from "../../../../metadata/meatMetadata";
+import { veggiesImageMapping } from "../../../../metadata/veggiesMetadata";
+import { MEATS, VEGGIES } from "../../../../metadata/pizzaProperties";
+import OptionsButton from "../../../UI/OptionsButton/OptionsButton";
 
 class ToppingsBuilder extends Component {
   state = {
@@ -25,20 +25,20 @@ class ToppingsBuilder extends Component {
     if (this.state.stage === MEATS) {
       toppingsBuilder = (
         <React.Fragment>
-          <BuilderListOptions
+          <ListOptions
             onClick={e => this.props.onClick(e, MEATS)}
             imageMapping={meatImageMapping}
-            itemsSelected={this.props.item[MEATS]}
+            itemsSelected={this.props.pizza[MEATS]}
           />
         </React.Fragment>
       );
     } else {
       toppingsBuilder = (
         <React.Fragment>
-          <BuilderListOptions
+          <ListOptions
             onClick={e => this.props.onClick(e, VEGGIES)}
             imageMapping={veggiesImageMapping}
-            itemsSelected={this.props.item[VEGGIES]}
+            itemsSelected={this.props.pizza[VEGGIES]}
           />
         </React.Fragment>
       );

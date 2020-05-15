@@ -1,37 +1,36 @@
 import React, { Component } from "react";
-//import "./SignIn.scss";
-import Button, {
-  primary,
-  secondary
-} from "../../components/UI/Button/Button";
+import Button, { primary } from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import { handleInputChange } from "../../shared/validation.js";
-import { signIn, authReset } from "../../store/auth/authActions";
-import { connect } from "react-redux";
-import { SyncLoader } from "react-spinners";
-import { lookupErrorCode } from "../../shared/errorMessages";
-import { Link, Redirect } from "react-router-dom";
 
 class Form extends Component {
-  state = {
-    form: this.props.form,
-    formIsValid: false
-  };
 
   handleInputChange = (event, inputId) => {
-    const updatedFormData = handleInputChange(this.state.form, event, inputId);
-    this.setState({
+    const updatedFormData = handleInputChange(this.props.form, event, inputId);
+    this.props.updateForm({
       form: updatedFormData.form,
       formIsValid: updatedFormData.formIsValid
     });
   };
 
+ /* componentDidUpdate(prevProps) {
+    if(prevProps.form !== this.props.form){
+      this.setState({form: this.props.form});
+    }
+  }*/
+
+  /*handleSubmit = (event) => {
+    this.setState({submitted: true});
+    this.props.onSubmit(event, this.props.form)
+  }*/
+
+
   render() {
     const formElementsArray = [];
-    for (let key in this.state.form) {
+    for (let key in this.props.form) {
       formElementsArray.push({
         id: key,
-        config: this.state.form[key]
+        config: this.props.form[key]
       });
     }
 
@@ -48,12 +47,14 @@ class Form extends Component {
               shouldValidate={formElement.config.validation}
               invalid={!formElement.config.valid}
               touched={formElement.config.touched}
+              formSubmitted={this.props.formSubmitted}
+              errorMessage={formElement.config.errorMessage}
               onChange={e => this.handleInputChange(e, formElement.id)}
             />
           );
         })}
         <div className="form-component__submit">
-          <Button type={primary} disabled={!this.state.formIsValid}>
+          <Button type={primary} disabled={this.props.formSubmitted && !this.props.formIsValid}>
             Submit
           </Button>
         </div>
@@ -61,7 +62,10 @@ class Form extends Component {
     );
 
     return (
-      <form className="form-component__form" onSubmit={(e) => this.props.onSubmit(e, this.state.form)}>
+      <form
+        className="form-component__form"
+        onSubmit={this.props.onSubmit}
+      >
         {form}
       </form>
     );

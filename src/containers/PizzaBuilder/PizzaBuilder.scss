@@ -1,92 +1,61 @@
 @import "../../sass/abstracts/variables";
 
-.builder-title {
-    text-align: center;
-    padding: 2rem;
-    border-bottom: 1px solid $border-color;
-    width: 100%;
-    background-color: $primary-black;
-    color: white;
-}
-
-.builder-progress{
-    margin: 2rem;
-}
-
-.builder-action {
-    display: flex;
-    justify-content: center;
-    border-top: 1px solid $border-color;
-    padding: 1rem;
-
-
-    &__step{
-        width: 10rem;
-
-        &:not(:last-child) {
-            margin-right: 2rem;
-        }
-    }
-}
-
 .totalBuilder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  @media only screen and (max-width: 830px) {
+    flex-direction: column;
+  }
+
+  &__mypizza {
+    background-color: $color-grey-light-1;
+    align-self: flex-start;
+    position: relative;
+    width: 40%;
+    min-width: 25rem;
+    margin-right: 5rem;
+    overflow: hidden;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid $border-color;
+    border-radius: 1rem;
+
+    @media only screen and (max-width: 830px) {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__details {
     width: 100%;
-    height: 100%;
 
-    @media only screen and (max-width: 830px){
-        flex-direction: column;
+    @media only screen and (max-width: 830px) {
+      border: none;
     }
+  }
 
-    &__preview {
-        background-color: $color-grey-light-1;
-        align-self: flex-start;
-        position: relative;
-        width: 40%;
-        min-width: 25rem;
-        margin-right: 5rem;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: 1px solid $border-color;
-        border-radius: 1rem;
-        @media only screen and (max-width: 830px){
-            width: 100%;
-            margin-bottom: 2rem;
-         }
+  &__preview {
+    width: 100%;
+
+    @media only screen and (max-width: 830px) {
+        display: none;
+      }
+  }
+
+
+  &__builder {
+    background-color: $color-grey-light-1;
+    align-self: flex-start;
+    width: 60%;
+    border: 1px solid $border-color;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    @media only screen and (max-width: 830px) {
+      width: 100%;
     }
-
-    &__previewImg{
-        width: 30rem;
-        height: 30rem;
-        margin-bottom: 2rem;
-
-        @media only screen and (max-width: 970px){
-            width: 25rem;
-            height: 25rem;
-        }
-
-        @media only screen and (max-width: 830px){
-           display: none;
-        }
-    }
-
-    &__previewTitle {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    
-    &__builder {
-        background-color: $color-grey-light-1;
-        align-self: flex-start;
-        width: 60%;
-        border: 1px solid $border-color;
-        border-radius: 1rem;
-        overflow: hidden;
-
-        @media only screen and (max-width: 830px){
-            width: 100%;
-         }
-    }
+  }
 }

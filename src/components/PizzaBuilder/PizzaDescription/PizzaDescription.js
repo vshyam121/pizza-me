@@ -12,25 +12,26 @@ import {
 } from "../../../metadata/pizzaProperties";
 import { NO_CHEESE } from "../../../metadata/cheeseMetadata";
 import { NO_SAUCE } from "../../../metadata/sauceMetadata";
+import { calculatePrice } from "../../../shared/util";
 
 const PizzaDescription = props => {
-  let sauce = props.item[SAUCE_AMOUNT] + " " + props.item[SAUCE];
-  if (props.item[SAUCE_AMOUNT] === NO_SAUCE) {
+  let sauce = props.pizza[SAUCE_AMOUNT] + " " + props.pizza[SAUCE];
+  if (props.pizza[SAUCE_AMOUNT] === NO_SAUCE) {
     sauce = "No";
   }
 
-  let cheeseAmount = props.item[CHEESE_AMOUNT];
-  if (props.item[CHEESE_AMOUNT] === NO_CHEESE) {
+  let cheeseAmount = props.pizza[CHEESE_AMOUNT];
+  if (props.pizza[CHEESE_AMOUNT] === NO_CHEESE) {
     cheeseAmount = "No";
   }
 
   let crustFlavor = null;
-  if (props.item[CRUST_FLAVOR] !== NO_CRUST_FLAVOR) {
-    crustFlavor = <span>, {props.item[CRUST_FLAVOR]} Crust Flavor</span>;
+  if (props.pizza[CRUST_FLAVOR] !== NO_CRUST_FLAVOR) {
+    crustFlavor = <span>, {props.pizza[CRUST_FLAVOR]} Crust Flavor</span>;
   }
 
-  let meats = props.item.meats;
-  let veggies = props.item.veggies;
+  let meats = props.pizza.meats;
+  let veggies = props.pizza.veggies;
   let toppings = [];
   if (meats && meats.length !== 0) {
     toppings.push(...meats);
@@ -49,12 +50,34 @@ const PizzaDescription = props => {
     );
   }
 
+  const singlePrice = calculatePrice(props.pizza, true);
+  let overallPrice = null;
+  let edit = null;
+  if (!props.inCart) {
+    overallPrice = (
+      <h2 className="description__price">
+        ${(singlePrice * props.quantity).toFixed(2)}
+      </h2>
+    );
+  } else {
+    edit = (
+      <span className="description__edit link" onClick={props.editItem}>
+        Edit
+      </span>
+    );
+  }
+
   return (
     <div className="description">
       <div className="description__title">
-        <h2>
-          {props.item[SIZE]} {props.item[CRUST]} {props.item[COMBO_NAME]} Pizza
-        </h2>
+        <div className="description__pizza">
+          <h2>
+            {props.pizza[SIZE]} {props.pizza[CRUST]} {props.pizza[COMBO_NAME]}{" "}
+            Pizza
+          </h2>
+        </div>
+        {edit}
+        {overallPrice}
       </div>
       <div className="description__details">
         <span>{sauce} Sauce, </span>

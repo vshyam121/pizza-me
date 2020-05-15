@@ -6,9 +6,9 @@ import { addToCart, saveToCart } from "../../store/cart/cartActions";
 import PizzaDetails from "../../components/PizzaBuilder/PizzaDetails/PizzaDetails";
 import PizzaBuilderProgress from "../../components/PizzaBuilder/PizzaBuilderProgress/PizzaBuilderProgress";
 import Modal from "../../components/UI/Modal/Modal";
-import SizeCrustBuilder from "../../components/PizzaBuilder/SizeCrustBuilder/SizeCrustBuilder";
-import CheeseSauceBuilder from "../../components/PizzaBuilder/CheeseSauceBuilder/CheeseSauceBuilder";
-import ToppingsBuilder from "../../components/PizzaBuilder/ToppingsBuilder/ToppingsBuilder";
+import SizeCrustBuilder from "../../components/PizzaBuilder/Builders/SizeCrustBuilder/SizeCrustBuilder";
+import CheeseSauceBuilder from "../../components/PizzaBuilder/Builders/CheeseSauceBuilder/CheeseSauceBuilder";
+import ToppingsBuilder from "../../components/PizzaBuilder/Builders/ToppingsBuilder/ToppingsBuilder";
 import {
   closePizzaBuilder,
   setProperty,
@@ -49,14 +49,14 @@ class PizzaBuilder extends Component {
   };
 
   handleAddToCart = (price, quantity) => {
-    let item = { ...this.props.item, price: price, quantity: quantity };
-    this.props.addToCart(item);
+    let pizza = { ...this.props.pizza, price: price};
+    this.props.addToCart(pizza, quantity);
     this.props.closePizzaBuilder();
   };
 
   handleSaveToCart = (price, quantity) => {
-    let item = { ...this.props.item, price: price, quantity: quantity };
-    this.props.saveToCart(item, this.props.itemId);
+    let pizza = { ...this.props.pizza, price: price};
+    this.props.saveToCart(pizza, quantity, this.props.itemId);
     this.props.closePizzaBuilder();
   };
 
@@ -77,7 +77,7 @@ class PizzaBuilder extends Component {
     if (this.state.stage === SIZE_CRUST) {
       builder = (
         <SizeCrustBuilder
-          item={this.props.item}
+          pizza={this.props.pizza}
           onClick={this.handleClickProperty}
         />
       );
@@ -85,7 +85,7 @@ class PizzaBuilder extends Component {
     } else if (this.state.stage === CHEESE_SAUCE) {
       builder = (
         <CheeseSauceBuilder
-          item={this.props.item}
+          pizza={this.props.pizza}
           onClick={this.handleClickProperty}
         />
       );
@@ -94,7 +94,7 @@ class PizzaBuilder extends Component {
     } else if (this.state.stage === TOPPINGS) {
       builder = (
         <ToppingsBuilder
-          item={this.props.item}
+          pizza={this.props.pizza}
           onClick={this.handleClickTopping}
         />
       );
@@ -107,19 +107,18 @@ class PizzaBuilder extends Component {
         modalClosed={this.handleCloseBuilder}
       >
         <div className="totalBuilder">
-          <div className="totalBuilder__preview">
-            <h3 className="builder-title">My Pizza</h3>
-            <PizzaDetails
-              addToCart={this.handleAddToCart}
-              saveToCart={this.handleSaveToCart}
-              item={this.props.item}
-              itemId={this.props.itemId}
-            />
-            <div>
-              <h2 className="totalBuilder__previewTitle">Preview</h2>
-              <div className="totalBuilder__previewImg">
-                <PizzaPreview item={this.props.item} />
-              </div>
+          <div className="totalBuilder__mypizza">
+            <div className="totalBuilder__details">
+              <PizzaDetails
+                addToCart={this.handleAddToCart}
+                saveToCart={this.handleSaveToCart}
+                pizza={this.props.pizza}
+                quantity={this.props.quantity}
+                itemId={this.props.itemId}
+              />
+            </div>
+            <div className="totalBuilder__preview">
+                <PizzaPreview withTitle pizza={this.props.pizza} />
             </div>
           </div>
           <div className="totalBuilder__builder">
@@ -144,7 +143,8 @@ class PizzaBuilder extends Component {
 
 const mapStateToProps = state => ({
   itemId: state.pizzaBuilder.itemId,
-  item: state.pizzaBuilder.item,
+  pizza: state.pizzaBuilder.pizza,
+  quantity: state.pizzaBuilder.quantity,
   showPizzaBuilder: state.pizzaBuilder.showPizzaBuilder
 });
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Home.scss";
-import ItemBox from "../../containers/ItemBox/ItemBox";
+import PizzaBox from "../../containers/PizzaBox/PizzaBox";
 import CheesePizzaImg from "../../assets/images/pizza_cheese.jpg";
 import PepperoniPizzaImg from "../../assets/images/pizza_pepperoni.jpg";
 import MeatLoversPizzaImg from "../../assets/images/pizza_meat_lovers.webp";
@@ -14,35 +14,35 @@ import {
 } from "../../metadata/comboMetadata";
 import { connect } from "react-redux";
 
-/* Home screen containing popular pizza item boxes */
+/* Home screen containing popular pizza boxes */
 class Home extends Component {
   state = {};
 
   render() {
     return (
       <div className="home">
-        <ItemBox
+        <PizzaBox
           pizzaType={CHEESE}
           priceType={REGULAR}
           buildPizza
           imageSrc={CheesePizzaImg}
         />
-        <ItemBox
+        <PizzaBox
           pizzaType={CHEESE}
           priceType={REGULAR}
           imageSrc={CheesePizzaImg}
         />
-        <ItemBox
+        <PizzaBox
           pizzaType={PEPPERONI_PIZZA}
           priceType={REGULAR}
           imageSrc={PepperoniPizzaImg}
         />
-        <ItemBox
+        <PizzaBox
           pizzaType={MEAT_LOVER}
           priceType={COMBO}
           imageSrc={MeatLoversPizzaImg}
         />
-        <ItemBox
+        <PizzaBox
           pizzaType={SUPREME}
           priceType={COMBO}
           imageSrc={SupremePizzaImg}

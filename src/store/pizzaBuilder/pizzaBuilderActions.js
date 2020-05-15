@@ -5,10 +5,11 @@ import {
   TOGGLE_TOPPING
 } from "./pizzaBuilderActionTypes";
 
-export const initializePizzaBuilder = (item, itemId) => {
+export const initializePizzaBuilder = (pizza, quantity, itemId) => {
   return {
     type: INIT_PIZZA_BUILDER,
-    item: item,
+    pizza: pizza,
+    quantity: quantity,
     itemId: itemId
   };
 };

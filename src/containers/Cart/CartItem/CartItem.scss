@@ -5,7 +5,7 @@
     justify-content: space-between;
     padding: 2rem;
     line-height: 1.6rem;
-    height: 20rem;
+    min-height: 20rem;
     width: 100%;
     border-top: 1px solid $border-color;
 
@@ -15,33 +15,25 @@
     }
 
     &__preview {
-        width: 14rem;
-        height: 14rem;
-        margin-right: 2rem;
+        width: 100%;
+        flex: 0;
 
-        @media only screen and (max-width: 660px){
+        @media only screen and (max-width: 810px){
             display: none;
         }
+    }
+
+    &__description {
+        min-height: 14rem;
+        margin-right: 2rem;
     }
 
     &__details {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        height: 100%;
         width: 15rem;
-    }
-
-    &__price {
-        align-self: center;
-    }
-
-    &__quantity {
-        align-self: center;
-    }
-
-    &__change {
-        display: flex;
-        justify-content: space-between;
+        align-items: center;
+        padding: 2rem;
     }
 }

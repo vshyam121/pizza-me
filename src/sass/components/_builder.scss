@@ -4,6 +4,34 @@
   width: 100%;
 }
 
+.builder-title {
+  text-align: center;
+  padding: 2rem;
+  border-bottom: 1px solid $border-color;
+  width: 100%;
+  background-color: $primary-black;
+  color: white;
+}
+
+.builder-progress {
+  margin: 2rem;
+}
+
+.builder-action {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid $border-color;
+  padding: 1rem;
+
+  &__step {
+    width: 10rem;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
+
 .builder-section {
   display: flex;
   flex-direction: column;
@@ -25,7 +53,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     justify-items: center;
-    padding: 1rem;
+    padding: 2rem;
     grid-row-gap: 1rem;
 }
 

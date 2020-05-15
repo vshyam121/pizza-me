@@ -1,31 +1,51 @@
 @import "../../../sass/abstracts/variables";
 
-.pizza {
+.pizza-details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__details {
     display: flex;
     flex-direction: column;
+
+    @media only screen and (max-width: 830px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__options {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     padding: 2rem;
-    width: 100%;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid $border-color;
 
-    &__description {
-        margin-bottom: 2rem;
+    @media only screen and (max-width: 830px) {
+      flex-direction: column;
+      align-items: flex-end;
     }
+  }
 
-    &__options {
-        display: flex;
-        align-items: center;
-    }
+  &__price {
+    display: none;
 
-    &__price {
-        margin-right: 2rem;
+    @media only screen and (max-width: 830px) {
+      display: flex;
+      margin-bottom: 2rem;
     }
+  }
 
-    &__quantity {
-        margin-right: 2rem;
-    }
+  &__quantity {
+    margin-right: 2rem;
 
-    &__save{
-        width: 100%;
+    @media only screen and (max-width: 830px) {
+      margin-right: 0;
+      margin-bottom: 2rem;
     }
+  }
+
+  &__save {
+    width: 15rem;
+  }
 }

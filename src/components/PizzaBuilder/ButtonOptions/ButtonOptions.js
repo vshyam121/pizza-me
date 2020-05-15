@@ -1,9 +1,7 @@
 import React from "react";
-import "./BuilderButtonOptions.scss";
-import { CRUST } from "../../../metadata/pizzaProperties";
-import { connect } from "react-redux";
+import "./ButtonOptions.scss";
 
-const BuilderButtonOptions = props => {
+const ButtonOptions = props => {
   return (
     <div className="builder-options">
       {props.selectionOptions.map(option => {
@@ -26,8 +24,4 @@ const BuilderButtonOptions = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  crust: state.pizzaBuilder[CRUST]
-});
-
-export default connect(mapStateToProps, null)(BuilderButtonOptions);
+export default ButtonOptions;

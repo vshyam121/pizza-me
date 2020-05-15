@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import "./Guest.scss";
-import Input from "../../../components/UI/Input/Input";
-import Button, { primary } from "../../../components/UI/Button/Button";
-import { handleInputChange } from "../../../shared/validation.js";
 import { connect } from "react-redux";
-import { storeUserInfo } from "../../../store/order/orderActions";
+import { storeUserInfo } from "../../../store/checkout/checkoutActions";
 import Form from "../../Form/Form";
 import { Redirect } from "react-router-dom";
+import { handleInputChange } from "../../../shared/validation";
 
 class Guest extends Component {
   state = {
-    guestForm: {
+    form: {
       firstName: {
         elementType: "input",
         elementConfig: {
@@ -36,10 +34,10 @@ class Guest extends Component {
       email: {
         elementType: "input",
         elementConfig: {
-          type: "email",
           placeholder: "Email"
         },
         value: "",
+        errorMessage: "Please enter a valid email address",
         validation: {
           required: true,
           isEmail: true
@@ -47,11 +45,12 @@ class Guest extends Component {
         valid: false
       },
       phone: {
-        elementType: "input",
+        elementType: "phonenumber",
         elementConfig: {
-          placeholder: "Phone Number"
+          placeholder: "US Phone Number"
         },
         value: "",
+        errorMessage: "Please enter a valid phone number",
         validation: {
           required: true,
           isPhoneNumber: true
@@ -59,36 +58,31 @@ class Guest extends Component {
         valid: false
       }
     },
-    formIsValid: false
+    formIsValid: false,
+    formSubmitted: false
   };
 
-  handleInputChange = (event, inputId) => {
-    const updatedFormData = handleInputChange(
-      this.state.guestForm,
-      event,
-      inputId
-    );
-    this.setState({
-      guestForm: updatedFormData.form,
-      formIsValid: updatedFormData.formIsValid
-    });
-  };
-
-  handleSubmit = (event, guestForm) => {
+  handleSubmit = event => {
     event.preventDefault();
-    this.props.storeUserInfo({
-      firstName: guestForm.firstName.value,
-      lastName: guestForm.lastName.value,
-      email: guestForm.email.value,
-      phone: guestForm.phone.value
-    });
-    this.props.history.push("/checkout/order-type");
+    this.setState({ formSubmitted: true });
+    if (this.state.formIsValid) {
+      this.props.storeUserInfo({
+        firstName: this.state.form.firstName.value,
+        lastName: this.state.form.lastName.value,
+        email: this.state.form.email.value,
+        phone: this.state.form.phone.value
+      });
+      this.props.history.push("/checkout/order-type");
+    }
+  };
+
+  updateForm = stateUpdate => {
+    this.setState(stateUpdate);
   };
 
   render() {
-
-    if(this.props.isAuthenticated){
-      return <Redirect to="/checkout/order-type" />
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/checkout/order-type" />;
     }
 
     const guestForm = {
@@ -128,9 +122,9 @@ class Guest extends Component {
         valid: false
       },
       phone: {
-        elementType: "input",
+        elementType: "phonenumber",
         elementConfig: {
-          placeholder: "Phone Number"
+          placeholder: "US Phone Number"
         },
         value: "",
         validation: {
@@ -141,7 +135,13 @@ class Guest extends Component {
       }
     };
 
-    let form = <Form form={guestForm} onSubmit={this.handleSubmit} />;
+    let form = (
+      <Form
+        onSubmit={this.handleSubmit}
+        {...this.state}
+        updateForm={this.updateForm}
+      />
+    );
 
     return (
       <div className="guestContainer">

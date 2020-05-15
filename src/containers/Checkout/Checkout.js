@@ -9,14 +9,17 @@ import {
 import { Link } from "react-router-dom";
 import Button, { primary } from "../../components/UI/Button/Button";
 import { connect } from "react-redux";
-import { orderSubmit } from "../../store/order/orderActions";
+import { orderSubmit } from "../../store/checkout/checkoutActions";
 import { emptyCart } from "../../store/cart/cartActions";
+import { changeItemQuantity, removeItem } from "../../store/cart/cartActions";
+import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
+
 
 const Checkout = props => {
   const calculateSubTotal = () => {
     let subTotal = 0;
     Object.values(props.items).forEach(item => {
-      subTotal += item.price * item.quantity;
+      subTotal += item.pizza.price * item.quantity;
     });
     return subTotal.toFixed(2);
   };
@@ -40,11 +43,14 @@ const Checkout = props => {
     <div className="order-summary">
       <h1 className="order-summary__title">Order Summary</h1>
       <CartItems
-        handleEditItem={() => handleEditItem()}
-        handleRemoveItem={handleRemoveItem}
-        handleChangeItemQuantity={handleChangeItemQuantity}
-        items={props.items}
-      />
+          handleEditItem={(pizza, quantity, itemId) => handleEditItem(props, pizza, quantity, itemId)}
+          handleRemoveItem={(itemId, pizza) => handleRemoveItem(props, itemId, pizza)}
+          handleChangeItemQuantity={(event, itemId) =>
+            handleChangeItemQuantity(props, itemId, event.target.value)
+          }
+          checkout
+          items={props.items}
+        />
       <div className="order-summary__totals-container">
         <div className="order-summary__totals">
           <div className="order-summary__total-line-items">
@@ -80,4 +86,4 @@ const mapStateToProps = state => ({
   userId: state.auth.userId
 });
 
-export default connect(mapStateToProps, { orderSubmit, emptyCart })(Checkout);
+export default connect(mapStateToProps, { orderSubmit, emptyCart, removeItem, initializePizzaBuilder, changeItemQuantity })(Checkout);
