@@ -1,4 +1,5 @@
 @import "../../sass/abstracts/variables";
+@import "../../sass/abstracts/mixins";
 
 .header {
     position: fixed;
@@ -8,45 +9,84 @@
     background-color: $primary-black;
     z-index: 1000;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    border-top: 1px solid $secondary-black;
+    border-bottom: 1px solid $secondary-black;
+
+    &__main {
+        display: flex;
+    }
+
+    &__logo-title {
+        margin-left: 2rem;
+        margin-right: 4rem;
+        display: flex;
+        align-items: center;
+    }
+
+    &__logo {
+        height: 4rem;
+        width: auto;
+        margin-right: 1rem;
+
+        @include respond(tab-port){
+            height: 3.5rem;
+        }
+    }
+
+    &__title {
+        display: flex;
+        justify-content: center;
+        font-family: 'Permanent Marker';
+        color: white;
+        font-size: 2.4rem;
+
+        @include respond(tab-port){
+            font-size: 2rem;
+        }
+    }
+
+    &__menu {
+        display: none;
+
+        @include respond(tab-port){
+            display: block;
+        }
+    }
+
+
+    &__menu-items {
+        @include respond(tab-port){
+            display: none;
+        }
+    }
+    &__account {
+        display: flex;
+        flex: 0 0;
+    }
+
+    &__account-actions {
+        display: flex;
+
+        @include respond(phone){
+            display: none;
+        }
+    }
+
+    &__cart-container {
+    }
 
     &__cart {
         position: relative;
-        font-size: 3rem;
-        color: white;
-        height: 3.5rem;
-        display: flex;
-        align-items: center;
     }
 
-    &__add-item {
-        position: absolute;
-        top: 4rem;
-        left: -14rem;
-        height: auto;
-        width: auto;
-        background-color: white;
-        color: black;
-        border: 1px solid $border-color;
-        transition: all .3s;
-        opacity: 0;
-        white-space: nowrap;
-    }
-
-    &__alert-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-    }
-
-    &__alert-text {
+    &__view-cart {
         margin-bottom: 2rem;
+        width: 75%;
     }
 
     &__checkout {
-        width: 100%;
+        width: 75%;
     }
 
     &__cart-items {

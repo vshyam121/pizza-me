@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { crustTypes, crustImageMapping } from "../../../../metadata/crustMetadata";
+import { crustTypes, crustMetadataMapping } from "../../../../metadata/crustMetadata";
 import {
   crust_flavors,
   crustFlavorImageMapping
 } from "../../../../metadata/crustFlavorMetadata";
 import { sizes } from "../../../../metadata/sizeMetadata";
-import  ImageOptions from "../../ImageOptions/ImageOptions";
-import ButtonOption from "../../ButtonOptions/ButtonOptions";
+import  ImageOptions from "../../BuilderOptions/ImageOptions/ImageOptions";
+import ButtonOptions from "../../BuilderOptions/ButtonOptions/ButtonOptions";
 import {
   SIZE,
   CRUST,
@@ -21,7 +21,7 @@ class SizeCrustBuilder extends Component {
       <div className="builder">
         <div className="builder-section">
           <h4 className="builder-section__title">Size</h4>
-          <ButtonOption
+          <ButtonOptions
             selectionOptions={sizes}
             itemSelected={this.props.pizza[SIZE]}
             onClick={e => this.props.onClick(e, SIZE)}
@@ -30,9 +30,10 @@ class SizeCrustBuilder extends Component {
         <div className="builder-section">
           <h4 className="builder-section__title">Crust</h4>
           <ImageOptions
+            selectionMetadata={crustMetadataMapping}
             selectionOptions={crustTypes}
             itemSelected={this.props.pizza[CRUST]}
-            imageMapping={crustImageMapping}
+            imageMapping={crustMetadataMapping}
             onClick={e => this.props.onClick(e, CRUST)}
           />
         </div>

@@ -6,14 +6,13 @@ import Button from "../../components/UI/Button/Button";
 import {
   crustPriceMapping,
   sizePriceMapping,
-  toppingPrice
+  toppingPrice,
 } from "../../metadata/priceMappings";
 import {
   HAND_TOSSED,
-  THIN_N_CRISPY,
-  ORIGINAL_PAN
+  crustMetadataMapping,
 } from "../../metadata/crustMetadata";
-import { LARGE, MEDIUM, PERSONAL } from "../../metadata/sizeMetadata";
+import { LARGE, sizes } from "../../metadata/sizeMetadata";
 import { toppingMapping, COMBO } from "../../metadata/comboMetadata";
 import { connect } from "react-redux";
 import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
@@ -23,7 +22,7 @@ import {
   CRUST,
   MEATS,
   VEGGIES,
-  COMBO_NAME
+  COMBO_NAME,
 } from "../../metadata/pizzaProperties";
 import { primary, secondary } from "../../components/UI/Button/Button";
 import { calculatePrice } from "../../shared/util";
@@ -37,104 +36,92 @@ class PizzaBox extends Component {
     const initialState = this.getInitialState();
     this.state = {
       width: window.innerWidth,
-      ...initialState
+      ...initialState,
     };
   }
 
   getInitialState = () => {
     let initialState = {
       pizza: {
-        price: this.calculatePrice(LARGE, HAND_TOSSED),
+        //price: this.calculatePrice(LARGE, HAND_TOSSED),
         priceType: this.props.priceType,
         [COMBO_NAME]: this.props.pizzaType,
         [CRUST]: HAND_TOSSED,
-        [SIZE]: LARGE
+        [SIZE]: LARGE,
       },
-      quantity: 1
+      quantity: 1,
     };
 
-    if (toppingMapping[this.props.pizzaType][MEATS]) {
+    if (toppingMapping[this.props.pizzaType]) {
       initialState = {
         ...initialState,
         pizza: {
           ...initialState.pizza,
-          [MEATS]: toppingMapping[this.props.pizzaType][MEATS]
-        }
-      };
-    }
-
-    if (toppingMapping[this.props.pizzaType][VEGGIES]) {
-      initialState = {
-        ...initialState,
-        pizza: {
-          ...initialState.pizza,
-          [VEGGIES]: toppingMapping[this.props.pizzaType][VEGGIES]
-        }
+          ...toppingMapping[this.props.pizzaType],
+        },
       };
     }
 
     return initialState;
   };
 
-  componentDidMount() {
-    this.setState({
-      pizza: {
-        ...this.state.pizza,
-        price: calculatePrice(this.state.pizza, false)
-      }
-    });
-  }
-
   resetState = () => {
     this.setState(this.getInitialState());
   };
 
-  handleChangeQuantity = event => {
+  handleChangeQuantity = (event) => {
     event.persist();
-    const singlePrice = this.calculatePrice(
+    /*  const singlePrice = this.calculatePrice(
       this.state.pizza.size,
-      this.state.pizza.crust
-    );
+      this.getCrust(this.state.pizza.crust)
+    ); */
     this.setState({
-      pizza: {
+      /*pizza: {
         ...this.state.pizza,
-        price: singlePrice
-      },
-      quantity: event.target.value
+        //price: singlePrice
+      },*/
+      quantity: event.target.value,
     });
   };
 
-  handleChangeCrust = event => {
+  getCrust = (crustDisplayValue) => {
+    const regexp = /(.*) (\+\$.*)/g;
+    const match = regexp.exec(crustDisplayValue);
+    return match ? match[1] : crustDisplayValue;
+  };
+
+  handleChangeCrust = (event) => {
     event.persist();
-    const singlePrice = this.calculatePrice(
+
+    /* const singlePrice = this.calculatePrice(
       this.state.pizza[SIZE],
-      event.target.value
-    );
+      this.getCrust(event.target.value)
+    ); */
     this.setState({
       pizza: {
         ...this.state.pizza,
         [CRUST]: event.target.value,
-        price: singlePrice
-      }
+        //price: singlePrice
+      },
     });
   };
 
-  handleChangeSize = event => {
+  handleChangeSize = (event) => {
     event.persist();
-    const singlePrice = this.calculatePrice(
+    /* const singlePrice = this.calculatePrice(
       event.target.value,
-      this.state.pizza[CRUST]
-    );
+      this.getCrust(this.state.pizza[CRUST])
+    );*/
     this.setState({
       pizza: {
         ...this.state.pizza,
         [SIZE]: event.target.value,
-        price: singlePrice
-      }
+        //price: singlePrice
+      },
     });
   };
 
-  calculatePrice = (size, crust) => {
+  /*calculatePrice = (size, crust) => {
     const basePrice =
       sizePriceMapping[size][this.props.priceType] +
       crustPriceMapping[size][crust];
@@ -149,27 +136,38 @@ class PizzaBox extends Component {
     }
 
     return (basePrice + meatsPrice + veggiesPrice).toFixed(2);
-  };
+  };*/
 
-  handleClickBuild = () => {
-    this.props.initializePizzaBuilder(this.state.pizza, this.state.quantity);
+  handleClickBuild = (price) => {
+    let pizza = { ...this.state.pizza, price: price };
+    pizza.crust = this.getCrust(pizza.crust);
+    this.props.initializePizzaBuilder(pizza, this.state.quantity);
     this.resetState();
   };
 
-  handleAddToCart = () => {
-    this.props.addToCart(this.state.pizza, this.state.quantity);
+  handleAddToCart = (price) => {
+    let pizza = { ...this.state.pizza, price: price };
+    this.props.addToCart(pizza, this.state.quantity);
     this.resetState();
   };
 
   render() {
-    const crustOptions = [HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN];
+    const crustOptions = Object.entries(crustMetadataMapping).map(
+      ([crust, crustMetadata]) => {
+        return crust + (crustMetadata.price ? " " + crustMetadata.price : "");
+      }
+    );
 
-    const sizeOptions = [LARGE, MEDIUM, PERSONAL];
+    const sizeOptions = sizes;
     const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    const price = calculatePrice(this.state.pizza);
 
     let pizzaAdd = null;
     let pizzaName = null;
     let customize = null;
+    let customizeSecondary = null;
+
     if (this.props.buildPizza) {
       pizzaAdd = (
         <Button type={primary} onClick={this.handleClickBuild}>
@@ -181,7 +179,7 @@ class PizzaBox extends Component {
     } else {
       pizzaAdd = (
         <React.Fragment>
-          <div className="pizza__quantity">
+          <div className="pizza-box__quantity">
             <Dropdown
               onChange={this.handleChangeQuantity}
               size={smallDropDown}
@@ -189,54 +187,60 @@ class PizzaBox extends Component {
               value={this.state.quantity}
             />
           </div>
-          <Button type={primary} onClick={this.handleAddToCart}>
+          <Button type={primary} onClick={() => this.handleAddToCart(price)}>
             Add to Order
           </Button>
         </React.Fragment>
       );
       pizzaName = this.props.pizzaType;
       customize = (
-        <Button type={secondary} onClick={this.handleClickBuild}>
+        <Button type={secondary} onClick={() => this.handleClickBuild(price)}>
           Customize
         </Button>
+      );
+      customizeSecondary = (
+        <span className="pizza-box__customize link" onClick={() => this.handleClickBuild(price)}>
+          Customize
+        </span>
       );
     }
 
     return (
-      <div className="pizza">
-        <div className="pizza__details">
-          <div className="pizza__name-price">
-            <h3 className="pizza__name">{pizzaName} Pizza</h3>
-            <h4>
-              ${(this.state.quantity * this.state.pizza.price).toFixed(2)}
+      <div className="pizza-box">
+        <h3 className="pizza-box__name">{pizzaName} Pizza</h3>
+        <div className="pizza-box__container">
+          <div className="pizza-box__details">
+            {customizeSecondary}
+
+            <h4 className="pizza-box__price">
+              ${(this.state.quantity * price).toFixed(2)}
             </h4>
-          </div>
-          <div className="pizza__options">
-            <div className="pizza__crust">
-              <Dropdown
-                options={crustOptions}
-                onChange={this.handleChangeCrust}
-                value={this.state.pizza.crust}
-              />
+            <div className="pizza-box__options">
+              <div className="pizza-box__crust">
+                <Dropdown
+                  options={crustOptions}
+                  onChange={this.handleChangeCrust}
+                  value={this.state.pizza.crust}
+                />
+              </div>
+              <div className="pizza-box__size">
+                <Dropdown
+                  options={sizeOptions}
+                  onChange={this.handleChangeSize}
+                  value={this.state.pizza.size}
+                />
+              </div>
+              <div className="pizza-box__add">{pizzaAdd}</div>
             </div>
-            <div className="pizza__size">
-              <Dropdown
-                className="pizza__size"
-                options={sizeOptions}
-                onChange={this.handleChangeSize}
-                value={this.state.pizza.size}
-              />
-            </div>
-            <div className="pizza__add">{pizzaAdd}</div>
           </div>
-        </div>
-        <div className="pizza__right">
-          <img
-            className="pizza__image"
-            src={this.props.imageSrc}
-            alt={this.props.pizzaName}
-          />
-          {customize}
+          <div className="pizza-box__right">
+            <img
+              className="pizza-box__image"
+              src={this.props.imageSrc}
+              alt={this.props.pizzaName}
+            />
+            {customize}
+          </div>
         </div>
       </div>
     );

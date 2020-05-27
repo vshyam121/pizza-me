@@ -1,5 +1,8 @@
+@import "../../../sass/abstracts/variables";
+
 .footer {
     width: 100%;
     height: 20rem;
-    background-color: yellow;
+    color: white;
+    background-color: $primary-black;
 }

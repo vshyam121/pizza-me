@@ -4,6 +4,7 @@
   border: 1px solid $border-color;
   border-radius: 100px;
   display: flex;
+  transition: all 1s;
 
   &__option {
     width: 100%;

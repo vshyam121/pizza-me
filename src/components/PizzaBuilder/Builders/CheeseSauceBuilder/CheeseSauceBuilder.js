@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { cheese_amounts } from "../../../../metadata/cheeseMetadata";
+import { cheeseAmounts, cheeseAmountMetadataMapping } from "../../../../metadata/cheeseMetadata";
 import {
   sauceImageMapping,
-  sauce_amounts
+  sauceAmounts,
+  sauceAmountMetadataMapping
 } from "../../../../metadata/sauceMetadata";
-import ImageOptions from "../../ImageOptions/ImageOptions";
-import ButtonOption from "../../ButtonOptions/ButtonOptions";
+import ImageOptions from "../../BuilderOptions/ImageOptions/ImageOptions";
+import ButtonOptions from "../../BuilderOptions/ButtonOptions/ButtonOptions";
 import {
   SAUCE,
   SAUCE_AMOUNT,
@@ -28,16 +29,18 @@ class CheeseSauceBuilder extends Component {
         </div>
         <div className="builder-section">
           <h2 className="builder-section__title">Amount of Sauce</h2>
-          <ButtonOption
-            selectionOptions={sauce_amounts}
+          <ButtonOptions
+            selectionMetadata={sauceAmountMetadataMapping}
+            selectionOptions={sauceAmounts}
             itemSelected={this.props.pizza[SAUCE_AMOUNT]}
             onClick={e => this.props.onClick(e, SAUCE_AMOUNT)}
           />
         </div>
         <div className="builder-section">
           <h2 className="builder-section__title">Amount of Cheese</h2>
-          <ButtonOption
-            selectionOptions={cheese_amounts}
+          <ButtonOptions
+            selectionMetadata={cheeseAmountMetadataMapping}
+            selectionOptions={cheeseAmounts}
             itemSelected={this.props.pizza[CHEESE_AMOUNT]}
             onClick={e => this.props.onClick(e, CHEESE_AMOUNT)}
           />

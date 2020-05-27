@@ -11,10 +11,10 @@ export const ORIGINAL_PAN = "Original Pan";
 
 export const crustTypes = [HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN];
 
-export const crustImageMapping = {
+export const crustMetadataMapping = {
     [HAND_TOSSED]: {
         preview: HandTossedPreview,
-        icon: HandTossedIcon
+        icon: HandTossedIcon,
     },
     [THIN_N_CRISPY]: {
         preview: ThinNCrispyPreview,
@@ -22,6 +22,7 @@ export const crustImageMapping = {
     },
     [ORIGINAL_PAN]: {
         preview: OriginalPanPreview,
-        icon: OriginalPanIcon
+        icon: OriginalPanIcon,
+        price: "+$2.00"
     }
 }

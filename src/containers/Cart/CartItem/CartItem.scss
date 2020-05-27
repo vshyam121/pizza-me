@@ -1,4 +1,5 @@
 @import "../../../sass/abstracts/variables";
+@import "../../../sass/abstracts/mixins";
 
 .cart-item {
     display: flex;
@@ -18,9 +19,12 @@
         width: 100%;
         flex: 0;
 
-        @media only screen and (max-width: 810px){
+        @include respond(tab-port){
             display: none;
         }
+       /* @media only screen and (max-width: 810px){
+            display: none;
+        }*/
     }
 
     &__description {

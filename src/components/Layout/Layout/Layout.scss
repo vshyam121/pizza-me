@@ -2,8 +2,9 @@
 
 .main {
     margin-top: $header-height;
-    padding: 3rem;
+    padding: 2rem;
     overflow: hidden;
     background-color: $color-grey-light-3;
-    min-height: 80vh;
+    min-height: 60vh;
+    position: relative;
 }

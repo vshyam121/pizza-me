@@ -1,44 +1,32 @@
 @import "../../../sass/abstracts/variables";
+@import "../../../sass/abstracts/mixins";
 
-.preview {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  &__title {
-    width: 100%;
-    padding: 2rem;
-    border-bottom: 1px solid $border-color;
-    margin-bottom: 2rem;
-  }
-
-  &__properties {
+.pizza-preview {
     position: relative;
     align-self: center;
     width: 34rem;
     height: 34rem;
 
-    @media only screen and (max-width: 970px) {
+    @include respond(tab-land){
       width: 29rem;
       height: 29rem;
     }
+   /* @media only screen and (max-width: 970px) {
+      width: 29rem;
+      height: 29rem;
+    }*/
 
-    @media only screen and (max-width: 830px) {
+    @include respond(tab-port){
       display: none;
     }
-  }
+    /*@media only screen and (max-width: 830px) {
+      display: none;
+    }*/
 
-  &__properties-cart {
+  &--cart {
     position: relative;
     width: 18rem;
     height: 18rem;
-  }
-
-
-  &__description {
-    margin-bottom: 2rem;
   }
 
   &__property {
@@ -48,5 +36,13 @@
     width: 100%;
     height: 100%;
     padding: 2rem;
+
+    &--left {
+      clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    }
+
+    &--right {
+      clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    }
   }
 }

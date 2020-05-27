@@ -28,6 +28,12 @@ export const EXTRA_SAUCE = "Extra";
 export const LIGHT_SAUCE = "Light";
 export const NO_SAUCE = "None";
 
-export const sauce_amounts = [EXTRA_SAUCE, REGULAR_SAUCE, LIGHT_SAUCE, NO_SAUCE];
+export const sauceAmounts = [EXTRA_SAUCE, REGULAR_SAUCE, LIGHT_SAUCE, NO_SAUCE];
+
+export const sauceAmountMetadataMapping = {
+    [EXTRA_SAUCE]: {
+        price: "+$1.00"
+    }
+}
 
 

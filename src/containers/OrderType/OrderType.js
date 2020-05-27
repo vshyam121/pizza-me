@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./OrderType.scss";
 import { MdDirectionsCar, MdStore } from "react-icons/md";
-import Form from "../Form/Form";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import AddressForm from "../AddressForm/AddressForm";
@@ -32,70 +31,11 @@ class OrderType extends Component {
         />
       );
     }
-    const deliveryForm = {
-      address: {
-        elementType: "input",
-        elementConfig: {
-          placeholder: "Address"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false
-      },
-      unit: {
-        elementType: "input",
-        elementConfig: {
-          type: "number",
-          placeholder: "Apt/Unit #"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false
-      },
-      city: {
-        elementType: "input",
-        elementConfig: {
-          placeholder: "City"
-        },
-        value: "",
-        validation: {
-          hasLength: 2,
-          required: true
-        },
-        valid: false
-      },
-      state: {
-        elementType: "input",
-        elementConfig: {
-          placeholder: "State"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false
-      },
-      zipcode: {
-        elementType: "input",
-        elementConfig: {
-          placeholder: "ZIP Code"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false
-      }
-    };
+   
 
     let form = null;
 
     if (this.state.isDelivery) {
-      //form = <Form form={deliveryForm} onSubmit={this.handleSubmit} />;
       form = <AddressForm />
     }
     return (

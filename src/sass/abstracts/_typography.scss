@@ -1,38 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=Permanent%20Marker');
 
 
 h1 {
-    font-size: 2.4rem;
-    font-weight: 600;
+  font-size: 2.4rem;
+  font-weight: 600;
 }
 
 h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 
 h3 {
-    font-size: 1.8rem;
-    font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 h4 {
-    font-size: 1.5rem;
-    font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
-.link, .link:link, .link:visited {
-    text-decoration: none;
-    color: $primary-red;
-    font-size: 1.5rem;
-    cursor: pointer;
+.link,
+.link:link,
+.link:visited {
+  text-decoration: none;
+  color: $primary-red;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .link:hover {
-    color: $primary-red;
-    font-weight: 600;
+  color: $primary-red;
+  font-weight: 600;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
+.header-icon {
+  font-size: 3rem;
+  color: white;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+}

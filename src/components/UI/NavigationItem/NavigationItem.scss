@@ -1,13 +1,14 @@
 @import "../../../sass/abstracts/variables";
 
 .navigation-item {
-    width: 10rem;
     height: 100%;
     background-color: $primary-black;
     color: white;
     display: flex;
-    align-items: center;
     justify-content: center;
+    padding: 0 2rem;
+
+   
 
     &__text {
         width: 100%;
@@ -16,7 +17,13 @@
         color: white;
         display: flex;
         justify-content: center;
-        align-items: center
+        align-items: center;
+        white-space: nowrap;
+
+        &--vertical {
+            height: 5rem;
+            justify-content: flex-start;
+        }
     }
 
     &:hover {

@@ -260,7 +260,7 @@ export const changeItemQuantity = (itemId, quantity) => {
     } else {
       let cart = JSON.parse(localStorage.getItem("cart"));
       cart.quantity -= cart.items[itemId].quantity;
-      cart.quantity += quantity;
+      cart.quantity += parseInt(quantity);
       cart.items[itemId].quantity = quantity;
       localStorage.setItem("cart", JSON.stringify(cart));
       dispatch({

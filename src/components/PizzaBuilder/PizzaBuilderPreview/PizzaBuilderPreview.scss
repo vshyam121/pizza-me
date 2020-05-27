@@ -1,0 +1,11 @@
+.pizza-builder-preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__preview {
+    display: flex;
+    justify-content: center;
+  }
+}

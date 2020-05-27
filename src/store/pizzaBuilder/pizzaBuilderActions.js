@@ -1,13 +1,8 @@
-import {
-  INIT_PIZZA_BUILDER,
-  CLOSE_PIZZA_BUILDER,
-  SET_PROPERTY,
-  TOGGLE_TOPPING
-} from "./pizzaBuilderActionTypes";
+import * as actionTypes from "./pizzaBuilderActionTypes";
 
 export const initializePizzaBuilder = (pizza, quantity, itemId) => {
   return {
-    type: INIT_PIZZA_BUILDER,
+    type: actionTypes.INIT_PIZZA_BUILDER,
     pizza: pizza,
     quantity: quantity,
     itemId: itemId
@@ -16,13 +11,13 @@ export const initializePizzaBuilder = (pizza, quantity, itemId) => {
 
 export const closePizzaBuilder = () => {
   return {
-    type: CLOSE_PIZZA_BUILDER
+    type: actionTypes.CLOSE_PIZZA_BUILDER
   };
 };
 
 export const setProperty = (property, value) => {
   return {
-    type: SET_PROPERTY,
+    type: actionTypes.SET_PROPERTY,
     property: property,
     value: value
   };
@@ -30,8 +25,26 @@ export const setProperty = (property, value) => {
 
 export const toggleTopping = (property, value) => {
   return {
-    type: TOGGLE_TOPPING,
+    type: actionTypes.TOGGLE_TOPPING,
     property: property,
+    value: value
+  };
+};
+
+export const setToppingAmount = (property, topping, value) => {
+  return {
+    type: actionTypes.SET_TOPPING_AMOUNT,
+    property: property,
+    topping: topping,
+    value: value
+  };
+};
+
+export const setToppingPortion = (property, topping, value) => {
+  return {
+    type: actionTypes.SET_TOPPING_PORTION,
+    property: property,
+    topping: topping,
     value: value
   };
 };

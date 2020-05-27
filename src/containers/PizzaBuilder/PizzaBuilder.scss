@@ -1,12 +1,18 @@
 @import "../../sass/abstracts/variables";
+@import "../../sass/abstracts/mixins";
 
 .totalBuilder {
   display: flex;
   width: 100%;
   height: 100%;
 
-  @media only screen and (max-width: 830px) {
+  @include respond(tab-port){
     flex-direction: column;
+  }
+
+  @include respond(phone){
+    flex-direction: column;
+    font-size: 1.2rem;
   }
 
   &__mypizza {
@@ -23,7 +29,7 @@
     border: 1px solid $border-color;
     border-radius: 1rem;
 
-    @media only screen and (max-width: 830px) {
+    @include respond(tab-port){
       width: 100%;
       margin-bottom: 2rem;
     }
@@ -32,7 +38,7 @@
   &__details {
     width: 100%;
 
-    @media only screen and (max-width: 830px) {
+    @include respond(tab-port){
       border: none;
     }
   }
@@ -40,9 +46,10 @@
   &__preview {
     width: 100%;
 
-    @media only screen and (max-width: 830px) {
-        display: none;
-      }
+
+    @include respond(tab-port){
+      display: none;
+    }
   }
 
 
@@ -54,7 +61,7 @@
     border-radius: 1rem;
     overflow: hidden;
 
-    @media only screen and (max-width: 830px) {
+    @include respond(tab-port){
       width: 100%;
     }
   }

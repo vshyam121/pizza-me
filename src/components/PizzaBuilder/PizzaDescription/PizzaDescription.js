@@ -8,13 +8,16 @@ import {
   SAUCE_AMOUNT,
   CHEESE_AMOUNT,
   CRUST_FLAVOR,
-  COMBO_NAME
+  COMBO_NAME,
+  MEATS,
+  VEGGIES,
+  EXTRA_TOPPING
 } from "../../../metadata/pizzaProperties";
 import { NO_CHEESE } from "../../../metadata/cheeseMetadata";
 import { NO_SAUCE } from "../../../metadata/sauceMetadata";
 import { calculatePrice } from "../../../shared/util";
 
-const PizzaDescription = props => {
+const PizzaDescription = (props) => {
   let sauce = props.pizza[SAUCE_AMOUNT] + " " + props.pizza[SAUCE];
   if (props.pizza[SAUCE_AMOUNT] === NO_SAUCE) {
     sauce = "No";
@@ -30,15 +33,24 @@ const PizzaDescription = props => {
     crustFlavor = <span>, {props.pizza[CRUST_FLAVOR]} Crust Flavor</span>;
   }
 
-  let meats = props.pizza.meats;
-  let veggies = props.pizza.veggies;
-  let toppings = [];
-  if (meats && meats.length !== 0) {
-    toppings.push(...meats);
+  const getToppingDescriptions = toppings => {
+    let toppingDescriptions = [];
+    Object.entries(toppings).forEach(([topping, toppingProps]) => {
+      if (toppingProps.amount === EXTRA_TOPPING) {
+        toppingDescriptions.push("Extra " + topping);
+      } else {
+        toppingDescriptions.push(topping);
+      }
+    });
+
+    return toppingDescriptions;
   }
-  if (veggies && veggies.length !== 0) {
-    toppings.push(...veggies);
-  }
+
+  let meats = props.pizza[MEATS] || {};
+  let veggies = props.pizza[VEGGIES] || {};
+
+  let toppings = [...getToppingDescriptions(meats), ...getToppingDescriptions(veggies)];
+
   if (toppings.length === 0) {
     toppings = null;
   } else {

@@ -10,14 +10,14 @@ import { Link } from "react-router-dom";
 import {
   handleEditItem,
   handleChangeItemQuantity,
-  handleRemoveItem
+  handleRemoveItem,
 } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
 
-const Cart = props => {
+const Cart = (props) => {
   const calculateSubTotal = () => {
     let subTotal = 0;
-    Object.values(props.items).forEach(item => {
+    Object.values(props.items).forEach((item) => {
       subTotal += item.pizza.price * item.quantity;
     });
     return subTotal.toFixed(2);
@@ -60,7 +60,7 @@ const Cart = props => {
                 pathname: props.isAuthenticated
                   ? "/checkout/order-type"
                   : "/signin",
-                checkout: "true"
+                checkout: "true",
               }}
             >
               <Button type={primary}>
@@ -80,23 +80,25 @@ const Cart = props => {
   }
 
   return (
-    <div className="cart">
-      <h1 className="cart__title">Shopping Cart</h1>
-      {cart}
+    <div className="cart-container">
+      <div className="cart">
+        <h1 className="cart__title">Shopping Cart</h1>
+        {cart}
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   items: state.cart.items,
   cartId: state.cart.cartId,
   loading: state.cart.loadingCart,
   error: state.cart.errorCart,
-  isAuthenticated: state.auth.idToken
+  isAuthenticated: state.auth.idToken,
 });
 
 export default connect(mapStateToProps, {
   initializePizzaBuilder,
   changeItemQuantity,
-  removeItem
+  removeItem,
 })(Cart);

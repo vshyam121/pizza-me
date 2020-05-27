@@ -1,0 +1,173 @@
+@import "../../../../sass/abstracts/variables";
+@import "../../../../sass/abstracts/mixins";
+
+.builder-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.topping-option {
+  display: flex;
+  align-items: stretch;
+  border: none;
+  outline: none;
+  border-top: 1px solid $border-color;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1rem;
+  background-color: inherit;
+  cursor: pointer;
+
+  @include respond(phone){
+    padding: .5rem;
+  }
+  
+  &__img-selection {
+    position: relative;
+    margin-right: 2rem;
+  }
+
+  &__img {
+    height: 7rem;
+
+    @include respond(phone){
+      height: 5rem;
+    }
+  }
+
+  &__checkmark {
+    position: absolute;
+    right: 0;
+    height: 3rem;
+    width: 3rem;
+    background-color: white;
+    border-radius: 100%;
+    border: 1px solid $border-color;
+    color: $primary-red;
+
+    @include respond(phone){
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+
+  &__name {
+    margin-bottom: 1.5rem;
+  }
+
+  &__details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  &__amount-portion {
+    display: flex;
+
+    @include respond(tab-land){
+      flex-direction: column;
+    }
+
+    @include respond(tab-port){
+      flex-direction: row;
+    }
+
+    @include respond(phone){
+      flex-direction: column;
+    }
+  }
+
+  &__amount {
+    display: flex;
+    margin-right: 2rem;
+
+    @include respond(tab-land){
+      margin-bottom: 1.5rem;
+    }
+
+    @include respond(tab-port){
+      margin-bottom: 0;
+    }
+
+    @include respond(phone){
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__portion {
+    display: flex;
+    flex: 1;
+  }
+}
+
+.amount-option {
+  cursor: pointer;
+    height: 3rem;
+    width: 6rem;
+    border: 1px solid $border-color;
+    outline: none;
+    border-radius: 5%;
+    font-family: inherit;
+    font-size: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    
+    &--selected {
+        background-color: $primary-red;
+        color: white;
+    }
+}
+
+.portion-option {
+  position: relative;
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid $border-color;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+
+  &--selected {
+    border-color: $primary-red;
+  }
+
+  &__whole{
+    width: 2rem;
+    height: 2rem;
+    background-color: grey;
+    border-radius: 100%;
+
+    &--selected {
+      background-color: $primary-red;
+    }
+  }
+
+  &__left{
+    width: 2rem;
+    height: 2rem;
+    background-color: grey;
+    border-radius: 100%;
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+
+    &--selected {
+      background-color: $primary-red;
+    }
+  }
+
+  &__right{
+    width: 2rem;
+    height: 2rem;
+    background-color: grey;
+    border-radius: 100%;
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+
+    &--selected {
+      background-color: $primary-red;
+    }
+  }
+}

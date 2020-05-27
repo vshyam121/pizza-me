@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./ToppingsBuilder.scss";
 import Button from "../../../UI/Button/Button";
-import ListOptions from "../../ListOptions/ListOptions";
+import ToppingOptions from "../../BuilderOptions/ToppingOptions/ToppingOptions";
 import { meatImageMapping } from "../../../../metadata/meatMetadata";
 import { veggiesImageMapping } from "../../../../metadata/veggiesMetadata";
 import { MEATS, VEGGIES } from "../../../../metadata/pizzaProperties";
@@ -9,7 +9,7 @@ import OptionsButton from "../../../UI/OptionsButton/OptionsButton";
 
 class ToppingsBuilder extends Component {
   state = {
-    stage: MEATS
+    stage: this.props.toppingType || MEATS
   };
 
   handleClickVeggies = () => {
@@ -25,8 +25,10 @@ class ToppingsBuilder extends Component {
     if (this.state.stage === MEATS) {
       toppingsBuilder = (
         <React.Fragment>
-          <ListOptions
+          <ToppingOptions
             onClick={e => this.props.onClick(e, MEATS)}
+            onClickAmount={e => this.props.onClickAmount(e, MEATS)}
+            onClickPortion={e => this.props.onClickPortion(e, MEATS)}
             imageMapping={meatImageMapping}
             itemsSelected={this.props.pizza[MEATS]}
           />
@@ -35,8 +37,10 @@ class ToppingsBuilder extends Component {
     } else {
       toppingsBuilder = (
         <React.Fragment>
-          <ListOptions
+          <ToppingOptions
             onClick={e => this.props.onClick(e, VEGGIES)}
+            onClickAmount={e => this.props.onClickAmount(e, VEGGIES)}
+            onClickPortion={e => this.props.onClickPortion(e, VEGGIES)}
             imageMapping={veggiesImageMapping}
             itemsSelected={this.props.pizza[VEGGIES]}
           />
