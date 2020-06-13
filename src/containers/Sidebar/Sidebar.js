@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./Sidebar.scss";
 import { connect } from "react-redux";
-import PizzaMenuItems from "../../components/PizzaMenuItems/PizzaMenuItems";
+import PizzaMenuItems from "../../components/MenuItems/PizzaMenuItems/PizzaMenuItems";
+import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/AccountMenuItems";
 import { closeSidebar } from "../../store/ui/uiActions";
 import NavigationItem from "../../components/UI/NavigationItem/NavigationItem";
+
 
 class Sidebar extends Component {
   handleClickMenuItem = () => {
@@ -54,7 +56,7 @@ class Sidebar extends Component {
             >
               Cart
             </NavigationItem>
-            {authentication}
+            <AccountMenuItems vertical onClick={this.handleClickMenuItem} />
           </div>
         </div>
       </div>

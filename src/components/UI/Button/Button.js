@@ -4,8 +4,10 @@ import "./Button.scss";
 export const primary = "button";
 export const secondary = "button button--secondary"
 export const tertiary = "button button--tertiary";
+
 /* Standard button across entire app */
 const Button = props => {
+  
   return (
     <button
       onClick={props.onClick}

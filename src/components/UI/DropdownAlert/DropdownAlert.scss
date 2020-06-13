@@ -1,17 +1,21 @@
-@import "../../../sass/abstracts/variables";
+@import "../../../sass/base/variables";
 
 .dropdown-menu-alert {
     position: absolute;
-    top: 4rem;
-    left: -17rem;
+    top: 5rem;
+    right: 1rem;
     height: auto;
     width: auto;
     background-color: white;
     color: black;
     border: 1px solid $border-color;
     transition: all .3s;
-    opacity: 0;
     white-space: nowrap;
+    //display: none;
+    visibility: hidden;
+    opacity: 0;
+    cursor: pointer;
+    animation: show-alert 4s;
 
     &__container {
         display: flex;
@@ -28,14 +32,17 @@
 
 @keyframes show-alert {
     0% {
+        visibility: visible;
         opacity: 1;
     }
 
     75% {
+        visibility: visible;
         opacity: 1;
     }
 
     100% {
+        visibility: hidden;
         opacity: 0;
     }
 }

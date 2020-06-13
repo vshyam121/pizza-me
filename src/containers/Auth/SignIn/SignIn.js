@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./SignIn.scss";
 import Button, { secondary } from "../../../components/UI/Button/Button";
-import { handleInputChange } from "../../../shared/validation.js";
 import { signIn, authReset } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { lookupErrorCode } from "../../../shared/errorMessages";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import withErrorHandler from "../../../hoc/withErrorHandler";
 
 class SignIn extends Component {
   state = {
@@ -15,36 +17,36 @@ class SignIn extends Component {
       email: {
         elementType: "input",
         elementConfig: {
-          placeholder: "Email"
+          placeholder: "Email",
         },
         value: "",
         errorMessage: "Please enter a valid email address",
         validation: {
           required: true,
-          isEmail: true
+          isEmail: true,
         },
-        valid: false
+        valid: false,
       },
       password: {
         elementType: "input",
         elementConfig: {
           type: "password",
-          placeholder: "Password"
+          placeholder: "Password",
         },
         value: "",
         errorMessage: "Password has to be at least 6 characters long",
         validation: {
           required: true,
-          minLength: 6
+          minLength: 6,
         },
-        valid: false
-      }
+        valid: false,
+      },
     },
     formIsValid: false,
-    formSubmitted: false
+    formSubmitted: false,
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ formSubmitted: true });
     if (this.state.formIsValid) {
@@ -55,7 +57,7 @@ class SignIn extends Component {
     }
   };
 
-  updateForm = stateUpdate => {
+  updateForm = (stateUpdate) => {
     this.setState(stateUpdate);
   };
 
@@ -92,22 +94,11 @@ class SignIn extends Component {
 
     let redirect = null;
     if (this.props.isAuthenticated) {
-      if (this.props.location.checkout) {
+      if (this.props.location.fromCheckout) {
         redirect = <Redirect to="/checkout/order-type" />;
       } else {
         redirect = <Redirect to="/" />;
       }
-    }
-
-    let guestButton = null;
-    if (this.props.location.checkout) {
-      guestButton = (
-        <div className="form-component__guest">
-          <Link to="/checkout/guest">
-            <Button type={secondary}>Continue as guest</Button>
-          </Link>
-        </div>
-      );
     }
 
     return (
@@ -119,17 +110,21 @@ class SignIn extends Component {
           {redirect}
           {errorMessage}
           {form}
-          {guestButton}
+          <div className="signup">
+            <Link to="/signup">
+              <Button type={secondary}>Sign Up</Button>
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   error: state.auth.error,
-  isAuthenticated: state.auth.idToken
+  isAuthenticated: state.auth.idToken,
 });
 
-export default connect(mapStateToProps, { signIn, authReset })(SignIn);
+export default connect(mapStateToProps, { signIn, authReset })(withErrorHandler(SignIn, axios));

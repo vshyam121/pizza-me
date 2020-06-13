@@ -1,10 +1,10 @@
-@import "../../sass/abstracts/variables";
+@import "../../sass/base/variables";
 @import "../../sass/abstracts/_mixins";
 
 .sidebar-container {
-  position: absolute;
+  position: fixed;
   left: 0;
-  top: 0;
+  top: $header-height;
   height: 100%;
   width: 100%;
   z-index: 1000;
@@ -18,9 +18,9 @@
 }
 
 .sidebar {
-  position: absolute;
+  position: fixed;
   left: 0;
-  top: 0;
+  top: $header-height;
   height: 100%;
   width: 25rem;
   background-color: $primary-black;

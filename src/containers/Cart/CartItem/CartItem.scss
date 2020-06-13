@@ -1,43 +1,85 @@
-@import "../../../sass/abstracts/variables";
+@import "../../../sass/base/variables";
 @import "../../../sass/abstracts/mixins";
 
-.cart-item {
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0rem 2rem;
+  min-height: 15rem;
+  width: 100%;
+  border-top: 1px solid $border-color;
+
+
+  @include respond(phone) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &--order {
+    justify-content: center;
+  }
+
+  &__pizza {
     display: flex;
-    justify-content: space-between;
-    padding: 2rem;
-    line-height: 1.6rem;
-    min-height: 20rem;
+    align-items: flex-start;
+    margin-right: 2rem;
+
+    @include respond(phone){
+        margin-right: 0;
+    }
+  }
+
+  &__preview {
     width: 100%;
+    flex: 0;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__description {
+    min-height: 14rem;
+    max-width: 40rem;
+    flex: 1;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 15rem;
+    align-items: center;
+    padding: 2rem;
+
+    @include respond(phone) {
+      width: 75%;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__price {
+
+    @include respond(phone){
+        display: none;
+    }
+  }
+
+  &__actions {
+    display: flex;
+
+    span:not(:last-child){
+      margin-right: 2rem;
+    }
+  }
+
+  &__empty {
+    height: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-top: 1px solid $border-color;
-
-    &__pizza {
-        display: flex;
-        align-items: center;
-    }
-
-    &__preview {
-        width: 100%;
-        flex: 0;
-
-        @include respond(tab-port){
-            display: none;
-        }
-       /* @media only screen and (max-width: 810px){
-            display: none;
-        }*/
-    }
-
-    &__description {
-        min-height: 14rem;
-        margin-right: 2rem;
-    }
-
-    &__details {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        width: 15rem;
-        align-items: center;
-        padding: 2rem;
-    }
+    width: 100%;
+  }
 }

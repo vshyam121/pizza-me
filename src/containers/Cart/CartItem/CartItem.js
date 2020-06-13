@@ -1,14 +1,15 @@
 import React from "react";
 import "./CartItem.scss";
-import PizzaDescription from "../../../components/PizzaBuilder/PizzaDescription/PizzaDescription";
+import PizzaDescription from "../../../components/PizzaDescription/PizzaDescription";
 import Dropdown from "../../../components/UI/Dropdown/Dropdown";
 import { smallDropDown } from "../../../components/UI/Dropdown/Dropdown";
-import PizzaPreview from "../../../components/PizzaBuilder/PizzaPreview/PizzaPreview";
+import PizzaPreview from "../../../components/PizzaPreview/PizzaPreview";
 import { connect } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { isEqual } from "lodash";
+import { calculatePrice } from "../../../shared/util";
 
-const CartItem = props => {
+const CartItem = (props) => {
   const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   console.log(props.pizza);
@@ -22,33 +23,34 @@ const CartItem = props => {
     );
   }
 
+  let overallPrice = (calculatePrice(props.pizza) * props.quantity).toFixed(2);
+
   let cartItem = null;
-  if (props.loading && isEqual(props.itemBeingRemoved, props.pizza)) {
+  if (props.loading && isEqual(props.itemBeingChanged, props.pizza)) {
     cartItem = (
-      <div className="cart__empty">
+      <div className="item__empty">
         <SyncLoader />
       </div>
     );
   } else {
     cartItem = (
-      <div className="cart-item">
-        <div className="cart-item__pizza">
-          <div className="cart-item__preview">
-            <PizzaPreview inCart pizza={props.pizza} />
+      <div className="item">
+        <div className="item__pizza u-margin-right">
+          <div className="item__preview">
+            <PizzaPreview small pizza={props.pizza} />
           </div>
-          <div className="cart-item__description">
+          <div className="item__description">
             <PizzaDescription
               editItem={props.editItem}
-              inCart
+              cart
               pizza={props.pizza}
+              quantity={props.quantity}
             />
           </div>
         </div>
-        <div className="cart-item__details">
-          <div className="cart-item__price">
-            ${(props.pizza.price * props.quantity).toFixed(2)}
-          </div>
-          <div className="cart-item__quantity">
+        <div className="item__details">
+          <div className="item__price">${overallPrice}</div>
+          <div className="item__quantity">
             <Dropdown
               onChange={props.changeItemQuantity}
               size={smallDropDown}
@@ -56,7 +58,12 @@ const CartItem = props => {
               value={props.quantity}
             />
           </div>
-          {remove}
+          <div className="item__actions">
+            <span className="item__edit link" onClick={props.editItem}>
+              Edit
+            </span>
+            {remove}
+          </div>
         </div>
       </div>
     );
@@ -65,10 +72,9 @@ const CartItem = props => {
   return cartItem;
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loading: state.cart.loadingCartItem,
-  error: state.cart.errorCartItem,
-  itemBeingRemoved: state.cart.itemBeingRemoved
+  itemBeingChanged: state.cart.itemBeingChanged,
 });
 
 export default connect(mapStateToProps, null)(CartItem);

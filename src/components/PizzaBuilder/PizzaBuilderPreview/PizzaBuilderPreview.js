@@ -15,20 +15,16 @@ import {
   RIGHT_HALF,
 } from "../../../metadata/pizzaProperties";
 import { NO_CRUST_FLAVOR } from "../../../metadata/crustFlavorMetadata";
-import PizzaPreview from "../../PizzaBuilder/PizzaPreview/PizzaPreview";
+import PizzaPreview from "../../PizzaPreview/PizzaPreview";
 
 class PizzaBuilderPreview extends Component {
   render() {
-    let title = null;
-    if (!this.props.inCart) {
-      title = <h4 className="builder-section__title">Preview</h4>;
-    }
 
     return (
       <div className="pizza-builder-preview">
         <h4 className="builder-section__title">Preview</h4>
         <div className="pizza-builder-preview__preview">
-          <PizzaPreview inCart={this.props.inCart} pizza={this.props.pizza} />
+          <PizzaPreview pizza={this.props.pizza} />
         </div>
       </div>
     );

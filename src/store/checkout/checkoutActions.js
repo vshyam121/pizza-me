@@ -1,39 +1,60 @@
 import * as actionTypes from "./checkoutActionTypes";
-import axiosDB from "../../axios";
-import axios from "axios";
+import axiosDB from "../../axiosDB";
+import axiosGeolocation from "axios";
+import * as actionDisplays from "../ui/actionDisplays";
+import { setErroredAction } from "../ui/uiActions";
 
-export const storeUserInfo = userInfo => {
+export const submitOrderStart = () => {
   return {
-    type: actionTypes.STORE_USER_INFO,
-    userInfo: userInfo
+    type: actionTypes.SUBMIT_ORDER_START,
   };
 };
 
-export const orderSubmit = (items, idToken, userId) => {
-  return dispatch => {
-    const order = {
+export const submitOrder = (total, items, idToken, userId) => {
+  return (dispatch, getState) => {
+    dispatch(submitOrderStart());
+    let order = {
       userId: userId,
-      items: items
+      items: items,
+      date: new Date(),
+      total: total,
     };
-    axiosDB.post("/orders.json?auth=" + idToken, order).then(res => {
-      console.log(res);
-      dispatch({
-        type: actionTypes.SUBMIT_ORDER,
-        orderId: res.data.name,
-        order: order
+
+    const deliveryAddress = getState().checkout.deliveryAddress;
+    if (deliveryAddress) {
+      order = { ...order, deliveryAddress: deliveryAddress };
+    }
+    axiosDB
+      .post("/orders.json?auth=" + idToken, order)
+      .then((res) => {
+        console.log(res);
+        dispatch({
+          type: actionTypes.SUBMIT_ORDER,
+          orderId: res.data.name,
+          order: order,
+        });
+      })
+      .catch((err) => {
+        dispatch(setErroredAction(actionDisplays.SUBMIT_ORDER));
+        dispatch(submitOrderFailed());
       });
-    });
+  };
+};
+
+export const submitOrderFailed = () => {
+  return {
+    type: actionTypes.SUBMIT_ORDER_FAILED,
   };
 };
 
 export const validateAddressReset = () => {
   return {
-    type: actionTypes.VALIDATE_ADDRESS_RESET
+    type: actionTypes.VALIDATE_ADDRESS_RESET,
   };
 };
 
-export const validateAddress = addressForm => {
-  return dispatch => {
+export const validateAddress = (addressForm) => {
+  return (dispatch) => {
     let params = {
       key: process.env.REACT_APP_SMARTY_STREETS_KEY,
       street: addressForm.street.value,
@@ -41,102 +62,75 @@ export const validateAddress = addressForm => {
       city: addressForm.city.value,
       state: addressForm.state.value,
       zipcode: addressForm.zipcode.value,
-      candidates: 10
+      candidates: 10,
     };
 
     dispatch({
-      type: actionTypes.VALIDATE_ADDRESS_START
+      type: actionTypes.VALIDATE_ADDRESS_START,
     });
 
-    axios
+    axiosGeolocation
       .get("https://us-street.api.smartystreets.com/street-address", {
-        params: params
+        params: params,
       })
-      .then(res => {
+      .then((res) => {
         console.log(res);
         if (res.data.length > 0) {
           const matchCode = res.data[0].analysis.dpv_match_code;
           if (matchCode === "Y") {
             dispatch({
-              type: actionTypes.VALIDATE_ADDRESS_SUCCESS
+              type: actionTypes.VALIDATE_ADDRESS_SUCCESS,
+              deliveryAddress: {
+                street: addressForm.street.value,
+                secondary: addressForm.unit.value,
+                city: addressForm.city.value,
+                state: addressForm.state.value,
+                zipcode: addressForm.zipcode.value,
+              },
             });
           } else if (matchCode === "N") {
             dispatch({
               type: actionTypes.VALIDATE_ADDRESS_FAILED,
-              error: "The address you entered is invalid"
+              error: "The address you entered is invalid",
             });
           } else if (matchCode === "S" || matchCode === "D") {
             dispatch({
               type: actionTypes.VALIDATE_ADDRESS_FAILED,
-              error: "Missing or incorrect secondary address (apt/unit)"
+              error: "Missing or incorrect secondary address (apt/unit)",
             });
           }
         } else {
           dispatch({
             type: actionTypes.VALIDATE_ADDRESS_FAILED,
-            error: "The address you entered is invalid"
+            error: "The address you entered is invalid",
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err.response.status);
         dispatch({
-          type: actionTypes.VALIDATE_ADDRESS_FAILED
+          type: actionTypes.VALIDATE_ADDRESS_FAILED,
         });
       });
-
-    /*params = {
-      apiKey: process.env.REACT_APP_HERE_GEOCODE_API_KEY,
-      additionaldata: "IncludeMicroPointAddresses,true"
-    };
-
-    params["searchtext"] =
-      addressForm.street.value +
-      " Unit " +
-      addressForm.unit.value +
-      " " +
-      addressForm.city.value +
-      " " +
-      addressForm.state.value +
-      " " +
-      addressForm.zipcode.value;
-
-    dispatch({
-      type: actionTypes.VALIDATE_ADDRESS_START
-    });
-
-    axios
-      .get("https://geocoder.ls.hereapi.com/search/6.2/geocode.json", {
-        params: params
-      })
-      .then(function(response) {
-        const view = response.data.Response.View;
-        console.log(view);
-        if (view.length > 0 && view[0].Result.length > 0) {
-          const result = view[0].Result[0];
-          if (
-            result.Relevance === 1 &&
-            result.MatchLevel === "houseNumber" &&
-            result.MatchType === "pointAddress"
-          ) {
-            dispatch({
-              type: actionTypes.VALIDATE_ADDRESS_SUCCESS
-            });
-          }
-        } else {
-          dispatch({
-            type: actionTypes.VALIDATE_ADDRESS_FAILED
-          });
-        }
-      });*/
   };
 };
 
-/*export const getOrders = (idToken, userId) => {
-  return dispatch => {
-    let items = null;
-    let cartId = null;
-    axios
+const getOrdersStart = () => {
+  return {
+    type: actionTypes.GET_ORDERS_START,
+  };
+};
+
+const getOrdersFailed = () => {
+  return {
+    type: actionTypes.GET_ORDERS_FAILED,
+  };
+};
+
+export const getOrders = (idToken, userId) => {
+  return (dispatch) => {
+    dispatch(getOrdersStart());
+    axiosDB
       .get(
         "/orders.json?auth=" +
           idToken +
@@ -144,27 +138,17 @@ export const validateAddress = addressForm => {
           userId +
           '"'
       )
-      .then(res => {
-        console.log(res);
-        let orders = {};
-        if (Object.entries(res.data).length > 0) {
-            Object.entries(res.data).map(([key, value]) => {
-
-            })
-          items = Object.values(res.data)[0].items || {};
-          cartId = Object.keys(res.data)[0];
-          else {
-            dispatch({
-              type: actionTypes.GET_CART,
-              userId: userId,
-              cartId: cartId,
-              items: items
-            });
-          }
-        } else {
-          dispatch(createCart(idToken, userId));
-        }
+      .then((res) => {
+        const orders = res.data;
+        console.log(orders);
+        dispatch({
+          type: actionTypes.GET_ORDERS_SUCCESS,
+          orders: orders,
+        });
       })
-      .catch(err => console.log(err));
+      .catch(() => {
+        dispatch(setErroredAction(actionDisplays.GET_ORDERS));
+        dispatch(getOrdersFailed());
+      });
   };
-};*/
+};

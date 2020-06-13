@@ -2,26 +2,36 @@ import React from "react";
 import "./NavigationItem.scss";
 import { Link } from "react-router-dom";
 
+const NavigationItem = (props) => {
+  let classNames = ["navigation-item__text"];
+  if (props.vertical) {
+    classNames.push("navigation-item__text--vertical");
+  }
+  let navigationItemContent = null;
 
-export const VERTICAL = "VERTICAL";
-export const HORIZONTAL = "HORIZONTAL";
+  navigationItemContent = (
+    <span className={classNames.join(" ")}>
+      <h3>{props.children}</h3>
+    </span>
+  );
 
-const NavigationItem = props => {
-
-  let className = null;
-  if(props.vertical){
-    className = "navigation-item__text navigation-item__text--vertical";
+  let navigationItem = null;
+  if (props.to) {
+    navigationItem = (
+      <Link onClick={props.onClick} to={props.to} className="navigation-item">
+        {navigationItemContent}
+      </Link>
+    );
   }
   else {
-    className = "navigation-item__text";
+    navigationItem = (
+      <span onClick={props.onClick} className="navigation-item">
+        {navigationItemContent}
+      </span>
+    );
   }
-  return (
-    <div onClick={props.onClick} className="navigation-item">
-      <Link className={className} to={props.to}>
-        <h3>{props.children}</h3>
-      </Link>
-    </div>
-  );
+
+  return navigationItem;
 };
 
 export default NavigationItem;

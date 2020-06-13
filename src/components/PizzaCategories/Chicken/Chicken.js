@@ -16,6 +16,8 @@ import {
 import {
   CHEESE,
 } from "../../../metadata/comboMetadata";
+import axiosDB from "../../../axiosDB";
+import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Chicken component containing chicken pizza boxes */
 class Chicken extends Component {
@@ -58,4 +60,4 @@ class Chicken extends Component {
   }
 }
 
-export default Chicken;
+export default withErrorHandler(Chicken, axiosDB);

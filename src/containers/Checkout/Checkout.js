@@ -1,89 +1,143 @@
 import React, { Component } from "react";
-import "./Checkout.scss";
 import CartItems from "../../components/CartItems/CartItems";
 import {
   handleEditItem,
   handleChangeItemQuantity,
-  handleRemoveItem
+  handleRemoveItem,
 } from "../../shared/util";
-import { Link } from "react-router-dom";
 import Button, { primary } from "../../components/UI/Button/Button";
 import { connect } from "react-redux";
-import { orderSubmit } from "../../store/checkout/checkoutActions";
+import { submitOrder } from "../../store/checkout/checkoutActions";
 import { emptyCart } from "../../store/cart/cartActions";
 import { changeItemQuantity, removeItem } from "../../store/cart/cartActions";
 import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
+import { calculateSubTotal, calculateTax } from "../../shared/util";
+import { SyncLoader } from "react-spinners";
+import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
+import axiosDB from "../../axiosDB";
+import withErrorHandler from "../../hoc/withErrorHandler";
 
-
-const Checkout = props => {
-  const calculateSubTotal = () => {
-    let subTotal = 0;
-    Object.values(props.items).forEach(item => {
-      subTotal += item.pizza.price * item.quantity;
-    });
-    return subTotal.toFixed(2);
+class Checkout extends Component {
+  handleSubmitOrder = (total) => {
+    if (this.props.idToken) {
+      this.props.submitOrder(
+        total,
+        this.props.items,
+        this.props.idToken,
+        this.props.userId
+      );
+    }
   };
 
-  const calculateTax = subTotal => {
-    return (subTotal * 0.1).toFixed(2);
-  };
+  componentDidUpdate(prevProps) {
+    if (prevProps.submittingOrder && !this.props.submittingOrder && !this.props.submitOrderError) {
+      this.props.history.push({ pathname: "/", fromCheckout: "true" });
+      this.props.emptyCart(this.props.userId);
+    }
+  }
 
-  const subTotal = calculateSubTotal();
-  const tax = calculateTax(subTotal);
-  const total = (+subTotal + +tax).toFixed(2);
+  render() {
+    const subTotal = calculateSubTotal(this.props.items);
+    const tax = calculateTax(subTotal);
+    const total = (+subTotal + +tax).toFixed(2);
+    let deliveryAddress = null;
+    if (this.props.deliveryAddress) {
+      deliveryAddress = (
+        <DeliveryAddress deliveryAddress={this.props.deliveryAddress} />
+      );
+    }
 
-  const handleOrderSubmit = () => {
-      if(props.idToken){
-        props.orderSubmit(props.items, props.idToken, props.userId);
-      }
-      props.emptyCart(props.userId);
-  };
+    let submitOrder = null;
+    if (this.props.submittingOrder) {
+      submitOrder = (
+        <Button type={primary}>
+          <SyncLoader color="white" />
+        </Button>
+      );
+    } else {
+      submitOrder = (
+        <Button onClick={() => this.handleSubmitOrder(total)} type={primary}>
+          <span>Place Order</span>
+        </Button>
+      );
+    }
 
-  return (
-    <div className="order-summary">
-      <h1 className="order-summary__title">Order Summary</h1>
-      <CartItems
-          handleEditItem={(pizza, quantity, itemId) => handleEditItem(props, pizza, quantity, itemId)}
-          handleRemoveItem={(itemId, pizza) => handleRemoveItem(props, itemId, pizza)}
-          handleChangeItemQuantity={(event, itemId) =>
-            handleChangeItemQuantity(props, itemId, event.target.value)
-          }
-          checkout
-          items={props.items}
-        />
-      <div className="order-summary__totals-container">
-        <div className="order-summary__totals">
-          <div className="order-summary__total-line-items">
-            <div className="order-summary__total-line-item">
-              <h3>Subtotal:</h3> <h3>${subTotal}</h3>
-            </div>
-            <div className="order-summary__total-line-item">
-              <span>Tax:</span> <span>${tax}</span>
-            </div>
-            <div className="order-summary__total-line-item">
-              <span>Total:</span> <span>${total}</span>
+    let cart = null;
+    if (this.props.loading) {
+      cart = (
+        <div className="item-list__empty">
+          <SyncLoader />
+        </div>
+      );
+    } else if (Object.keys(this.props.items).length > 0) {
+      cart = (
+        <React.Fragment>
+          <CartItems
+            handleEditItem={(pizza, quantity, itemId) =>
+              handleEditItem(this.props, pizza, quantity, itemId)
+            }
+            handleRemoveItem={(itemId, pizza) =>
+              handleRemoveItem(this.props, itemId, pizza)
+            }
+            handleChangeItemQuantity={(event, itemId) =>
+              handleChangeItemQuantity(this.props, itemId, event.target.value)
+            }
+            checkout
+            items={this.props.items}
+          />
+          <div className="item-list__bottom">
+            {deliveryAddress}
+            <div className="totals">
+              <div className="totals__line-items">
+                <div className="totals__line-item">
+                  <h3>Subtotal:</h3> <h3>${subTotal}</h3>
+                </div>
+                <div className="totals__line-item">
+                  <h3>Tax:</h3> <h3>${tax}</h3>
+                </div>
+                <div className="totals__line-item">
+                  <h3>Total:</h3> <h3>${total}</h3>
+                </div>
+              </div>
+
+              {submitOrder}
             </div>
           </div>
-          <Link
-            to={{
-              pathname: "/thank-you",
-              checkout: "true"
-            }}
-          >
-            <Button onClick={handleOrderSubmit} type={primary}>
-              <span>Place Order</span>
-            </Button>
-          </Link>
+        </React.Fragment>
+      );
+    } else {
+      cart = (
+        <div className="item-list__empty">
+          <h2>Your cart is empty!</h2>
+        </div>
+      );
+    }
+
+    return (
+      <div className="item-list-container">
+        <div className="item-list">
+          <h1 className="item-list__title">Order Summary</h1>
+          {cart}
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   items: state.cart.items,
   idToken: state.auth.idToken,
-  userId: state.auth.userId
+  userId: state.auth.userId,
+  loadingCart: state.cart.loadingCart,
+  submittingOrder: state.checkout.submittingOrder,
+  deliveryAddress: state.checkout.deliveryAddress,
+  submitOrderError: state.checkout.submitOrderError
 });
 
-export default connect(mapStateToProps, { orderSubmit, emptyCart, removeItem, initializePizzaBuilder, changeItemQuantity })(Checkout);
+export default connect(mapStateToProps, {
+  submitOrder,
+  emptyCart,
+  removeItem,
+  initializePizzaBuilder,
+  changeItemQuantity,
+})(withErrorHandler(Checkout, axiosDB));

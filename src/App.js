@@ -10,12 +10,14 @@ import { Route, Switch } from "react-router-dom";
 import Cart from "./containers/Cart/Cart";
 import SignIn from "./containers/Auth/SignIn/SignIn";
 import SignOut from "./containers/Auth/SignOut/SignOut";
+import SignUp from "./containers/Auth/SignUp/SignUp";
 import { checkAuthentication } from "./store/auth/authActions";
 import { connect } from "react-redux";
 import Guest from "./containers/Auth/Guest/Guest";
 import OrderType from "./containers/OrderType/OrderType";
 import Checkout from "./containers/Checkout/Checkout";
 import Sidebar from "./containers/Sidebar/Sidebar";
+import Orders from "./containers/Orders/Orders";
 
 class App extends Component {
 
@@ -34,6 +36,8 @@ class App extends Component {
           <Route path="/checkout/order-type" component={OrderType} />
           <Route path="/checkout/guest" component={Guest} />
           <Route path="/signin" component={SignIn} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/my-orders" component={Orders} />
           <Route path="/signout" component={SignOut} />
           <Route path="/cart" component={Cart} />
           <Route path="/" exact component={Home} />

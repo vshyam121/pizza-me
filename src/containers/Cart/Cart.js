@@ -1,10 +1,8 @@
 import React from "react";
-import "./Cart.scss";
 import { connect } from "react-redux";
 import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
 import { changeItemQuantity, removeItem } from "../../store/cart/cartActions";
 import CartItems from "../../components/CartItems/CartItems";
-import CartItem from "./CartItem/CartItem";
 import Button, { primary } from "../../components/UI/Button/Button";
 import { Link } from "react-router-dom";
 import {
@@ -13,22 +11,17 @@ import {
   handleRemoveItem,
 } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
+import { calculateSubTotal } from "../../shared/util";
+import axiosDB from "../../axiosDB";
+import withErrorHandler from "../../hoc/withErrorHandler";
 
 const Cart = (props) => {
-  const calculateSubTotal = () => {
-    let subTotal = 0;
-    Object.values(props.items).forEach((item) => {
-      subTotal += item.pizza.price * item.quantity;
-    });
-    return subTotal.toFixed(2);
-  };
-
-  const subTotal = calculateSubTotal();
+  const subTotal = calculateSubTotal(props.items);
 
   let cart = null;
   if (props.loading) {
     cart = (
-      <div className="cart__empty">
+      <div className="item-list__empty">
         <SyncLoader />
       </div>
     );
@@ -47,10 +40,10 @@ const Cart = (props) => {
           }
           items={props.items}
         />
-        <div className="cart__totals-container">
-          <div className="cart__totals">
-            <div className="cart__total-line-items">
-              <div className="cart__total-line-item">
+        <div className="item-list__bottom">
+          <div className="totals">
+            <div className="totals__line-items">
+              <div className="totals__line-item">
                 <h3>Subtotal:</h3> <h3>${subTotal}</h3>
               </div>
             </div>
@@ -60,7 +53,6 @@ const Cart = (props) => {
                 pathname: props.isAuthenticated
                   ? "/checkout/order-type"
                   : "/signin",
-                checkout: "true",
               }}
             >
               <Button type={primary}>
@@ -73,16 +65,16 @@ const Cart = (props) => {
     );
   } else {
     cart = (
-      <div className="cart__empty">
+      <div className="item-list__empty">
         <h2>Your cart is empty!</h2>
       </div>
     );
   }
 
   return (
-    <div className="cart-container">
-      <div className="cart">
-        <h1 className="cart__title">Shopping Cart</h1>
+    <div className="item-list-container">
+      <div className="item-list">
+        <h1 className="item-list__title">Shopping Cart</h1>
         {cart}
       </div>
     </div>
@@ -101,4 +93,4 @@ export default connect(mapStateToProps, {
   initializePizzaBuilder,
   changeItemQuantity,
   removeItem,
-})(Cart);
+})(withErrorHandler(Cart, axiosDB));

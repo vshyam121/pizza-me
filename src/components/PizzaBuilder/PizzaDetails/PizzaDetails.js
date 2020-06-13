@@ -1,23 +1,9 @@
 import React, { Component } from "react";
 import Dropdown from "../../UI/Dropdown/Dropdown";
 import Button, { primary } from "../../UI/Button/Button";
-import { Link } from "react-router-dom";
-import PizzaDescription from "../PizzaDescription/PizzaDescription";
+import PizzaDescription from "../../PizzaDescription/PizzaDescription";
 import { smallDropDown } from "../../UI/Dropdown/Dropdown";
 import "./PizzaDetails.scss";
-import {
-  SIZE,
-  CRUST,
-  MEATS,
-  VEGGIES,
-  COMBO_NAME
-} from "../../../metadata/pizzaProperties";
-import { COMBO, toppingMapping } from "../../../metadata/comboMetadata";
-import {
-  sizePriceMapping,
-  crustPriceMapping,
-  toppingPrice
-} from "../../../metadata/priceMappings";
 import { calculatePrice } from "../../../shared/util";
 
 class PizzaDetails extends Component {
@@ -37,7 +23,7 @@ class PizzaDetails extends Component {
       save = (
         <Button
           type={primary}
-          onClick={() => this.props.saveToCart(price, this.state.quantity)}
+          onClick={() => this.props.saveToCart(this.state.quantity)}
         >
           Save Changes
         </Button>
@@ -46,7 +32,7 @@ class PizzaDetails extends Component {
       save = (
         <Button
           type={primary}
-          onClick={() => this.props.addToCart(price, this.state.quantity)}
+          onClick={() => this.props.addToCart(this.state.quantity)}
         >
           Add to Cart
         </Button>

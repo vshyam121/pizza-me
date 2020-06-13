@@ -5,48 +5,80 @@ const initialState = {
   orders: {},
   validatingAddress: false,
   addressValid: false,
-  addressValidationError: null
+  addressValidationError: null,
+  deliveryAddress: null,
+  gettingOrders: false,
+  submittingOrder: false,
+  submitOrderError: false,
+  getOrdersError: false
 };
 
 const checkoutReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.STORE_USER_INFO:
+    case actionTypes.SUBMIT_ORDER_START:
       return {
         ...state,
-        userInfo: action.userInfo
+        submittingOrder: true,
+        submitOrderError: false
       };
     case actionTypes.SUBMIT_ORDER:
       const orders = { ...state.orders, [action.orderId]: action.order };
       return {
         ...state,
-        orders: orders
+        orders: orders,
+        submittingOrder: false,
+      };
+    case actionTypes.SUBMIT_ORDER_FAILED:
+      return {
+        ...state,
+        submittingOrder: false,
+        submitOrderError: true
+      };
+    case actionTypes.GET_ORDERS_SUCCESS:
+      return {
+        ...state,
+        gettingOrders: false,
+        orders: action.orders,
+      };
+    case actionTypes.GET_ORDERS_START:
+      return {
+        ...state,
+        gettingOrders: true,
+        getOrdersError: false
+      };
+    case actionTypes.GET_ORDERS_FAILED:
+      return {
+        ...state,
+        gettingOrders: false,
+        getOrdersError: true
       };
     case actionTypes.VALIDATE_ADDRESS_SUCCESS:
       return {
         ...state,
         addressValid: true,
         addressValidationError: null,
-        validatingAddress: false
+        validatingAddress: false,
+        deliveryAddress: action.deliveryAddress,
       };
     case actionTypes.VALIDATE_ADDRESS_FAILED:
       return {
         ...state,
         addressValid: false,
         addressValidationError: action.error,
-        validatingAddress: false
+        validatingAddress: false,
       };
     case actionTypes.VALIDATE_ADDRESS_START:
       return {
         ...state,
         validatingAddress: true,
-        addressValidationError: null
+        addressValidationError: null,
       };
     case actionTypes.VALIDATE_ADDRESS_RESET:
       return {
         ...state,
         validatingAddress: false,
         addressValid: false,
-        addressValidationError: false
+        addressValidationError: false,
       };
     default:
       return state;

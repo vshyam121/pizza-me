@@ -4,11 +4,6 @@ import Dropdown from "../../components/UI/Dropdown/Dropdown";
 import { smallDropDown } from "../../components/UI/Dropdown/Dropdown";
 import Button from "../../components/UI/Button/Button";
 import {
-  crustPriceMapping,
-  sizePriceMapping,
-  toppingPrice,
-} from "../../metadata/priceMappings";
-import {
   HAND_TOSSED,
   crustMetadataMapping,
 } from "../../metadata/crustMetadata";
@@ -26,6 +21,8 @@ import {
 } from "../../metadata/pizzaProperties";
 import { primary, secondary } from "../../components/UI/Button/Button";
 import { calculatePrice } from "../../shared/util";
+import withErrorHandler from "../../hoc/withErrorHandler";
+import axiosDB from "../../axiosDB";
 
 /* UI Box that holds an pizza and lets user customize various pizza properties.
    Can add pizza to order and also build your own pizza from here. 
@@ -43,7 +40,6 @@ class PizzaBox extends Component {
   getInitialState = () => {
     let initialState = {
       pizza: {
-        //price: this.calculatePrice(LARGE, HAND_TOSSED),
         priceType: this.props.priceType,
         [COMBO_NAME]: this.props.pizzaType,
         [CRUST]: HAND_TOSSED,
@@ -71,19 +67,12 @@ class PizzaBox extends Component {
 
   handleChangeQuantity = (event) => {
     event.persist();
-    /*  const singlePrice = this.calculatePrice(
-      this.state.pizza.size,
-      this.getCrust(this.state.pizza.crust)
-    ); */
     this.setState({
-      /*pizza: {
-        ...this.state.pizza,
-        //price: singlePrice
-      },*/
       quantity: event.target.value,
     });
   };
 
+  /* get only crust value from crust display value which includes price */
   getCrust = (crustDisplayValue) => {
     const regexp = /(.*) (\+\$.*)/g;
     const match = regexp.exec(crustDisplayValue);
@@ -93,60 +82,34 @@ class PizzaBox extends Component {
   handleChangeCrust = (event) => {
     event.persist();
 
-    /* const singlePrice = this.calculatePrice(
-      this.state.pizza[SIZE],
-      this.getCrust(event.target.value)
-    ); */
     this.setState({
       pizza: {
         ...this.state.pizza,
         [CRUST]: event.target.value,
-        //price: singlePrice
       },
     });
   };
 
   handleChangeSize = (event) => {
     event.persist();
-    /* const singlePrice = this.calculatePrice(
-      event.target.value,
-      this.getCrust(this.state.pizza[CRUST])
-    );*/
     this.setState({
       pizza: {
         ...this.state.pizza,
         [SIZE]: event.target.value,
-        //price: singlePrice
       },
     });
   };
 
-  /*calculatePrice = (size, crust) => {
-    const basePrice =
-      sizePriceMapping[size][this.props.priceType] +
-      crustPriceMapping[size][crust];
-
-    let meatsPrice = 0;
-    let veggiesPrice = 0;
-    if (this.props.priceType !== COMBO) {
-      const meats = toppingMapping[this.props.pizzaType][MEATS];
-      const veggies = toppingMapping[this.props.pizzaType][VEGGIES];
-      meatsPrice = meats ? meats.length * toppingPrice : 0;
-      veggiesPrice = veggies ? veggies.length * toppingPrice : 0;
-    }
-
-    return (basePrice + meatsPrice + veggiesPrice).toFixed(2);
-  };*/
-
-  handleClickBuild = (price) => {
-    let pizza = { ...this.state.pizza, price: price };
+  handleClickBuild = () => {
+    let pizza = { ...this.state.pizza};
     pizza.crust = this.getCrust(pizza.crust);
     this.props.initializePizzaBuilder(pizza, this.state.quantity);
     this.resetState();
   };
 
-  handleAddToCart = (price) => {
-    let pizza = { ...this.state.pizza, price: price };
+  handleAddToCart = () => {
+    let pizza = { ...this.state.pizza};
+    pizza.crust = this.getCrust(pizza.crust);
     this.props.addToCart(pizza, this.state.quantity);
     this.resetState();
   };
@@ -161,7 +124,9 @@ class PizzaBox extends Component {
     const sizeOptions = sizes;
     const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    const price = calculatePrice(this.state.pizza);
+    let pizza = { ...this.state.pizza};
+    pizza.crust = this.getCrust(pizza.crust);
+    const price = calculatePrice(pizza);
 
     let pizzaAdd = null;
     let pizzaName = null;
@@ -170,7 +135,7 @@ class PizzaBox extends Component {
 
     if (this.props.buildPizza) {
       pizzaAdd = (
-        <Button type={primary} onClick={this.handleClickBuild}>
+        <Button type={primary} onClick={() => this.handleClickBuild(price)}>
           Get Started
         </Button>
       );
@@ -187,19 +152,22 @@ class PizzaBox extends Component {
               value={this.state.quantity}
             />
           </div>
-          <Button type={primary} onClick={() => this.handleAddToCart(price)}>
+          <Button type={primary} onClick={() => this.handleAddToCart()}>
             Add to Order
           </Button>
         </React.Fragment>
       );
       pizzaName = this.props.pizzaType;
       customize = (
-        <Button type={secondary} onClick={() => this.handleClickBuild(price)}>
+        <Button type={secondary} onClick={() => this.handleClickBuild()}>
           Customize
         </Button>
       );
       customizeSecondary = (
-        <span className="pizza-box__customize link" onClick={() => this.handleClickBuild(price)}>
+        <span
+          className="pizza-box__customize link"
+          onClick={() => this.handleClickBuild(price)}
+        >
           Customize
         </span>
       );

@@ -11,3 +11,10 @@ export const closeSidebar = () => {
     type: actionTypes.CLOSE_SIDEBAR
   }
 }
+
+export const setErroredAction = (erroredAction) => {
+  return {
+    type: actionTypes.SET_ERRORED_ACTION,
+    erroredAction: erroredAction
+  };
+};

@@ -1,0 +1,15 @@
+.totals {
+  margin-left: auto;
+  width: 20rem;
+
+  &__line-items {
+    margin-bottom: 4rem;
+  }
+
+  &__line-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+}

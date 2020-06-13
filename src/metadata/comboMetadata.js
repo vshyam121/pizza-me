@@ -24,7 +24,7 @@ import {
   REGULAR_TOPPING,
   WHOLE,
   SAUCE,
-  CRUST_FLAVOR
+  CRUST_FLAVOR,
 } from "./pizzaProperties";
 import { EXTRA_CHEESE } from "./cheeseMetadata";
 import { BUFFALO, BARBECUE } from "./sauceMetadata";
@@ -48,9 +48,13 @@ export const REGULAR = "Regular";
 export const COMBO = "Combo";
 
 export const toppingMapping = {
-  [CHEESE]: {},
+  [CHEESE]: {
+    [MEATS]: {},
+    [VEGGIES]: {},
+  },
   [PEPPERONI_PIZZA]: {
     [MEATS]: { [PEPPERONI]: { amount: REGULAR_TOPPING, portion: WHOLE } },
+    [VEGGIES]: {},
   },
   [MEAT_LOVER]: {
     [MEATS]: {
@@ -61,9 +65,11 @@ export const toppingMapping = {
       [ITALIAN_SAUSAGE]: { amount: REGULAR_TOPPING, portion: WHOLE },
       [BACON]: { amount: REGULAR_TOPPING, portion: WHOLE },
     },
+    [VEGGIES]: {},
   },
   [PEPPERONI_LOVER]: {
     [MEATS]: { [PEPPERONI]: { amount: EXTRA_TOPPING, portion: WHOLE } },
+    [VEGGIES]: {},
   },
   [SUPREME]: {
     [MEATS]: {
@@ -93,6 +99,7 @@ export const toppingMapping = {
     },
   },
   [VEGGIE_LOVER]: {
+    [MEATS]: {},
     [VEGGIES]: {
       [OLIVES]: { amount: REGULAR_TOPPING, portion: WHOLE },
       [ROMA_TOMATOES]: { amount: REGULAR_TOPPING, portion: WHOLE },
@@ -103,6 +110,8 @@ export const toppingMapping = {
   },
   [ULTIMATE_CHEESE_LOVER]: {
     [CHEESE_AMOUNT]: EXTRA_CHEESE,
+    [MEATS]: {},
+    [VEGGIES]: {},
   },
   [BUFFALO_CHICKEN]: {
     [MEATS]: { [GRILLED_CHICKEN]: { amount: REGULAR_TOPPING, portion: WHOLE } },
@@ -110,7 +119,7 @@ export const toppingMapping = {
       [BANANA_PEPPERS]: { amount: REGULAR_TOPPING, portion: WHOLE },
       [RED_ONIONS]: { amount: REGULAR_TOPPING, portion: WHOLE },
     },
-    [SAUCE]: [BUFFALO]
+    [SAUCE]: [BUFFALO],
   },
   [BBQ_CHICKEN]: {
     [MEATS]: {
@@ -118,7 +127,7 @@ export const toppingMapping = {
       [GRILLED_CHICKEN]: { amount: REGULAR_TOPPING, portion: WHOLE },
     },
     [VEGGIES]: { [RED_ONIONS]: { amount: REGULAR_TOPPING, portion: WHOLE } },
-    [SAUCE]: BARBECUE
+    [SAUCE]: BARBECUE,
   },
   [HAWAIIAN_CHICKEN]: {
     [MEATS]: {
@@ -136,6 +145,6 @@ export const toppingMapping = {
       [GRILLED_CHICKEN]: { amount: REGULAR_TOPPING, portion: WHOLE },
     },
     [VEGGIES]: { [ROMA_TOMATOES]: { amount: REGULAR_TOPPING, portion: WHOLE } },
-    [CRUST_FLAVOR]: TOASTED_PARMESAN
+    [CRUST_FLAVOR]: TOASTED_PARMESAN,
   },
 };

@@ -1,5 +1,5 @@
-@import "../../../sass/abstracts/variables";
-@import "../../../sass/abstracts/mixins";
+@import "../../sass/base/variables";
+@import "../../sass/abstracts/mixins";
 
 .pizza-preview {
     position: relative;
@@ -11,19 +11,12 @@
       width: 29rem;
       height: 29rem;
     }
-   /* @media only screen and (max-width: 970px) {
-      width: 29rem;
-      height: 29rem;
-    }*/
 
     @include respond(tab-port){
       display: none;
     }
-    /*@media only screen and (max-width: 830px) {
-      display: none;
-    }*/
 
-  &--cart {
+  &--small {
     position: relative;
     width: 18rem;
     height: 18rem;

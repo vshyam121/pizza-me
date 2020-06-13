@@ -12,6 +12,8 @@ import {
   SUPER_SUPREME,
   PEPPERONI_LOVER,
 } from "../../../metadata/comboMetadata";
+import axiosDB from "../../../axiosDB";
+import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Meats component containing meat pizza boxes */
 class Meats extends Component {
@@ -52,4 +54,4 @@ class Meats extends Component {
   }
 }
 
-export default Meats;
+export default withErrorHandler(Meats, axiosDB);

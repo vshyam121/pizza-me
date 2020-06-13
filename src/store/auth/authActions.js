@@ -1,16 +1,23 @@
 import * as actionTypes from "./authActionTypes";
-import { clearCart, getCart, getCartFromLocalStorage } from "../cart/cartActions";
+import {
+  clearCart,
+  getCart,
+  getCartFromLocalStorage,
+} from "../cart/cartActions";
+import { getOrders } from "../checkout/checkoutActions";
 import axios from "axios";
-
+import { secureStorage } from "../../shared/secureStorage";
+import { setErroredAction } from "../ui/uiActions";
+import * as actionDisplays from "../ui/actionDisplays";
 
 export const authReset = () => {
   return {
-    type: actionTypes.AUTH_RESET
-  }
-}
+    type: actionTypes.AUTH_RESET,
+  };
+};
 export const authStart = () => {
   return {
-    type: actionTypes.AUTH_START
+    type: actionTypes.AUTH_START,
   };
 };
 
@@ -18,31 +25,31 @@ export const authSuccess = (idToken, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     idToken: idToken,
-    userId: userId
+    userId: userId,
   };
 };
 
-export const authFailed = error => {
+export const authFailed = (error) => {
   return {
     type: actionTypes.AUTH_FAILED,
-    error: error
+    error: error,
   };
 };
 
 export const signOut = () => {
-  return dispatch => {
+  return (dispatch) => {
     localStorage.removeItem("idToken");
     localStorage.removeItem("expirationTime");
     localStorage.removeItem("userId");
     dispatch(clearCart());
     dispatch({
-      type: actionTypes.AUTH_SIGNOUT
+      type: actionTypes.AUTH_SIGNOUT,
     });
   };
 };
 
-export const checkAuthTimeout = expirationTime => {
-  return dispatch => {
+export const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {
     setTimeout(() => {
       dispatch(signOut());
     }, expirationTime * 1000);
@@ -50,12 +57,12 @@ export const checkAuthTimeout = expirationTime => {
 };
 
 export const signIn = (email, password) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(authStart());
     const authData = {
       email: email,
       password: password,
-      returnSecureToken: true
+      returnSecureToken: true,
     };
     axios
       .post(
@@ -63,7 +70,7 @@ export const signIn = (email, password) => {
           process.env.REACT_APP_API_KEY,
         authData
       )
-      .then(res => {
+      .then((res) => {
         console.log(res);
         localStorage.setItem("idToken", res.data.idToken);
         localStorage.setItem(
@@ -74,21 +81,22 @@ export const signIn = (email, password) => {
         dispatch(authSuccess(res.data.idToken, res.data.localId));
         dispatch(checkAuthTimeout(res.data.expiresIn));
         dispatch(getCart(res.data.idToken, res.data.localId));
+        dispatch(getOrders(res.data.idToken, res.data.localId));
       })
-      .catch(err => {
-        console.log(err.response.data);
+      .catch((err) => {
+        dispatch(setErroredAction(actionDisplays.SIGN_IN));
         dispatch(authFailed(err.response.data.error));
       });
   };
 };
 
 export const signUp = (email, password) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(authStart());
     const authData = {
       email: email,
       password: password,
-      returnSecureToken: true
+      returnSecureToken: true,
     };
     axios
       .post(
@@ -96,23 +104,28 @@ export const signUp = (email, password) => {
           process.env.REACT_APP_API_KEY,
         authData
       )
-      .then(res => {
+      .then((res) => {
         console.log(res);
         dispatch(authSuccess(res));
       })
-      .catch(err => {
-        console.log(err);
+      .catch((err) => {
+        dispatch(setErroredAction(actionDisplays.SIGN_UP));
         dispatch(authFailed(err.response.data.error));
       });
   };
 };
 
 export const checkAuthentication = () => {
-  return dispatch => {
-    const localCart = localStorage.getItem("cart");
-    if(!localCart){
-      let emptyCart = {items: {}, quantity: 0};
-      localStorage.setItem("cart", JSON.stringify(emptyCart));
+  return (dispatch) => {
+    let localCart = null;
+    try {
+      localCart = secureStorage.getItem("cart");
+    } catch (error) {
+      console.log(error);
+    }
+    if (!localCart) {
+      let emptyCart = { items: {}, quantity: 0 };
+      secureStorage.setItem("cart", emptyCart);
     }
     const idToken = localStorage.getItem("idToken");
     if (idToken) {
@@ -125,8 +138,8 @@ export const checkAuthentication = () => {
         )
       );
       dispatch(getCart(idToken, userId));
-    }
-    else {
+      dispatch(getOrders(idToken, userId));
+    } else {
       dispatch(getCartFromLocalStorage());
     }
   };

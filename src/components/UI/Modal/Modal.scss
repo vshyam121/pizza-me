@@ -1,4 +1,4 @@
-@import '../../../sass/abstracts/variables';
+@import '../../../sass/base/variables';
 @import '../../../sass/abstracts/mixins';
 
 .modal {
@@ -12,6 +12,13 @@
     transition: all .3s ease-out;
     opacity: 1;
     position: relative;
+
+    &--error {
+        width: 50rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 
     @include respond(phone){
         padding:3rem 1rem;

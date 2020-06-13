@@ -9,10 +9,9 @@ const initialState = {
   itemHashMap: {},
   itemAdded: false,
   loadingCart: false,
-  errorCart: null,
   loadingCartItem: false,
-  errorCartItem: null,
-  itemBeingRemoved: null
+  itemBeingChanged: null,
+  erroredAction: null,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -25,7 +24,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cartId: action.cartId,
-        userId: action.userId
+        userId: action.userId,
       };
     case actionTypes.ADD_TO_CART:
       items = { ...state.items, [action.itemId]: action.item };
@@ -38,19 +37,18 @@ const cartReducer = (state = initialState, action) => {
         items: items,
         quantity: quantity,
         itemHashMap: itemHashMap,
-        itemAdded: true
+        itemAdded: action.item.quantity,
       };
     case actionTypes.GET_CART_START:
       return {
         ...state,
         loadingCart: true,
-        errorCart: null
+        errorCart: null,
       };
     case actionTypes.GET_CART_FAILED:
       return {
         ...state,
         loadingCart: false,
-        errorCart: action.error
       };
     case actionTypes.GET_CART_SUCCESS:
       return {
@@ -60,7 +58,7 @@ const cartReducer = (state = initialState, action) => {
         items: action.items,
         quantity: action.quantity,
         itemHashMap: action.itemHashMap,
-        loadingCart: false
+        loadingCart: false,
       };
     case actionTypes.CLEAR_CART:
       return {
@@ -70,14 +68,14 @@ const cartReducer = (state = initialState, action) => {
         items: {},
         quantity: 0,
         itemHashMap: {},
-        itemAdded: false
+        itemAdded: null,
       };
     case actionTypes.SET_CART_ITEMS:
       return {
         ...state,
         items: action.items,
         quantity: action.quantity,
-        itemHashMap: action.itemHashMap
+        itemHashMap: action.itemHashMap,
       };
     case actionTypes.CHANGE_ITEM_QUANTITY:
       items = { ...state.items };
@@ -85,27 +83,26 @@ const cartReducer = (state = initialState, action) => {
       items[action.itemId].quantity = action.quantity;
       quantity += parseInt(action.quantity);
       if (state.quantity < quantity) {
-        itemAdded = true;
+        itemAdded = quantity - state.quantity;
       }
       return {
         ...state,
         items: items,
         quantity: quantity,
-        itemAdded: itemAdded
+        itemAdded: itemAdded,
+        loadingCartItem: false
       };
-    case actionTypes.REMOVE_ITEM_START:
+    case actionTypes.CHANGE_CART_ITEM_START:
       return {
         ...state,
         loadingCartItem: true,
-        errorCartItem: null,
-        itemBeingRemoved: action.itemBeingRemoved
+        itemBeingChanged: action.itemBeingChanged,
       };
-    case actionTypes.REMOVE_ITEM_FAILED:
+    case actionTypes.CHANGE_CART_ITEM_FAILED:
       return {
         ...state,
         loadingCartItem: false,
-        errorCartItem: action.error,
-        itemBeingRemoved: null
+        itemBeingChanged: null,
       };
     case actionTypes.REMOVE_ITEM_SUCCESS:
       items = { ...state.items };
@@ -118,9 +115,9 @@ const cartReducer = (state = initialState, action) => {
         items: items,
         quantity: quantity,
         itemHashMap: itemHashMap,
-        itemAdded: false,
+        itemAdded: null,
         loadingCartItem: false,
-        itemBeingRemoved: null
+        itemBeingChanged: null,
       };
     case actionTypes.SAVE_TO_CART:
       items = { ...state.items };
@@ -131,7 +128,8 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: items,
         quantity: quantity,
-        itemAdded: false
+        itemAdded: null,
+        loadingCartItem: false
       };
     case actionTypes.EMPTY_CART:
       items = {};
@@ -139,7 +137,8 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: items,
         quantity: 0,
-        itemAdded: false
+        itemAdded: null,
+        itemHashMap: {}
       };
     default:
       return state;

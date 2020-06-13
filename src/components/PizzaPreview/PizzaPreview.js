@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Cheese from "../../../assets/images/cheese_mozz_ML.webp";
+import Cheese from "../../assets/images/cheese_mozz_ML.webp";
 import "./PizzaPreview.scss";
-import { crustMetadataMapping } from "../../../metadata/crustMetadata";
-import { meatImageMapping } from "../../../metadata/meatMetadata";
-import { veggiesImageMapping } from "../../../metadata/veggiesMetadata";
-import { crustFlavorImageMapping } from "../../../metadata/crustFlavorMetadata";
+import { crustMetadataMapping } from "../../metadata/crustMetadata";
+import { meatImageMapping } from "../../metadata/meatMetadata";
+import { veggiesImageMapping } from "../../metadata/veggiesMetadata";
+import { crustFlavorImageMapping } from "../../metadata/crustFlavorMetadata";
 import {
   CRUST,
   CRUST_FLAVOR,
@@ -13,13 +13,13 @@ import {
   EXTRA_TOPPING,
   LEFT_HALF,
   RIGHT_HALF
-} from "../../../metadata/pizzaProperties";
-import { NO_CRUST_FLAVOR } from "../../../metadata/crustFlavorMetadata";
+} from "../../metadata/pizzaProperties";
+import { NO_CRUST_FLAVOR } from "../../metadata/crustFlavorMetadata";
 
 class PizzaPreview extends Component {
   render() {
     return (
-        <div className={this.props.inCart ? "pizza-preview--cart" : "pizza-preview"}>
+        <div className={this.props.small ? "pizza-preview--small" : "pizza-preview"}>
           <img
             className="pizza-preview__property"
             src={crustMetadataMapping[this.props.pizza[CRUST]].preview}

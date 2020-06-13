@@ -1,57 +1,5 @@
-@import "../../../sass/abstracts/variables";
+@import "../../../sass/base/variables";
 
-
-.form-component__guest {
+.signup {
     width: 50%;
 }
-/*.form-container {
-    display: flex;
-    justify-content: center;
-    min-width: 25rem;
-}
-
-.form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    //height: 25rem;
-
-    &__submit {
-        margin: 2rem;
-        width: 50%;
-    }
-
-    &__error {
-        color: red;
-        margin-bottom: 2rem;
-    }
-}
-
-.spinner {
-    height: 25rem;
-    display: flex;
-    justify-content: center;
-    align-items:center;
-}
-
-.form-component {
-    width: 40rem;
-    padding: 2rem;
-    border: 1px solid $border-color;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 1rem;
-
-    &__title {
-        margin-bottom: 2rem;
-    }
-
-    &__guest {
-        width: 50%;
-    }
-}*/

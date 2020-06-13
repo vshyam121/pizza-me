@@ -7,10 +7,10 @@ import AddressForm from "../AddressForm/AddressForm";
 
 class OrderType extends Component {
   state = {
-    isDelivery: false
+    isDelivery: false,
   };
 
-  handleClick = event => {
+  handleClick = (event) => {
     if (event.currentTarget.dataset.type === "Delivery") {
       this.setState({ isDelivery: true });
     } else {
@@ -18,36 +18,43 @@ class OrderType extends Component {
     }
   };
 
-  handleSubmit = event => {};
-
   render() {
-    if (!this.props.isAuthenticated && !this.props.userInfo) {
+    if (!this.props.isAuthenticated) {
       return (
         <Redirect
           to={{
             pathname: "/signin",
-            checkout: "true"
+            fromCheckout: "true",
           }}
         />
       );
     }
-   
 
     let form = null;
 
     if (this.state.isDelivery) {
-      form = <AddressForm />
+      form = <AddressForm />;
     }
+
+    let orderTypeClassNames = ["order-type"];
+    let deliveryClassNames = ["order-type__type"];
+    let iconClassNames = ["order-type__icon"];
+    if (this.state.isDelivery) {
+      orderTypeClassNames.push("order-type--extended");
+      deliveryClassNames.push("order-type__type--selected");
+      iconClassNames.push("order-type__icon--selected");
+    }
+
     return (
       <div className="form-container">
         <div className="form-component">
-          <div className="order-type">
+          <div className={orderTypeClassNames.join(" ")}>
             <div
               onClick={this.handleClick}
               data-type="Delivery"
-              className="order-type__type"
+              className={deliveryClassNames.join(" ")}
             >
-              <div className="order-type__icon">
+              <div className={iconClassNames.join(" ")}>
                 <MdDirectionsCar />
               </div>
               <span className="order-type__description">Delivery</span>
@@ -70,9 +77,8 @@ class OrderType extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.idToken,
-  userInfo: state.checkout.userInfo
 });
 
 export default connect(mapStateToProps, null)(OrderType);

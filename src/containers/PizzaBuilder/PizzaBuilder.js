@@ -67,16 +67,14 @@ class PizzaBuilder extends Component {
   }
 
   /* Add current pizza to cart and close pizza builder */
-  handleAddToCart = (price, quantity) => {
-    let pizza = { ...this.props.pizza, price: price };
-    this.props.addToCart(pizza, quantity);
+  handleAddToCart = (quantity) => {
+    this.props.addToCart(this.props.pizza, quantity);
     this.handleCloseBuilder();
   };
 
   /* Save current pizza to cart and close pizza builder */
-  handleSaveToCart = (price, quantity) => {
-    let pizza = { ...this.props.pizza, price: price };
-    this.props.saveToCart(pizza, quantity, this.props.itemId);
+  handleSaveToCart = (quantity) => {
+    this.props.saveToCart(this.props.pizza, quantity, this.props.itemId);
     this.handleCloseBuilder();
   };
 

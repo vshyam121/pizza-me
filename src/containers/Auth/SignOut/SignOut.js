@@ -4,15 +4,20 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 class SignOut extends Component {
+  componentDidMount() {
+    this.props.signOut();
+  }
 
-    componentDidMount() {
-        this.props.signOut();
-    }
-
-    render(){
-
-    return <Redirect to="/" />
-    }
+  render() {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+          fromSignOut: "true",
+        }}
+      />
+    );
+  }
 }
 
 export default connect(null, { signOut })(SignOut);

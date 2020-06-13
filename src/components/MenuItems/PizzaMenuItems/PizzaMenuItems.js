@@ -1,6 +1,6 @@
 import React from "react";
 import "./PizzaMenuItems.scss";
-import NavigationItem from "../UI/NavigationItem/NavigationItem";
+import NavigationItem from "../../UI/NavigationItem/NavigationItem";
 
 const PizzaMenuItems = (props) => {
   return (

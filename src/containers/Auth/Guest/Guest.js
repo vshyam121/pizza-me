@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import "./Guest.scss";
 import { connect } from "react-redux";
-import { storeUserInfo } from "../../../store/checkout/checkoutActions";
 import Form from "../../Form/Form";
 import { Redirect } from "react-router-dom";
-import { handleInputChange } from "../../../shared/validation";
 
 class Guest extends Component {
   state = {
@@ -62,11 +60,11 @@ class Guest extends Component {
     formSubmitted: false
   };
 
-  handleSubmit = event => {
+ /* handleSubmit = event => {
     event.preventDefault();
     this.setState({ formSubmitted: true });
     if (this.state.formIsValid) {
-      this.props.storeUserInfo({
+      this.props.storeGuestUserInfo({
         firstName: this.state.form.firstName.value,
         lastName: this.state.form.lastName.value,
         email: this.state.form.email.value,
@@ -74,7 +72,7 @@ class Guest extends Component {
       });
       this.props.history.push("/checkout/order-type");
     }
-  };
+  }; */
 
   updateForm = stateUpdate => {
     this.setState(stateUpdate);
@@ -85,55 +83,6 @@ class Guest extends Component {
       return <Redirect to="/checkout/order-type" />;
     }
 
-    const guestForm = {
-      firstName: {
-        elementType: "input",
-        elementConfig: {
-          placeholder: "First Name"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false
-      },
-      lastName: {
-        elementType: "input",
-        elementConfig: {
-          placeholder: "Last Name"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false
-      },
-      email: {
-        elementType: "input",
-        elementConfig: {
-          type: "email",
-          placeholder: "Email"
-        },
-        value: "",
-        validation: {
-          required: true,
-          isEmail: true
-        },
-        valid: false
-      },
-      phone: {
-        elementType: "phonenumber",
-        elementConfig: {
-          placeholder: "US Phone Number"
-        },
-        value: "",
-        validation: {
-          required: true,
-          isPhoneNumber: true
-        },
-        valid: false
-      }
-    };
 
     let form = (
       <Form
@@ -158,4 +107,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.idToken
 });
 
-export default connect(mapStateToProps, { storeUserInfo })(Guest);
+export default connect(mapStateToProps, {  })(Guest);

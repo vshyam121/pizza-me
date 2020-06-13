@@ -1,10 +1,10 @@
 import React from "react";
 import "./DropdownAlert.scss";
 
-const DropdownMenuAlert = props => {
+const DropdownAlert = props => {
 
     return (
-        <div key={props.alertKey} className="dropdown-menu-alert animate-alert">
+        <div key={props.alertKey} onClick={props.onClick} className="dropdown-menu-alert">
             <div className="dropdown-menu-alert__container">
                 {props.children}
             </div>
@@ -12,4 +12,4 @@ const DropdownMenuAlert = props => {
     )
 }
 
-export default DropdownMenuAlert;
+export default React.memo(DropdownAlert);

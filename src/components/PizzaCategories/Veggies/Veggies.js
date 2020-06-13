@@ -10,6 +10,8 @@ import {
   ULTIMATE_CHEESE_LOVER,
 } from "../../../metadata/comboMetadata";
 import { CHEESE } from "../../../metadata/comboMetadata";
+import axiosDB from "../../../axiosDB";
+import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Veggies component containing veggy pizza boxes */
 class Veggies extends Component {
@@ -40,4 +42,4 @@ class Veggies extends Component {
   }
 }
 
-export default Veggies;
+export default withErrorHandler(Veggies, axiosDB);

@@ -13,9 +13,16 @@ const Modal = props => {
     }
   });
 
+  let modalClassNames = ["modal"];
+  if(props.error){
+    modalClassNames.push("modal--error");
+  }
+  if(!props.show){
+    modalClassNames.push("modal--closed");
+  }
   return (
     <Backdrop show={props.show} clicked={props.modalClosed}>
-      <div className={props.show ? "modal" : " modal modal--closed"}>
+      <div className={modalClassNames.join(" ")}>
         <MdClose className="modal__close" onClick={props.modalClosed} />
         {props.children}
       </div>

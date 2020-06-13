@@ -2,6 +2,7 @@ import * as actionTypes from "./uiActionTypes";
 
 const initialState = {
   sidebarOpen: false,
+  erroredAction: null,
 };
 
 const uiReducer = (state = initialState, action) => {
@@ -15,8 +16,13 @@ const uiReducer = (state = initialState, action) => {
     case actionTypes.CLOSE_SIDEBAR:
       return {
         ...state,
-        sidebarOpen: false
-      }
+        sidebarOpen: false,
+      };
+    case actionTypes.SET_ERRORED_ACTION:
+      return {
+        ...state,
+        erroredAction: action.erroredAction,
+      };
     default:
       return state;
   }

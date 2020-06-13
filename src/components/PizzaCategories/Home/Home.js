@@ -11,44 +11,67 @@ import {
   MEAT_LOVER,
   SUPREME,
 } from "../../../metadata/comboMetadata";
+import OrderSubmission from "../../Messages/OrderSubmissionMessage/OrderSubmissionMessage";
+import SignedOutMessage from "../../Messages/SignedOutMessage/SignedOutMessage";
+import Message from "../../UI/Message/Message";
+import axiosDB from "../../../axiosDB";
+import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Home component containing popular pizza boxes */
 class Home extends Component {
   render() {
+    let message = null;
+    if (this.props.location.fromCheckout) {
+      message = (
+        <Message>
+          <OrderSubmission />
+        </Message>
+      );
+    } else if (this.props.location.fromSignOut) {
+      message = (
+        <Message>
+          <SignedOutMessage />
+        </Message>
+      );
+    }
+
     return (
-      <div className="pizza-grid">
-        <h1 className="pizza-grid__title">Popular</h1>
-        <div className="pizza-grid__grid">
-          <PizzaBox
-            pizzaType={CHEESE}
-            priceType={REGULAR}
-            buildPizza
-            imageSrc={CheesePizzaImg}
-          />
-          <PizzaBox
-            pizzaType={CHEESE}
-            priceType={REGULAR}
-            imageSrc={CheesePizzaImg}
-          />
-          <PizzaBox
-            pizzaType={PEPPERONI_PIZZA}
-            priceType={REGULAR}
-            imageSrc={PepperoniPizzaImg}
-          />
-          <PizzaBox
-            pizzaType={MEAT_LOVER}
-            priceType={COMBO}
-            imageSrc={MeatLoversPizzaImg}
-          />
-          <PizzaBox
-            pizzaType={SUPREME}
-            priceType={COMBO}
-            imageSrc={SupremePizzaImg}
-          />
+      <React.Fragment>
+        {message}
+        <div className="pizza-grid">
+          <h1 className="pizza-grid__title">Popular</h1>
+          <div className="pizza-grid__grid">
+            <PizzaBox
+              pizzaType={CHEESE}
+              priceType={REGULAR}
+              buildPizza
+              imageSrc={CheesePizzaImg}
+            />
+            <PizzaBox
+              pizzaType={CHEESE}
+              priceType={REGULAR}
+              imageSrc={CheesePizzaImg}
+            />
+            <PizzaBox
+              pizzaType={PEPPERONI_PIZZA}
+              priceType={REGULAR}
+              imageSrc={PepperoniPizzaImg}
+            />
+            <PizzaBox
+              pizzaType={MEAT_LOVER}
+              priceType={COMBO}
+              imageSrc={MeatLoversPizzaImg}
+            />
+            <PizzaBox
+              pizzaType={SUPREME}
+              priceType={COMBO}
+              imageSrc={SupremePizzaImg}
+            />
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default Home;
+export default withErrorHandler(Home, axiosDB);

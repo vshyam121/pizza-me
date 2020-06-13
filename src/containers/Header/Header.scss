@@ -1,4 +1,4 @@
-@import "../../sass/abstracts/variables";
+@import "../../sass/base/variables";
 @import "../../sass/abstracts/mixins";
 
 .header {
@@ -73,16 +73,20 @@
         }
     }
 
-    &__cart-container {
-    }
-
     &__cart {
         position: relative;
     }
 
-    &__view-cart {
+    &__icon {
+        font-size: 3rem;
+        color: white;
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+      }
+
+    &__alert-text {
         margin-bottom: 2rem;
-        width: 75%;
     }
 
     &__checkout {
@@ -91,17 +95,19 @@
 
     &__cart-items {
         position: absolute;
-        right: -.25rem;
+        right: -.6rem;
         top: -0.25rem;
-        height: 1.5rem;
-        width: 1.5rem;
+        height: 1.7rem;
+        width: 1.7rem;
         border-radius: 100%;
         background-color: $primary-red;
         color: white;
-        font-size: 1rem;
+        font-size: 1.2rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        font-weight: bold;
+        box-shadow: 0 .1rem .1rem rgba(0, 0, 0, .5)
     }
     
 }
