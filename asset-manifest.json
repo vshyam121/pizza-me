@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/pizza-me/static/css/main.3236a0d4.chunk.css",
-    "main.js": "/pizza-me/static/js/main.1032ded1.chunk.js",
-    "main.js.map": "/pizza-me/static/js/main.1032ded1.chunk.js.map",
+    "main.js": "/pizza-me/static/js/main.ae77d35a.chunk.js",
+    "main.js.map": "/pizza-me/static/js/main.ae77d35a.chunk.js.map",
     "runtime-main.js": "/pizza-me/static/js/runtime-main.5ccde37c.js",
     "runtime-main.js.map": "/pizza-me/static/js/runtime-main.5ccde37c.js.map",
     "static/js/2.67cdfcd7.chunk.js": "/pizza-me/static/js/2.67cdfcd7.chunk.js",
     "static/js/2.67cdfcd7.chunk.js.map": "/pizza-me/static/js/2.67cdfcd7.chunk.js.map",
     "index.html": "/pizza-me/index.html",
-    "precache-manifest.e4aebfd63cffbc212b7f558954744280.js": "/pizza-me/precache-manifest.e4aebfd63cffbc212b7f558954744280.js",
+    "precache-manifest.4815942d32ef028259d467216d7f0265.js": "/pizza-me/precache-manifest.4815942d32ef028259d467216d7f0265.js",
     "service-worker.js": "/pizza-me/service-worker.js",
     "static/css/main.3236a0d4.chunk.css.map": "/pizza-me/static/css/main.3236a0d4.chunk.css.map",
     "static/js/2.67cdfcd7.chunk.js.LICENSE.txt": "/pizza-me/static/js/2.67cdfcd7.chunk.js.LICENSE.txt",
@@ -96,6 +96,6 @@
     "static/js/runtime-main.5ccde37c.js",
     "static/js/2.67cdfcd7.chunk.js",
     "static/css/main.3236a0d4.chunk.css",
-    "static/js/main.1032ded1.chunk.js"
+    "static/js/main.ae77d35a.chunk.js"
   ]
 }
