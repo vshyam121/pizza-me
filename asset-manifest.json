@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/pizza-me/static/css/main.171bc6e2.chunk.css",
-    "main.js": "/pizza-me/static/js/main.ea797cff.chunk.js",
-    "main.js.map": "/pizza-me/static/js/main.ea797cff.chunk.js.map",
+    "main.js": "/pizza-me/static/js/main.b7af76bc.chunk.js",
+    "main.js.map": "/pizza-me/static/js/main.b7af76bc.chunk.js.map",
     "runtime-main.js": "/pizza-me/static/js/runtime-main.5ccde37c.js",
     "runtime-main.js.map": "/pizza-me/static/js/runtime-main.5ccde37c.js.map",
     "static/js/2.67cdfcd7.chunk.js": "/pizza-me/static/js/2.67cdfcd7.chunk.js",
     "static/js/2.67cdfcd7.chunk.js.map": "/pizza-me/static/js/2.67cdfcd7.chunk.js.map",
     "index.html": "/pizza-me/index.html",
-    "precache-manifest.5cff84c3aa22d0ea01c56fe299e9a1cd.js": "/pizza-me/precache-manifest.5cff84c3aa22d0ea01c56fe299e9a1cd.js",
+    "precache-manifest.2cf1255a873424f26eea6eaaa6f33536.js": "/pizza-me/precache-manifest.2cf1255a873424f26eea6eaaa6f33536.js",
     "service-worker.js": "/pizza-me/service-worker.js",
     "static/css/main.171bc6e2.chunk.css.map": "/pizza-me/static/css/main.171bc6e2.chunk.css.map",
     "static/js/2.67cdfcd7.chunk.js.LICENSE.txt": "/pizza-me/static/js/2.67cdfcd7.chunk.js.LICENSE.txt",
@@ -24,7 +24,6 @@
     "static/media/crust_thin_NoFinish.webp": "/pizza-me/static/media/crust_thin_NoFinish.adbed319.webp",
     "static/media/crust_thin_ToastedParmesan.webp": "/pizza-me/static/media/crust_thin_ToastedParmesan.f38d858f.webp",
     "static/media/icon_crust_pan.webp": "/pizza-me/static/media/icon_crust_pan.a7bcbde8.webp",
-    "static/media/icon_crust_thin.webp": "/pizza-me/static/media/icon_crust_thin.0809ee75.webp",
     "static/media/icon_finisher_GarlicButteryBlend_whole_2017.webp": "/pizza-me/static/media/icon_finisher_GarlicButteryBlend_whole_2017.69a08ee0.webp",
     "static/media/icon_finisher_ToastedParm_whole_2017.webp": "/pizza-me/static/media/icon_finisher_ToastedParm_whole_2017.76367cf4.webp",
     "static/media/icon_finisher_none_whole_2017.webp": "/pizza-me/static/media/icon_finisher_none_whole_2017.0548e955.webp",
@@ -95,6 +94,6 @@
     "static/js/runtime-main.5ccde37c.js",
     "static/js/2.67cdfcd7.chunk.js",
     "static/css/main.171bc6e2.chunk.css",
-    "static/js/main.ea797cff.chunk.js"
+    "static/js/main.b7af76bc.chunk.js"
   ]
 }

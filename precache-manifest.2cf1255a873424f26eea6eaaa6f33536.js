@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2364e9c967d9de91c03d889cc08ad17d",
+    "revision": "c7e6f85e3710b60f1f0b7c84efe5cdc3",
     "url": "/pizza-me/index.html"
   },
   {
-    "revision": "9ec13f5c5b166bea8e50",
+    "revision": "2f1067ffdbfdb74e2e42",
     "url": "/pizza-me/static/css/main.171bc6e2.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pizza-me/static/js/2.67cdfcd7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9ec13f5c5b166bea8e50",
-    "url": "/pizza-me/static/js/main.ea797cff.chunk.js"
+    "revision": "2f1067ffdbfdb74e2e42",
+    "url": "/pizza-me/static/js/main.b7af76bc.chunk.js"
   },
   {
     "revision": "a4cf6b570e21ec0e2825",
@@ -70,10 +70,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a7bcbde8a54a9a92b382549aa6fecd21",
     "url": "/pizza-me/static/media/icon_crust_pan.a7bcbde8.webp"
-  },
-  {
-    "revision": "0809ee75fe124e1c5e4453dd0f7ffc22",
-    "url": "/pizza-me/static/media/icon_crust_thin.0809ee75.webp"
   },
   {
     "revision": "69a08ee0f1949203bb47f6eebb00a8cd",
