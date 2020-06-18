@@ -1,0 +1,47 @@
+@import "../../sass/abstracts/mixins";
+
+.description {
+  line-height: 2;
+  padding: 2rem;
+
+  &__title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  &__pizza {
+    display: flex;
+    align-items: baseline;
+    margin-right: 2rem;
+  }
+
+  &__pizza-title {
+    margin-right: 2rem;
+  }
+
+  
+
+  &__price {
+    display: block;
+    @include respond(tab-port){
+      display: none;
+    }
+
+    @include respond(phone){
+      display: block;
+    }
+  }
+
+  &__price--cart {
+    display: none;
+
+    @include respond(phone){
+      display: block;
+    }
+  }
+
+  &__price--order {
+    
+  }
+}

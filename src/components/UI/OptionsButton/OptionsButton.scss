@@ -1,0 +1,21 @@
+@import "../../../sass/base/variables";
+
+.optionsButton {
+  border: 1px solid $border-color;
+  border-radius: 100px;
+  display: flex;
+  transition: all 1s;
+
+  &__option {
+    width: 100%;
+    border: none;
+    background-color: none;
+    border-radius: 100px;
+    outline: none;
+    font-size: inherit;
+    font-family: inherit;
+    background-color: inherit;
+    color: $color-grey-dark-2;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,29 @@
+@import "../../../sass/base/variables";
+
+.input {
+    width: 100%;
+    padding: 1rem;
+
+    &__element {
+        outline: none;
+        border: 1px solid $border-color;
+        font-size: 1.6rem;
+        padding: .6rem 1rem;
+        width: 100%;
+        
+
+        &:focus {
+            outline: none;
+            background-color: #ccc;
+        }
+    }
+
+    &__invalid {
+        border: 1px solid red;
+        background-color: salmon;
+    }
+
+    &__error-message {
+        color: red;
+    }
+}

@@ -1,0 +1,46 @@
+@import "../../sass/base/variables";
+@import "../../sass/abstracts/_mixins";
+
+.sidebar-container {
+  position: fixed;
+  left: 0;
+  top: $header-height;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, .5);
+  transition: all .3s;
+  visibility: visible;
+
+  &--closed {
+      visibility: hidden;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: $header-height;
+  height: 100%;
+  width: 25rem;
+  background-color: $primary-black;
+  transition: all 0.3s;
+  z-index: 1000;
+
+  &--closed {
+    left: -25rem;
+  }
+
+  &__menu-items {
+    display: none;
+
+    @include respond(tab-port) {
+      display: block;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__account {
+    border-top: 1px solid $secondary-black;
+  }
+}

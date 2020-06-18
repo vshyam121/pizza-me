@@ -1,0 +1,41 @@
+@import "../../sass/base/variables";
+@import "../../sass/abstracts/mixins";
+
+.pizza-preview {
+    position: relative;
+    align-self: center;
+    width: 34rem;
+    height: 34rem;
+
+    @include respond(tab-land){
+      width: 29rem;
+      height: 29rem;
+    }
+
+    @include respond(tab-port){
+      display: none;
+    }
+
+  &--small {
+    position: relative;
+    width: 18rem;
+    height: 18rem;
+  }
+
+  &__property {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+
+    &--left {
+      clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    }
+
+    &--right {
+      clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@import "../../../../sass/abstracts/mixins";
+
+.builder__topping {
+    margin-bottom: 2rem;
+}
+
+.builder__topping-type {
+    width: 30rem;
+    align-self: center;
+
+    @include respond(phone){
+        width: 20rem;
+    }
+}
