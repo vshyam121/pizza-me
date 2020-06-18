@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "274506239ead9956e9cd300a117ade6f",
+    "revision": "5d67df9b78f53adfb043973dca23fff5",
     "url": "/pizza-me/index.html"
   },
   {
