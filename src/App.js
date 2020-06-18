@@ -13,7 +13,6 @@ import SignOut from "./containers/Auth/SignOut/SignOut";
 import SignUp from "./containers/Auth/SignUp/SignUp";
 import { initApp } from "./store/auth/authActions";
 import { connect } from "react-redux";
-import Guest from "./containers/Auth/Guest/Guest";
 import OrderType from "./containers/OrderType/OrderType";
 import Checkout from "./containers/Checkout/Checkout";
 import Sidebar from "./containers/Sidebar/Sidebar";
@@ -34,7 +33,6 @@ class App extends Component {
         <Switch>
           <Route exact path="/checkout" component={Checkout} />
           <Route path="/checkout/order-type" component={OrderType} />
-          <Route path="/checkout/guest" component={Guest} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/my-orders" component={Orders} />
