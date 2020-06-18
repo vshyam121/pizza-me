@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "57f588e8eca3772dd68ae4d9844b9f14",
+    "revision": "2364e9c967d9de91c03d889cc08ad17d",
     "url": "/pizza-me/index.html"
   },
   {
-    "revision": "9a76ee0300d4191243f4",
+    "revision": "9ec13f5c5b166bea8e50",
     "url": "/pizza-me/static/css/main.171bc6e2.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pizza-me/static/js/2.67cdfcd7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "9a76ee0300d4191243f4",
-    "url": "/pizza-me/static/js/main.a3448c48.chunk.js"
+    "revision": "9ec13f5c5b166bea8e50",
+    "url": "/pizza-me/static/js/main.ea797cff.chunk.js"
   },
   {
     "revision": "a4cf6b570e21ec0e2825",
@@ -37,11 +37,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "08aa34b3aa01304a8edff9709425209e",
-    "url": "/pizza-me/static/media/crust_ht_NoFinish.08aa34b3.webp"
+    "url": "/pizza-me/static/media/crust_ht_NoFinish.08aa34b3.png"
   },
   {
     "revision": "89f0f86fe0a8504777226e05710932ec",
-    "url": "/pizza-me/static/media/crust_ht_ToastedParmesan.89f0f86f.webp"
+    "url": "/pizza-me/static/media/crust_ht_ToastedParmesan.89f0f86f.png"
   },
   {
     "revision": "904ed9e38d85112f17bc6e8e60afabfe",
@@ -66,10 +66,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "f38d858f7cb22fe5d48065697a5b415d",
     "url": "/pizza-me/static/media/crust_thin_ToastedParmesan.f38d858f.webp"
-  },
-  {
-    "revision": "3557515d7b1807be24d7825ba13f185f",
-    "url": "/pizza-me/static/media/icon_crust_ht.3557515d.webp"
   },
   {
     "revision": "a7bcbde8a54a9a92b382549aa6fecd21",
@@ -313,7 +309,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "88b2446667b7934310206e7f07708505",
-    "url": "/pizza-me/static/media/topping_Pineapple_ML_reg.88b24466.webp"
+    "url": "/pizza-me/static/media/topping_Pineapple_ML_reg.88b24466.png"
   },
   {
     "revision": "ef9d58c03743f5c6c631d74aba5a9394",
