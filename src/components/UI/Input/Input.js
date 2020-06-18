@@ -2,15 +2,22 @@ import React from "react";
 import "./Input.scss";
 import Dropdown from "../Dropdown/Dropdown";
 
-const Input = props => {
+/* Standard input element to be included in forms */
+const Input = (props) => {
   let inputElement = null;
   const inputClasses = ["input__element"];
   let validationError = null;
-  if (props.invalid && props.shouldValidate && props.touched && props.formSubmitted) {
+  if (
+    props.invalid &&
+    props.shouldValidate &&
+    props.touched &&
+    props.formSubmitted
+  ) {
     inputClasses.push("input__invalid");
-    validationError = <p className="input__error-message">{props.errorMessage}</p>
+    validationError = (
+      <p className="input__error-message">{props.errorMessage}</p>
+    );
   }
-
 
   switch (props.elementType) {
     case "input":
@@ -42,6 +49,7 @@ const Input = props => {
           onChange={props.onChange}
         />
       );
+      break;
     default:
       inputElement = (
         <input

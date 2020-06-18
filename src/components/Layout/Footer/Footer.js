@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.scss";
 
-/* Footer containing helpful links */
+/* Footer containing informational links */
 const Footer = (props) => {
   return (
     <footer className="footer">

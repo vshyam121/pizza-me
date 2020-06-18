@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import AddressForm from "../AddressForm/AddressForm";
 
+/* Options for choosing either carryout or delivery order */
 class OrderType extends Component {
   state = {
     isDelivery: false,

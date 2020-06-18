@@ -14,9 +14,10 @@ import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderAct
 import { calculateSubTotal, calculateTax } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
 import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
-import axiosDB from "../../axiosDB";
+import axiosFirebase from "../../axiosFirebase";
 import withErrorHandler from "../../hoc/withErrorHandler";
 
+/* Order summary and ability to submit an order */
 class Checkout extends Component {
   handleSubmitOrder = (total) => {
     if (this.props.idToken) {
@@ -140,4 +141,4 @@ export default connect(mapStateToProps, {
   removeItem,
   initializePizzaBuilder,
   changeItemQuantity,
-})(withErrorHandler(Checkout, axiosDB));
+})(withErrorHandler(Checkout, axiosFirebase));

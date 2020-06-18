@@ -1,15 +1,17 @@
 import * as actionTypes from "./checkoutActionTypes";
-import axiosDB from "../../axiosDB";
+import axiosFirebase from "../../axiosFirebase";
 import axiosGeolocation from "axios";
 import * as actionDisplays from "../ui/actionDisplays";
 import { setErroredAction } from "../ui/uiActions";
 
+/* To set loading in UI when starting to submit order */
 export const submitOrderStart = () => {
   return {
     type: actionTypes.SUBMIT_ORDER_START,
   };
 };
 
+/* Submit an order for a user */
 export const submitOrder = (total, items, idToken, userId) => {
   return (dispatch, getState) => {
     dispatch(submitOrderStart());
@@ -24,7 +26,7 @@ export const submitOrder = (total, items, idToken, userId) => {
     if (deliveryAddress) {
       order = { ...order, deliveryAddress: deliveryAddress };
     }
-    axiosDB
+    axiosFirebase
       .post("/orders.json?auth=" + idToken, order)
       .then((res) => {
         console.log(res);
@@ -34,13 +36,14 @@ export const submitOrder = (total, items, idToken, userId) => {
           order: order,
         });
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(setErroredAction(actionDisplays.SUBMIT_ORDER));
         dispatch(submitOrderFailed());
       });
   };
 };
 
+/* Stop loading in UI when submitting order failed */
 export const submitOrderFailed = () => {
   return {
     type: actionTypes.SUBMIT_ORDER_FAILED,
@@ -130,7 +133,7 @@ const getOrdersFailed = () => {
 export const getOrders = (idToken, userId) => {
   return (dispatch) => {
     dispatch(getOrdersStart());
-    axiosDB
+    axiosFirebase
       .get(
         "/orders.json?auth=" +
           idToken +

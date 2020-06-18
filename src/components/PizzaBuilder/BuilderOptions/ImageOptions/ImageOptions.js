@@ -2,6 +2,7 @@ import React from "react";
 import "./ImageOptions.scss";
 import { FaCheckCircle } from "react-icons/fa";
 
+/* Interactable options to be displayed as images in the pizza builder */
 const ImageOptions = props => {
   return (
     <div className="builder-options">

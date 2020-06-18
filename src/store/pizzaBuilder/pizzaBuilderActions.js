@@ -1,5 +1,6 @@
 import * as actionTypes from "./pizzaBuilderActionTypes";
 
+/* Initialize pizza builder with properties of given pizza */
 export const initializePizzaBuilder = (pizza, quantity, itemId) => {
   return {
     type: actionTypes.INIT_PIZZA_BUILDER,
@@ -15,6 +16,7 @@ export const closePizzaBuilder = () => {
   };
 };
 
+/* Dynamically set a pizza property value */
 export const setProperty = (property, value) => {
   return {
     type: actionTypes.SET_PROPERTY,
@@ -23,6 +25,7 @@ export const setProperty = (property, value) => {
   };
 };
 
+/* Select/deselect a topping */
 export const toggleTopping = (property, value) => {
   return {
     type: actionTypes.TOGGLE_TOPPING,
@@ -31,6 +34,7 @@ export const toggleTopping = (property, value) => {
   };
 };
 
+/* Set the topping amount, whether regular/extra */
 export const setToppingAmount = (property, topping, value) => {
   return {
     type: actionTypes.SET_TOPPING_AMOUNT,
@@ -40,6 +44,7 @@ export const setToppingAmount = (property, topping, value) => {
   };
 };
 
+/* Set the topping portion, whether left/right/whole */
 export const setToppingPortion = (property, topping, value) => {
   return {
     type: actionTypes.SET_TOPPING_PORTION,

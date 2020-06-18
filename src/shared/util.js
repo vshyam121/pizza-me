@@ -17,6 +17,23 @@ import {
   propertyPriceMapping,
 } from "../metadata/priceMappings";
 
+/* Utility functions used across multiple components/containers */
+
+/* Get display message for error code related to authentication */
+export const lookupErrorCode = (errorCode) => {
+  console.log(errorCode);
+  if (errorCode === "INVALID_PASSWORD" || errorCode === "EMAIL_NOT_FOUND") {
+    return "The username or password you entered is incorrect.";
+  } else if (errorCode.includes("TOO_MANY_ATTEMPTS_TRY_LATER")) {
+    return "You've made too many unsuccessful attempts. Please try again later.";
+  } else if (errorCode === "EMAIL_EXISTS") {
+    return "The email you entered is already taken. Please try another one.";
+  } else {
+    return "There was an error submitting your credentials.";
+  }
+};
+
+/* calculate price of a pizza, given its size, crust, toppings and various other properties */
 export const calculatePrice = (pizza) => {
   const basePrice =
     sizePriceMapping[pizza[SIZE]][pizza.priceType] +
@@ -39,46 +56,55 @@ export const calculatePrice = (pizza) => {
   return (basePrice + meatsPrice + veggiesPrice + propertyPrices).toFixed(2);
 };
 
+/* Get price of only the toppings */
 const getToppingsPrice = (pizza, toppingType, combo) => {
   let toppings = pizza[toppingType];
   let toppingsPrice = 0;
   toppings &&
-    Object.entries(toppings).map(([topping, toppingProps]) => {
-      const comboIncludesTopping = combo && Object.keys(
-        toppingMapping[pizza[COMBO_NAME]][toppingType]
-      ).includes(topping);
-      if (!comboIncludesTopping  || !combo) {
+    Object.entries(toppings).forEach(([topping, toppingProps]) => {
+      const comboIncludesTopping =
+        combo &&
+        Object.keys(toppingMapping[pizza[COMBO_NAME]][toppingType]).includes(
+          topping
+        );
+      if (!comboIncludesTopping || !combo) {
         if (toppingProps.amount === EXTRA_TOPPING) {
           toppingsPrice += extraToppingPrice;
         } else {
           toppingsPrice += toppingPrice;
         }
-      }
-      else if(comboIncludesTopping && toppingProps.amount === EXTRA_TOPPING){
-        toppingsPrice += (extraToppingPrice - toppingPrice);
+      } else if (
+        comboIncludesTopping &&
+        toppingProps.amount === EXTRA_TOPPING
+      ) {
+        toppingsPrice += extraToppingPrice - toppingPrice;
       }
     });
 
   return toppingsPrice;
 };
 
+/* Open the pizza builder for editing a pizza */
 export const handleEditItem = (props, pizza, quantity, itemId) => {
   props.initializePizzaBuilder(pizza, quantity, itemId);
 };
 
+/* Change the quantity of an item in redux store */
 export const handleChangeItemQuantity = (props, itemId, quantity) => {
   props.changeItemQuantity(itemId, quantity);
 };
 
+/* Remove item from cart */
 export const handleRemoveItem = (props, itemId, pizza) => {
   props.removeItem(itemId, pizza);
 };
 
+/* Calculate the sum of the price of all pizzas in cart before tax */
 export const calculateSubTotal = (items) => {
   let subTotal = 0;
   Object.values(items).forEach((item) => {
-    let price = item.pizza.price
-    if(!price){
+    let price = item.pizza.price;
+    if (!price) {
       price = calculatePrice(item.pizza);
     }
     subTotal += price * item.quantity;
@@ -86,10 +112,12 @@ export const calculateSubTotal = (items) => {
   return subTotal.toFixed(2);
 };
 
+/* Calculate the tax */
 export const calculateTax = (subTotal) => {
   return (subTotal * 0.1).toFixed(2);
 };
 
+/* Get display date */
 export const getReadableDate = (givenDate) => {
   const monthArray = [
     "January",
@@ -112,14 +140,14 @@ export const getReadableDate = (givenDate) => {
   return month + " " + day + ", " + year;
 };
 
-export const getReadableAddress = givenAddress => {
+/* Get display address */
+export const getReadableAddress = (givenAddress) => {
   let address = "";
   address += givenAddress.street;
-  if(givenAddress.secondary)
-    address += ", "+givenAddress.secondary
+  if (givenAddress.secondary) address += ", " + givenAddress.secondary;
   address += "\n";
   address += givenAddress.city;
-  address += ", "+givenAddress.state;
-  address += " "+givenAddress.zipcode;
+  address += ", " + givenAddress.state;
+  address += " " + givenAddress.zipcode;
   return address;
-}
+};

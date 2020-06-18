@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Header.scss";
-import PizzaIconImg from "../../assets/images/alarm-clock.png";
+import PizzaTimeLogo from "../../assets/images/alarm-clock.png";
 import { MdShoppingCart, MdMenu } from "react-icons/md";
 import { connect } from "react-redux";
 import NavigationItem from "../../components/UI/NavigationItem/NavigationItem";
@@ -11,9 +11,9 @@ import PizzaMenuItems from "../../components/MenuItems/PizzaMenuItems/PizzaMenuI
 import { toggleSidebar } from "../../store/ui/uiActions";
 import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/AccountMenuItems";
 
-/* Header containing logo, app name, main menu, sign in and cart */
+/* Header containing logo, app name, main menu, autentication, orders and cart */
 class Header extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.handleClickCheckout = this.handleClickCheckout.bind(this);
   }
@@ -75,28 +75,14 @@ class Header extends Component {
               pathname: this.props.isAuthenticated
                 ? "/checkout/order-type"
                 : "/signin",
-              fromCheckout: "true"
+              fromCheckout: "true",
             }}
           >
-            <Button  type={primary}>
+            <Button type={primary}>
               <span>Checkout</span>
             </Button>
           </Link>
         </DropdownAlert>
-      );
-    }
-
-    let authentication = (
-      <NavigationItem to="/signin">
-        <span>Sign In</span>
-      </NavigationItem>
-    );
-    if (this.props.isAuthenticated) {
-      authentication = (
-        <React.Fragment>
-          <NavigationItem>My Orders</NavigationItem>
-          <NavigationItem to="/signout">Sign Out</NavigationItem>
-        </React.Fragment>
       );
     }
 
@@ -111,7 +97,7 @@ class Header extends Component {
             </NavigationItem>
           </div>
           <Link to="/" className="header__logo-title">
-            <img className="header__logo" src={PizzaIconImg} />
+            <img alt="PizzaTime logo" className="header__logo" src={PizzaTimeLogo} />
             <div className="header__title">
               <span>PizzaTime</span>
             </div>

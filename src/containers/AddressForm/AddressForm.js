@@ -8,6 +8,7 @@ import { SyncLoader } from "react-spinners";
 import { withRouter } from "react-router-dom";
 import Form from "../Form/Form";
 
+/* Delivery address form */
 class AddressForm extends Component {
   state = {
     form: {

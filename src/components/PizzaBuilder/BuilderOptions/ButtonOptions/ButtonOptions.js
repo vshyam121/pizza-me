@@ -1,6 +1,7 @@
 import React from "react";
 import "./ButtonOptions.scss";
 
+/* Interactable options to be displayed as buttons in the pizza builder */
 const ButtonOptions = props => {
 
   return (

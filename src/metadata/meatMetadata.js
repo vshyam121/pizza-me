@@ -20,6 +20,8 @@ import PorkPreview from "../assets/images/topping_Pork_ML_reg.webp";
 import ExtraPorkPreview from "../assets/images/topping_Pork_ML_extra.webp";
 import PorkIcon from "../assets/images/icon_topping_Pork.webp";
  
+/* All metadata related to the display of meat options */
+
 export const PEPPERONI = "Pepperoni";
 export const ITALIAN_SAUSAGE = "Italian Sausage";
 export const HAM = "Ham";

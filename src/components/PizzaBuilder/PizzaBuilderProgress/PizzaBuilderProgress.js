@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import "./PizzaBuilderProgress.scss";
 import {
   SIZE_CRUST,
@@ -6,6 +6,7 @@ import {
   TOPPINGS
 } from "../../../containers/PizzaBuilder/PizzaBuilder";
 
+/* Shows progress of steps in the pizza builder */
 const PizzaBuilderProgress = props => {
   return (
     <div className="progress">

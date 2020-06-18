@@ -20,12 +20,14 @@ const cartReducer = (state = initialState, action) => {
   let quantity;
   let itemAdded = false;
   switch (action.type) {
+    //set cart id and user id once cart has been created 
     case actionTypes.CREATE_CART:
       return {
         ...state,
         cartId: action.cartId,
         userId: action.userId,
       };
+    //add item to cart, update pizza to item id hashmap and quantity
     case actionTypes.ADD_TO_CART:
       items = { ...state.items, [action.itemId]: action.item };
       quantity = state.quantity + +action.item.quantity;

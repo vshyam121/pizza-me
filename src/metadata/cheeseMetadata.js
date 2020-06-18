@@ -1,3 +1,5 @@
+/* All metadata related to the displaying of cheese options */
+
 export const REGULAR_CHEESE = "Regular";
 export const EXTRA_CHEESE = "Extra";
 export const LIGHT_CHEESE = "Light";

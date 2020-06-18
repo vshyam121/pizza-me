@@ -1,6 +1,7 @@
 import React from "react";
 import "./DropdownAlert.scss";
 
+/* Dropdown alert disappears automatically in a few seconds */
 const DropdownAlert = props => {
 
     return (

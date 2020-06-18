@@ -6,7 +6,7 @@ import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/Accoun
 import { closeSidebar } from "../../store/ui/uiActions";
 import NavigationItem from "../../components/UI/NavigationItem/NavigationItem";
 
-
+/* Sidebar menu with pizza menu items and account menu items */
 class Sidebar extends Component {
   handleClickMenuItem = () => {
     this.props.closeSidebar();
@@ -18,28 +18,6 @@ class Sidebar extends Component {
     if (!this.props.sidebarOpen) {
       sidebarClassNames.push("sidebar--closed");
       sidebarContainerClassNames.push("sidebar-container--closed");
-    }
-
-    let authentication = (
-      <NavigationItem vertical to="/signin" onClick={this.handleClickMenuItem}>
-        <span>Sign In</span>
-      </NavigationItem>
-    );
-    if (this.props.isAuthenticated) {
-      authentication = (
-        <React.Fragment>
-          <NavigationItem vertical onClick={this.handleClickMenuItem}>
-            My Orders
-          </NavigationItem>
-          <NavigationItem
-            vertical
-            to="/signout"
-            onClick={this.handleClickMenuItem}
-          >
-            Sign Out
-          </NavigationItem>
-        </React.Fragment>
-      );
     }
 
     return (

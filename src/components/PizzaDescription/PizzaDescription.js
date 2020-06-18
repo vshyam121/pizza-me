@@ -19,6 +19,7 @@ import { NO_CHEESE } from "../../metadata/cheeseMetadata";
 import { NO_SAUCE } from "../../metadata/sauceMetadata";
 import { calculatePrice } from "../../shared/util";
 
+/* Description of pizza, including size, toppings and other descriptives */
 const PizzaDescription = (props) => {
   let sauce = props.pizza[SAUCE_AMOUNT] + " " + props.pizza[SAUCE];
   if (props.pizza[SAUCE_AMOUNT] === NO_SAUCE) {

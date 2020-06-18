@@ -13,6 +13,8 @@ import {
   CRUST_FLAVOR
 } from "../../../../metadata/pizzaProperties";
 
+
+/* Pizza builder section with size/crust options */
 class SizeCrustBuilder extends Component {
   
 

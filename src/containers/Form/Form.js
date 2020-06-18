@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Button, { primary } from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
-import { handleInputChange } from "../../shared/validation.js";
+import { handleInputChange } from "../../shared/formValidation.js";
 
+/* Standard form component across entire app */
 class Form extends Component {
 
   handleInputChange = (event, inputId) => {
@@ -12,18 +13,6 @@ class Form extends Component {
       formIsValid: updatedFormData.formIsValid
     });
   };
-
- /* componentDidUpdate(prevProps) {
-    if(prevProps.form !== this.props.form){
-      this.setState({form: this.props.form});
-    }
-  }*/
-
-  /*handleSubmit = (event) => {
-    this.setState({submitted: true});
-    this.props.onSubmit(event, this.props.form)
-  }*/
-
 
   render() {
     const formElementsArray = [];

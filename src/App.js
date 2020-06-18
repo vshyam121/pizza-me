@@ -11,7 +11,7 @@ import Cart from "./containers/Cart/Cart";
 import SignIn from "./containers/Auth/SignIn/SignIn";
 import SignOut from "./containers/Auth/SignOut/SignOut";
 import SignUp from "./containers/Auth/SignUp/SignUp";
-import { checkAuthentication } from "./store/auth/authActions";
+import { initApp } from "./store/auth/authActions";
 import { connect } from "react-redux";
 import Guest from "./containers/Auth/Guest/Guest";
 import OrderType from "./containers/OrderType/OrderType";
@@ -22,7 +22,7 @@ import Orders from "./containers/Orders/Orders";
 class App extends Component {
 
   componentDidMount() {
-    this.props.checkAuthentication();
+    this.props.initApp();
   }
 
 
@@ -50,4 +50,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, { checkAuthentication } )(App);
+export default connect(null, { initApp } )(App);

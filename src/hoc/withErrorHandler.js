@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Modal from "../components/UI/Modal/Modal";
 import { connect } from "react-redux";
 
+/* Axios error handler HOC */
 const withErrorHandler = (WrappedComponent, axios) => {
   class HOComponent extends Component {
     state = {

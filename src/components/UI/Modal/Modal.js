@@ -4,6 +4,7 @@ import Backdrop from "../Backdrop/Backdrop";
 import { useEffect } from "react";
 import { MdClose } from "react-icons/md";
 
+/* Standard modal across entire app */
 const Modal = props => {
   useEffect(() => {
     if (props.show) {

@@ -13,6 +13,7 @@ import {
   CHEESE_AMOUNT,
 } from "../../../../metadata/pizzaProperties";
 
+/* Pizza builder section with cheese/sauce options */
 class CheeseSauceBuilder extends Component {
 
 

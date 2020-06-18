@@ -2,35 +2,37 @@ import React, { Component } from "react";
 import "./OptionsButton.scss";
 import Button, { tertiary } from "../Button/Button";
 
+/* Standard single component with one or more button options */
 class OptionsButton extends Component {
   state = {};
 
-  handleButtonClick = option => {
-    console.log("in handle button click");
+  handleButtonClick = (option) => {
     option.onClick();
   };
 
   render() {
     return (
       <div className="optionsButton">
-        {this.props.options.map(option => {
+        {this.props.options.map((option) => {
           let button = null;
-          if (this.props.selectedOption === option.stage) {
+          if (this.props.selectedOption === option.optionName) {
             button = (
               <Button
+                key={option.optionName}
                 onClick={() => this.handleButtonClick(option)}
                 type={tertiary}
               >
-                {option.optionName}
+                {option.displayName}
               </Button>
             );
           } else {
             button = (
               <button
+                key={option.optionName}
                 onClick={() => this.handleButtonClick(option)}
                 className="optionsButton__option"
               >
-                {option.optionName}
+                {option.displayName}
               </button>
             );
           }

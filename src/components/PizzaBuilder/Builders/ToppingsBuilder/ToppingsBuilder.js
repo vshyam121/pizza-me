@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./ToppingsBuilder.scss";
-import Button from "../../../UI/Button/Button";
 import ToppingOptions from "../../BuilderOptions/ToppingOptions/ToppingOptions";
 import { meatImageMapping } from "../../../../metadata/meatMetadata";
 import { veggiesImageMapping } from "../../../../metadata/veggiesMetadata";
 import { MEATS, VEGGIES } from "../../../../metadata/pizzaProperties";
 import OptionsButton from "../../../UI/OptionsButton/OptionsButton";
 
+/* Pizza builder section with topping options */
 class ToppingsBuilder extends Component {
   state = {
     stage: this.props.toppingType || MEATS
@@ -49,10 +49,10 @@ class ToppingsBuilder extends Component {
     }
 
     const options = [
-      { stage: MEATS, optionName: "Meats", onClick: this.handleClickMeats },
+      { optionName: MEATS, displayName: "Meats", onClick: this.handleClickMeats },
       {
-        stage: VEGGIES,
-        optionName: "Veggies",
+        optionName: VEGGIES,
+        displayName: "Veggies",
         onClick: this.handleClickVeggies
       }
     ];

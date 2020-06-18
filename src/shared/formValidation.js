@@ -1,3 +1,5 @@
+/* Form validation helper functions */
+
 const formatPhoneNumber = digits => {
   var cleaned = ("" + digits).replace(/\D/g, "");
   var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);

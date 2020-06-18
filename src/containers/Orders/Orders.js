@@ -6,16 +6,17 @@ import Order from "./Order/Order";
 import { getReadableDate } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
 import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
-import axiosDB from "../../axiosDB";
+import axiosFirebase from "../../axiosFirebase";
 import withErrorHandler from "../../hoc/withErrorHandler";
 
+/* Contains a list of all submitted orders */
 class Orders extends Component {
   render() {
     let orders = null;
     if (
       !this.props.idToken ||
       this.props.gettingOrders ||
-      this.props.checkoutErroredAction ||
+      this.props.getOrdersError ||
       Object.entries(this.props.orders).length === 0
     ) {
       let ordersContent = null;
@@ -106,5 +107,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { getOrders })(
-  withErrorHandler(Orders, axiosDB)
+  withErrorHandler(Orders, axiosFirebase)
 );

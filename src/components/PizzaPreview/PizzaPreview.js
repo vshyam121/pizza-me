@@ -16,6 +16,7 @@ import {
 } from "../../metadata/pizzaProperties";
 import { NO_CRUST_FLAVOR } from "../../metadata/crustFlavorMetadata";
 
+/* Pizza preview image with all selected toppings and crust options */
 class PizzaPreview extends Component {
   render() {
     return (

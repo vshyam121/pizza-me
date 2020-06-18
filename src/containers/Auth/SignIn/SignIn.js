@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import "./SignIn.scss";
 import Button, { secondary } from "../../../components/UI/Button/Button";
-import { signIn, authReset } from "../../../store/auth/authActions";
+import { signIn } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
 import { SyncLoader } from "react-spinners";
-import { lookupErrorCode } from "../../../shared/errorMessages";
+import { lookupErrorCode } from "../../../shared/util";
 import { Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import withErrorHandler from "../../../hoc/withErrorHandler";
 
+/* Sign in form */
 class SignIn extends Component {
   state = {
     form: {
@@ -60,12 +59,6 @@ class SignIn extends Component {
   updateForm = (stateUpdate) => {
     this.setState(stateUpdate);
   };
-
-  componentDidMount() {
-    if (this.props.error) {
-      this.props.authReset();
-    }
-  }
 
   render() {
     let form = (
@@ -127,4 +120,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.idToken,
 });
 
-export default connect(mapStateToProps, { signIn, authReset })(withErrorHandler(SignIn, axios));
+export default connect(mapStateToProps, { signIn })(SignIn);

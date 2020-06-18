@@ -1,32 +1,26 @@
 import React, { Component } from "react";
 import "./PizzaBox.scss";
 import Dropdown from "../../components/UI/Dropdown/Dropdown";
-import { smallDropDown } from "../../components/UI/Dropdown/Dropdown";
 import Button from "../../components/UI/Button/Button";
 import {
   HAND_TOSSED,
   crustMetadataMapping,
 } from "../../metadata/crustMetadata";
 import { LARGE, sizes } from "../../metadata/sizeMetadata";
-import { toppingMapping, COMBO } from "../../metadata/comboMetadata";
+import { toppingMapping } from "../../metadata/comboMetadata";
 import { connect } from "react-redux";
 import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
 import { addToCart } from "../../store/cart/cartActions";
 import {
   SIZE,
   CRUST,
-  MEATS,
-  VEGGIES,
   COMBO_NAME,
 } from "../../metadata/pizzaProperties";
 import { primary, secondary } from "../../components/UI/Button/Button";
 import { calculatePrice } from "../../shared/util";
-import withErrorHandler from "../../hoc/withErrorHandler";
-import axiosDB from "../../axiosDB";
 
-/* UI Box that holds an pizza and lets user customize various pizza properties.
-   Can add pizza to order and also build your own pizza from here. 
-*/
+/* UI box container that holds an pizza and lets user customize various pizza properties.
+   Can add pizza to order and also build your own pizza from here. */
 class PizzaBox extends Component {
   constructor(props) {
     super(props);
@@ -147,7 +141,6 @@ class PizzaBox extends Component {
           <div className="pizza-box__quantity">
             <Dropdown
               onChange={this.handleChangeQuantity}
-              size={smallDropDown}
               options={quantityOptions}
               value={this.state.quantity}
             />

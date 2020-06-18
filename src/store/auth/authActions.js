@@ -10,17 +10,14 @@ import { secureStorage } from "../../shared/secureStorage";
 import { setErroredAction } from "../ui/uiActions";
 import * as actionDisplays from "../ui/actionDisplays";
 
-export const authReset = () => {
-  return {
-    type: actionTypes.AUTH_RESET,
-  };
-};
+/* To show loading in UI when authentication action has started */
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START,
   };
 };
 
+/* Successfully authenticated user and received token/userid */
 export const authSuccess = (idToken, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
@@ -29,6 +26,7 @@ export const authSuccess = (idToken, userId) => {
   };
 };
 
+/* Set error to be displayed in UI when authentication has failed */
 export const authFailed = (error) => {
   return {
     type: actionTypes.AUTH_FAILED,
@@ -36,6 +34,7 @@ export const authFailed = (error) => {
   };
 };
 
+/* Clear user data and cart on sign out */
 export const signOut = () => {
   return (dispatch) => {
     localStorage.removeItem("idToken");
@@ -48,6 +47,7 @@ export const signOut = () => {
   };
 };
 
+/* Sign out user when expiration time has been reached */
 export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
     setTimeout(() => {
@@ -56,6 +56,7 @@ export const checkAuthTimeout = (expirationTime) => {
   };
 };
 
+/* Sign in user with email/password */
 export const signIn = (email, password) => {
   return (dispatch) => {
     dispatch(authStart());
@@ -90,6 +91,7 @@ export const signIn = (email, password) => {
   };
 };
 
+/* Sign up user with email/password */
 export const signUp = (email, password) => {
   return (dispatch) => {
     dispatch(authStart());
@@ -115,7 +117,8 @@ export const signUp = (email, password) => {
   };
 };
 
-export const checkAuthentication = () => {
+/* Initialize application upon app load */
+export const initApp = () => {
   return (dispatch) => {
     let localCart = null;
     try {

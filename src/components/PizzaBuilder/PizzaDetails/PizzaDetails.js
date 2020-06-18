@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Dropdown from "../../UI/Dropdown/Dropdown";
 import Button, { primary } from "../../UI/Button/Button";
 import PizzaDescription from "../../PizzaDescription/PizzaDescription";
-import { smallDropDown } from "../../UI/Dropdown/Dropdown";
 import "./PizzaDetails.scss";
 import { calculatePrice } from "../../../shared/util";
 
+/* Shows pizza description, as well as options to change quantity and add/save to cart */
 class PizzaDetails extends Component {
   state = {
     quantity: this.props.quantity
@@ -55,7 +55,6 @@ class PizzaDetails extends Component {
             </h2>
             <div className="pizza-details__quantity">
               <Dropdown
-                size={smallDropDown}
                 className="item__size"
                 options={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
                 value={this.state.quantity}

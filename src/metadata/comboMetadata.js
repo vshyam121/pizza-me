@@ -29,7 +29,8 @@ import {
 import { EXTRA_CHEESE } from "./cheeseMetadata";
 import { BUFFALO, BARBECUE } from "./sauceMetadata";
 import { TOASTED_PARMESAN } from "./crustFlavorMetadata";
-/* Holds various combo related metadata used in multiple components */
+
+/* Holds various combo related display metadata used in multiple components */
 
 export const CHEESE = "Cheese";
 export const PEPPERONI_PIZZA = "Pepperoni";

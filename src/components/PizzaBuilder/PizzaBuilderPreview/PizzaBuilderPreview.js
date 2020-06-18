@@ -1,22 +1,8 @@
 import React, { Component } from "react";
 import "./PizzaBuilderPreview.scss";
-import Cheese from "../../../assets/images/cheese_mozz_ML.webp";
-import { crustMetadataMapping } from "../../../metadata/crustMetadata";
-import { meatImageMapping } from "../../../metadata/meatMetadata";
-import { veggiesImageMapping } from "../../../metadata/veggiesMetadata";
-import { crustFlavorImageMapping } from "../../../metadata/crustFlavorMetadata";
-import {
-  CRUST,
-  CRUST_FLAVOR,
-  MEATS,
-  VEGGIES,
-  EXTRA_TOPPING,
-  LEFT_HALF,
-  RIGHT_HALF,
-} from "../../../metadata/pizzaProperties";
-import { NO_CRUST_FLAVOR } from "../../../metadata/crustFlavorMetadata";
 import PizzaPreview from "../../PizzaPreview/PizzaPreview";
 
+/* Pizza preview image section of the pizza builder */
 class PizzaBuilderPreview extends Component {
   render() {
 

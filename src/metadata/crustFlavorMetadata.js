@@ -9,6 +9,9 @@ import ToastedParmesanIcon from "../assets/images/icon_finisher_ToastedParm_whol
 import NoCrustFlavorIcon from "../assets/images/icon_finisher_none_whole_2017.webp";
 import { HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN } from "./crustMetadata";
 
+/* All metadata related to the display of crust flavor options */
+
+
 export const NO_CRUST_FLAVOR = "No Crust Flavor";
 export const GARLIC_BUTTERY_BLEND = "Garlic Buttery Blend";
 export const TOASTED_PARMESAN = "Toasted Parmesan";

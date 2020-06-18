@@ -10,10 +10,10 @@ import {
   ULTIMATE_CHEESE_LOVER,
 } from "../../../metadata/comboMetadata";
 import { CHEESE } from "../../../metadata/comboMetadata";
-import axiosDB from "../../../axiosDB";
+import axiosFirebase from "../../../axiosFirebase";
 import withErrorHandler from "../../../hoc/withErrorHandler";
 
-/* Veggies component containing veggy pizza boxes */
+/* Displays various types of veggy pizzas */
 class Veggies extends Component {
   render() {
     return (
@@ -42,4 +42,4 @@ class Veggies extends Component {
   }
 }
 
-export default withErrorHandler(Veggies, axiosDB);
+export default withErrorHandler(Veggies, axiosFirebase);

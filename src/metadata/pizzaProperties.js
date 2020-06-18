@@ -1,3 +1,5 @@
+/* Standard key names used to store data in app */
+
 export const CRUST = "crust";
 export const SIZE = "size";
 export const SAUCE = "sauce";

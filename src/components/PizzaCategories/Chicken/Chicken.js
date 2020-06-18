@@ -16,10 +16,10 @@ import {
 import {
   CHEESE,
 } from "../../../metadata/comboMetadata";
-import axiosDB from "../../../axiosDB";
+import axiosFirebase from "../../../axiosFirebase";
 import withErrorHandler from "../../../hoc/withErrorHandler";
 
-/* Chicken component containing chicken pizza boxes */
+/* Displays various types of chicken pizza */
 class Chicken extends Component {
   state = {};
 
@@ -60,4 +60,4 @@ class Chicken extends Component {
   }
 }
 
-export default withErrorHandler(Chicken, axiosDB);
+export default withErrorHandler(Chicken, axiosFirebase);

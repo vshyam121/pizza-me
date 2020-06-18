@@ -2,6 +2,7 @@ import React from "react";
 import PizzaPreview from "../../../components/PizzaPreview/PizzaPreview";
 import PizzaDescription from "../../../components/PizzaDescription/PizzaDescription";
 
+/* Represents a single submitted order */
 const Order = (props) => {
   return (
     <div className="item item--order">

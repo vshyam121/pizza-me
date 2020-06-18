@@ -2,13 +2,13 @@ import React from "react";
 import "./CartItem.scss";
 import PizzaDescription from "../../../components/PizzaDescription/PizzaDescription";
 import Dropdown from "../../../components/UI/Dropdown/Dropdown";
-import { smallDropDown } from "../../../components/UI/Dropdown/Dropdown";
 import PizzaPreview from "../../../components/PizzaPreview/PizzaPreview";
 import { connect } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { isEqual } from "lodash";
 import { calculatePrice } from "../../../shared/util";
 
+/* Single cart item with pizza description, price, quantity and edit/remove options */
 const CartItem = (props) => {
   const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -53,7 +53,6 @@ const CartItem = (props) => {
           <div className="item__quantity">
             <Dropdown
               onChange={props.changeItemQuantity}
-              size={smallDropDown}
               options={quantityOptions}
               value={props.quantity}
             />

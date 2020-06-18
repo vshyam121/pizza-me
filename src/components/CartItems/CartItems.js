@@ -1,6 +1,7 @@
 import React from "react";
 import CartItem from "../../containers/Cart/CartItem/CartItem";
 
+/* All cart items to display in cart and order summary pages */
 const CartItems = props => {
   return Object.keys(props.items).map(itemId => {
     const item = props.items[itemId];

@@ -9,7 +9,8 @@ import {
   RIGHT_HALF,
 } from "../../../../metadata/pizzaProperties";
 
-const ListOptions = (props) => {
+/* Interactable topping options */ 
+const ToppingOptions = (props) => {
   const onClick = (event) => {
     event.stopPropagation();
     props.onClick(event);
@@ -158,4 +159,4 @@ const ListOptions = (props) => {
   );
 };
 
-export default ListOptions;
+export default ToppingOptions;

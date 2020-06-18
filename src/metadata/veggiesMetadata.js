@@ -26,6 +26,8 @@ import RomaTomatoesPreview from "../assets/images/topping_Tomato_ML_reg.png";
 import ExtraRomaTomatoesPreview from "../assets/images/topping_Tomato_ML_extra.png";
 import RomaTomatoesIcon from "../assets/images/icon_topping_Tomato.webp";
 
+/* All metadata related to the display of veggy options */
+
 export const MUSHROOMS = "Mushrooms";
 export const ROASTED_SPINACH = "Roasted Spinach";
 export const RED_ONIONS = "Red Onions";

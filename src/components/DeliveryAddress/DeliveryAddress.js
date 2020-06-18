@@ -1,5 +1,6 @@
 import React from "react";
 
+/* Displays delivery address in the correct format */
 const DeliveryAddress = (props) => {
   return (
     <span className="address-container">

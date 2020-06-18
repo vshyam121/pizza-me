@@ -3,6 +3,8 @@ import CreamyGarlicParmesanIcon from "../assets/images/icon_sauce_CreamyGarlicPa
 import BarbequeIcon from "../assets/images/icon_sauce_BBQ.webp";
 import BuffaloIcon from "../assets/images/icon_sauce_Buffalo.webp";
 
+/* All metadata related to the display of sauce options */
+
 export const CLASSIC_MARINARA = "Classic Marinara";
 export const CREAMY_GARLIC_PARMESAN = "Creamy Garlic Parmesan"
 export const BARBECUE = "Barbeque";

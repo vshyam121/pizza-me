@@ -14,10 +14,10 @@ import {
 import OrderSubmission from "../../Messages/OrderSubmissionMessage/OrderSubmissionMessage";
 import SignedOutMessage from "../../Messages/SignedOutMessage/SignedOutMessage";
 import Message from "../../UI/Message/Message";
-import axiosDB from "../../../axiosDB";
+import axiosFirebase from "../../../axiosFirebase";
 import withErrorHandler from "../../../hoc/withErrorHandler";
 
-/* Home component containing popular pizza boxes */
+/* Displays popular pizzas */
 class Home extends Component {
   render() {
     let message = null;
@@ -74,4 +74,4 @@ class Home extends Component {
   }
 }
 
-export default withErrorHandler(Home, axiosDB);
+export default withErrorHandler(Home, axiosFirebase);

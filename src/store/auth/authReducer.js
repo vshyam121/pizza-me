@@ -9,17 +9,14 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.AUTH_RESET:
-      return {
-      ...state,
-      error: null
-    }
+    //set loading to true and reset error
     case actionTypes.AUTH_START:
       return {
         ...state,
         error: null,
         loading: true
       };
+    //successfully authenticated 
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
@@ -28,12 +25,14 @@ const authReducer = (state = initialState, action) => {
         userId: action.userId,
         error: null
       };
+    //set error and reset loading when auth failed
     case actionTypes.AUTH_FAILED:
       return {
         ...state,
         loading: false,
         error: action.error
       };
+    //reset user data on signout
     case actionTypes.AUTH_SIGNOUT:
       return {
         ...state,

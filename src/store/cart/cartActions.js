@@ -7,7 +7,7 @@ import {
 } from "../../metadata/pizzaProperties";
 import { CLASSIC_MARINARA, REGULAR_SAUCE } from "../../metadata/sauceMetadata";
 import { NO_CRUST_FLAVOR } from "../../metadata/crustFlavorMetadata";
-import axiosDB from "../../axiosDB";
+import axiosFirebase from "../../axiosFirebase";
 import { v4 as uuidv4 } from "uuid";
 import { REGULAR_CHEESE } from "../../metadata/cheeseMetadata";
 import hash from "object-hash";
@@ -15,12 +15,13 @@ import { secureStorage } from "../../shared/secureStorage";
 import * as actionDisplays from "../ui/actionDisplays";
 import { setErroredAction } from "../ui/uiActions";
 
+/* Create cart in backend for a particular user */
 export const createCart = (idToken, userId) => {
   return (dispatch) => {
     const cart = {
       userId: userId,
     };
-    axiosDB.post("/carts.json?auth=" + idToken, cart).then((res) => {
+    axiosFirebase.post("/carts.json?auth=" + idToken, cart).then((res) => {
       dispatch({
         type: actionTypes.CREATE_CART,
         cartId: res.data.name,
@@ -30,6 +31,7 @@ export const createCart = (idToken, userId) => {
   };
 };
 
+/* Set cart in redux store from cart in local storage */
 export const getCartFromLocalStorage = () => {
   return (dispatch) => {
     let cart = secureStorage.getItem("cart");
@@ -39,6 +41,7 @@ export const getCartFromLocalStorage = () => {
   };
 };
 
+/* Combine local storage cart with cart in backend */
 export const combineCarts = (localCart, items, cartId, userId, idToken) => {
   return (dispatch) => {
     let emptyCart = { items: {}, quantity: 0 };
@@ -59,7 +62,7 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
       }
     });
     if (Object.keys(localItems)) {
-      axiosDB
+      axiosFirebase
         .patch("/carts/" + cartId + "/items.json?auth=" + idToken, localItems)
         .then((res) => {
           dispatch({
@@ -85,6 +88,7 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
   };
 };
 
+/* Add up individual item quantities to get total quantity for cart */
 const getTotalQuantity = (items) => {
   let totalQuantity = 0;
   Object.values(items).forEach((item) => {
@@ -94,25 +98,28 @@ const getTotalQuantity = (items) => {
   return totalQuantity;
 };
 
+/* To set loading in UI when getting cart */
 const getCartStart = () => {
   return {
     type: actionTypes.GET_CART_START,
   };
 };
 
+/* To stop loading cart when getting cart failed */
 const getCartFailed = () => {
   return {
     type: actionTypes.GET_CART_FAILED,
   };
 };
 
+/* Get cart from backend if user signed in or from local storage if not */
 export const getCart = (idToken, userId) => {
   return (dispatch) => {
     dispatch(getCartStart());
     let items = null;
     let cartId = null;
     let quantity;
-    axiosDB
+    axiosFirebase
       .get(
         "/carts.json?auth=" +
           idToken +
@@ -152,6 +159,7 @@ export const getCart = (idToken, userId) => {
   };
 };
 
+/* Generate pizza to item id hashmap to take care of duplicate pizzas */
 const generateItemHashMap = (items) => {
   let itemHashMap = {};
   Object.entries(items).forEach(([itemId, item]) => {
@@ -167,11 +175,12 @@ export const clearCart = () => {
   };
 };
 
+/* Add new item to cart, meaning it doesn't have a match in cart already */
 const addNewItemToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
     let item = { pizza: pizza, quantity: quantity };
     if (getState().cart.cartId) {
-      axiosDB
+      axiosFirebase
         .post(
           "/carts/" +
             getState().cart.cartId +
@@ -187,7 +196,7 @@ const addNewItemToCart = (pizza, quantity) => {
             item: item,
           });
         })
-        .catch((err) => {
+        .catch(() => {
           dispatch(setErroredAction(actionDisplays.ADD_ITEM_TO_CART));
         });
     } else {
@@ -206,6 +215,7 @@ const addNewItemToCart = (pizza, quantity) => {
   };
 };
 
+/* Add to cart, either new item or increase quantity for already existing item */
 export const addToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
     if (!pizza[SAUCE]) {
@@ -233,6 +243,7 @@ export const addToCart = (pizza, quantity) => {
   };
 };
 
+/* set cart items and metadata in redux store */
 export const setCartItems = (cart) => {
   let itemHashMap = generateItemHashMap(cart.items);
   return {
@@ -243,13 +254,14 @@ export const setCartItems = (cart) => {
   };
 };
 
+/* Set new item quantity and update total quantity */
 export const changeItemQuantity = (itemId, quantity) => {
   return (dispatch, getState) => {
     const item = { ...getState().cart.items[itemId] };
     dispatch(changeCartItemStart(item.pizza));
     item.quantity = quantity;
     if (getState().cart.cartId) {
-      axiosDB
+      axiosFirebase
         .put(
           "/carts/" +
             getState().cart.cartId +
@@ -259,7 +271,7 @@ export const changeItemQuantity = (itemId, quantity) => {
             getState().auth.idToken,
           item
         )
-        .then((res) => {
+        .then(() => {
           console.log("changing item quantity");
           dispatch({
             type: actionTypes.CHANGE_ITEM_QUANTITY,
@@ -267,10 +279,10 @@ export const changeItemQuantity = (itemId, quantity) => {
             quantity: quantity,
           });
         })
-        .catch(err => {
+        .catch(() => {
           dispatch(setErroredAction(actionDisplays.CHANGE_ITEM_QUANTITY));
           dispatch(changeCartItemFailed());
-        })
+        });
     } else {
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
@@ -286,6 +298,7 @@ export const changeItemQuantity = (itemId, quantity) => {
   };
 };
 
+/* To set loading in UI when making change to a cart item */
 const changeCartItemStart = (pizza) => {
   return {
     type: actionTypes.CHANGE_CART_ITEM_START,
@@ -293,17 +306,19 @@ const changeCartItemStart = (pizza) => {
   };
 };
 
+/* To stop loading cart item in UI if changing cart item failed */
 const changeCartItemFailed = () => {
   return {
     type: actionTypes.CHANGE_CART_ITEM_FAILED,
   };
 };
 
+/* remove item from cart in backend if user signed in or from cart in local storage if not */
 export const removeItem = (itemId, pizza) => {
   return (dispatch, getState) => {
     dispatch(changeCartItemStart(pizza));
     if (getState().cart.cartId) {
-      axiosDB
+      axiosFirebase
         .delete(
           "/carts/" +
             getState().cart.cartId +
@@ -312,17 +327,17 @@ export const removeItem = (itemId, pizza) => {
             ".json?auth=" +
             getState().auth.idToken
         )
-        .then((res) => {
+        .then(() => {
           dispatch({
             type: actionTypes.REMOVE_ITEM_SUCCESS,
             itemId: itemId,
             pizza: pizza,
           });
         })
-        .catch(err => {
+        .catch(() => {
           dispatch(changeCartItemFailed());
           dispatch(setErroredAction(actionDisplays.REMOVE_ITEM));
-        })
+        });
     } else {
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
@@ -344,7 +359,7 @@ export const emptyCart = (userId) => {
       let emptyCart = {
         userId: userId,
       };
-      axiosDB
+      axiosFirebase
         .put(
           "/carts/" +
             getState().cart.cartId +
@@ -352,7 +367,7 @@ export const emptyCart = (userId) => {
             getState().auth.idToken,
           emptyCart
         )
-        .then((res) => {
+        .then(() => {
           dispatch({
             type: actionTypes.EMPTY_CART,
           });
@@ -368,12 +383,13 @@ export const emptyCart = (userId) => {
   };
 };
 
+/* Save item to cart in backend if user signed in or in local storage if not */
 export const saveToCart = (pizza, quantity, itemId) => {
   return (dispatch, getState) => {
     const item = { pizza: pizza, quantity: quantity };
     dispatch(changeCartItemStart(getState().cart.items[itemId].pizza));
     if (getState().cart.cartId) {
-      axiosDB
+      axiosFirebase
         .put(
           "/carts/" +
             getState().cart.cartId +
@@ -383,14 +399,14 @@ export const saveToCart = (pizza, quantity, itemId) => {
             getState().auth.idToken,
           item
         )
-        .then((res) => {
+        .then(() => {
           dispatch({
             type: actionTypes.SAVE_TO_CART,
             itemId: itemId,
             item: item,
           });
         })
-        .catch(err => {
+        .catch(() => {
           dispatch(changeCartItemFailed());
           dispatch(setErroredAction(actionDisplays.SAVE_TO_CART));
         });

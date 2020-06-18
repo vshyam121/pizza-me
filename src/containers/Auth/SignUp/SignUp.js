@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import "./SignUp.scss";
-import { signUp, authReset } from "../../../store/auth/authActions";
+import { signUp } from "../../../store/auth/authActions";
 import { connect } from "react-redux";
 import { SyncLoader } from "react-spinners";
-import { lookupErrorCode } from "../../../shared/errorMessages";
+import { lookupErrorCode } from "../../../shared/util";
 import { Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
-import axios from "axios";
-import withErrorHandler from "../../../hoc/withErrorHandler";
 
+/* User sign up form */
 class SignUp extends Component {
   state = {
     form: {
@@ -58,12 +57,6 @@ class SignUp extends Component {
   updateForm = (stateUpdate) => {
     this.setState(stateUpdate);
   };
-
-  componentDidMount() {
-    if (this.props.error) {
-      this.props.authReset();
-    }
-  }
 
   render() {
     let form = (
@@ -120,4 +113,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.idToken,
 });
 
-export default connect(mapStateToProps, { signUp, authReset })(withErrorHandler(SignUp, axios));
+export default connect(mapStateToProps, { signUp })(SignUp);

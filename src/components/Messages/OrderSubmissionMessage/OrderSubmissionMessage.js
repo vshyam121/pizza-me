@@ -2,6 +2,7 @@ import React from "react";
 import "./OrderSubmissionMessage.scss";
 import { Link } from "react-router-dom";
 
+/* A thank you message to be displayed after successfully submitting an order */
 const OrderSubmission = () => {
   return (
     <div className="order-submission">

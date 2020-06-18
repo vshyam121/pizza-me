@@ -2,6 +2,7 @@ import React from "react";
 import NavigationItem from "../../UI/NavigationItem/NavigationItem";
 import { connect } from "react-redux";
 
+/* Menu items that deal with account information, namely authentication and orders */
 const AccountMenuItems = (props) => {
   let accountMenuItems = (
     <NavigationItem {...props} to="/signin">
@@ -20,7 +21,7 @@ const AccountMenuItems = (props) => {
       </React.Fragment>
     );
   }
-  return accountMenuItems ;
+  return accountMenuItems;
 };
 
 const mapStateToProps = (state) => ({

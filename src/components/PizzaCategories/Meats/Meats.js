@@ -12,10 +12,10 @@ import {
   SUPER_SUPREME,
   PEPPERONI_LOVER,
 } from "../../../metadata/comboMetadata";
-import axiosDB from "../../../axiosDB";
+import axiosFirebase from "../../../axiosFirebase";
 import withErrorHandler from "../../../hoc/withErrorHandler";
 
-/* Meats component containing meat pizza boxes */
+/* Displays various types of meat pizzas */
 class Meats extends Component {
   render() {
     return (
@@ -54,4 +54,4 @@ class Meats extends Component {
   }
 }
 
-export default withErrorHandler(Meats, axiosDB);
+export default withErrorHandler(Meats, axiosFirebase);
