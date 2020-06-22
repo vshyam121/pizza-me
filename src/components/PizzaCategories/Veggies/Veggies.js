@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PizzaBox from "../../../containers/PizzaBox/PizzaBox";
 import CheesePizzaImg from "../../../assets/images/pizza_cheese.jpg";
-import VeggieLoversPizzaImg from "../../../assets/images/pizza_Veggie_Lovers.webp";
-import UltimateCheeseLoverPizzaImg from "../../../assets/images/pizza_Ultimate_Cheese_Lovers.webp";
+import VeggieLoversPizzaImg from "../../../assets/images/pizza_Veggie_Lovers.png";
+import UltimateCheeseLoverPizzaImg from "../../../assets/images/pizza_Ultimate_Cheese_Lovers.png";
 import {
   REGULAR,
   COMBO,

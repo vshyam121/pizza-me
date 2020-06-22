@@ -41,17 +41,20 @@ const cartReducer = (state = initialState, action) => {
         itemHashMap: itemHashMap,
         itemAdded: action.item.quantity,
       };
+    //set loading before getting cart
     case actionTypes.GET_CART_START:
       return {
         ...state,
         loadingCart: true,
         errorCart: null,
       };
+    //finish loading when getting cart failed
     case actionTypes.GET_CART_FAILED:
       return {
         ...state,
         loadingCart: false,
       };
+    //successfully got cart for user, set cart metadata
     case actionTypes.GET_CART_SUCCESS:
       return {
         ...state,
@@ -62,6 +65,7 @@ const cartReducer = (state = initialState, action) => {
         itemHashMap: action.itemHashMap,
         loadingCart: false,
       };
+    //clear cart after logging out
     case actionTypes.CLEAR_CART:
       return {
         ...state,
@@ -72,6 +76,7 @@ const cartReducer = (state = initialState, action) => {
         itemHashMap: {},
         itemAdded: null,
       };
+    //set cart items 
     case actionTypes.SET_CART_ITEMS:
       return {
         ...state,
@@ -79,6 +84,7 @@ const cartReducer = (state = initialState, action) => {
         quantity: action.quantity,
         itemHashMap: action.itemHashMap,
       };
+    //change item quantity 
     case actionTypes.CHANGE_ITEM_QUANTITY:
       items = { ...state.items };
       quantity = state.quantity - items[action.itemId].quantity;
@@ -94,18 +100,21 @@ const cartReducer = (state = initialState, action) => {
         itemAdded: itemAdded,
         loadingCartItem: false
       };
+    //set loading before changing cart item
     case actionTypes.CHANGE_CART_ITEM_START:
       return {
         ...state,
         loadingCartItem: true,
         itemBeingChanged: action.itemBeingChanged,
       };
+    //failed to change cart item, done loading
     case actionTypes.CHANGE_CART_ITEM_FAILED:
       return {
         ...state,
         loadingCartItem: false,
         itemBeingChanged: null,
       };
+    //update cart metadata with removed item
     case actionTypes.REMOVE_ITEM_SUCCESS:
       items = { ...state.items };
       itemHashMap = { ...state.itemHashMap };
@@ -121,6 +130,7 @@ const cartReducer = (state = initialState, action) => {
         loadingCartItem: false,
         itemBeingChanged: null,
       };
+    //save item to list of items and update quantity
     case actionTypes.SAVE_TO_CART:
       items = { ...state.items };
       quantity = state.quantity - items[action.itemId].quantity;
@@ -133,11 +143,11 @@ const cartReducer = (state = initialState, action) => {
         itemAdded: null,
         loadingCartItem: false
       };
+    //empty cart and all metadata
     case actionTypes.EMPTY_CART:
-      items = {};
       return {
         ...state,
-        items: items,
+        items: {},
         quantity: 0,
         itemAdded: null,
         itemHashMap: {}

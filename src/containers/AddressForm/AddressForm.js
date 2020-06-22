@@ -7,6 +7,8 @@ import {
 import { SyncLoader } from "react-spinners";
 import { withRouter } from "react-router-dom";
 import Form from "../Form/Form";
+import axios from "axios";
+import withErrorHandler from "../../hoc/withErrorHandler";
 
 /* Delivery address form */
 class AddressForm extends Component {
@@ -26,9 +28,12 @@ class AddressForm extends Component {
       unit: {
         elementType: "input",
         elementConfig: {
-          type: "number",
           placeholder: "Apt/Unit #"
         },
+        validation: {
+          isNumeric: true
+        },
+        errorMessage: "Please enter only the Apt/Unit number",
         value: "",
         valid: true
       },
@@ -137,4 +142,4 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   validateAddress,
   validateAddressReset
-})(withRouter(AddressForm));
+})(withRouter(withErrorHandler(AddressForm, axios)));

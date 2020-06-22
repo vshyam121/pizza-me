@@ -131,18 +131,19 @@ export const initApp = () => {
       secureStorage.setItem("cart", emptyCart);
     }
     const idToken = localStorage.getItem("idToken");
+    let timeToExpire = 0;
     if (idToken) {
-      const userId = localStorage.getItem("userId");
       const expirationTime = localStorage.getItem("expirationTime");
-      dispatch(authSuccess(idToken, userId));
-      dispatch(
-        checkAuthTimeout(
-          (new Date(expirationTime).getTime() - new Date().getTime()) / 1000
-        )
-      );
-      dispatch(getCart(idToken, userId));
-      dispatch(getOrders(idToken, userId));
-    } else {
+      timeToExpire =
+        new Date(expirationTime).getTime() - new Date().getTime();
+      if (timeToExpire > 0) {
+        const userId = localStorage.getItem("userId");
+        dispatch(authSuccess(idToken, userId));
+        dispatch(checkAuthTimeout(timeToExpire / 1000));
+        dispatch(getCart(idToken, userId));
+        dispatch(getOrders(idToken, userId));
+      }
+    } else if (!idToken || timeToExpire <= 0) {
       dispatch(getCartFromLocalStorage());
     }
   };

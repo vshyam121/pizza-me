@@ -4,6 +4,8 @@ import { MdDirectionsCar, MdStore } from "react-icons/md";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import AddressForm from "../AddressForm/AddressForm";
+import Message from "../../components/UI/Message/Message";
+import SignedUpMessage from "../../components/Messages/SignedUpMessage/SignedUpMessage";
 
 /* Options for choosing either carryout or delivery order */
 class OrderType extends Component {
@@ -20,6 +22,14 @@ class OrderType extends Component {
   };
 
   render() {
+    let message = null;
+    if (this.props.location.fromSignUp) {
+      message = (
+        <Message>
+          <SignedUpMessage />
+        </Message>
+      );
+    }
     if (!this.props.isAuthenticated) {
       return (
         <Redirect
@@ -47,33 +57,39 @@ class OrderType extends Component {
     }
 
     return (
-      <div className="form-container">
-        <div className="form-component">
-          <div className={orderTypeClassNames.join(" ")}>
-            <div
-              onClick={this.handleClick}
-              data-type="Delivery"
-              className={deliveryClassNames.join(" ")}
-            >
-              <div className={iconClassNames.join(" ")}>
-                <MdDirectionsCar />
+      <React.Fragment>
+        {message}
+        <div className="form-container">
+          <div className="form-component">
+            <h4 className="form-component__title">
+              Please choose an order method
+            </h4>
+            <div className={orderTypeClassNames.join(" ")}>
+              <div
+                onClick={this.handleClick}
+                data-type="Delivery"
+                className={deliveryClassNames.join(" ")}
+              >
+                <div className={iconClassNames.join(" ")}>
+                  <MdDirectionsCar />
+                </div>
+                <span className="order-type__description">Delivery</span>
               </div>
-              <span className="order-type__description">Delivery</span>
-            </div>
-            <div
-              onClick={this.handleClick}
-              data-type="Carryout"
-              className="order-type__type"
-            >
-              <div className="order-type__icon">
-                <MdStore />
+              <div
+                onClick={this.handleClick}
+                data-type="Carryout"
+                className="order-type__type"
+              >
+                <div className="order-type__icon">
+                  <MdStore />
+                </div>
+                <span className="order-type__description">Carryout</span>
               </div>
-              <span className="order-type__description">Carryout</span>
             </div>
+            {form}
           </div>
-          {form}
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

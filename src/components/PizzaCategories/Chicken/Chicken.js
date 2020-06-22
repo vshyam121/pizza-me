@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PizzaBox from "../../../containers/PizzaBox/PizzaBox";
 import CheesePizzaImg from "../../../assets/images/pizza_cheese.jpg";
-import HawaiianChickenPizzaImg from "../../../assets/images/pizza_Hawaiian_Chicken.webp";
-import ChickenBaconParmesanImg from "../../../assets/images/pizza_Chicken_Bacon_Parmesan.webp";
-import BBQChickenPizzaImg from "../../../assets/images/pizza_Backyard_BBQ_Chicken.webp";
-import BuffaloChickenPizzaImg from "../../../assets/images/pizza_Buffalo_Chicken.webp";
+import HawaiianChickenPizzaImg from "../../../assets/images/pizza_Hawaiian_Chicken.png";
+import ChickenBaconParmesanImg from "../../../assets/images/pizza_Chicken_Bacon_Parmesan.png";
+import BBQChickenPizzaImg from "../../../assets/images/pizza_Backyard_BBQ_Chicken.png";
+import BuffaloChickenPizzaImg from "../../../assets/images/pizza_Buffalo_Chicken.png";
 import {
   REGULAR,
   COMBO,

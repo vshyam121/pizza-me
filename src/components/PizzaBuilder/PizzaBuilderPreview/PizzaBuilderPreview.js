@@ -4,7 +4,14 @@ import PizzaPreview from "../../PizzaPreview/PizzaPreview";
 
 /* Pizza preview image section of the pizza builder */
 class PizzaBuilderPreview extends Component {
+  shouldComponentUpdate(prevProps) {
+    if (this.props.pizza !== prevProps.pizza) {
+      return true;
+    }
+    return false;
+  }
   render() {
+    console.log("render pizza builder preview");
 
     return (
       <div className="pizza-builder-preview">

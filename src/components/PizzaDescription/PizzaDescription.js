@@ -75,25 +75,24 @@ const PizzaDescription = (props) => {
   }
 
   const singlePrice = calculatePrice(props.pizza);
-  let overallPrice = null;
+  let overallPrice = (singlePrice * props.quantity).toFixed(2);
+  let quantity = null;
+  let pizzaText = "Pizza";
+
   if (props.cart) {
     overallPrice = (
-      <h2 className="description__price--cart">
-        ${(singlePrice * props.quantity).toFixed(2)}
-      </h2>
+      <h2 className="description__price--cart">${overallPrice}</h2>
     );
   } else if (props.order) {
     overallPrice = (
-      <h2 className="description__price--order">
-        ${(singlePrice * props.quantity).toFixed(2)}
-      </h2>
+      <h2 className="description__price--order">${overallPrice}</h2>
     );
+    quantity = props.quantity + " ";
+    if (props.quantity > 1) {
+      pizzaText = "Pizzas";
+    }
   } else {
-    overallPrice = (
-      <h2 className="description__price">
-        ${(singlePrice * props.quantity).toFixed(2)}
-      </h2>
-    );
+    overallPrice = <h2 className="description__price">${overallPrice}</h2>;
   }
 
   return (
@@ -101,8 +100,8 @@ const PizzaDescription = (props) => {
       <div className="description__title">
         <div className="description__pizza">
           <h2 className="description__pizza-title">
-            {props.pizza[SIZE]} {props.pizza[CRUST]} {props.pizza[COMBO_NAME]}{" "}
-            Pizza
+            {quantity} {props.pizza[SIZE]} {props.pizza[CRUST]}{" "}
+            {props.pizza[COMBO_NAME]} {pizzaText}
           </h2>
         </div>
         {overallPrice}

@@ -86,18 +86,20 @@ class SignUp extends Component {
     let redirect = null;
     if (this.props.isAuthenticated) {
       if (this.props.location.fromCheckout) {
-        redirect = <Redirect to="/checkout/order-type" />;
+        redirect = (
+          <Redirect
+            to={{ pathname: "/checkout/order-type", fromSignUp: "true" }}
+          />
+        );
       } else {
-        redirect = <Redirect to="/" />;
+        redirect = <Redirect to={{ pathname: "/", fromSignUp: "true" }} />;
       }
     }
 
     return (
       <div className="form-container">
         <div className="form-component">
-          <h3 className="form-component__title">
-            Sign up for an account
-          </h3>
+          <h3 className="form-component__title">Sign up for an account</h3>
           {redirect}
           {errorMessage}
           {form}

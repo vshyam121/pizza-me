@@ -109,8 +109,8 @@ export const validateAddress = (addressForm) => {
           });
         }
       })
-      .catch((err) => {
-        console.log(err.response.status);
+      .catch(() => {
+        dispatch(setErroredAction(actionDisplays.VALIDATE_ADDRESS));
         dispatch({
           type: actionTypes.VALIDATE_ADDRESS_FAILED,
         });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./PizzaBuilderProgress.scss";
 import {
   SIZE_CRUST,
@@ -8,6 +8,10 @@ import {
 
 /* Shows progress of steps in the pizza builder */
 const PizzaBuilderProgress = props => {
+
+  useEffect(() => {
+    console.log("render builder progress");
+  }, [props.stage]);
   return (
     <div className="progress">
       <button

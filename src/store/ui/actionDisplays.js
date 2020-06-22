@@ -7,3 +7,4 @@ export const REMOVE_ITEM = "remove item";
 export const SAVE_TO_CART = "save item to cart";
 export const SIGN_IN = "sign in";
 export const SIGN_UP = "sign up";
+export const VALIDATE_ADDRESS = "validate address";

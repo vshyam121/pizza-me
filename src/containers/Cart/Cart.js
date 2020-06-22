@@ -55,6 +55,7 @@ const Cart = (props) => {
                 pathname: props.isAuthenticated
                   ? "/checkout/order-type"
                   : "/signin",
+                fromCheckout: true
               }}
             >
               <Button type={primary}>

@@ -79,6 +79,8 @@ class PizzaBuilder extends Component {
   };
 
   render() {
+
+    console.log("render pizza builder");
     let builder = null;
     let back = null;
     let next = null;

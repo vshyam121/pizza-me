@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PizzaBox from "../../../containers/PizzaBox/PizzaBox";
 import CheesePizzaImg from "../../../assets/images/pizza_cheese.jpg";
 import PepperoniPizzaImg from "../../../assets/images/pizza_pepperoni.jpg";
-import MeatLoversPizzaImg from "../../../assets/images/pizza_meat_lovers.webp";
-import SupremePizzaImg from "../../../assets/images/pizza_supreme.webp";
+import MeatLoversPizzaImg from "../../../assets/images/pizza_meat_lovers.png";
+import SupremePizzaImg from "../../../assets/images/pizza_supreme.png";
 import { REGULAR, COMBO } from "../../../metadata/comboMetadata";
 import {
   CHEESE,
@@ -13,6 +13,7 @@ import {
 } from "../../../metadata/comboMetadata";
 import OrderSubmission from "../../Messages/OrderSubmissionMessage/OrderSubmissionMessage";
 import SignedOutMessage from "../../Messages/SignedOutMessage/SignedOutMessage";
+import SignedUpMessage from "../../Messages/SignedUpMessage/SignedUpMessage";
 import Message from "../../UI/Message/Message";
 import axiosFirebase from "../../../axiosFirebase";
 import withErrorHandler from "../../../hoc/withErrorHandler";
@@ -20,6 +21,8 @@ import withErrorHandler from "../../../hoc/withErrorHandler";
 /* Displays popular pizzas */
 class Home extends Component {
   render() {
+
+    console.log("render Home");
     let message = null;
     if (this.props.location.fromCheckout) {
       message = (
@@ -31,6 +34,12 @@ class Home extends Component {
       message = (
         <Message>
           <SignedOutMessage />
+        </Message>
+      );
+    } else if (this.props.location.fromSignUp) {
+      message = (
+        <Message>
+          <SignedUpMessage />
         </Message>
       );
     }

@@ -1,24 +1,26 @@
 import React, { Component } from "react";
-import { crustTypes, crustMetadataMapping } from "../../../../metadata/crustMetadata";
+import {
+  crustTypes,
+  crustMetadataMapping,
+} from "../../../../metadata/crustMetadata";
 import {
   crust_flavors,
-  crustFlavorImageMapping
+  crustFlavorImageMapping,
 } from "../../../../metadata/crustFlavorMetadata";
 import { sizes } from "../../../../metadata/sizeMetadata";
-import  ImageOptions from "../../BuilderOptions/ImageOptions/ImageOptions";
+import ImageOptions from "../../BuilderOptions/ImageOptions/ImageOptions";
 import ButtonOptions from "../../BuilderOptions/ButtonOptions/ButtonOptions";
 import {
   SIZE,
   CRUST,
-  CRUST_FLAVOR
+  CRUST_FLAVOR,
 } from "../../../../metadata/pizzaProperties";
-
 
 /* Pizza builder section with size/crust options */
 class SizeCrustBuilder extends Component {
-  
 
   render() {
+    console.log("render size crust builder");
     return (
       <div className="builder">
         <div className="builder-section">
@@ -26,7 +28,7 @@ class SizeCrustBuilder extends Component {
           <ButtonOptions
             selectionOptions={sizes}
             itemSelected={this.props.pizza[SIZE]}
-            onClick={e => this.props.onClick(e, SIZE)}
+            onClick={(e) => this.props.onClick(e, SIZE)}
           />
         </div>
         <div className="builder-section">
@@ -36,7 +38,7 @@ class SizeCrustBuilder extends Component {
             selectionOptions={crustTypes}
             itemSelected={this.props.pizza[CRUST]}
             imageMapping={crustMetadataMapping}
-            onClick={e => this.props.onClick(e, CRUST)}
+            onClick={(e) => this.props.onClick(e, CRUST)}
           />
         </div>
 
@@ -46,7 +48,7 @@ class SizeCrustBuilder extends Component {
             selectionOptions={crust_flavors}
             itemSelected={this.props.pizza[CRUST_FLAVOR]}
             imageMapping={crustFlavorImageMapping}
-            onClick={e => this.props.onClick(e, CRUST_FLAVOR)}
+            onClick={(e) => this.props.onClick(e, CRUST_FLAVOR)}
           />
         </div>
       </div>

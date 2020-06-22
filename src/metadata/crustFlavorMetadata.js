@@ -1,12 +1,12 @@
-import HTGarlicButteryBlendPreview from "../assets/images/crust_ht_GarlicButteryBlend.webp";
-import ThinGarlicButteryBlendPreview from "../assets/images/crust_thin_GarlicButteryBlend.webp";
-import PanGarlicButteryBlendPreview from "../assets/images/crust_pan_GarlicButteryBlend.webp";
-import GarlicButteryBlendIcon from "../assets/images/icon_finisher_GarlicButteryBlend_whole_2017.webp";
-import HTToastedParmesanPreview from "../assets/images/crust_ht_ToastedParmesan.webp";
-import ThinToastedParmesanPreview from "../assets/images/crust_thin_ToastedParmesan.webp";
-import PanToastedParmesanPreview from "../assets/images/crust_pan_ToastedParmesan.webp";
-import ToastedParmesanIcon from "../assets/images/icon_finisher_ToastedParm_whole_2017.webp";
-import NoCrustFlavorIcon from "../assets/images/icon_finisher_none_whole_2017.webp";
+import HTGarlicButteryBlendPreview from "../assets/images/crust_ht_GarlicButteryBlend.png";
+import ThinGarlicButteryBlendPreview from "../assets/images/crust_thin_GarlicButteryBlend.png";
+import PanGarlicButteryBlendPreview from "../assets/images/crust_pan_GarlicButteryBlend.png";
+import GarlicButteryBlendIcon from "../assets/images/icon_finisher_GarlicButteryBlend_whole_2017.png";
+import HTToastedParmesanPreview from "../assets/images/crust_ht_ToastedParmesan.png";
+import ThinToastedParmesanPreview from "../assets/images/crust_thin_ToastedParmesan.png";
+import PanToastedParmesanPreview from "../assets/images/crust_pan_ToastedParmesan.png";
+import ToastedParmesanIcon from "../assets/images/icon_finisher_ToastedParm_whole_2017.png";
+import NoCrustFlavorIcon from "../assets/images/icon_finisher_none_whole_2017.png";
 import { HAND_TOSSED, THIN_N_CRISPY, ORIGINAL_PAN } from "./crustMetadata";
 
 /* All metadata related to the display of crust flavor options */

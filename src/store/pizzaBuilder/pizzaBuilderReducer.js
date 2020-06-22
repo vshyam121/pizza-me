@@ -40,6 +40,7 @@ const pizzaBuilderReducer = (state = initialState, action) => {
   let toppings = null;
   let topping = null;
   switch (action.type) {
+    //initialize and display pizza builder with given pizza and quantity
     case actionTypes.INIT_PIZZA_BUILDER:
       return {
         ...state,
@@ -68,11 +69,13 @@ const pizzaBuilderReducer = (state = initialState, action) => {
         },
         quantity: action.quantity,
       };
+    //close the pizza builder
     case actionTypes.CLOSE_PIZZA_BUILDER:
       return {
         ...state,
         showPizzaBuilder: false,
       };
+    //dynamically set a pizza property
     case actionTypes.SET_PROPERTY:
       return {
         ...state,
@@ -81,6 +84,7 @@ const pizzaBuilderReducer = (state = initialState, action) => {
           [action.property]: action.value,
         },
       };
+    //add or remove topping on pizza
     case actionTypes.TOGGLE_TOPPING:
       toppings = state.pizza[action.property]
         ? { ...state.pizza[action.property] }
@@ -97,13 +101,18 @@ const pizzaBuilderReducer = (state = initialState, action) => {
           [action.property]: toppings,
         },
       };
+    //set the amount of a topping (WHOLE, LEFT_HALF, or RIGHT_HALF)
     case actionTypes.SET_TOPPING_AMOUNT:
       toppings = state.pizza[action.property]
         ? { ...state.pizza[action.property] }
         : {};
 
       topping = toppings[action.topping];
-      topping.amount = action.value;
+      if (!topping) {
+        topping = { amount: action.value, portion: WHOLE };
+      } else {
+        topping.amount = action.value;
+      }
       toppings[action.topping] = topping;
       return {
         ...state,
@@ -112,7 +121,8 @@ const pizzaBuilderReducer = (state = initialState, action) => {
           [action.property]: toppings,
         },
       };
-      case actionTypes.SET_TOPPING_PORTION:
+    //set portion of a topping (EXTRA, REGULAR)
+    case actionTypes.SET_TOPPING_PORTION:
       toppings = state.pizza[action.property]
         ? { ...state.pizza[action.property] }
         : {};

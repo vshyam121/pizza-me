@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import "./Header.scss";
 import PizzaTimeLogo from "../../assets/images/alarm-clock.png";
-import { MdShoppingCart, MdMenu } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
 import { connect } from "react-redux";
 import NavigationItem from "../../components/UI/NavigationItem/NavigationItem";
 import { Link, withRouter } from "react-router-dom";
-import Button, { primary } from "../../components/UI/Button/Button";
-import DropdownAlert from "../../components/UI/DropdownAlert/DropdownAlert";
 import PizzaMenuItems from "../../components/MenuItems/PizzaMenuItems/PizzaMenuItems";
 import { toggleSidebar } from "../../store/ui/uiActions";
 import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/AccountMenuItems";
+import CartIcon from "../../components/CartIcon/CartIcon";
 
 /* Header containing logo, app name, main menu, autentication, orders and cart */
 class Header extends Component {
@@ -38,53 +37,6 @@ class Header extends Component {
 
   render() {
     console.log("render header");
-    let numItemsInCart = null;
-    if (this.props.quantity > 0) {
-      numItemsInCart = (
-        <div
-          key={this.props.quantity + "-num-items"}
-          className="header__cart-items animate-num-items"
-        >
-          {this.props.quantity}
-        </div>
-      );
-    }
-
-    let itemAdded = null;
-    if (
-      this.props.itemAdded &&
-      this.props.location.pathname !== "/cart" &&
-      this.props.location.pathname !== "/checkout"
-    ) {
-      let numItems = null;
-      if (this.props.itemAdded === 1) {
-        numItems = <span>{this.props.itemAdded} new item</span>;
-      } else {
-        numItems = <span>{this.props.itemAdded} new items</span>;
-      }
-      itemAdded = (
-        <DropdownAlert
-          onClick={this.handleClickItemAddedAlert}
-          alertKey={this.props.quantity + "-add-items"}
-        >
-          <h3 className="header__alert-text">{numItems} added to cart</h3>
-          <Link
-            onClick={this.handleClickCheckout}
-            className="header__checkout"
-            to={{
-              pathname: this.props.isAuthenticated
-                ? "/checkout/order-type"
-                : "/signin",
-              fromCheckout: "true",
-            }}
-          >
-            <Button type={primary}>
-              <span>Checkout</span>
-            </Button>
-          </Link>
-        </DropdownAlert>
-      );
-    }
 
     return (
       <header className="header">
@@ -97,7 +49,11 @@ class Header extends Component {
             </NavigationItem>
           </div>
           <Link to="/" className="header__logo-title">
-            <img alt="PizzaTime logo" className="header__logo" src={PizzaTimeLogo} />
+            <img
+              alt="PizzaTime logo"
+              className="header__logo"
+              src={PizzaTimeLogo}
+            />
             <div className="header__title">
               <span>PizzaTime</span>
             </div>
@@ -111,13 +67,10 @@ class Header extends Component {
             <AccountMenuItems />
           </div>
           <div style={{ position: "relative" }}>
-            <NavigationItem to="/cart">
-              <div className="header__cart header__icon">
-                <MdShoppingCart />
-                {numItemsInCart}
-              </div>
-            </NavigationItem>
-            {itemAdded}
+            <CartIcon
+              itemAdded={this.props.itemAdded}
+              quantity={this.props.quantity}
+            />
           </div>
         </div>
       </header>

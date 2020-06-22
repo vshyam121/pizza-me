@@ -104,7 +104,12 @@ class SignIn extends Component {
           {errorMessage}
           {form}
           <div className="signup">
-            <Link to="/signup">
+            <Link
+              to={{
+                pathname: "/signup",
+                fromCheckout: this.props.location.fromCheckout,
+              }}
+            >
               <Button type={secondary}>Sign Up</Button>
             </Link>
           </div>

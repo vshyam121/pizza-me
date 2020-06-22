@@ -9,7 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./hoc/ScrollToTop";
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/pizza-me">
     <Provider store={store}>
       <ScrollToTop>
         <App />

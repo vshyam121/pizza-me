@@ -151,8 +151,7 @@ export const getCart = (idToken, userId) => {
           dispatch(createCart(idToken, userId));
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         dispatch(getCartFailed());
         dispatch(setErroredAction(actionDisplays.GET_CART));
       });

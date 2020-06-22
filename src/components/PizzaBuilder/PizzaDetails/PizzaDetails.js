@@ -8,14 +8,26 @@ import { calculatePrice } from "../../../shared/util";
 /* Shows pizza description, as well as options to change quantity and add/save to cart */
 class PizzaDetails extends Component {
   state = {
-    quantity: this.props.quantity
+    quantity: this.props.quantity,
   };
 
-  handleChangeQuantity = event => {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.quantity !== nextProps.quantity ||
+      this.props.pizza !== nextProps.pizza ||
+      this.state.quantity !== nextState.quantity
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  handleChangeQuantity = (event) => {
     this.setState({ quantity: event.target.value });
   };
 
   render() {
+    console.log("render pizza details");
     const price = calculatePrice(this.props.pizza, true);
 
     let save = null;
