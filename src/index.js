@@ -10,6 +10,8 @@ import ScrollToTop from "./hoc/ScrollToTop";
 import "react-app-polyfill/ie9";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 ReactDOM.render(
   <BrowserRouter basename="/pizza-me">
