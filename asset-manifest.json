@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/pizza-me/static/css/main.8e4a0af3.chunk.css",
+    "main.css": "/pizza-me/static/css/main.68ff9c1b.chunk.css",
     "main.js": "/pizza-me/static/js/main.5906d5d4.chunk.js",
     "main.js.map": "/pizza-me/static/js/main.5906d5d4.chunk.js.map",
     "runtime-main.js": "/pizza-me/static/js/runtime-main.5ccde37c.js",
@@ -8,9 +8,9 @@
     "static/js/2.91e62082.chunk.js": "/pizza-me/static/js/2.91e62082.chunk.js",
     "static/js/2.91e62082.chunk.js.map": "/pizza-me/static/js/2.91e62082.chunk.js.map",
     "index.html": "/pizza-me/index.html",
-    "precache-manifest.d8fe1fe4b02f4949dff51058dadbd3c5.js": "/pizza-me/precache-manifest.d8fe1fe4b02f4949dff51058dadbd3c5.js",
+    "precache-manifest.1d1b3c3f1852897829b36efb3f8928f3.js": "/pizza-me/precache-manifest.1d1b3c3f1852897829b36efb3f8928f3.js",
     "service-worker.js": "/pizza-me/service-worker.js",
-    "static/css/main.8e4a0af3.chunk.css.map": "/pizza-me/static/css/main.8e4a0af3.chunk.css.map",
+    "static/css/main.68ff9c1b.chunk.css.map": "/pizza-me/static/css/main.68ff9c1b.chunk.css.map",
     "static/js/2.91e62082.chunk.js.LICENSE.txt": "/pizza-me/static/js/2.91e62082.chunk.js.LICENSE.txt",
     "static/media/alarm-clock.png": "/pizza-me/static/media/alarm-clock.e343a2cb.png",
     "static/media/cheese_mozz_ML.png": "/pizza-me/static/media/cheese_mozz_ML.10abdd1f.png",
@@ -95,7 +95,7 @@
   "entrypoints": [
     "static/js/runtime-main.5ccde37c.js",
     "static/js/2.91e62082.chunk.js",
-    "static/css/main.8e4a0af3.chunk.css",
+    "static/css/main.68ff9c1b.chunk.css",
     "static/js/main.5906d5d4.chunk.js"
   ]
 }
