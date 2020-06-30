@@ -1,5 +1,6 @@
 import React from "react";
 import CartItem from "../../containers/Cart/CartItem/CartItem";
+import PropTypes from "prop-types";
 
 /* All cart items to display in cart and order summary pages */
 const CartItems = props => {
@@ -18,5 +19,9 @@ const CartItems = props => {
     );
   });
 };
+
+CartItems.propTypes = {
+  items: PropTypes.objectOf(PropTypes.object).isRequired
+}
 
 export default CartItems;

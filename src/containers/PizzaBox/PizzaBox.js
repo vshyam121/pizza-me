@@ -111,7 +111,7 @@ class PizzaBox extends Component {
   render() {
     const crustOptions = Object.entries(crustMetadataMapping).map(
       ([crust, crustMetadata]) => {
-        return crust + (crustMetadata.price ? " " + crustMetadata.price : "");
+        return crust + (crustMetadata.additionalDisplay ? " " + crustMetadata.additionalDisplay : "");
       }
     );
 

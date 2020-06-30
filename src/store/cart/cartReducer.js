@@ -7,7 +7,7 @@ const initialState = {
   items: {},
   quantity: 0,
   itemHashMap: {},
-  itemAdded: false,
+  numItemsAdded: 0,
   loadingCart: false,
   loadingCartItem: false,
   itemBeingChanged: null,
@@ -18,7 +18,7 @@ const cartReducer = (state = initialState, action) => {
   let items = null;
   let itemHashMap = null;
   let quantity;
-  let itemAdded = false;
+  let numItemsAdded = 0;
   switch (action.type) {
     //set cart id and user id once cart has been created 
     case actionTypes.CREATE_CART:
@@ -39,7 +39,7 @@ const cartReducer = (state = initialState, action) => {
         items: items,
         quantity: quantity,
         itemHashMap: itemHashMap,
-        itemAdded: action.item.quantity,
+        numItemsAdded: action.item.quantity,
       };
     //set loading before getting cart
     case actionTypes.GET_CART_START:
@@ -74,7 +74,7 @@ const cartReducer = (state = initialState, action) => {
         items: {},
         quantity: 0,
         itemHashMap: {},
-        itemAdded: null,
+        numItemsAdded: 0,
       };
     //set cart items 
     case actionTypes.SET_CART_ITEMS:
@@ -91,13 +91,13 @@ const cartReducer = (state = initialState, action) => {
       items[action.itemId].quantity = action.quantity;
       quantity += parseInt(action.quantity);
       if (state.quantity < quantity) {
-        itemAdded = quantity - state.quantity;
+        numItemsAdded = quantity - state.quantity;
       }
       return {
         ...state,
         items: items,
         quantity: quantity,
-        itemAdded: itemAdded,
+        numItemsAdded: numItemsAdded,
         loadingCartItem: false
       };
     //set loading before changing cart item
@@ -126,7 +126,7 @@ const cartReducer = (state = initialState, action) => {
         items: items,
         quantity: quantity,
         itemHashMap: itemHashMap,
-        itemAdded: null,
+        numItemsAdded: 0,
         loadingCartItem: false,
         itemBeingChanged: null,
       };
@@ -140,7 +140,7 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: items,
         quantity: quantity,
-        itemAdded: null,
+        numItemsAdded: 0,
         loadingCartItem: false
       };
     //empty cart and all metadata
@@ -149,7 +149,7 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: {},
         quantity: 0,
-        itemAdded: null,
+        numItemsAdded: 0,
         itemHashMap: {}
       };
     default:

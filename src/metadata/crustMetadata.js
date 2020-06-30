@@ -25,6 +25,6 @@ export const crustMetadataMapping = {
     [ORIGINAL_PAN]: {
         preview: OriginalPanPreview,
         icon: OriginalPanIcon,
-        price: "+$2.00"
+        additionalDisplay: "+$2.00"
     }
 }

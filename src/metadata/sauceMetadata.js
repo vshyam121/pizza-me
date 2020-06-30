@@ -34,7 +34,7 @@ export const sauceAmounts = [EXTRA_SAUCE, REGULAR_SAUCE, LIGHT_SAUCE, NO_SAUCE];
 
 export const sauceAmountMetadataMapping = {
     [EXTRA_SAUCE]: {
-        price: "+$1.00"
+        additionalDisplay: "+$1.00"
     }
 }
 

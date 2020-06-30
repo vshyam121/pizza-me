@@ -3,12 +3,12 @@ import "./PizzaBuilderProgress.scss";
 import {
   SIZE_CRUST,
   CHEESE_SAUCE,
-  TOPPINGS
+  TOPPINGS,
 } from "../../../containers/PizzaBuilder/PizzaBuilder";
+import PropTypes from "prop-types";
 
 /* Shows progress of steps in the pizza builder */
-const PizzaBuilderProgress = props => {
-
+const PizzaBuilderProgress = (props) => {
   useEffect(() => {
     console.log("render builder progress");
   }, [props.stage]);
@@ -45,6 +45,10 @@ const PizzaBuilderProgress = props => {
       </button>
     </div>
   );
+};
+
+PizzaBuilderProgress.propTypes = {
+  stage: PropTypes.oneOf(["SIZE_CRUST", "CHEESE_SAUCE", "TOPPINGS"]).isRequired,
 };
 
 export default PizzaBuilderProgress;

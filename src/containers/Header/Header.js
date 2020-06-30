@@ -68,7 +68,7 @@ class Header extends Component {
           </div>
           <div style={{ position: "relative" }}>
             <CartIcon
-              itemAdded={this.props.itemAdded}
+              numItemsAdded={this.props.numItemsAdded}
               quantity={this.props.quantity}
             />
           </div>
@@ -81,7 +81,7 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   items: state.cart.items,
   quantity: state.cart.quantity,
-  itemAdded: state.cart.itemAdded,
+  numItemsAdded: state.cart.numItemsAdded,
   isAuthenticated: state.auth.idToken,
 });
 

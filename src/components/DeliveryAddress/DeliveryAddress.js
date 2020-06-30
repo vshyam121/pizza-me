@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 /* Displays delivery address in the correct format */
 const DeliveryAddress = (props) => {
@@ -18,5 +19,9 @@ const DeliveryAddress = (props) => {
     </span>
   );
 };
+
+DeliveryAddress.propTypes = {
+  deliveryAddress: PropTypes.objectOf(PropTypes.string),
+}
 
 export default DeliveryAddress;

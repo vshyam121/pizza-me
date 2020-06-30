@@ -12,6 +12,7 @@ import {
   SAUCE_AMOUNT,
   CHEESE_AMOUNT,
 } from "../../../../metadata/pizzaProperties";
+import PropTypes from "prop-types";
 
 /* Pizza builder section with cheese/sauce options */
 class CheeseSauceBuilder extends Component {
@@ -49,6 +50,10 @@ class CheeseSauceBuilder extends Component {
       </div>
     );
   }
+}
+
+CheeseSauceBuilder.propTypes = {
+  pizza: PropTypes.object.isRequired
 }
 
 export default CheeseSauceBuilder;

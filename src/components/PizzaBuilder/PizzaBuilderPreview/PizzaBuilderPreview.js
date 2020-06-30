@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./PizzaBuilderPreview.scss";
 import PizzaPreview from "../../PizzaPreview/PizzaPreview";
+import PropTypes from "prop-types";
 
 /* Pizza preview image section of the pizza builder */
 class PizzaBuilderPreview extends Component {
@@ -22,6 +23,10 @@ class PizzaBuilderPreview extends Component {
       </div>
     );
   }
+}
+
+PizzaBuilderPreview.propTypes = {
+  pizza: PropTypes.object.isRequired
 }
 
 export default PizzaBuilderPreview;

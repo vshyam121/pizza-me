@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./hoc/ScrollToTop";
+import "react-app-polyfill/ie9";
+import "react-app-polyfill/stable";
 
 ReactDOM.render(
   <BrowserRouter basename="/pizza-me">

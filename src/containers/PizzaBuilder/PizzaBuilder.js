@@ -132,41 +132,46 @@ class PizzaBuilder extends Component {
       back = getActionButton(CHEESE_SAUCE, "Back");
     }
 
+    let totalBuilder = null;
+    if(this.props.showPizzaBuilder){
+      totalBuilder = <div className="totalBuilder">
+      <div className="totalBuilder__mypizza">
+        <div className="totalBuilder__details">
+          <PizzaDetails
+            addToCart={this.handleAddToCart}
+            saveToCart={this.handleSaveToCart}
+            pizza={this.props.pizza}
+            quantity={this.props.quantity}
+            itemId={this.props.itemId}
+          />
+        </div>
+        <div className="totalBuilder__preview">
+          <PizzaBuilderPreview pizza={this.props.pizza} />
+        </div>
+      </div>
+      <div className="totalBuilder__builder">
+        <h3 className="builder-title">Pizza Builder</h3>
+        <div className="builder-progress">
+          <PizzaBuilderProgress
+            stage={this.state.stage}
+            onClick={this.handleClickStage}
+          />
+        </div>
+        {builder}
+        <div className="builder-action">
+          {back}
+          {next}
+        </div>
+      </div>
+    </div>
+    }
+
     return (
       <Modal
         show={this.props.showPizzaBuilder}
         modalClosed={this.handleCloseBuilder}
       >
-        <div className="totalBuilder">
-          <div className="totalBuilder__mypizza">
-            <div className="totalBuilder__details">
-              <PizzaDetails
-                addToCart={this.handleAddToCart}
-                saveToCart={this.handleSaveToCart}
-                pizza={this.props.pizza}
-                quantity={this.props.quantity}
-                itemId={this.props.itemId}
-              />
-            </div>
-            <div className="totalBuilder__preview">
-              <PizzaBuilderPreview pizza={this.props.pizza} />
-            </div>
-          </div>
-          <div className="totalBuilder__builder">
-            <h3 className="builder-title">Pizza Builder</h3>
-            <div className="builder-progress">
-              <PizzaBuilderProgress
-                stage={this.state.stage}
-                onClick={this.handleClickStage}
-              />
-            </div>
-            {builder}
-            <div className="builder-action">
-              {back}
-              {next}
-            </div>
-          </div>
-        </div>
+        {totalBuilder}
       </Modal>
     );
   }

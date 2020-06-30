@@ -8,6 +8,7 @@ import {
   LEFT_HALF,
   RIGHT_HALF,
 } from "../../../../metadata/pizzaProperties";
+import PropTypes from "prop-types";
 
 /* Interactable topping options */
 
@@ -36,7 +37,6 @@ const ToppingOptions = (props) => {
         let amountOptions = null;
         let portionOptions = null;
         let selection = props.itemsSelected[topping];
-        //if (true) {
         toppingOptionClasses.push("topping-option--selected");
         amountOptions = (
           <div className="topping-option__amount">
@@ -178,5 +178,10 @@ const ToppingOptions = (props) => {
     </div>
   );
 };
+
+ToppingOptions.propTypes = {
+  imageMapping: PropTypes.objectOf(PropTypes.object).isRequired,
+  itemSelected: PropTypes.string,
+}
 
 export default ToppingOptions;

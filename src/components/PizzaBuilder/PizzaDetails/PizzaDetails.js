@@ -4,6 +4,7 @@ import Button, { primary } from "../../UI/Button/Button";
 import PizzaDescription from "../../PizzaDescription/PizzaDescription";
 import "./PizzaDetails.scss";
 import { calculatePrice } from "../../../shared/util";
+import PropTypes from "prop-types";
 
 /* Shows pizza description, as well as options to change quantity and add/save to cart */
 class PizzaDetails extends Component {
@@ -80,4 +81,10 @@ class PizzaDetails extends Component {
     );
   }
 }
+
+PizzaDetails.propTypes = {
+  pizza: PropTypes.object.isRequired,
+  quantity: PropTypes.number.isRequired
+}
+
 export default PizzaDetails;

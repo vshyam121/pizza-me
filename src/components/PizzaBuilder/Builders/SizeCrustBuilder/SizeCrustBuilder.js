@@ -15,6 +15,7 @@ import {
   CRUST,
   CRUST_FLAVOR,
 } from "../../../../metadata/pizzaProperties";
+import PropTypes from "prop-types";
 
 /* Pizza builder section with size/crust options */
 class SizeCrustBuilder extends Component {
@@ -54,6 +55,10 @@ class SizeCrustBuilder extends Component {
       </div>
     );
   }
+}
+
+SizeCrustBuilder.proptTypes = {
+  pizza: PropTypes.object.isRequired
 }
 
 export default SizeCrustBuilder;
