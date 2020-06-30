@@ -8,6 +8,7 @@ import store from "./store/store";
 import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./hoc/ScrollToTop";
 import "react-app-polyfill/ie9";
+import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
 ReactDOM.render(
