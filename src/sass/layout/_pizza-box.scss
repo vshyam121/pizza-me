@@ -5,21 +5,25 @@
   }
 
   &__grid {
+    display: -ms-grid;
     display: grid;
+    -ms-grid-columns: repeat(auto-fit, 50rem);
     grid-template-columns: repeat(auto-fit, 50rem);
-    grid-row-gap: 2rem;
-    grid-column-gap: 2rem;
+    grid-gap: 2rem;
     justify-content: center;
 
     @include respond(tab-land){
+      -ms-grid-columns: repeat(auto-fit, 40rem);
       grid-template-columns: repeat(auto-fit, 40rem);
     }
 
     @include respond(tab-port){
+      -ms-grid-columns: repeat(auto-fit, 50rem);
       grid-template-columns: repeat(auto-fit, 50rem);
     }
     
     @include respond(phone){
+      -ms-grid-columns: repeat(auto-fit, 30rem);
       grid-template-columns: repeat(auto-fit, 30rem);
     }
 
