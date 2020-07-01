@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "464bb27fd2590697d318e81e8a73bf20",
+    "revision": "6ed6cbc8387fd834d7c00d39cd1cb0ee",
     "url": "/pizza-me/index.html"
   },
   {
-    "revision": "440db773679b895db7f0",
+    "revision": "0ae1822c2a69d695d8e6",
     "url": "/pizza-me/static/css/main.b7889319.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pizza-me/static/js/2.a220638a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "440db773679b895db7f0",
-    "url": "/pizza-me/static/js/main.aa6915ac.chunk.js"
+    "revision": "0ae1822c2a69d695d8e6",
+    "url": "/pizza-me/static/js/main.7f6e523c.chunk.js"
   },
   {
     "revision": "a4cf6b570e21ec0e2825",
