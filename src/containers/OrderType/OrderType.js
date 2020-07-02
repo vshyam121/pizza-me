@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import AddressForm from "../AddressForm/AddressForm";
 import Message from "../../components/UI/Message/Message";
 import SignedUpMessage from "../../components/Messages/SignedUpMessage/SignedUpMessage";
+import PropTypes from "prop-types";
 
 /* Options for choosing either carryout or delivery order */
 class OrderType extends Component {
@@ -35,7 +36,7 @@ class OrderType extends Component {
         <Redirect
           to={{
             pathname: "/signin",
-            fromCheckout: "true",
+            fromCheckout: true,
           }}
         />
       );
@@ -92,6 +93,10 @@ class OrderType extends Component {
       </React.Fragment>
     );
   }
+}
+
+OrderType.propTypes = {
+  isAuthenticated: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({

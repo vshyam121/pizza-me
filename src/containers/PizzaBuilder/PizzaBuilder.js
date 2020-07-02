@@ -14,9 +14,10 @@ import {
   setProperty,
   toggleTopping,
   setToppingAmount,
-  setToppingPortion
+  setToppingPortion,
 } from "../../store/pizzaBuilder/pizzaBuilderActions";
 import Button, { primary } from "../../components/UI/Button/Button";
+import PropTypes from "prop-types";
 
 /* Stages that are possible for pizza builder.
    Set in state. */
@@ -27,18 +28,18 @@ export const TOPPINGS = "TOPPINGS";
 /* Main container for entire pizza builder */
 class PizzaBuilder extends Component {
   state = {
-    stage: SIZE_CRUST
+    stage: SIZE_CRUST,
   };
 
   /* Set current stage of pizza builder based on 
     PizzaBuilderProgres component */
-  handleClickStage = event => {
+  handleClickStage = (event) => {
     this.setState({ stage: event.target.value });
   };
 
   /* Set current stage of pizza builder based on
      Back/Next buttons */
-  handleClickAction = stage => {
+  handleClickAction = (stage) => {
     this.setState({ stage: stage });
   };
 
@@ -59,12 +60,20 @@ class PizzaBuilder extends Component {
   };
 
   handleClickAmount = (event, property) => {
-    this.props.setToppingAmount(property, event.currentTarget.dataset.topping, event.currentTarget.dataset.value);
-  }
+    this.props.setToppingAmount(
+      property,
+      event.currentTarget.dataset.topping,
+      event.currentTarget.dataset.value
+    );
+  };
 
   handleClickPortion = (event, property) => {
-    this.props.setToppingPortion(property, event.currentTarget.dataset.topping, event.currentTarget.dataset.value);
-  }
+    this.props.setToppingPortion(
+      property,
+      event.currentTarget.dataset.topping,
+      event.currentTarget.dataset.value
+    );
+  };
 
   /* Add current pizza to cart and close pizza builder */
   handleAddToCart = (quantity) => {
@@ -79,7 +88,6 @@ class PizzaBuilder extends Component {
   };
 
   render() {
-
     console.log("render pizza builder");
     let builder = null;
     let back = null;
@@ -133,37 +141,39 @@ class PizzaBuilder extends Component {
     }
 
     let totalBuilder = null;
-    if(this.props.showPizzaBuilder){
-      totalBuilder = <div className="totalBuilder">
-      <div className="totalBuilder__mypizza">
-        <div className="totalBuilder__details">
-          <PizzaDetails
-            addToCart={this.handleAddToCart}
-            saveToCart={this.handleSaveToCart}
-            pizza={this.props.pizza}
-            quantity={this.props.quantity}
-            itemId={this.props.itemId}
-          />
+    if (this.props.showPizzaBuilder) {
+      totalBuilder = (
+        <div className="totalBuilder">
+          <div className="totalBuilder__mypizza">
+            <div className="totalBuilder__details">
+              <PizzaDetails
+                addToCart={this.handleAddToCart}
+                saveToCart={this.handleSaveToCart}
+                pizza={this.props.pizza}
+                quantity={this.props.quantity}
+                itemId={this.props.itemId}
+              />
+            </div>
+            <div className="totalBuilder__preview">
+              <PizzaBuilderPreview pizza={this.props.pizza} />
+            </div>
+          </div>
+          <div className="totalBuilder__builder">
+            <h3 className="builder-title">Pizza Builder</h3>
+            <div className="builder-progress">
+              <PizzaBuilderProgress
+                stage={this.state.stage}
+                onClick={this.handleClickStage}
+              />
+            </div>
+            {builder}
+            <div className="builder-action">
+              {back}
+              {next}
+            </div>
+          </div>
         </div>
-        <div className="totalBuilder__preview">
-          <PizzaBuilderPreview pizza={this.props.pizza} />
-        </div>
-      </div>
-      <div className="totalBuilder__builder">
-        <h3 className="builder-title">Pizza Builder</h3>
-        <div className="builder-progress">
-          <PizzaBuilderProgress
-            stage={this.state.stage}
-            onClick={this.handleClickStage}
-          />
-        </div>
-        {builder}
-        <div className="builder-action">
-          {back}
-          {next}
-        </div>
-      </div>
-    </div>
+      );
     }
 
     return (
@@ -177,11 +187,18 @@ class PizzaBuilder extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+PizzaBuilder.propTypes = {
+  itemId: PropTypes.string,
+  pizza: PropTypes.object,
+  quantity: PropTypes.number,
+  showPizzaBuilder: PropTypes.bool,
+}
+
+const mapStateToProps = (state) => ({
   itemId: state.pizzaBuilder.itemId,
   pizza: state.pizzaBuilder.pizza,
   quantity: state.pizzaBuilder.quantity,
-  showPizzaBuilder: state.pizzaBuilder.showPizzaBuilder
+  showPizzaBuilder: state.pizzaBuilder.showPizzaBuilder,
 });
 
 export default connect(mapStateToProps, {
@@ -191,5 +208,5 @@ export default connect(mapStateToProps, {
   setToppingAmount,
   setToppingPortion,
   addToCart,
-  saveToCart
+  saveToCart,
 })(PizzaBuilder);

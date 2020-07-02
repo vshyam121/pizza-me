@@ -8,6 +8,7 @@ import { lookupErrorCode } from "../../../shared/util";
 import { Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 /* Sign in form */
 class SignIn extends Component {
@@ -117,6 +118,12 @@ class SignIn extends Component {
       </div>
     );
   }
+}
+
+SignIn.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+  isAuthenticated: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({

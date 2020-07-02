@@ -30,7 +30,7 @@ const mapStateToProps = (state) => ({
 });
 
 AccountMenuItems.propTypes = {
-  isAuthenticated: PropTypes.object
+  isAuthenticated: PropTypes.string
 }
 
 export default connect(mapStateToProps, null)(AccountMenuItems);

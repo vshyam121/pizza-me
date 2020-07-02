@@ -9,6 +9,7 @@ import PizzaMenuItems from "../../components/MenuItems/PizzaMenuItems/PizzaMenuI
 import { toggleSidebar } from "../../store/ui/uiActions";
 import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/AccountMenuItems";
 import CartIcon from "../../components/CartIcon/CartIcon";
+import PropTypes from "prop-types";
 
 /* Header containing logo, app name, main menu, autentication, orders and cart */
 class Header extends Component {
@@ -77,6 +78,11 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  quantity: PropTypes.number.isRequired,
+  numItemsAdded: PropTypes.number.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,

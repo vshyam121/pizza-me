@@ -3,6 +3,7 @@ import "./Modal.scss";
 import Backdrop from "../Backdrop/Backdrop";
 import { useEffect } from "react";
 import { MdClose } from "react-icons/md";
+import PropTypes from "prop-types";
 
 /* Standard modal across entire app */
 const Modal = (props) => {
@@ -30,5 +31,11 @@ const Modal = (props) => {
     </Backdrop>
   );
 };
+
+Modal.propTypes = {
+  show: PropTypes.bool,
+  children: PropTypes.object,
+  error: PropTypes.bool
+}
 
 export default Modal;

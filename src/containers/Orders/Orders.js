@@ -8,6 +8,7 @@ import { SyncLoader } from "react-spinners";
 import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
 import axiosFirebase from "../../axiosFirebase";
 import withErrorHandler from "../../hoc/withErrorHandler";
+import PropTypes from "prop-types";
 
 /* Contains a list of all submitted orders */
 class Orders extends Component {
@@ -96,6 +97,14 @@ class Orders extends Component {
 
     return orders;
   }
+}
+
+Orders.propTypes = {
+  idToken: PropTypes.string,
+  userId: PropTypes.string,
+  orders: PropTypes.object.isRequired,
+  gettingOrders: PropTypes.bool,
+  getOrdersError: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({

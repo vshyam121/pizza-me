@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import Form from "../Form/Form";
 import axios from "axios";
 import withErrorHandler from "../../hoc/withErrorHandler";
+import PropTypes from "prop-types";
 
 /* Delivery address form */
 class AddressForm extends Component {
@@ -134,11 +135,19 @@ class AddressForm extends Component {
   }
 }
 
+AddressForm.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+  addressValid: PropTypes.bool
+}
+
 const mapStateToProps = state => ({
   addressValid: state.checkout.addressValid,
   error: state.checkout.addressValidationError,
   loading: state.checkout.validatingAddress
 });
+
+
 export default connect(mapStateToProps, {
   validateAddress,
   validateAddressReset

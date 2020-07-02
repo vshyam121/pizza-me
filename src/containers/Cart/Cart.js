@@ -14,7 +14,7 @@ import { SyncLoader } from "react-spinners";
 import { calculateSubTotal } from "../../shared/util";
 import axiosFirebase from "../../axiosFirebase";
 import withErrorHandler from "../../hoc/withErrorHandler";
-
+import PropTypes from "prop-types";
 
 /* Shopping cart with all added cart items */
 const Cart = (props) => {
@@ -55,12 +55,10 @@ const Cart = (props) => {
                 pathname: props.isAuthenticated
                   ? "/checkout/order-type"
                   : "/signin",
-                fromCheckout: true
+                fromCheckout: true,
               }}
             >
-              <Button type={primary}>
-                <span>Checkout</span>
-              </Button>
+              <Button type={primary}>Checkout</Button>
             </Link>
           </div>
         </div>
@@ -82,6 +80,13 @@ const Cart = (props) => {
       </div>
     </div>
   );
+};
+
+Cart.propTypes = {
+  items: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+  isAuthenticated: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

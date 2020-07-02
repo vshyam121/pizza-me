@@ -18,6 +18,7 @@ import {
 import { NO_CHEESE } from "../../metadata/cheeseMetadata";
 import { NO_SAUCE } from "../../metadata/sauceMetadata";
 import { calculatePrice } from "../../shared/util";
+import PropTypes from "prop-types";
 
 /* Description of pizza, including size, toppings and other descriptives */
 const PizzaDescription = (props) => {
@@ -115,5 +116,12 @@ const PizzaDescription = (props) => {
     </div>
   );
 };
+
+PizzaDescription.propTypes = {
+  pizza: PropTypes.object.isRequired,
+  quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  cart: PropTypes.bool,
+  order: PropTypes.bool
+}
 
 export default PizzaDescription;

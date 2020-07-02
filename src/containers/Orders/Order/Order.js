@@ -1,6 +1,7 @@
 import React from "react";
 import PizzaPreview from "../../../components/PizzaPreview/PizzaPreview";
 import PizzaDescription from "../../../components/PizzaDescription/PizzaDescription";
+import PropTypes from "prop-types";
 
 /* Represents a single submitted order */
 const Order = (props) => {
@@ -20,6 +21,11 @@ const Order = (props) => {
       </div>
     </div>
   );
+};
+
+Order.propTypes = {
+  pizza: PropTypes.object.isRequired,
+  quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };
 
 export default Order;

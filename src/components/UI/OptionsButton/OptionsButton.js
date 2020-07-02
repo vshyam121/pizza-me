@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./OptionsButton.scss";
 import Button, { tertiary } from "../Button/Button";
+import PropTypes from "prop-types";
 
 /* Standard single component with one or more button options */
 class OptionsButton extends Component {
@@ -41,6 +42,10 @@ class OptionsButton extends Component {
       </div>
     );
   }
+}
+
+OptionsButton.propTypes = {
+  options: PropTypes.array.isRequired,
 }
 
 export default OptionsButton;

@@ -1,6 +1,7 @@
 import React from "react";
 import "./Input.scss";
 import Dropdown from "../Dropdown/Dropdown";
+import PropTypes from "prop-types";
 
 /* Standard input element to be included in forms */
 const Input = (props) => {
@@ -68,5 +69,17 @@ const Input = (props) => {
     </div>
   );
 };
+
+Input.propTypes = {
+  invalid: PropTypes.bool.isRequired,
+  shouldValidate: PropTypes.object.isRequired,
+  touched: PropTypes.bool,
+  formSubmitted: PropTypes.bool.isRequired, 
+  value: PropTypes.string.isRequired,
+  elementConfig: PropTypes.object.isRequired,
+  errorMessage: PropTypes.string,
+  label: PropTypes.string,
+  elementType: PropTypes.string.isRequired
+}
 
 export default Input;

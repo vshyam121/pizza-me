@@ -44,17 +44,17 @@ export const getCartFromLocalStorage = () => {
 /* Combine local storage cart with cart in backend */
 export const combineCarts = (localCart, items, cartId, userId, idToken) => {
   return (dispatch) => {
-    let emptyCart = { items: {}, quantity: 0 };
-    secureStorage.setItem("cart", emptyCart);
     const remoteItemsQuantity = getTotalQuantity(items);
     let itemHashMap = generateItemHashMap(items);
     let localItems = {};
     Object.entries(localCart.items).forEach(([itemId, item]) => {
       const pizzaHash = hash(item.pizza);
-      if (itemHashMap[pizzaHash]) {
-        items[itemHashMap[pizzaHash]].quantity =
-          parseInt(items[itemHashMap[pizzaHash]].quantity) +
-          parseInt(item.quantity);
+      const matchingItemId = itemHashMap[pizzaHash];
+      if (matchingItemId) {
+        const matchingItem = items[itemHashMap[pizzaHash]];
+        matchingItem.quantity =
+          parseInt(matchingItem.quantity) + parseInt(item.quantity);
+        localItems[matchingItemId] = matchingItem;
       } else {
         itemHashMap[pizzaHash] = itemId;
         items[itemId] = item;
@@ -64,7 +64,9 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
     if (Object.keys(localItems)) {
       axiosFirebase
         .patch("/carts/" + cartId + "/items.json?auth=" + idToken, localItems)
-        .then((res) => {
+        .then(() => {
+          let emptyCart = { items: {}, quantity: 0 };
+          secureStorage.setItem("cart", emptyCart);
           dispatch({
             type: actionTypes.GET_CART_SUCCESS,
             userId: userId,
@@ -74,7 +76,10 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
             itemHashMap: itemHashMap,
           });
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          dispatch(getCartFailed());
+          dispatch(setErroredAction(actionDisplays.GET_CART));
+        });
     } else {
       dispatch({
         type: actionTypes.GET_CART_SUCCESS,
@@ -128,7 +133,6 @@ export const getCart = (idToken, userId) => {
           '"'
       )
       .then((res) => {
-        console.log(res);
         if (Object.entries(res.data).length > 0) {
           items = Object.values(res.data)[0].items || {};
           cartId = Object.keys(res.data)[0];
@@ -177,6 +181,13 @@ export const clearCart = () => {
 /* Add new item to cart, meaning it doesn't have a match in cart already */
 const addNewItemToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
+    //Need to delete empty objects because firebase disregards properties with empty objects
+    if(Object.keys(pizza.meats).length === 0 && pizza.meats.constructor === Object){
+      delete pizza.meats;
+    }
+    if(Object.keys(pizza.veggies).length === 0 && pizza.veggies.constructor === Object){
+      delete pizza.veggies;
+    }
     let item = { pizza: pizza, quantity: quantity };
     if (getState().cart.cartId) {
       axiosFirebase
@@ -188,7 +199,6 @@ const addNewItemToCart = (pizza, quantity) => {
           item
         )
         .then((res) => {
-          console.log(res);
           dispatch({
             type: actionTypes.ADD_TO_CART,
             itemId: res.data.name,
@@ -203,7 +213,6 @@ const addNewItemToCart = (pizza, quantity) => {
       const itemId = uuidv4();
       cart.items[itemId] = item;
       cart.quantity += parseInt(item.quantity);
-      console.log(cart);
       secureStorage.setItem("cart", cart);
       dispatch({
         type: actionTypes.ADD_TO_CART,
@@ -271,7 +280,6 @@ export const changeItemQuantity = (itemId, quantity) => {
           item
         )
         .then(() => {
-          console.log("changing item quantity");
           dispatch({
             type: actionTypes.CHANGE_ITEM_QUANTITY,
             itemId: itemId,
@@ -353,14 +361,13 @@ export const removeItem = (itemId, pizza) => {
 
 export const emptyCart = (userId) => {
   return (dispatch, getState) => {
-    console.log("in empty cart");
     if (getState().cart.cartId) {
       let emptyCart = {
         userId: userId,
       };
       axiosFirebase
         .put(
-          "/carts/" +
+          "/cartss/" +
             getState().cart.cartId +
             ".json?auth=" +
             getState().auth.idToken,
@@ -371,7 +378,9 @@ export const emptyCart = (userId) => {
             type: actionTypes.EMPTY_CART,
           });
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          dispatch(setErroredAction(actionDisplays.EMPTY_CART));
+        });
     } else {
       let emptyCart = { items: {}, quantity: 0 };
       secureStorage.setItem("cart", emptyCart);

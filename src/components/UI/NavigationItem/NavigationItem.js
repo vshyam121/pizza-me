@@ -1,6 +1,7 @@
 import React from "react";
 import "./NavigationItem.scss";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 /* Standard navigation item that is part of either the header or sidebar menus */
 const NavigationItem = (props) => {
@@ -34,5 +35,11 @@ const NavigationItem = (props) => {
 
   return navigationItem;
 };
+
+NavigationItem.propTypes = {
+  to: PropTypes.string,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  vertical: PropTypes.bool
+}
 
 export default NavigationItem;

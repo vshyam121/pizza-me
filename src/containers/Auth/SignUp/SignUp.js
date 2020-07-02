@@ -6,6 +6,7 @@ import { SyncLoader } from "react-spinners";
 import { lookupErrorCode } from "../../../shared/util";
 import { Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
+import PropTypes from "prop-types";
 
 /* User sign up form */
 class SignUp extends Component {
@@ -107,6 +108,12 @@ class SignUp extends Component {
       </div>
     );
   }
+}
+
+SignUp.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+  isAuthenticated: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({

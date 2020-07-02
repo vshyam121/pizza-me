@@ -5,25 +5,35 @@ import { connect } from "react-redux";
 /* Axios error handler HOC */
 const withErrorHandler = (WrappedComponent, axios) => {
   class HOComponent extends Component {
+    _isMounted = false;
+
     state = {
       error: null,
     };
 
     componentDidMount() {
+      this._isMounted = true;
       axios.interceptors.request.use((req) => {
-        this.setState({ error: null });
+        if (this._isMounted) {
+          this.setState({ error: null });
+        }
         return req;
       });
 
       axios.interceptors.response.use(
         (res) => res,
         (error) => {
-          console.log("got error");
-          console.log(error);
-          this.setState({ error: error });
+          if (this._isMounted) {
+            console.log(error);
+            this.setState({ error: error });
+          }
           return Promise.reject(error);
         }
       );
+    }
+
+    componentWillUnmount() {
+      this._isMounted = false;
     }
 
     handleModalClosed = () => {
@@ -42,10 +52,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             modalClosed={this.handleModalClosed}
           >
             {this.state.error
-              ? "Unable to " +
-                erroredAction +
-                ": " +
-                this.state.error.message
+              ? "Unable to " + erroredAction + ": " + this.state.error.message
               : null}
           </Modal>
           <WrappedComponent {...this.props} />

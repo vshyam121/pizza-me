@@ -5,6 +5,7 @@ import PizzaMenuItems from "../../components/MenuItems/PizzaMenuItems/PizzaMenuI
 import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/AccountMenuItems";
 import { closeSidebar } from "../../store/ui/uiActions";
 import NavigationItem from "../../components/UI/NavigationItem/NavigationItem";
+import PropTypes from "prop-types";
 
 /* Sidebar menu with pizza menu items and account menu items */
 class Sidebar extends Component {
@@ -40,6 +41,11 @@ class Sidebar extends Component {
       </div>
     );
   }
+}
+
+Sidebar.propTypes = {
+  sidebarOpen: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({

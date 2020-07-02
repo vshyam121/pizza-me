@@ -1,5 +1,6 @@
 import React from "react";
 import "./DropdownAlert.scss";
+import PropTypes from "prop-types";
 
 /* Dropdown alert disappears automatically in a few seconds */
 const DropdownAlert = props => {
@@ -12,5 +13,10 @@ const DropdownAlert = props => {
         </div>
     )
 }
+
+DropdownAlert.propTypes = {
+    alertKey: PropTypes.string.isRequired,
+    children: PropTypes.array
+  }
 
 export default React.memo(DropdownAlert);

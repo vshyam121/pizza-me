@@ -15,6 +15,7 @@ import {
   RIGHT_HALF
 } from "../../metadata/pizzaProperties";
 import { NO_CRUST_FLAVOR } from "../../metadata/crustFlavorMetadata";
+import PropTypes from "prop-types";
 
 /* Pizza preview image with all selected toppings and crust options */
 class PizzaPreview extends Component {
@@ -91,6 +92,11 @@ class PizzaPreview extends Component {
         </div>
     );
   }
+}
+
+PizzaPreview.propTypes = {
+  pizza: PropTypes.object.isRequired,
+  small: PropTypes.bool
 }
 
 export default PizzaPreview;

@@ -23,7 +23,7 @@ class CartIcon extends Component {
   }
 
   render() {
-      console.log("render cart icon");
+    console.log("render cart icon");
     let numItemsInCart = null;
     if (this.props.quantity > 0) {
       numItemsInCart = (
@@ -60,12 +60,10 @@ class CartIcon extends Component {
               pathname: this.props.isAuthenticated
                 ? "/checkout/order-type"
                 : "/signin",
-              fromCheckout: "true",
+              fromCheckout: true,
             }}
           >
-            <Button type={primary}>
-              <span>Checkout</span>
-            </Button>
+            <Button type={primary}>Checkout</Button>
           </Link>
         </DropdownAlert>
       );
@@ -87,7 +85,7 @@ class CartIcon extends Component {
 
 CartIcon.propTypes = {
   quantity: PropTypes.number.isRequired,
-  numItemsAdded: PropTypes.number.isRequired
-}
+  numItemsAdded: PropTypes.number.isRequired,
+};
 
 export default withRouter(CartIcon);
