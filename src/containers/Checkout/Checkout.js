@@ -14,8 +14,6 @@ import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderAct
 import { calculateSubTotal, calculateTax } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
 import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
-import axiosFirebase from "../../axiosFirebase";
-import withErrorHandler from "../../hoc/withErrorHandler";
 import PropTypes from "prop-types";
 
 /* Order summary and ability to submit an order */
@@ -156,4 +154,4 @@ export default connect(mapStateToProps, {
   removeItem,
   initializePizzaBuilder,
   changeItemQuantity,
-})(withErrorHandler(Checkout, axiosFirebase));
+})(Checkout);

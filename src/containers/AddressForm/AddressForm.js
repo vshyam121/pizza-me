@@ -7,8 +7,6 @@ import {
 import { SyncLoader } from "react-spinners";
 import { withRouter } from "react-router-dom";
 import Form from "../Form/Form";
-import axios from "axios";
-import withErrorHandler from "../../hoc/withErrorHandler";
 import PropTypes from "prop-types";
 
 /* Delivery address form */
@@ -151,4 +149,4 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   validateAddress,
   validateAddressReset
-})(withRouter(withErrorHandler(AddressForm, axios)));
+})(withRouter(AddressForm));

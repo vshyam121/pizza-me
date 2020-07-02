@@ -12,8 +12,6 @@ import {
   SUPER_SUPREME,
   PEPPERONI_LOVER,
 } from "../../../metadata/comboMetadata";
-import axiosFirebase from "../../../axiosFirebase";
-import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Displays various types of meat pizzas */
 const Meats = () => {
@@ -52,4 +50,4 @@ const Meats = () => {
   );
 };
 
-export default withErrorHandler(Meats, axiosFirebase);
+export default Meats;

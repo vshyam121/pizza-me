@@ -10,8 +10,6 @@ import {
   ULTIMATE_CHEESE_LOVER,
 } from "../../../metadata/comboMetadata";
 import { CHEESE } from "../../../metadata/comboMetadata";
-import axiosFirebase from "../../../axiosFirebase";
-import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Displays various types of veggy pizzas */
 const Veggies = () => {
@@ -40,4 +38,4 @@ const Veggies = () => {
   );
 };
 
-export default withErrorHandler(Veggies, axiosFirebase);
+export default Veggies;

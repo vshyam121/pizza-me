@@ -6,8 +6,6 @@ import Order from "./Order/Order";
 import { getReadableDate } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
 import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
-import axiosFirebase from "../../axiosFirebase";
-import withErrorHandler from "../../hoc/withErrorHandler";
 import PropTypes from "prop-types";
 
 /* Contains a list of all submitted orders */
@@ -28,7 +26,7 @@ class Orders extends Component {
       } else if (this.props.getOrdersError) {
         ordersContent = <h2>Unable to retrieve your orders!</h2>;
       } else {
-        ordersContent = <h2>You have no orders yet!</h2>
+        ordersContent = <h2>You have no orders yet!</h2>;
       }
 
       orders = (
@@ -104,17 +102,15 @@ Orders.propTypes = {
   userId: PropTypes.string,
   orders: PropTypes.object.isRequired,
   gettingOrders: PropTypes.bool,
-  getOrdersError: PropTypes.bool
-}
+  getOrdersError: PropTypes.bool,
+};
 
 const mapStateToProps = (state) => ({
   idToken: state.auth.idToken,
   userId: state.auth.userId,
   orders: state.checkout.orders,
   gettingOrders: state.checkout.gettingOrders,
-  getOrdersError: state.checkout.getOrdersError
+  getOrdersError: state.checkout.getOrdersError,
 });
 
-export default connect(mapStateToProps, { getOrders })(
-  withErrorHandler(Orders, axiosFirebase)
-);
+export default connect(mapStateToProps, { getOrders })(Orders);

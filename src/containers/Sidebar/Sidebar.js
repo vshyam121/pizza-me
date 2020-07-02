@@ -22,20 +22,19 @@ class Sidebar extends Component {
     }
 
     return (
-      <div className={sidebarContainerClassNames.join(" ")}>
+      <div
+        onClick={this.handleClickMenuItem}
+        className={sidebarContainerClassNames.join(" ")}
+      >
         <div className={sidebarClassNames.join(" ")}>
           <div className="sidebar__menu-items">
-            <PizzaMenuItems vertical onClick={this.handleClickMenuItem} />
+            <PizzaMenuItems vertical />
           </div>
           <div className="sidebar__account">
-            <NavigationItem
-              vertical
-              to="/cart"
-              onClick={this.handleClickMenuItem}
-            >
+            <NavigationItem vertical to="/cart">
               Cart
             </NavigationItem>
-            <AccountMenuItems vertical onClick={this.handleClickMenuItem} />
+            <AccountMenuItems vertical />
           </div>
         </div>
       </div>
@@ -45,8 +44,8 @@ class Sidebar extends Component {
 
 Sidebar.propTypes = {
   sidebarOpen: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.string
-}
+  isAuthenticated: PropTypes.string,
+};
 
 const mapStateToProps = (state) => ({
   sidebarOpen: state.ui.sidebarOpen,

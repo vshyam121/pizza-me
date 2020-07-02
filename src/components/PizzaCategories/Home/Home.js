@@ -15,8 +15,6 @@ import OrderSubmission from "../../Messages/OrderSubmissionMessage/OrderSubmissi
 import SignedOutMessage from "../../Messages/SignedOutMessage/SignedOutMessage";
 import SignedUpMessage from "../../Messages/SignedUpMessage/SignedUpMessage";
 import Message from "../../UI/Message/Message";
-import axiosFirebase from "../../../axiosFirebase";
-import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Displays popular pizzas */
 const Home = (props) => {
@@ -80,4 +78,4 @@ const Home = (props) => {
   );
 };
 
-export default withErrorHandler(Home, axiosFirebase);
+export default Home;

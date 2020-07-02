@@ -12,8 +12,6 @@ import {
 } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
 import { calculateSubTotal } from "../../shared/util";
-import axiosFirebase from "../../axiosFirebase";
-import withErrorHandler from "../../hoc/withErrorHandler";
 import PropTypes from "prop-types";
 
 /* Shopping cart with all added cart items */
@@ -101,4 +99,4 @@ export default connect(mapStateToProps, {
   initializePizzaBuilder,
   changeItemQuantity,
   removeItem,
-})(withErrorHandler(Cart, axiosFirebase));
+})(Cart);

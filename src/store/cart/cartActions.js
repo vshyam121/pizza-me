@@ -182,10 +182,16 @@ export const clearCart = () => {
 const addNewItemToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
     //Need to delete empty objects because firebase disregards properties with empty objects
-    if(Object.keys(pizza.meats).length === 0 && pizza.meats.constructor === Object){
+    if (
+      Object.keys(pizza.meats).length === 0 &&
+      pizza.meats.constructor === Object
+    ) {
       delete pizza.meats;
     }
-    if(Object.keys(pizza.veggies).length === 0 && pizza.veggies.constructor === Object){
+    if (
+      Object.keys(pizza.veggies).length === 0 &&
+      pizza.veggies.constructor === Object
+    ) {
       delete pizza.veggies;
     }
     let item = { pizza: pizza, quantity: quantity };
@@ -367,7 +373,7 @@ export const emptyCart = (userId) => {
       };
       axiosFirebase
         .put(
-          "/cartss/" +
+          "/carts/" +
             getState().cart.cartId +
             ".json?auth=" +
             getState().auth.idToken,

@@ -33,8 +33,8 @@ const Modal = (props) => {
 };
 
 Modal.propTypes = {
-  show: PropTypes.bool,
-  children: PropTypes.object,
+  show: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   error: PropTypes.bool
 }
 

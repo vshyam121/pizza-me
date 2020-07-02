@@ -14,8 +14,6 @@ import {
   BUFFALO_CHICKEN,
 } from "../../../metadata/comboMetadata";
 import { CHEESE } from "../../../metadata/comboMetadata";
-import axiosFirebase from "../../../axiosFirebase";
-import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Displays various types of chicken pizza */
 const Chicken = () => {
@@ -54,4 +52,4 @@ const Chicken = () => {
   );
 };
 
-export default withErrorHandler(Chicken, axiosFirebase);
+export default Chicken;
