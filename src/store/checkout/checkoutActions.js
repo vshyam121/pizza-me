@@ -1,5 +1,5 @@
 import * as actionTypes from "./checkoutActionTypes";
-import axiosFirebase from "../../axiosFirebase";
+import axiosFirebase from "../../shared/axiosFirebase";
 import axiosGeolocation from "axios";
 import * as actionDisplays from "../ui/actionDisplays";
 import { setErroredAction } from "../ui/uiActions";
@@ -72,7 +72,7 @@ export const validateAddress = (addressForm) => {
     });
 
     axiosGeolocation
-      .get("https://us-street.api.smartystreets.com/street-address", {
+      .get(process.env.REACT_APP_SMARTY_STREETS_BASE_URL, {
         params: params,
       })
       .then((res) => {
