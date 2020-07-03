@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "../components/UI/Modal/Modal";
 import { connect } from "react-redux";
+import { SIGN_IN, SIGN_UP } from "../store/ui/actionDisplays";
 
 /* Axios error handler HOC */
 const withErrorHandler = (WrappedComponent, axios) => {
@@ -30,6 +31,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
     };
 
     render() {
+      if(this.props.erroredAction === SIGN_IN || this.props.erroredAction === SIGN_UP){
+        return <WrappedComponent {...this.props} />;
+      }
       let erroredAction = "perform action";
       erroredAction = this.props.erroredAction || erroredAction;
 

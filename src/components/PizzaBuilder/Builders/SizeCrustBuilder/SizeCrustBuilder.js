@@ -21,7 +21,6 @@ import PropTypes from "prop-types";
 class SizeCrustBuilder extends Component {
 
   render() {
-    console.log("render size crust builder");
     return (
       <div className="builder">
         <div className="builder-section">

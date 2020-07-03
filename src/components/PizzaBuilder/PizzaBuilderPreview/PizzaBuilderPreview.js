@@ -12,7 +12,6 @@ class PizzaBuilderPreview extends Component {
     return false;
   }
   render() {
-    console.log("render pizza builder preview");
 
     return (
       <div className="pizza-builder-preview">

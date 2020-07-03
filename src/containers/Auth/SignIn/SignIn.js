@@ -122,13 +122,13 @@ class SignIn extends Component {
 
 SignIn.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.bool,
+  error: PropTypes.object,
   isAuthenticated: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
-  error: state.auth.error,
+  error: state.auth.signInError,
   isAuthenticated: state.auth.idToken,
 });
 

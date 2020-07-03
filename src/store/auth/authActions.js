@@ -27,9 +27,17 @@ export const authSuccess = (idToken, userId) => {
 };
 
 /* Set error to be displayed in UI when authentication has failed */
-export const authFailed = (error) => {
+export const signInFailed = (error) => {
   return {
-    type: actionTypes.AUTH_FAILED,
+    type: actionTypes.SIGN_IN_FAILED,
+    error: error,
+  };
+};
+
+/* Set error to be displayed in UI when authentication has failed */
+export const signUpFailed = (error) => {
+  return {
+    type: actionTypes.SIGN_UP_FAILED,
     error: error,
   };
 };
@@ -68,11 +76,10 @@ export const signIn = (email, password) => {
     axios
       .post(
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
-          process.env.REACT_APP_API_KEY,
+          process.env.REACT_APP_FIREBASE_API_KEY,
         authData
       )
       .then((res) => {
-        console.log(res);
         localStorage.setItem("idToken", res.data.idToken);
         localStorage.setItem(
           "expirationTime",
@@ -86,7 +93,7 @@ export const signIn = (email, password) => {
       })
       .catch((err) => {
         dispatch(setErroredAction(actionDisplays.SIGN_IN));
-        dispatch(authFailed(err.response.data.error));
+        dispatch(signInFailed(err.response.data.error));
       });
   };
 };
@@ -103,16 +110,15 @@ export const signUp = (email, password) => {
     axios
       .post(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
-          process.env.REACT_APP_API_KEY,
+          process.env.REACT_APP_FIREBASE_API_KEY,
         authData
       )
       .then((res) => {
-        console.log(res);
-        dispatch(authSuccess(res));
+        dispatch(authSuccess(res.data.idToken, res.data.localId));
       })
       .catch((err) => {
         dispatch(setErroredAction(actionDisplays.SIGN_UP));
-        dispatch(authFailed(err.response.data.error));
+        dispatch(signUpFailed(err.response.data.error));
       });
   };
 };
@@ -124,18 +130,15 @@ export const initApp = () => {
     try {
       localCart = secureStorage.getItem("cart");
     } catch (error) {
-      console.log(error);
-    }
-    if (!localCart) {
       let emptyCart = { items: {}, quantity: 0 };
       secureStorage.setItem("cart", emptyCart);
     }
+
     const idToken = localStorage.getItem("idToken");
     let timeToExpire = 0;
     if (idToken) {
       const expirationTime = localStorage.getItem("expirationTime");
-      timeToExpire =
-        new Date(expirationTime).getTime() - new Date().getTime();
+      timeToExpire = new Date(expirationTime).getTime() - new Date().getTime();
       if (timeToExpire > 0) {
         const userId = localStorage.getItem("userId");
         dispatch(authSuccess(idToken, userId));

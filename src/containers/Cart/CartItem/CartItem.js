@@ -13,8 +13,6 @@ import PropTypes from "prop-types";
 const CartItem = (props) => {
   const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  console.log(props.pizza);
-
   let remove = null;
   if (!props.checkout) {
     remove = (

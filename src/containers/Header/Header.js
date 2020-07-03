@@ -37,7 +37,6 @@ class Header extends Component {
   };
 
   render() {
-    console.log("render header");
 
     return (
       <header className="header">

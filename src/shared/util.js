@@ -21,7 +21,6 @@ import {
 
 /* Get display message for error code related to authentication */
 export const lookupErrorCode = (errorCode) => {
-  console.log(errorCode);
   if (errorCode === "INVALID_PASSWORD" || errorCode === "EMAIL_NOT_FOUND") {
     return "The username or password you entered is incorrect.";
   } else if (errorCode.includes("TOO_MANY_ATTEMPTS_TRY_LATER")) {

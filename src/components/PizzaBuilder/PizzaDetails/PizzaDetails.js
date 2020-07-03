@@ -28,7 +28,6 @@ class PizzaDetails extends Component {
   };
 
   render() {
-    console.log("render pizza details");
     const price = calculatePrice(this.props.pizza, true);
 
     let save = null;

@@ -18,7 +18,6 @@ import Message from "../../UI/Message/Message";
 
 /* Displays popular pizzas */
 const Home = (props) => {
-  console.log("render Home");
   let message = null;
   if (props.location.fromCheckout) {
     message = (

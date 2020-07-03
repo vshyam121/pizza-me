@@ -23,7 +23,6 @@ class CartIcon extends Component {
   }
 
   render() {
-    console.log("render cart icon");
     let numItemsInCart = null;
     if (this.props.quantity > 0) {
       numItemsInCart = (

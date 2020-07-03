@@ -112,13 +112,13 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.bool,
+  error: PropTypes.object,
   isAuthenticated: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
-  error: state.auth.error,
+  error: state.auth.signUpError,
   isAuthenticated: state.auth.idToken,
 });
 

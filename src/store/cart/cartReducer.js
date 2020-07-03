@@ -33,7 +33,6 @@ const cartReducer = (state = initialState, action) => {
       quantity = state.quantity + +action.item.quantity;
       itemHashMap = { ...state.itemHashMap };
       itemHashMap[hash(action.item.pizza)] = action.itemId;
-      console.log(items);
       return {
         ...state,
         items: items,

@@ -9,9 +9,7 @@ import PropTypes from "prop-types";
 
 /* Shows progress of steps in the pizza builder */
 const PizzaBuilderProgress = (props) => {
-  useEffect(() => {
-    console.log("render builder progress");
-  }, [props.stage]);
+  useEffect(() => {}, [props.stage]);
   return (
     <div className="progress">
       <button
