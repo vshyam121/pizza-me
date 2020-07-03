@@ -7,7 +7,7 @@ import {
 } from "../../metadata/pizzaProperties";
 import { CLASSIC_MARINARA, REGULAR_SAUCE } from "../../metadata/sauceMetadata";
 import { NO_CRUST_FLAVOR } from "../../metadata/crustFlavorMetadata";
-import axiosFirebase from "../../axiosFirebase";
+import axiosFirebase from "../../shared/axiosFirebase";
 import { v4 as uuidv4 } from "uuid";
 import { REGULAR_CHEESE } from "../../metadata/cheeseMetadata";
 import hash from "object-hash";
@@ -47,6 +47,7 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
     const remoteItemsQuantity = getTotalQuantity(items);
     let itemHashMap = generateItemHashMap(items);
     let localItems = {};
+    //Update quantities of matching item in backend cart and add new items
     Object.entries(localCart.items).forEach(([itemId, item]) => {
       const pizzaHash = hash(item.pizza);
       const matchingItemId = itemHashMap[pizzaHash];
@@ -61,6 +62,7 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
         localItems[itemId] = item;
       }
     });
+    //patch REST API call to update backend with changes to items in cart
     if (Object.keys(localItems)) {
       axiosFirebase
         .patch("/carts/" + cartId + "/items.json?auth=" + idToken, localItems)
@@ -137,9 +139,12 @@ export const getCart = (idToken, userId) => {
           items = Object.values(res.data)[0].items || {};
           cartId = Object.keys(res.data)[0];
           let localCart = secureStorage.getItem("cart");
+          //Combine local cart with backend cart if items in local cart
           if (localCart.quantity > 0) {
             dispatch(combineCarts(localCart, items, cartId, userId, idToken));
-          } else {
+          }
+          //Otherwise, just dispatch to reducer with results of get cart call
+          else {
             const itemHashMap = generateItemHashMap(items);
             quantity = getTotalQuantity(items);
             dispatch({
@@ -172,6 +177,8 @@ const generateItemHashMap = (items) => {
   return itemHashMap;
 };
 
+/* Just clear cart items from redux store only. 
+   Different from empty cart which empties cart in backend as well */
 export const clearCart = () => {
   return {
     type: actionTypes.CLEAR_CART,
@@ -195,6 +202,7 @@ const addNewItemToCart = (pizza, quantity) => {
       delete pizza.veggies;
     }
     let item = { pizza: pizza, quantity: quantity };
+    //if user is signed in, then add to backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .post(
@@ -215,6 +223,7 @@ const addNewItemToCart = (pizza, quantity) => {
           dispatch(setErroredAction(actionDisplays.ADD_ITEM_TO_CART));
         });
     } else {
+      //if user not signed in, add to local storage cart
       let cart = secureStorage.getItem("cart");
       const itemId = uuidv4();
       cart.items[itemId] = item;
@@ -274,6 +283,7 @@ export const changeItemQuantity = (itemId, quantity) => {
     const item = { ...getState().cart.items[itemId] };
     dispatch(changeCartItemStart(item.pizza));
     item.quantity = quantity;
+    //if user signed in, PUT call to change item quantity in backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
@@ -296,7 +306,9 @@ export const changeItemQuantity = (itemId, quantity) => {
           dispatch(setErroredAction(actionDisplays.CHANGE_ITEM_QUANTITY));
           dispatch(changeCartItemFailed());
         });
-    } else {
+    } 
+    //if user not signed in, change item quantity in local storage cart
+    else {
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
       cart.quantity += parseInt(quantity);
@@ -330,6 +342,7 @@ const changeCartItemFailed = () => {
 export const removeItem = (itemId, pizza) => {
   return (dispatch, getState) => {
     dispatch(changeCartItemStart(pizza));
+    //if user signed in, DELETE call to remove item from backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .delete(
@@ -352,6 +365,7 @@ export const removeItem = (itemId, pizza) => {
           dispatch(setErroredAction(actionDisplays.REMOVE_ITEM));
         });
     } else {
+      //if user not signed in, remove item from local storage cart
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
       delete cart.items[itemId];
@@ -367,6 +381,7 @@ export const removeItem = (itemId, pizza) => {
 
 export const emptyCart = (userId) => {
   return (dispatch, getState) => {
+    //if user signed in, PUT call to empty backend cart
     if (getState().cart.cartId) {
       let emptyCart = {
         userId: userId,
@@ -387,7 +402,9 @@ export const emptyCart = (userId) => {
         .catch(() => {
           dispatch(setErroredAction(actionDisplays.EMPTY_CART));
         });
-    } else {
+    } 
+    //if user not signed in, empty local storage cart
+    else {
       let emptyCart = { items: {}, quantity: 0 };
       secureStorage.setItem("cart", emptyCart);
       dispatch({
@@ -402,6 +419,7 @@ export const saveToCart = (pizza, quantity, itemId) => {
   return (dispatch, getState) => {
     const item = { pizza: pizza, quantity: quantity };
     dispatch(changeCartItemStart(getState().cart.items[itemId].pizza));
+    //if user signed in, PUT call to make change to backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
@@ -424,7 +442,9 @@ export const saveToCart = (pizza, quantity, itemId) => {
           dispatch(changeCartItemFailed());
           dispatch(setErroredAction(actionDisplays.SAVE_TO_CART));
         });
-    } else {
+    } 
+    //if user not signed in, make change to local storage cart
+    else {
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
       cart.items[itemId] = item;

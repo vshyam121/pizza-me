@@ -1,5 +1,5 @@
 import * as actionTypes from "./checkoutActionTypes";
-import axiosFirebase from "../../axiosFirebase";
+import axiosFirebase from "../../shared/axiosFirebase";
 import axiosGeolocation from "axios";
 import * as actionDisplays from "../ui/actionDisplays";
 import { setErroredAction } from "../ui/uiActions";
@@ -49,12 +49,14 @@ export const submitOrderFailed = () => {
   };
 };
 
+/* Reset all address validation properties */
 export const validateAddressReset = () => {
   return {
     type: actionTypes.VALIDATE_ADDRESS_RESET,
   };
 };
 
+/* Call smarty streets geolocation api to validate delivery address */ 
 export const validateAddress = (addressForm) => {
   return (dispatch) => {
     let params = {
@@ -72,7 +74,7 @@ export const validateAddress = (addressForm) => {
     });
 
     axiosGeolocation
-      .get("https://us-street.api.smartystreets.com/street-address", {
+      .get(process.env.REACT_APP_SMARTY_STREETS_BASE_URL, {
         params: params,
       })
       .then((res) => {
@@ -116,18 +118,21 @@ export const validateAddress = (addressForm) => {
   };
 };
 
+/* To set loading in UI when getting orders */
 const getOrdersStart = () => {
   return {
     type: actionTypes.GET_ORDERS_START,
   };
 };
 
+/* To finish loading in UI after getting orders failed */
 const getOrdersFailed = () => {
   return {
     type: actionTypes.GET_ORDERS_FAILED,
   };
 };
 
+/* Get all past orders for a particular user */
 export const getOrders = (idToken, userId) => {
   return (dispatch) => {
     dispatch(getOrdersStart());

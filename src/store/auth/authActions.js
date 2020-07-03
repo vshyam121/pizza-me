@@ -64,7 +64,8 @@ export const checkAuthTimeout = (expirationTime) => {
   };
 };
 
-/* Sign in user with email/password */
+/* Sign in user with email/password.
+   Also get user's cart and orders onced successfully signed in */
 export const signIn = (email, password) => {
   return (dispatch) => {
     dispatch(authStart());
@@ -126,27 +127,34 @@ export const signUp = (email, password) => {
 /* Initialize application upon app load */
 export const initApp = () => {
   return (dispatch) => {
+    const emptyCart = { items: {}, quantity: 0 };
     let localCart = null;
     try {
       localCart = secureStorage.getItem("cart");
     } catch (error) {
-      let emptyCart = { items: {}, quantity: 0 };
       secureStorage.setItem("cart", emptyCart);
     }
 
-    const idToken = localStorage.getItem("idToken");
+    if (!localCart) {
+      secureStorage.setItem("cart", emptyCart);
+    }
+
+    const idToken = secureStorage.getItem("idToken");
     let timeToExpire = 0;
+    //if user's session still alive, get user's cart and orders
     if (idToken) {
-      const expirationTime = localStorage.getItem("expirationTime");
+      const expirationTime = secureStorage.getItem("expirationTime");
       timeToExpire = new Date(expirationTime).getTime() - new Date().getTime();
       if (timeToExpire > 0) {
-        const userId = localStorage.getItem("userId");
+        const userId = secureStorage.getItem("userId");
         dispatch(authSuccess(idToken, userId));
         dispatch(checkAuthTimeout(timeToExpire / 1000));
         dispatch(getCart(idToken, userId));
         dispatch(getOrders(idToken, userId));
       }
-    } else if (!idToken || timeToExpire <= 0) {
+    } 
+    //if user's session expired, get local storage cart
+    else if (!idToken || timeToExpire <= 0) {
       dispatch(getCartFromLocalStorage());
     }
   };
