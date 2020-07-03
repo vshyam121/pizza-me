@@ -8,6 +8,7 @@ import { lookupErrorCode } from "../../../shared/util";
 import { Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 /* Sign in form */
 class SignIn extends Component {
@@ -104,7 +105,12 @@ class SignIn extends Component {
           {errorMessage}
           {form}
           <div className="signup">
-            <Link to="/signup">
+            <Link
+              to={{
+                pathname: "/signup",
+                fromCheckout: this.props.location.fromCheckout,
+              }}
+            >
               <Button type={secondary}>Sign Up</Button>
             </Link>
           </div>
@@ -114,9 +120,15 @@ class SignIn extends Component {
   }
 }
 
+SignIn.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.object,
+  isAuthenticated: PropTypes.string
+}
+
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
-  error: state.auth.error,
+  error: state.auth.signInError,
   isAuthenticated: state.auth.idToken,
 });
 

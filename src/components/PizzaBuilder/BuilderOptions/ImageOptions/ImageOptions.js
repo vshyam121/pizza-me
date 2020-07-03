@@ -1,6 +1,7 @@
 import React from "react";
 import "./ImageOptions.scss";
 import { FaCheckCircle } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 /* Interactable options to be displayed as images in the pizza builder */
 const ImageOptions = props => {
@@ -8,9 +9,9 @@ const ImageOptions = props => {
     <div className="builder-options">
       {Object.keys(props.imageMapping).map(option => {
         const selected = props.itemSelected === option;
-        let price = null;
+        let additionalDisplay = null;
         if(props.selectionMetadata && props.selectionMetadata[option]){
-          price = props.selectionMetadata[option].price;
+          additionalDisplay = props.selectionMetadata[option].additionalDisplay;
         }
         return (
           <div
@@ -32,7 +33,7 @@ const ImageOptions = props => {
                   : "option__name"
               }
             >
-              {option} {price}
+              {option} {additionalDisplay}
             </div>
           </div>
         );
@@ -40,5 +41,11 @@ const ImageOptions = props => {
     </div>
   );
 };
+
+ImageOptions.propTypes = {
+  imageMapping: PropTypes.objectOf(PropTypes.object).isRequired,
+  itemSelected: PropTypes.string.isRequired,
+  selectionMetadata: PropTypes.objectOf(PropTypes.object)
+}
 
 export default ImageOptions;

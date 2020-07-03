@@ -1,40 +1,49 @@
-@import '../../../sass/base/variables';
-@import '../../../sass/abstracts/mixins';
+@import "../../../sass/base/variables";
+@import "../../../sass/abstracts/mixins";
 
 .modal {
-    width: 100%;
-    height: auto;
-    z-index: 1500;
-    background-color: white;
-    box-shadow: 0 1rem 2rem $color-grey-dark-1;
-    border: 1px solid $border-color;
-    padding: 3rem;
-    transition: all .3s ease-out;
-    opacity: 1;
-    position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 1500;
+  background-color: white;
+  box-shadow: 0 1rem 2rem $color-grey-dark-1;
+  border: 1px solid $border-color;
+  padding: 3rem;
+  transition: all 0.3s ease-out;
+  opacity: 1;
+  position: relative;
 
-    &--error {
-        width: 50rem;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+  &--error {
+    width: 50rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    @include respond(phone){
-        padding:3rem 1rem;
+    @include respond(tab-port) {
+      width: 90%;
     }
+  }
 
-    &--closed {
-        transform: translate(-50%, -100vh);
-        opacity: 0;
-    }
+  @include respond(phone) {
+    padding: 3rem 1rem;
+  }
 
-    &__close {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        font-size: 2rem;
-        cursor: pointer;
+  &--closed {
+    transform: translate(-50%, -100vh);
+    opacity: 0;
+  }
+
+  &__close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  &__children {
+    @include respond(phone) {
+      margin-top: 1rem;
     }
+  }
 }
-

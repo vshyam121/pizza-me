@@ -1,5 +1,6 @@
 import React from "react";
 import "./Dropdown.scss";
+import PropTypes from "prop-types";
 
 /* Standard dropdown selectors across entire app */
 const Dropdown = props => {
@@ -11,5 +12,10 @@ const Dropdown = props => {
     </select>
   );
 };
+
+Dropdown.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  options: PropTypes.array.isRequired
+}
 
 export default Dropdown;

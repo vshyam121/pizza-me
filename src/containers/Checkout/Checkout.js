@@ -14,8 +14,7 @@ import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderAct
 import { calculateSubTotal, calculateTax } from "../../shared/util";
 import { SyncLoader } from "react-spinners";
 import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
-import axiosFirebase from "../../axiosFirebase";
-import withErrorHandler from "../../hoc/withErrorHandler";
+import PropTypes from "prop-types";
 
 /* Order summary and ability to submit an order */
 class Checkout extends Component {
@@ -31,8 +30,12 @@ class Checkout extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.submittingOrder && !this.props.submittingOrder && !this.props.submitOrderError) {
-      this.props.history.push({ pathname: "/", fromCheckout: "true" });
+    if (
+      prevProps.submittingOrder &&
+      !this.props.submittingOrder &&
+      !this.props.submitOrderError
+    ) {
+      this.props.history.push({ pathname: "/", fromCheckout: true });
       this.props.emptyCart(this.props.userId);
     }
   }
@@ -58,7 +61,7 @@ class Checkout extends Component {
     } else {
       submitOrder = (
         <Button onClick={() => this.handleSubmitOrder(total)} type={primary}>
-          <span>Place Order</span>
+          Place Order
         </Button>
       );
     }
@@ -125,6 +128,16 @@ class Checkout extends Component {
   }
 }
 
+Checkout.propTypes = {
+  items: PropTypes.object.isRequired,
+  idToken: PropTypes.string,
+  userId: PropTypes.string,
+  loadingCart: PropTypes.bool,
+  submitOrderError: PropTypes.bool,
+  submittingOrder: PropTypes.bool,
+  deliveryAddress: PropTypes.string,
+};
+
 const mapStateToProps = (state) => ({
   items: state.cart.items,
   idToken: state.auth.idToken,
@@ -132,7 +145,7 @@ const mapStateToProps = (state) => ({
   loadingCart: state.cart.loadingCart,
   submittingOrder: state.checkout.submittingOrder,
   deliveryAddress: state.checkout.deliveryAddress,
-  submitOrderError: state.checkout.submitOrderError
+  submitOrderError: state.checkout.submitOrderError,
 });
 
 export default connect(mapStateToProps, {
@@ -141,4 +154,4 @@ export default connect(mapStateToProps, {
   removeItem,
   initializePizzaBuilder,
   changeItemQuantity,
-})(withErrorHandler(Checkout, axiosFirebase));
+})(Checkout);

@@ -1,6 +1,7 @@
 import React from "react";
 import NavigationItem from "../../UI/NavigationItem/NavigationItem";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 /* Menu items that deal with account information, namely authentication and orders */
 const AccountMenuItems = (props) => {
@@ -27,5 +28,9 @@ const AccountMenuItems = (props) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.idToken,
 });
+
+AccountMenuItems.propTypes = {
+  isAuthenticated: PropTypes.string
+}
 
 export default connect(mapStateToProps, null)(AccountMenuItems);

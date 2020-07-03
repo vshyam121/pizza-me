@@ -1,5 +1,4 @@
 import React from "react";
-import "./SignedOutMessage.scss";
 
 /* A confirmation message to be displayed after successfully signing out */
 const SignedOutMessage = () => {

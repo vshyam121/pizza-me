@@ -29,7 +29,6 @@ export const submitOrder = (total, items, idToken, userId) => {
     axiosFirebase
       .post("/orders.json?auth=" + idToken, order)
       .then((res) => {
-        console.log(res);
         dispatch({
           type: actionTypes.SUBMIT_ORDER,
           orderId: res.data.name,
@@ -77,7 +76,6 @@ export const validateAddress = (addressForm) => {
         params: params,
       })
       .then((res) => {
-        console.log(res);
         if (res.data.length > 0) {
           const matchCode = res.data[0].analysis.dpv_match_code;
           if (matchCode === "Y") {
@@ -109,8 +107,8 @@ export const validateAddress = (addressForm) => {
           });
         }
       })
-      .catch((err) => {
-        console.log(err.response.status);
+      .catch(() => {
+        dispatch(setErroredAction(actionDisplays.VALIDATE_ADDRESS));
         dispatch({
           type: actionTypes.VALIDATE_ADDRESS_FAILED,
         });
@@ -143,7 +141,6 @@ export const getOrders = (idToken, userId) => {
       )
       .then((res) => {
         const orders = res.data;
-        console.log(orders);
         dispatch({
           type: actionTypes.GET_ORDERS_SUCCESS,
           orders: orders,

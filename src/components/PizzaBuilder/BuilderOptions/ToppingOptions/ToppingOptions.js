@@ -8,8 +8,10 @@ import {
   LEFT_HALF,
   RIGHT_HALF,
 } from "../../../../metadata/pizzaProperties";
+import PropTypes from "prop-types";
 
-/* Interactable topping options */ 
+/* Interactable topping options */
+
 const ToppingOptions = (props) => {
   const onClick = (event) => {
     event.stopPropagation();
@@ -28,51 +30,55 @@ const ToppingOptions = (props) => {
 
   return (
     <div className="builder-list">
-      {Object.keys(props.imageMapping).map(topping => {
-        const selected = props.itemsSelected && Object.keys(props.itemsSelected).includes(topping);
+      {Object.keys(props.imageMapping).map((topping) => {
+        const selected = Object.keys(props.itemsSelected).includes(topping);
         let checkMark = null;
         let toppingOptionClasses = ["topping-option"];
         let amountOptions = null;
         let portionOptions = null;
-        let selection = props.itemsSelected && props.itemsSelected[topping];
+        let selection = props.itemsSelected[topping];
+        toppingOptionClasses.push("topping-option--selected");
+        amountOptions = (
+          <div className="topping-option__amount">
+            <div
+              className={
+                selection && selection.amount === EXTRA_TOPPING
+                  ? "amount-option amount-option--selected"
+                  : "amount-option"
+              }
+              data-topping={topping}
+              data-value={EXTRA_TOPPING}
+              onClick={onClickAmount}
+            >
+              Extra
+            </div>
+            <div
+              className={
+                selection && selection.amount === REGULAR_TOPPING
+                  ? "amount-option amount-option--selected"
+                  : "amount-option"
+              }
+              data-topping={topping}
+              data-value={REGULAR_TOPPING}
+              onClick={onClickAmount}
+            >
+              Regular
+            </div>
+            <div
+              className={
+                !selection
+                  ? "amount-option amount-option--selected"
+                  : "amount-option"
+              }
+              data-value={topping}
+              onClick={onClick}
+            >
+              None
+            </div>
+          </div>
+        );
         if (selected) {
           checkMark = <FaCheckCircle className="topping-option__checkmark" />;
-          toppingOptionClasses.push("topping-option--selected");
-          amountOptions = (
-            <div className="topping-option__amount">
-              <div
-                className={
-                  selection.amount === EXTRA_TOPPING
-                    ? "amount-option amount-option--selected"
-                    : "amount-option"
-                }
-                data-topping={topping}
-                data-value={EXTRA_TOPPING}
-                onClick={onClickAmount}
-              >
-                Extra
-              </div>
-              <div
-                className={
-                  selection.amount === REGULAR_TOPPING
-                    ? "amount-option amount-option--selected"
-                    : "amount-option"
-                }
-                data-topping={topping}
-                data-value={REGULAR_TOPPING}
-                onClick={onClickAmount}
-              >
-                Regular
-              </div>
-              <div
-                className="amount-option"
-                data-value={topping}
-                onClick={onClick}
-              >
-                None
-              </div>
-            </div>
-          );
 
           let wholeSelection = selection.portion === WHOLE;
           let leftSelection = selection.portion === LEFT_HALF;
@@ -89,11 +95,13 @@ const ToppingOptions = (props) => {
                 data-value={WHOLE}
                 onClick={onClickPortion}
               >
-                <div className={
-                  wholeSelection
-                    ? "portion-option__whole portion-option__whole--selected"
-                    : "portion-option__whole"
-                }></div>
+                <div
+                  className={
+                    wholeSelection
+                      ? "portion-option__whole portion-option__whole--selected"
+                      : "portion-option__whole"
+                  }
+                ></div>
               </div>
               <div
                 className={
@@ -105,11 +113,13 @@ const ToppingOptions = (props) => {
                 data-value={LEFT_HALF}
                 onClick={onClickPortion}
               >
-                <div className={
-                  leftSelection
-                    ? "portion-option__left portion-option__left--selected"
-                    : "portion-option__left"
-                }></div>
+                <div
+                  className={
+                    leftSelection
+                      ? "portion-option__left portion-option__left--selected"
+                      : "portion-option__left"
+                  }
+                ></div>
               </div>
               <div
                 className={
@@ -121,15 +131,18 @@ const ToppingOptions = (props) => {
                 data-value={RIGHT_HALF}
                 onClick={onClickPortion}
               >
-                <div className={
-                  rightSelection
-                    ? "portion-option__right portion-option__right--selected"
-                    : "portion-option__right"
-                }></div>
+                <div
+                  className={
+                    rightSelection
+                      ? "portion-option__right portion-option__right--selected"
+                      : "portion-option__right"
+                  }
+                ></div>
               </div>
             </div>
           );
         }
+
         return (
           <div
             key={topping}
@@ -143,11 +156,18 @@ const ToppingOptions = (props) => {
               onClick={onClick}
             >
               {checkMark}
-              <img className="topping-option__img" src={props.imageMapping[topping].icon} alt={topping} />
+              <img
+                className="topping-option__img"
+                src={props.imageMapping[topping].icon}
+                alt={topping}
+              />
             </div>
             <div className="topping-option__details">
               <span className="topping-option__name">{topping}</span>
-              <div className="topping-option__amount-portion" onClick={e => e.stopPropagation()}>
+              <div
+                className="topping-option__amount-portion"
+                onClick={(e) => e.stopPropagation()}
+              >
                 {amountOptions}
                 {portionOptions}
               </div>
@@ -158,5 +178,10 @@ const ToppingOptions = (props) => {
     </div>
   );
 };
+
+ToppingOptions.propTypes = {
+  imageMapping: PropTypes.objectOf(PropTypes.object).isRequired,
+  itemSelected: PropTypes.string,
+}
 
 export default ToppingOptions;

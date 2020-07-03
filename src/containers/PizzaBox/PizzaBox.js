@@ -11,13 +11,10 @@ import { toppingMapping } from "../../metadata/comboMetadata";
 import { connect } from "react-redux";
 import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
 import { addToCart } from "../../store/cart/cartActions";
-import {
-  SIZE,
-  CRUST,
-  COMBO_NAME,
-} from "../../metadata/pizzaProperties";
+import { SIZE, CRUST, COMBO_NAME } from "../../metadata/pizzaProperties";
 import { primary, secondary } from "../../components/UI/Button/Button";
 import { calculatePrice } from "../../shared/util";
+import PropTypes from "prop-types";
 
 /* UI box container that holds an pizza and lets user customize various pizza properties.
    Can add pizza to order and also build your own pizza from here. */
@@ -95,14 +92,14 @@ class PizzaBox extends Component {
   };
 
   handleClickBuild = () => {
-    let pizza = { ...this.state.pizza};
+    let pizza = { ...this.state.pizza };
     pizza.crust = this.getCrust(pizza.crust);
     this.props.initializePizzaBuilder(pizza, this.state.quantity);
     this.resetState();
   };
 
   handleAddToCart = () => {
-    let pizza = { ...this.state.pizza};
+    let pizza = { ...this.state.pizza };
     pizza.crust = this.getCrust(pizza.crust);
     this.props.addToCart(pizza, this.state.quantity);
     this.resetState();
@@ -111,14 +108,19 @@ class PizzaBox extends Component {
   render() {
     const crustOptions = Object.entries(crustMetadataMapping).map(
       ([crust, crustMetadata]) => {
-        return crust + (crustMetadata.price ? " " + crustMetadata.price : "");
+        return (
+          crust +
+          (crustMetadata.additionalDisplay
+            ? " " + crustMetadata.additionalDisplay
+            : "")
+        );
       }
     );
 
     const sizeOptions = sizes;
     const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    let pizza = { ...this.state.pizza};
+    let pizza = { ...this.state.pizza };
     pizza.crust = this.getCrust(pizza.crust);
     const price = calculatePrice(pizza);
 
@@ -207,5 +209,12 @@ class PizzaBox extends Component {
     );
   }
 }
+
+PizzaBox.propTypes = {
+  priceType: PropTypes.string.isRequired,
+  pizzaType: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string.isRequired,
+  pizzaName: PropTypes.string,
+};
 
 export default connect(null, { initializePizzaBuilder, addToCart })(PizzaBox);

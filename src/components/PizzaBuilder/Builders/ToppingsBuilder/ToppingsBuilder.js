@@ -5,6 +5,7 @@ import { meatImageMapping } from "../../../../metadata/meatMetadata";
 import { veggiesImageMapping } from "../../../../metadata/veggiesMetadata";
 import { MEATS, VEGGIES } from "../../../../metadata/pizzaProperties";
 import OptionsButton from "../../../UI/OptionsButton/OptionsButton";
+import PropTypes from "prop-types";
 
 /* Pizza builder section with topping options */
 class ToppingsBuilder extends Component {
@@ -66,6 +67,10 @@ class ToppingsBuilder extends Component {
       </div>
     );
   }
+}
+
+ToppingsBuilder.propTypes = {
+  pizza: PropTypes.object.isRequired
 }
 
 export default ToppingsBuilder;

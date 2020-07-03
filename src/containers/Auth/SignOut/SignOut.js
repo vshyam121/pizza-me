@@ -14,7 +14,7 @@ class SignOut extends Component {
       <Redirect
         to={{
           pathname: "/",
-          fromSignOut: "true",
+          fromSignOut: true,
         }}
       />
     );

@@ -67,7 +67,6 @@ const checkValidity = (value, rules) => {
   }
 
   if (rules.isPhoneNumber) {
-    console.log(value);
     const pattern = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
     isValid = pattern.test(value) && isValid;
   }

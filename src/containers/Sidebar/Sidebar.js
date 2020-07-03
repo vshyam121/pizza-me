@@ -5,6 +5,7 @@ import PizzaMenuItems from "../../components/MenuItems/PizzaMenuItems/PizzaMenuI
 import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/AccountMenuItems";
 import { closeSidebar } from "../../store/ui/uiActions";
 import NavigationItem from "../../components/UI/NavigationItem/NavigationItem";
+import PropTypes from "prop-types";
 
 /* Sidebar menu with pizza menu items and account menu items */
 class Sidebar extends Component {
@@ -21,26 +22,30 @@ class Sidebar extends Component {
     }
 
     return (
-      <div className={sidebarContainerClassNames.join(" ")}>
+      <div
+        onClick={this.handleClickMenuItem}
+        className={sidebarContainerClassNames.join(" ")}
+      >
         <div className={sidebarClassNames.join(" ")}>
           <div className="sidebar__menu-items">
-            <PizzaMenuItems vertical onClick={this.handleClickMenuItem} />
+            <PizzaMenuItems vertical />
           </div>
           <div className="sidebar__account">
-            <NavigationItem
-              vertical
-              to="/cart"
-              onClick={this.handleClickMenuItem}
-            >
+            <NavigationItem vertical to="/cart">
               Cart
             </NavigationItem>
-            <AccountMenuItems vertical onClick={this.handleClickMenuItem} />
+            <AccountMenuItems vertical />
           </div>
         </div>
       </div>
     );
   }
 }
+
+Sidebar.propTypes = {
+  sidebarOpen: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.string,
+};
 
 const mapStateToProps = (state) => ({
   sidebarOpen: state.ui.sidebarOpen,

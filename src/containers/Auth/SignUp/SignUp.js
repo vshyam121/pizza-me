@@ -6,6 +6,7 @@ import { SyncLoader } from "react-spinners";
 import { lookupErrorCode } from "../../../shared/util";
 import { Redirect } from "react-router-dom";
 import Form from "../../../containers/Form/Form";
+import PropTypes from "prop-types";
 
 /* User sign up form */
 class SignUp extends Component {
@@ -86,18 +87,20 @@ class SignUp extends Component {
     let redirect = null;
     if (this.props.isAuthenticated) {
       if (this.props.location.fromCheckout) {
-        redirect = <Redirect to="/checkout/order-type" />;
+        redirect = (
+          <Redirect
+            to={{ pathname: "/checkout/order-type", fromSignUp: "true" }}
+          />
+        );
       } else {
-        redirect = <Redirect to="/" />;
+        redirect = <Redirect to={{ pathname: "/", fromSignUp: "true" }} />;
       }
     }
 
     return (
       <div className="form-container">
         <div className="form-component">
-          <h3 className="form-component__title">
-            Sign up for an account
-          </h3>
+          <h3 className="form-component__title">Sign up for an account</h3>
           {redirect}
           {errorMessage}
           {form}
@@ -107,9 +110,15 @@ class SignUp extends Component {
   }
 }
 
+SignUp.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.object,
+  isAuthenticated: PropTypes.string
+}
+
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
-  error: state.auth.error,
+  error: state.auth.signUpError,
   isAuthenticated: state.auth.idToken,
 });
 

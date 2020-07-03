@@ -3,8 +3,9 @@ import * as actionTypes from "./authActionTypes";
 const initialState = {
   idToken: null,
   userId: null,
-  error: null,
-  loading: false
+  signInError: null,
+  signUpError: null,
+  loading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,31 +14,39 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.AUTH_START:
       return {
         ...state,
-        error: null,
-        loading: true
+        signInError: null,
+        signUpError: null,
+        loading: true,
       };
-    //successfully authenticated 
+    //successfully authenticated
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
         loading: false,
         idToken: action.idToken,
         userId: action.userId,
-        error: null
+        signInError: null,
       };
-    //set error and reset loading when auth failed
-    case actionTypes.AUTH_FAILED:
+    //set error and reset loading when sign in failed
+    case actionTypes.SIGN_IN_FAILED:
       return {
         ...state,
         loading: false,
-        error: action.error
+        signInError: action.error,
+      };
+    //set error and reset loading when sign up failed
+    case actionTypes.SIGN_UP_FAILED:
+      return {
+        ...state,
+        loading: false,
+        signUpError: action.error,
       };
     //reset user data on signout
     case actionTypes.AUTH_SIGNOUT:
       return {
         ...state,
         idToken: null,
-        userId: null
+        userId: null,
       };
     default:
       return state;

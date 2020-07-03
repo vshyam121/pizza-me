@@ -1,5 +1,6 @@
 import React from "react";
 import "./Message.scss";
+import PropTypes from "prop-types";
 
 /* Standard message alert to the user component */
 const Message = (props) => {
@@ -13,5 +14,9 @@ const Message = (props) => {
     </div>
   );
 };
+
+Message.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+}
 
 export default Message;

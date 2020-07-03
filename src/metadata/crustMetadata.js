@@ -1,9 +1,9 @@
-import HandTossedPreview from "../assets/images/crust_ht_NoFinish.webp"
-import HandTossedIcon from "../assets/images/icon_crust_ht.webp";
-import ThinNCrispyPreview from "../assets/images/crust_thin_NoFinish.webp";
-import ThinNCrispyIcon from "../assets/images/icon_crust_thin.webp";
-import OriginalPanPreview from "../assets/images/crust_pan_NoFinish.webp";
-import OriginalPanIcon from "../assets/images/icon_crust_pan.webp";
+import HandTossedPreview from "../assets/images/crust_ht_NoFinish.png"
+import HandTossedIcon from "../assets/images/icon_crust_ht.png";
+import ThinNCrispyPreview from "../assets/images/crust_thin_NoFinish.png";
+import ThinNCrispyIcon from "../assets/images/icon_crust_thin.png";
+import OriginalPanPreview from "../assets/images/crust_pan_NoFinish.png";
+import OriginalPanIcon from "../assets/images/icon_crust_pan.png";
 
 /* All metadata related to the display of crust options */
 
@@ -25,6 +25,6 @@ export const crustMetadataMapping = {
     [ORIGINAL_PAN]: {
         preview: OriginalPanPreview,
         icon: OriginalPanIcon,
-        price: "+$2.00"
+        additionalDisplay: "+$2.00"
     }
 }

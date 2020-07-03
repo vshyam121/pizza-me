@@ -6,9 +6,9 @@
 
   &__grid {
     display: grid;
+    -ms-grid-columns: repeat(auto-fit, 50rem);
     grid-template-columns: repeat(auto-fit, 50rem);
-    grid-row-gap: 2rem;
-    grid-column-gap: 2rem;
+    grid-gap: 2rem;
     justify-content: center;
 
     @include respond(tab-land){
@@ -21,6 +21,11 @@
     
     @include respond(phone){
       grid-template-columns: repeat(auto-fit, 30rem);
+    }
+
+    @include respond(big-desktop){
+      margin: 0rem 30rem;
+      grid-gap: 10rem;
     }
   }
 }

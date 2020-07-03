@@ -7,12 +7,11 @@ import { connect } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { isEqual } from "lodash";
 import { calculatePrice } from "../../../shared/util";
+import PropTypes from "prop-types";
 
 /* Single cart item with pizza description, price, quantity and edit/remove options */
 const CartItem = (props) => {
   const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-  console.log(props.pizza);
 
   let remove = null;
   if (!props.checkout) {
@@ -70,6 +69,14 @@ const CartItem = (props) => {
 
   return cartItem;
 };
+
+CartItem.propTypes = {
+  itemBeingChanged: PropTypes.bool,
+  loading: PropTypes.bool,
+  pizza: PropTypes.object.isRequired,
+  quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  checkout: PropTypes.bool
+}
 
 const mapStateToProps = (state) => ({
   loading: state.cart.loadingCartItem,

@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import PizzaBox from "../../../containers/PizzaBox/PizzaBox";
 import CheesePizzaImg from "../../../assets/images/pizza_cheese.jpg";
 import PepperoniPizzaImg from "../../../assets/images/pizza_pepperoni.jpg";
-import MeatLoversPizzaImg from "../../../assets/images/pizza_meat_lovers.webp";
-import SupremePizzaImg from "../../../assets/images/pizza_supreme.webp";
+import MeatLoversPizzaImg from "../../../assets/images/pizza_meat_lovers.png";
+import SupremePizzaImg from "../../../assets/images/pizza_supreme.png";
 import { REGULAR, COMBO } from "../../../metadata/comboMetadata";
 import {
   CHEESE,
@@ -13,65 +13,68 @@ import {
 } from "../../../metadata/comboMetadata";
 import OrderSubmission from "../../Messages/OrderSubmissionMessage/OrderSubmissionMessage";
 import SignedOutMessage from "../../Messages/SignedOutMessage/SignedOutMessage";
+import SignedUpMessage from "../../Messages/SignedUpMessage/SignedUpMessage";
 import Message from "../../UI/Message/Message";
-import axiosFirebase from "../../../axiosFirebase";
-import withErrorHandler from "../../../hoc/withErrorHandler";
 
 /* Displays popular pizzas */
-class Home extends Component {
-  render() {
-    let message = null;
-    if (this.props.location.fromCheckout) {
-      message = (
-        <Message>
-          <OrderSubmission />
-        </Message>
-      );
-    } else if (this.props.location.fromSignOut) {
-      message = (
-        <Message>
-          <SignedOutMessage />
-        </Message>
-      );
-    }
-
-    return (
-      <React.Fragment>
-        {message}
-        <div className="pizza-grid">
-          <h1 className="pizza-grid__title">Popular</h1>
-          <div className="pizza-grid__grid">
-            <PizzaBox
-              pizzaType={CHEESE}
-              priceType={REGULAR}
-              buildPizza
-              imageSrc={CheesePizzaImg}
-            />
-            <PizzaBox
-              pizzaType={CHEESE}
-              priceType={REGULAR}
-              imageSrc={CheesePizzaImg}
-            />
-            <PizzaBox
-              pizzaType={PEPPERONI_PIZZA}
-              priceType={REGULAR}
-              imageSrc={PepperoniPizzaImg}
-            />
-            <PizzaBox
-              pizzaType={MEAT_LOVER}
-              priceType={COMBO}
-              imageSrc={MeatLoversPizzaImg}
-            />
-            <PizzaBox
-              pizzaType={SUPREME}
-              priceType={COMBO}
-              imageSrc={SupremePizzaImg}
-            />
-          </div>
-        </div>
-      </React.Fragment>
+const Home = (props) => {
+  let message = null;
+  if (props.location.fromCheckout) {
+    message = (
+      <Message>
+        <OrderSubmission />
+      </Message>
+    );
+  } else if (props.location.fromSignOut) {
+    message = (
+      <Message>
+        <SignedOutMessage />
+      </Message>
+    );
+  } else if (props.location.fromSignUp) {
+    message = (
+      <Message>
+        <SignedUpMessage />
+      </Message>
     );
   }
-}
 
-export default withErrorHandler(Home, axiosFirebase);
+  return (
+    <React.Fragment>
+      {message}
+      <div className="pizza-grid">
+        <h1 className="pizza-grid__title">Popular</h1>
+        <div className="pizza-grid__grid">
+          <PizzaBox
+            pizzaType={CHEESE}
+            priceType={REGULAR}
+            buildPizza
+            imageSrc={CheesePizzaImg}
+          />
+          <PizzaBox
+            pizzaType={CHEESE}
+            priceType={REGULAR}
+            imageSrc={CheesePizzaImg}
+          />
+          <PizzaBox
+            pizzaType={PEPPERONI_PIZZA}
+            priceType={REGULAR}
+            imageSrc={PepperoniPizzaImg}
+          />
+          <PizzaBox
+            pizzaType={MEAT_LOVER}
+            priceType={COMBO}
+            imageSrc={MeatLoversPizzaImg}
+          />
+          <PizzaBox
+            pizzaType={SUPREME}
+            priceType={COMBO}
+            imageSrc={SupremePizzaImg}
+          />
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default Home;

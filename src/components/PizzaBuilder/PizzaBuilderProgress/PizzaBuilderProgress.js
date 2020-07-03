@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./PizzaBuilderProgress.scss";
 import {
   SIZE_CRUST,
   CHEESE_SAUCE,
-  TOPPINGS
+  TOPPINGS,
 } from "../../../containers/PizzaBuilder/PizzaBuilder";
+import PropTypes from "prop-types";
 
 /* Shows progress of steps in the pizza builder */
-const PizzaBuilderProgress = props => {
+const PizzaBuilderProgress = (props) => {
+  useEffect(() => {}, [props.stage]);
   return (
     <div className="progress">
       <button
@@ -41,6 +43,10 @@ const PizzaBuilderProgress = props => {
       </button>
     </div>
   );
+};
+
+PizzaBuilderProgress.propTypes = {
+  stage: PropTypes.oneOf(["SIZE_CRUST", "CHEESE_SAUCE", "TOPPINGS"]).isRequired,
 };
 
 export default PizzaBuilderProgress;

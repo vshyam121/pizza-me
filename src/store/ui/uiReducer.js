@@ -7,17 +7,20 @@ const initialState = {
 
 const uiReducer = (state = initialState, action) => {
   switch (action.type) {
+    // open/close sidebar
     case actionTypes.TOGGLE_SIDEBAR:
       let sidebarOpen = state.sidebarOpen;
       return {
         ...state,
         sidebarOpen: !sidebarOpen,
       };
+    //close sidebar
     case actionTypes.CLOSE_SIDEBAR:
       return {
         ...state,
         sidebarOpen: false,
       };
+    //set action that produced the error
     case actionTypes.SET_ERRORED_ACTION:
       return {
         ...state,

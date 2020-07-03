@@ -1,5 +1,6 @@
 import React from "react";
 import "./Button.scss";
+import PropTypes from "prop-types";
 
 export const primary = "button";
 export const secondary = "button button--secondary"
@@ -18,5 +19,11 @@ const Button = props => {
     </button>
   );
 };
+
+Button.propTypes = {
+  disabled: PropTypes.bool,
+  type: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+}
 
 export default Button;

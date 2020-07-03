@@ -7,7 +7,7 @@ const initialState = {
   items: {},
   quantity: 0,
   itemHashMap: {},
-  itemAdded: false,
+  numItemsAdded: 0,
   loadingCart: false,
   loadingCartItem: false,
   itemBeingChanged: null,
@@ -18,7 +18,7 @@ const cartReducer = (state = initialState, action) => {
   let items = null;
   let itemHashMap = null;
   let quantity;
-  let itemAdded = false;
+  let numItemsAdded = 0;
   switch (action.type) {
     //set cart id and user id once cart has been created 
     case actionTypes.CREATE_CART:
@@ -33,25 +33,27 @@ const cartReducer = (state = initialState, action) => {
       quantity = state.quantity + +action.item.quantity;
       itemHashMap = { ...state.itemHashMap };
       itemHashMap[hash(action.item.pizza)] = action.itemId;
-      console.log(items);
       return {
         ...state,
         items: items,
         quantity: quantity,
         itemHashMap: itemHashMap,
-        itemAdded: action.item.quantity,
+        numItemsAdded: action.item.quantity,
       };
+    //set loading before getting cart
     case actionTypes.GET_CART_START:
       return {
         ...state,
         loadingCart: true,
         errorCart: null,
       };
+    //finish loading when getting cart failed
     case actionTypes.GET_CART_FAILED:
       return {
         ...state,
         loadingCart: false,
       };
+    //successfully got cart for user, set cart metadata
     case actionTypes.GET_CART_SUCCESS:
       return {
         ...state,
@@ -62,6 +64,7 @@ const cartReducer = (state = initialState, action) => {
         itemHashMap: action.itemHashMap,
         loadingCart: false,
       };
+    //clear cart after logging out
     case actionTypes.CLEAR_CART:
       return {
         ...state,
@@ -70,8 +73,9 @@ const cartReducer = (state = initialState, action) => {
         items: {},
         quantity: 0,
         itemHashMap: {},
-        itemAdded: null,
+        numItemsAdded: 0,
       };
+    //set cart items 
     case actionTypes.SET_CART_ITEMS:
       return {
         ...state,
@@ -79,33 +83,37 @@ const cartReducer = (state = initialState, action) => {
         quantity: action.quantity,
         itemHashMap: action.itemHashMap,
       };
+    //change item quantity 
     case actionTypes.CHANGE_ITEM_QUANTITY:
       items = { ...state.items };
       quantity = state.quantity - items[action.itemId].quantity;
       items[action.itemId].quantity = action.quantity;
       quantity += parseInt(action.quantity);
       if (state.quantity < quantity) {
-        itemAdded = quantity - state.quantity;
+        numItemsAdded = quantity - state.quantity;
       }
       return {
         ...state,
         items: items,
         quantity: quantity,
-        itemAdded: itemAdded,
+        numItemsAdded: numItemsAdded,
         loadingCartItem: false
       };
+    //set loading before changing cart item
     case actionTypes.CHANGE_CART_ITEM_START:
       return {
         ...state,
         loadingCartItem: true,
         itemBeingChanged: action.itemBeingChanged,
       };
+    //failed to change cart item, done loading
     case actionTypes.CHANGE_CART_ITEM_FAILED:
       return {
         ...state,
         loadingCartItem: false,
         itemBeingChanged: null,
       };
+    //update cart metadata with removed item
     case actionTypes.REMOVE_ITEM_SUCCESS:
       items = { ...state.items };
       itemHashMap = { ...state.itemHashMap };
@@ -117,10 +125,11 @@ const cartReducer = (state = initialState, action) => {
         items: items,
         quantity: quantity,
         itemHashMap: itemHashMap,
-        itemAdded: null,
+        numItemsAdded: 0,
         loadingCartItem: false,
         itemBeingChanged: null,
       };
+    //save item to list of items and update quantity
     case actionTypes.SAVE_TO_CART:
       items = { ...state.items };
       quantity = state.quantity - items[action.itemId].quantity;
@@ -130,16 +139,16 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: items,
         quantity: quantity,
-        itemAdded: null,
+        numItemsAdded: 0,
         loadingCartItem: false
       };
+    //empty cart and all metadata
     case actionTypes.EMPTY_CART:
-      items = {};
       return {
         ...state,
-        items: items,
+        items: {},
         quantity: 0,
-        itemAdded: null,
+        numItemsAdded: 0,
         itemHashMap: {}
       };
     default:

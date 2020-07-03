@@ -4,14 +4,26 @@ import Button, { primary } from "../../UI/Button/Button";
 import PizzaDescription from "../../PizzaDescription/PizzaDescription";
 import "./PizzaDetails.scss";
 import { calculatePrice } from "../../../shared/util";
+import PropTypes from "prop-types";
 
 /* Shows pizza description, as well as options to change quantity and add/save to cart */
 class PizzaDetails extends Component {
   state = {
-    quantity: this.props.quantity
+    quantity: this.props.quantity,
   };
 
-  handleChangeQuantity = event => {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.quantity !== nextProps.quantity ||
+      this.props.pizza !== nextProps.pizza ||
+      this.state.quantity !== nextState.quantity
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  handleChangeQuantity = (event) => {
     this.setState({ quantity: event.target.value });
   };
 
@@ -68,4 +80,10 @@ class PizzaDetails extends Component {
     );
   }
 }
+
+PizzaDetails.propTypes = {
+  pizza: PropTypes.object.isRequired,
+  quantity: PropTypes.number.isRequired
+}
+
 export default PizzaDetails;

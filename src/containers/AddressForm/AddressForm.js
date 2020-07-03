@@ -7,6 +7,7 @@ import {
 import { SyncLoader } from "react-spinners";
 import { withRouter } from "react-router-dom";
 import Form from "../Form/Form";
+import PropTypes from "prop-types";
 
 /* Delivery address form */
 class AddressForm extends Component {
@@ -26,9 +27,12 @@ class AddressForm extends Component {
       unit: {
         elementType: "input",
         elementConfig: {
-          type: "number",
           placeholder: "Apt/Unit #"
         },
+        validation: {
+          isNumeric: true
+        },
+        errorMessage: "Please enter only the Apt/Unit number",
         value: "",
         valid: true
       },
@@ -129,11 +133,19 @@ class AddressForm extends Component {
   }
 }
 
+AddressForm.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
+  addressValid: PropTypes.bool
+}
+
 const mapStateToProps = state => ({
   addressValid: state.checkout.addressValid,
   error: state.checkout.addressValidationError,
   loading: state.checkout.validatingAddress
 });
+
+
 export default connect(mapStateToProps, {
   validateAddress,
   validateAddressReset
