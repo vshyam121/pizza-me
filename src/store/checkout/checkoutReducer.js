@@ -82,7 +82,7 @@ const checkoutReducer = (state = initialState, action) => {
         validatingAddress: true,
         addressValidationError: null,
       };
-    //validate address reset
+    //reset all address validation properties
     case actionTypes.VALIDATE_ADDRESS_RESET:
       return {
         ...state,

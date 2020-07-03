@@ -283,6 +283,7 @@ export const changeItemQuantity = (itemId, quantity) => {
     const item = { ...getState().cart.items[itemId] };
     dispatch(changeCartItemStart(item.pizza));
     item.quantity = quantity;
+    //if user signed in, PUT call to change item quantity in backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
@@ -305,7 +306,9 @@ export const changeItemQuantity = (itemId, quantity) => {
           dispatch(setErroredAction(actionDisplays.CHANGE_ITEM_QUANTITY));
           dispatch(changeCartItemFailed());
         });
-    } else {
+    } 
+    //if user not signed in, change item quantity in local storage cart
+    else {
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
       cart.quantity += parseInt(quantity);
@@ -339,6 +342,7 @@ const changeCartItemFailed = () => {
 export const removeItem = (itemId, pizza) => {
   return (dispatch, getState) => {
     dispatch(changeCartItemStart(pizza));
+    //if user signed in, DELETE call to remove item from backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .delete(
@@ -361,6 +365,7 @@ export const removeItem = (itemId, pizza) => {
           dispatch(setErroredAction(actionDisplays.REMOVE_ITEM));
         });
     } else {
+      //if user not signed in, remove item from local storage cart
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
       delete cart.items[itemId];
@@ -376,6 +381,7 @@ export const removeItem = (itemId, pizza) => {
 
 export const emptyCart = (userId) => {
   return (dispatch, getState) => {
+    //if user signed in, PUT call to empty backend cart
     if (getState().cart.cartId) {
       let emptyCart = {
         userId: userId,
@@ -396,7 +402,9 @@ export const emptyCart = (userId) => {
         .catch(() => {
           dispatch(setErroredAction(actionDisplays.EMPTY_CART));
         });
-    } else {
+    } 
+    //if user not signed in, empty local storage cart
+    else {
       let emptyCart = { items: {}, quantity: 0 };
       secureStorage.setItem("cart", emptyCart);
       dispatch({
@@ -411,6 +419,7 @@ export const saveToCart = (pizza, quantity, itemId) => {
   return (dispatch, getState) => {
     const item = { pizza: pizza, quantity: quantity };
     dispatch(changeCartItemStart(getState().cart.items[itemId].pizza));
+    //if user signed in, PUT call to make change to backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
@@ -433,7 +442,9 @@ export const saveToCart = (pizza, quantity, itemId) => {
           dispatch(changeCartItemFailed());
           dispatch(setErroredAction(actionDisplays.SAVE_TO_CART));
         });
-    } else {
+    } 
+    //if user not signed in, make change to local storage cart
+    else {
       let cart = secureStorage.getItem("cart");
       cart.quantity -= cart.items[itemId].quantity;
       cart.items[itemId] = item;
