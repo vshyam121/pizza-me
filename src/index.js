@@ -15,7 +15,7 @@ import ScrollToTop from "./hoc/ScrollToTop";
 
 
 ReactDOM.render(
-  <BrowserRouter basename="/pizza-me">
+  <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
     <Provider store={store}>
       <ScrollToTop>
         <App />
