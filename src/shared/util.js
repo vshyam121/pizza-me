@@ -16,6 +16,10 @@ import {
   extraToppingPrice,
   propertyPriceMapping,
 } from "../metadata/priceMappings";
+import checkPropTypes from "check-prop-types";
+import { applyMiddleware, createStore } from "redux";
+import rootReducer from "../store/rootReducer";
+import { middleware } from "../store/store";
 
 /* Utility functions used across multiple components/containers */
 
@@ -149,4 +153,28 @@ export const getReadableAddress = (givenAddress) => {
   address += ", " + givenAddress.state;
   address += " " + givenAddress.zipcode;
   return address;
+};
+
+export const findByTestAttr = (component, attr) => {
+  const wrapper = component.find(`[data-test="${attr}"]`);
+  return wrapper;
+};
+
+export const checkProps = (component, expectedProps) => {
+  const propsErr = checkPropTypes(
+    component.propTypes,
+    expectedProps,
+    "props",
+    component.name
+  );
+  return propsErr;
+};
+
+export const testStore = (initialState) => {
+  const store = createStore(
+    rootReducer,
+    initialState,
+    applyMiddleware(...middleware)
+  );
+  return store;
 };

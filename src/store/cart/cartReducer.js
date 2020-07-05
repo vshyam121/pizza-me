@@ -31,8 +31,7 @@ const cartReducer = (state = initialState, action) => {
     case actionTypes.ADD_TO_CART:
       items = { ...state.items, [action.itemId]: action.item };
       quantity = state.quantity + +action.item.quantity;
-      itemHashMap = { ...state.itemHashMap };
-      itemHashMap[hash(action.item.pizza)] = action.itemId;
+      itemHashMap = { ...state.itemHashMap, [hash(action.item.pizza)]: action.itemId };
       return {
         ...state,
         items: items,

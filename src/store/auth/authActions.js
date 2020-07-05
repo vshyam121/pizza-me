@@ -67,14 +67,14 @@ export const checkAuthTimeout = (expirationTime) => {
 /* Sign in user with email/password.
    Also get user's cart and orders onced successfully signed in */
 export const signIn = (email, password) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(authStart());
     const authData = {
       email: email,
       password: password,
       returnSecureToken: true,
     };
-    axios
+    await axios
       .post(
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
           process.env.REACT_APP_FIREBASE_API_KEY,
@@ -82,11 +82,13 @@ export const signIn = (email, password) => {
       )
       .then((res) => {
         localStorage.setItem("idToken", res.data.idToken);
+
         localStorage.setItem(
           "expirationTime",
           new Date(new Date().getTime() + res.data.expiresIn * 1000)
         );
         localStorage.setItem("userId", res.data.localId);
+
         dispatch(authSuccess(res.data.idToken, res.data.localId));
         dispatch(checkAuthTimeout(res.data.expiresIn));
         dispatch(getCart(res.data.idToken, res.data.localId));
@@ -152,7 +154,7 @@ export const initApp = () => {
         dispatch(getCart(idToken, userId));
         dispatch(getOrders(idToken, userId));
       }
-    } 
+    }
     //if user's session expired, get local storage cart
     else if (!idToken || timeToExpire <= 0) {
       dispatch(getCartFromLocalStorage());

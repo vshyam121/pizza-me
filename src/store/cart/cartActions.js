@@ -188,19 +188,7 @@ export const clearCart = () => {
 /* Add new item to cart, meaning it doesn't have a match in cart already */
 const addNewItemToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
-    //Need to delete empty objects because firebase disregards properties with empty objects
-    if (
-      Object.keys(pizza.meats).length === 0 &&
-      pizza.meats.constructor === Object
-    ) {
-      delete pizza.meats;
-    }
-    if (
-      Object.keys(pizza.veggies).length === 0 &&
-      pizza.veggies.constructor === Object
-    ) {
-      delete pizza.veggies;
-    }
+    
     let item = { pizza: pizza, quantity: quantity };
     //if user is signed in, then add to backend cart
     if (getState().cart.cartId) {
@@ -252,6 +240,20 @@ export const addToCart = (pizza, quantity) => {
     }
     if (!pizza[CRUST_FLAVOR]) {
       pizza[CRUST_FLAVOR] = NO_CRUST_FLAVOR;
+    }
+
+    //Need to delete empty objects because firebase disregards properties with empty objects
+    if (
+      Object.keys(pizza.meats).length === 0 &&
+      pizza.meats.constructor === Object
+    ) {
+      delete pizza.meats;
+    }
+    if (
+      Object.keys(pizza.veggies).length === 0 &&
+      pizza.veggies.constructor === Object
+    ) {
+      delete pizza.veggies;
     }
 
     const matchedItemIdInCart = getState().cart.itemHashMap[hash(pizza)];

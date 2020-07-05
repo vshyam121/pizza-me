@@ -22,7 +22,7 @@ import axios from "axios";
 import withErrorHandler from "./hoc/withErrorHandler";
 
 
-class App extends Component {
+export class App extends Component {
 
   componentDidMount() {
     this.props.initApp();
@@ -31,9 +31,9 @@ class App extends Component {
 
   render() {
     return (
-      <Layout>
-        <PizzaBuilder />
-        <Sidebar />
+      <Layout data-test="layout">
+        <PizzaBuilder data-test="pizzaBuilder"/>
+        <Sidebar data-test="sidebar"/>
         <Switch>
           <Route exact path="/checkout" component={Checkout} />
           <Route path="/checkout/order-type" component={OrderType} />
@@ -53,3 +53,4 @@ class App extends Component {
 }
 
 export default connect(null, { initApp } )(withErrorHandler(withErrorHandler(App, axiosFirebase), axios));
+

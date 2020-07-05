@@ -10,7 +10,8 @@ export const tertiary = "button button--tertiary";
 const Button = props => {
   
   return (
-    <button
+    <button 
+      data-test="button"
       onClick={props.onClick}
       disabled={props.disabled}
       className={props.type}
@@ -23,7 +24,8 @@ const Button = props => {
 Button.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string.isRequired,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
+  onClick: PropTypes.func
 }
 
 export default Button;

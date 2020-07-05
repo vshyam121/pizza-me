@@ -71,7 +71,7 @@ const CartItem = (props) => {
 };
 
 CartItem.propTypes = {
-  itemBeingChanged: PropTypes.bool,
+  itemBeingChanged: PropTypes.object,
   loading: PropTypes.bool,
   pizza: PropTypes.object.isRequired,
   quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
