@@ -6,7 +6,7 @@ import Button, { primary } from "../../components/UI/Button/Button";
 import DropdownAlert from "../../components/UI/DropdownAlert/DropdownAlert";
 import PropTypes from "prop-types";
 
-class CartIcon extends Component {
+export class CartIcon extends Component {
   handleClickItemAddedAlert = () => {
     this.props.history.push("/cart");
   };
@@ -27,6 +27,7 @@ class CartIcon extends Component {
     if (this.props.quantity > 0) {
       numItemsInCart = (
         <div
+          data-test="numItems"
           key={this.props.quantity + "-num-items"}
           className="header__cart-items animate-num-items"
         >
@@ -48,6 +49,7 @@ class CartIcon extends Component {
       }
       itemAdded = (
         <DropdownAlert
+          data-test="itemAdded"
           onClick={this.handleClickItemAddedAlert}
           alertKey={this.props.quantity + "-add-items"}
         >
@@ -69,7 +71,7 @@ class CartIcon extends Component {
     }
 
     return (
-      <React.Fragment>
+      <div data-test="cartIcon" >
         <NavigationItem to="/cart">
           <div className="header__cart header__icon">
             <MdShoppingCart />
@@ -77,7 +79,7 @@ class CartIcon extends Component {
           </div>
         </NavigationItem>
         {itemAdded}
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -85,6 +87,7 @@ class CartIcon extends Component {
 CartIcon.propTypes = {
   quantity: PropTypes.number.isRequired,
   numItemsAdded: PropTypes.number.isRequired,
+  isAuthenticated: PropTypes.string
 };
 
 export default withRouter(CartIcon);

@@ -20,28 +20,28 @@ describe("Layout component", () => {
 
   describe("Checking proptypes", () => {
     it("Should not throw a warning for prop children object", () => {
-        const expectedProps = {
-            children: <React.Fragment/>
-        }
-        const propsErr = checkProps(Layout, expectedProps);
-        expect(propsErr).toBeUndefined();
+      const expectedProps = {
+        children: <React.Fragment />,
+      };
+      const propsErr = checkProps(Layout, expectedProps);
+      expect(propsErr).toBeUndefined();
     });
 
     it("Should not throw a warning for prop children array", () => {
-        const expectedProps = {
-            children: [<React.Fragment/>, <React.Fragment/>]
-        }
-        const propsErr = checkProps(Layout, expectedProps);
-        expect(propsErr).toBeUndefined();
+      const expectedProps = {
+        children: [<React.Fragment />, <React.Fragment />],
+      };
+      const propsErr = checkProps(Layout, expectedProps);
+      expect(propsErr).toBeUndefined();
     });
 
     it("Should throw a warning for prop children undefined", () => {
       const expectedProps = {
-          children: undefined
-      }
+        children: undefined,
+      };
       const propsErr = checkProps(Layout, expectedProps);
       expect(propsErr).toBeDefined();
-  });
+    });
   });
 
   it("Should render without errors", () => {
