@@ -1,6 +1,6 @@
 import * as actionTypes from "./uiActionTypes";
 
-const initialState = {
+export const initialState = {
   sidebarOpen: false,
   erroredAction: null,
 };
