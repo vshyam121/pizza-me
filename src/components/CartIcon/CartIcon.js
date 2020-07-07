@@ -27,6 +27,7 @@ class CartIcon extends Component {
     if (this.props.quantity > 0) {
       numItemsInCart = (
         <div
+          data-test="numItems"
           key={this.props.quantity + "-num-items"}
           className="header__cart-items animate-num-items"
         >
@@ -48,6 +49,7 @@ class CartIcon extends Component {
       }
       itemAdded = (
         <DropdownAlert
+          data-test="itemAdded"
           onClick={this.handleClickItemAddedAlert}
           alertKey={this.props.quantity + "-add-items"}
         >
@@ -69,15 +71,15 @@ class CartIcon extends Component {
     }
 
     return (
-      <React.Fragment>
-        <NavigationItem to="/cart">
-          <div className="header__cart header__icon">
+      <div data-test="cartIconContainer" >
+        <NavigationItem to="/cart" data-test="navigationItem">
+          <div className="header__cart header__icon" data-test="cartIcon">
             <MdShoppingCart />
             {numItemsInCart}
           </div>
         </NavigationItem>
         {itemAdded}
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -85,6 +87,7 @@ class CartIcon extends Component {
 CartIcon.propTypes = {
   quantity: PropTypes.number.isRequired,
   numItemsAdded: PropTypes.number.isRequired,
+  isAuthenticated: PropTypes.string
 };
 
 export default withRouter(CartIcon);

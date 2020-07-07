@@ -19,20 +19,20 @@ import {
 } from "../../metadata/pizzaProperties";
 import { REGULAR } from "../../metadata/comboMetadata";
 
-const initialState = {
+export const initialState = {
   showPizzaBuilder: false,
   itemId: null,
   pizza: {
-    priceType: REGULAR,
+    [CHEESE_AMOUNT]: REGULAR_CHEESE,
+    [COMBO_NAME]: null,
     [CRUST]: HAND_TOSSED,
-    [SIZE]: LARGE,
+    [CRUST_FLAVOR]: NO_CRUST_FLAVOR,
     [MEATS]: {},
     [VEGGIES]: {},
     [SAUCE]: CLASSIC_MARINARA,
     [SAUCE_AMOUNT]: REGULAR_SAUCE,
-    [CHEESE_AMOUNT]: REGULAR_CHEESE,
-    [CRUST_FLAVOR]: NO_CRUST_FLAVOR,
-    [COMBO_NAME]: null,
+    [SIZE]: LARGE,
+    priceType: REGULAR,
   },
 };
 
@@ -58,14 +58,15 @@ const pizzaBuilderReducer = (state = initialState, action) => {
             ? action.pizza[CRUST_FLAVOR]
             : NO_CRUST_FLAVOR,
           [MEATS]: action.pizza[MEATS],
-          price: action.pizza.price,
-          priceType: action.pizza.priceType,
+          [VEGGIES]: action.pizza[VEGGIES],
           [SAUCE]: action.pizza[SAUCE] ? action.pizza[SAUCE] : CLASSIC_MARINARA,
           [SAUCE_AMOUNT]: action.pizza[SAUCE_AMOUNT]
             ? action.pizza[SAUCE_AMOUNT]
             : REGULAR_SAUCE,
           [SIZE]: action.pizza[SIZE],
-          [VEGGIES]: action.pizza[VEGGIES],
+
+          price: action.pizza.price,
+          priceType: action.pizza.priceType,
         },
         quantity: action.quantity,
       };
