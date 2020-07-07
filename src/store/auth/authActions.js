@@ -45,9 +45,9 @@ export const signUpFailed = (error) => {
 /* Clear user data and cart on sign out */
 export const signOut = () => {
   return (dispatch) => {
-    localStorage.removeItem('idToken');
-    localStorage.removeItem('expirationTime');
-    localStorage.removeItem('userId');
+    secureStorage.removeItem('idToken');
+    secureStorage.removeItem('expirationTime');
+    secureStorage.removeItem('userId');
     dispatch(clearCart());
     dispatch({
       type: actionTypes.AUTH_SIGNOUT,
@@ -81,13 +81,13 @@ export const signIn = (email, password) => {
         authData
       )
       .then((res) => {
-        localStorage.setItem('idToken', res.data.idToken);
+        secureStorage.setItem('idToken', res.data.idToken);
 
-        localStorage.setItem(
+        secureStorage.setItem(
           'expirationTime',
           new Date(new Date().getTime() + res.data.expiresIn * 1000)
         );
-        localStorage.setItem('userId', res.data.localId);
+        secureStorage.setItem('userId', res.data.localId);
 
         dispatch(authSuccess(res.data.idToken, res.data.localId));
         dispatch(checkAuthTimeout(res.data.expiresIn));
