@@ -1,5 +1,5 @@
-@import "../../sass/base/variables";
-@import "../../sass/abstracts/_mixins";
+@import '../../sass/base/variables';
+@import '../../sass/abstracts/_mixins';
 
 .sidebar-container {
   position: fixed;
@@ -8,12 +8,12 @@
   height: 100%;
   width: 100%;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, .5);
-  transition: all .3s;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s;
   visibility: visible;
 
   &--closed {
-      visibility: hidden;
+    visibility: hidden;
   }
 }
 

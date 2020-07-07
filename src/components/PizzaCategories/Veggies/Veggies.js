@@ -1,22 +1,22 @@
-import React from "react";
-import PizzaBox from "../../../containers/PizzaBox/PizzaBox";
-import CheesePizzaImg from "../../../assets/images/pizza_cheese.jpg";
-import VeggieLoversPizzaImg from "../../../assets/images/pizza_Veggie_Lovers.png";
-import UltimateCheeseLoverPizzaImg from "../../../assets/images/pizza_Ultimate_Cheese_Lovers.png";
+import React from 'react';
+import PizzaBox from '../../../containers/PizzaBox/PizzaBox';
+import CheesePizzaImg from '../../../assets/images/pizza_cheese.jpg';
+import VeggieLoversPizzaImg from '../../../assets/images/pizza_Veggie_Lovers.png';
+import UltimateCheeseLoverPizzaImg from '../../../assets/images/pizza_Ultimate_Cheese_Lovers.png';
 import {
   REGULAR,
   COMBO,
   VEGGIE_LOVER,
   ULTIMATE_CHEESE_LOVER,
-} from "../../../metadata/comboMetadata";
-import { CHEESE } from "../../../metadata/comboMetadata";
+} from '../../../metadata/comboMetadata';
+import { CHEESE } from '../../../metadata/comboMetadata';
 
 /* Displays various types of veggy pizzas */
 const Veggies = () => {
   return (
-    <div className="pizza-grid">
-      <h1 className="pizza-grid__title">Veggies</h1>
-      <div className="pizza-grid__grid">
+    <div className='pizza-grid'>
+      <h1 className='pizza-grid__title'>Veggies</h1>
+      <div className='pizza-grid__grid'>
         <PizzaBox
           pizzaType={CHEESE}
           priceType={REGULAR}

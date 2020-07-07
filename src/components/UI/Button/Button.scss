@@ -1,4 +1,4 @@
-@import "../../../sass/base/variables";
+@import '../../../sass/base/variables';
 
 .button {
   outline: none;
@@ -37,16 +37,16 @@
     border: 1px solid $primary-red;
     background-color: transparent;
     color: $primary-red;
-    transition: all .1s;
+    transition: all 0.1s;
 
     & > * {
       color: inherit;
     }
 
     &:hover {
-        background-color: transparent;
-        border: 2px solid $primary-red;
-        font-weight: bold;
+      background-color: transparent;
+      border: 2px solid $primary-red;
+      font-weight: bold;
     }
   }
 

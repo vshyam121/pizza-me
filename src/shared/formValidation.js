@@ -1,24 +1,24 @@
 /* Form validation helper functions */
 
-const formatPhoneNumber = digits => {
-  var cleaned = ("" + digits).replace(/\D/g, "");
+const formatPhoneNumber = (digits) => {
+  var cleaned = ('' + digits).replace(/\D/g, '');
   var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
   if (match) {
-    return "(" + match[1] + ") " + match[2] + "-" + match[3];
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
   }
   return digits;
 };
 
 export const handleInputChange = (form, event, inputId) => {
   const updatedForm = {
-    ...form
+    ...form,
   };
 
   const updatedFormElement = {
-    ...updatedForm[inputId]
+    ...updatedForm[inputId],
   };
 
-  if (updatedFormElement.elementType === "phonenumber") {
+  if (updatedFormElement.elementType === 'phonenumber') {
     updatedFormElement.value = formatPhoneNumber(event.target.value);
   } else {
     updatedFormElement.value = event.target.value;
@@ -45,7 +45,7 @@ const checkValidity = (value, rules) => {
   }
 
   if (rules.required) {
-    isValid = value.trim() !== "" && isValid;
+    isValid = value.trim() !== '' && isValid;
   }
 
   if (rules.minLength) {

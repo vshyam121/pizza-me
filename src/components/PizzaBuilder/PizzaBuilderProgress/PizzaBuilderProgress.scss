@@ -1,66 +1,66 @@
-@import "../../../sass/base/variables";
-@import "../../../sass/abstracts/mixins";
+@import '../../../sass/base/variables';
+@import '../../../sass/abstracts/mixins';
 
 .progress {
-    display: flex;
-    flex-direction: row-reverse;
-    background-color: white;
-    height: 5rem;
-    width: 100%;
-    border-radius: 50rem;
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: white;
+  height: 5rem;
+  width: 100%;
+  border-radius: 50rem;
+  border: none;
+
+  &__button {
+    width: 40%;
+    background-color: $primary-black;
     border: none;
+    outline: none;
+    color: white;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
 
-    &__button {
-        width: 40%;
-        background-color: $primary-black;
-        border: none;
-        outline: none;
-        color: white;
-        font-size: inherit;
-        font-family: inherit;
-        cursor: pointer;
-
-        &--selected{
-            background-color: $primary-red;
-        }
-
-        &--selected ~ button {
-            background-color: $primary-red;
-        }
-
-        &--size-crust {
-            background-color: $primary-red;
-            border-top-left-radius: 50rem;
-            border-bottom-left-radius: 50rem;
-            clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%);
-
-            @include respond(phone){
-                clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
-                border-right: 1px solid white;
-            }
-        }
-
-        &--cheese-sauce {
-            margin-left: -3.4%;
-            clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%, 10% 50%);
-
-            @include respond(phone){
-                margin-left: 0rem;
-                clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
-                border-right: 1px solid white;
-            }
-        }
-
-        &--toppings {
-            border-top-right-radius: 50rem;
-            border-bottom-right-radius: 50rem;
-            margin-left: -3.4%;
-            clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%, 10% 50%);
-
-            @include respond(phone){
-                margin-left: 0rem;
-                clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
-            }
-        }
+    &--selected {
+      background-color: $primary-red;
     }
+
+    &--selected ~ button {
+      background-color: $primary-red;
+    }
+
+    &--size-crust {
+      background-color: $primary-red;
+      border-top-left-radius: 50rem;
+      border-bottom-left-radius: 50rem;
+      clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%);
+
+      @include respond(phone) {
+        clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
+        border-right: 1px solid white;
+      }
+    }
+
+    &--cheese-sauce {
+      margin-left: -3.4%;
+      clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0 100%, 10% 50%);
+
+      @include respond(phone) {
+        margin-left: 0rem;
+        clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
+        border-right: 1px solid white;
+      }
+    }
+
+    &--toppings {
+      border-top-right-radius: 50rem;
+      border-bottom-right-radius: 50rem;
+      margin-left: -3.4%;
+      clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%, 10% 50%);
+
+      @include respond(phone) {
+        margin-left: 0rem;
+        clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+  }
 }

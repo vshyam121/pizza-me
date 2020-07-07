@@ -1,24 +1,23 @@
-import React, { Component } from "react";
-import "./SignUp.scss";
-import { signUp } from "../../../store/auth/authActions";
-import { connect } from "react-redux";
-import { SyncLoader } from "react-spinners";
-import { lookupErrorCode } from "../../../shared/util";
-import { Redirect } from "react-router-dom";
-import Form from "../../../containers/Form/Form";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { signUp } from '../../../store/auth/authActions';
+import { connect } from 'react-redux';
+import { SyncLoader } from 'react-spinners';
+import { lookupErrorCode } from '../../../shared/util';
+import { Redirect } from 'react-router-dom';
+import Form from '../../../containers/Form/Form';
+import PropTypes from 'prop-types';
 
 /* User sign up form */
 class SignUp extends Component {
   state = {
     form: {
       email: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          placeholder: "Email",
+          placeholder: 'Email',
         },
-        value: "",
-        errorMessage: "Please enter a valid email address",
+        value: '',
+        errorMessage: 'Please enter a valid email address',
         validation: {
           required: true,
           isEmail: true,
@@ -26,13 +25,13 @@ class SignUp extends Component {
         valid: false,
       },
       password: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "password",
-          placeholder: "Password",
+          type: 'password',
+          placeholder: 'Password',
         },
-        value: "",
-        errorMessage: "Password has to be at least 6 characters long",
+        value: '',
+        errorMessage: 'Password has to be at least 6 characters long',
         validation: {
           required: true,
           minLength: 6,
@@ -69,7 +68,7 @@ class SignUp extends Component {
     );
     if (this.props.loading) {
       form = (
-        <div className="spinner">
+        <div className='spinner'>
           <SyncLoader />
         </div>
       );
@@ -78,7 +77,7 @@ class SignUp extends Component {
     let errorMessage = null;
     if (this.props.error) {
       errorMessage = (
-        <div className="form-component__error">
+        <div className='form-component__error'>
           <p>{lookupErrorCode(this.props.error.message)}</p>
         </div>
       );
@@ -89,18 +88,18 @@ class SignUp extends Component {
       if (this.props.location.fromCheckout) {
         redirect = (
           <Redirect
-            to={{ pathname: "/checkout/order-type", fromSignUp: "true" }}
+            to={{ pathname: '/checkout/order-type', fromSignUp: 'true' }}
           />
         );
       } else {
-        redirect = <Redirect to={{ pathname: "/", fromSignUp: "true" }} />;
+        redirect = <Redirect to={{ pathname: '/', fromSignUp: 'true' }} />;
       }
     }
 
     return (
-      <div className="form-container">
-        <div className="form-component">
-          <h3 className="form-component__title">Sign up for an account</h3>
+      <div className='form-container'>
+        <div className='form-component'>
+          <h3 className='form-component__title'>Sign up for an account</h3>
           {redirect}
           {errorMessage}
           {form}
@@ -113,8 +112,8 @@ class SignUp extends Component {
 SignUp.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
-  isAuthenticated: PropTypes.string
-}
+  isAuthenticated: PropTypes.string,
+};
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,

@@ -1,38 +1,37 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   crustTypes,
   crustMetadataMapping,
-} from "../../../../metadata/crustMetadata";
+} from '../../../../metadata/crustMetadata';
 import {
   crust_flavors,
   crustFlavorImageMapping,
-} from "../../../../metadata/crustFlavorMetadata";
-import { sizes } from "../../../../metadata/sizeMetadata";
-import ImageOptions from "../../BuilderOptions/ImageOptions/ImageOptions";
-import ButtonOptions from "../../BuilderOptions/ButtonOptions/ButtonOptions";
+} from '../../../../metadata/crustFlavorMetadata';
+import { sizes } from '../../../../metadata/sizeMetadata';
+import ImageOptions from '../../BuilderOptions/ImageOptions/ImageOptions';
+import ButtonOptions from '../../BuilderOptions/ButtonOptions/ButtonOptions';
 import {
   SIZE,
   CRUST,
   CRUST_FLAVOR,
-} from "../../../../metadata/pizzaProperties";
-import PropTypes from "prop-types";
+} from '../../../../metadata/pizzaProperties';
+import PropTypes from 'prop-types';
 
 /* Pizza builder section with size/crust options */
 class SizeCrustBuilder extends Component {
-
   render() {
     return (
-      <div className="builder">
-        <div className="builder-section">
-          <h4 className="builder-section__title">Size</h4>
+      <div className='builder'>
+        <div className='builder-section'>
+          <h4 className='builder-section__title'>Size</h4>
           <ButtonOptions
             selectionOptions={sizes}
             itemSelected={this.props.pizza[SIZE]}
             onClick={(e) => this.props.onClick(e, SIZE)}
           />
         </div>
-        <div className="builder-section">
-          <h4 className="builder-section__title">Crust</h4>
+        <div className='builder-section'>
+          <h4 className='builder-section__title'>Crust</h4>
           <ImageOptions
             selectionMetadata={crustMetadataMapping}
             selectionOptions={crustTypes}
@@ -42,8 +41,8 @@ class SizeCrustBuilder extends Component {
           />
         </div>
 
-        <div className="builder-section">
-          <h4 className="builder-section__title">Crust Flavor</h4>
+        <div className='builder-section'>
+          <h4 className='builder-section__title'>Crust Flavor</h4>
           <ImageOptions
             selectionOptions={crust_flavors}
             itemSelected={this.props.pizza[CRUST_FLAVOR]}
@@ -57,7 +56,7 @@ class SizeCrustBuilder extends Component {
 }
 
 SizeCrustBuilder.proptTypes = {
-  pizza: PropTypes.object.isRequired
-}
+  pizza: PropTypes.object.isRequired,
+};
 
 export default SizeCrustBuilder;

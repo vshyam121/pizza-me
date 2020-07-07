@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import "./OptionsButton.scss";
-import Button, { tertiary } from "../Button/Button";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import './OptionsButton.scss';
+import Button, { tertiary } from '../Button/Button';
+import PropTypes from 'prop-types';
 
 /* Standard single component with one or more button options */
 class OptionsButton extends Component {
@@ -13,7 +13,7 @@ class OptionsButton extends Component {
 
   render() {
     return (
-      <div className="optionsButton">
+      <div className='optionsButton'>
         {this.props.options.map((option) => {
           let button = null;
           if (this.props.selectedOption === option.optionName) {
@@ -31,7 +31,7 @@ class OptionsButton extends Component {
               <button
                 key={option.optionName}
                 onClick={() => this.handleButtonClick(option)}
-                className="optionsButton__option"
+                className='optionsButton__option'
               >
                 {option.displayName}
               </button>
@@ -46,6 +46,6 @@ class OptionsButton extends Component {
 
 OptionsButton.propTypes = {
   options: PropTypes.array.isRequired,
-}
+};
 
 export default OptionsButton;

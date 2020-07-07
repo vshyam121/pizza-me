@@ -1,85 +1,85 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   validateAddress,
-  validateAddressReset
-} from "../../store/checkout/checkoutActions";
-import { SyncLoader } from "react-spinners";
-import { withRouter } from "react-router-dom";
-import Form from "../Form/Form";
-import PropTypes from "prop-types";
+  validateAddressReset,
+} from '../../store/checkout/checkoutActions';
+import { SyncLoader } from 'react-spinners';
+import { withRouter } from 'react-router-dom';
+import Form from '../Form/Form';
+import PropTypes from 'prop-types';
 
 /* Delivery address form */
 class AddressForm extends Component {
   state = {
     form: {
       street: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          placeholder: "Street Address"
+          placeholder: 'Street Address',
         },
-        value: "",
+        value: '',
         validation: {
-          required: true
+          required: true,
         },
-        valid: false
+        valid: false,
       },
       unit: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          placeholder: "Apt/Unit #"
+          placeholder: 'Apt/Unit #',
         },
         validation: {
-          isNumeric: true
+          isNumeric: true,
         },
-        errorMessage: "Please enter only the Apt/Unit number",
-        value: "",
-        valid: true
+        errorMessage: 'Please enter only the Apt/Unit number',
+        value: '',
+        valid: true,
       },
       city: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          placeholder: "City"
+          placeholder: 'City',
         },
-        value: "",
+        value: '',
         validation: {
           hasLength: 2,
-          required: true
+          required: true,
         },
-        valid: false
+        valid: false,
       },
       state: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          placeholder: "State"
+          placeholder: 'State',
         },
-        value: "",
+        value: '',
         validation: {
-          required: true
+          required: true,
         },
-        valid: false
+        valid: false,
       },
       zipcode: {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          placeholder: "ZIP Code"
+          placeholder: 'ZIP Code',
         },
-        value: "",
+        value: '',
         validation: {
-          required: true
+          required: true,
         },
-        valid: false
-      }
+        valid: false,
+      },
     },
     formIsValid: false,
-    formSubmitted: false
+    formSubmitted: false,
   };
   constructor(props) {
     super(props);
     this.props.validateAddressReset();
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ formSubmitted: true });
     if (this.state.formIsValid) {
@@ -87,13 +87,13 @@ class AddressForm extends Component {
     }
   };
 
-  updateForm = stateUpdate => {
+  updateForm = (stateUpdate) => {
     this.setState(stateUpdate);
   };
 
   componentDidUpdate() {
     if (this.props.addressValid) {
-      this.props.history.push("/checkout");
+      this.props.history.push('/checkout');
     }
   }
 
@@ -102,7 +102,7 @@ class AddressForm extends Component {
     let form = null;
     if (this.props.loading) {
       form = (
-        <div className="spinner">
+        <div className='spinner'>
           <SyncLoader />
         </div>
       );
@@ -118,14 +118,16 @@ class AddressForm extends Component {
 
     if (this.props.error) {
       errorMessage = (
-        <div className="form-component__error">
+        <div className='form-component__error'>
           <p>{this.props.error}</p>
         </div>
       );
     }
     return (
       <React.Fragment>
-        <h4 className="form-component__title">Please enter your delivery address</h4>
+        <h4 className='form-component__title'>
+          Please enter your delivery address
+        </h4>
         {errorMessage}
         {form}
       </React.Fragment>
@@ -135,18 +137,17 @@ class AddressForm extends Component {
 
 AddressForm.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.bool,
-  addressValid: PropTypes.bool
-}
+  error: PropTypes.object,
+  addressValid: PropTypes.bool,
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   addressValid: state.checkout.addressValid,
   error: state.checkout.addressValidationError,
-  loading: state.checkout.validatingAddress
+  loading: state.checkout.validatingAddress,
 });
-
 
 export default connect(mapStateToProps, {
   validateAddress,
-  validateAddressReset
+  validateAddressReset,
 })(withRouter(AddressForm));

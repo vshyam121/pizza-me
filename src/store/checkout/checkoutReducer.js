@@ -1,4 +1,4 @@
-import * as actionTypes from "./checkoutActionTypes";
+import * as actionTypes from './checkoutActionTypes';
 
 export const initialState = {
   userInfo: null,

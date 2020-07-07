@@ -1,4 +1,4 @@
-import * as actionTypes from "./uiActionTypes";
+import * as actionTypes from './uiActionTypes';
 
 export const initialState = {
   sidebarOpen: false,

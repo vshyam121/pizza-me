@@ -1,5 +1,5 @@
-@import "../../../../sass/base/variables";
-@import "../../../../sass/abstracts/mixins";
+@import '../../../../sass/base/variables';
+@import '../../../../sass/abstracts/mixins';
 
 .builder-list {
   display: flex;
@@ -18,10 +18,10 @@
   background-color: inherit;
   cursor: pointer;
 
-  @include respond(phone){
-    padding: .5rem;
+  @include respond(phone) {
+    padding: 0.5rem;
   }
-  
+
   &__img-selection {
     position: relative;
     margin-right: 2rem;
@@ -30,7 +30,7 @@
   &__img {
     height: 7rem;
 
-    @include respond(phone){
+    @include respond(phone) {
       height: 5rem;
     }
   }
@@ -45,7 +45,7 @@
     border: 1px solid $border-color;
     color: $primary-red;
 
-    @include respond(phone){
+    @include respond(phone) {
       height: 2rem;
       width: 2rem;
     }
@@ -65,15 +65,15 @@
   &__amount-portion {
     display: flex;
 
-    @include respond(tab-land){
+    @include respond(tab-land) {
       flex-direction: column;
     }
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       flex-direction: row;
     }
 
-    @include respond(phone){
+    @include respond(phone) {
       flex-direction: column;
     }
   }
@@ -82,15 +82,15 @@
     display: flex;
     margin-right: 2rem;
 
-    @include respond(tab-land){
+    @include respond(tab-land) {
       margin-bottom: 1.5rem;
     }
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       margin-bottom: 0;
     }
 
-    @include respond(phone){
+    @include respond(phone) {
       margin-bottom: 1.5rem;
     }
   }
@@ -103,22 +103,22 @@
 
 .amount-option {
   cursor: pointer;
-    height: 3rem;
-    width: 6rem;
-    border: 1px solid $border-color;
-    outline: none;
-    border-radius: 5%;
-    font-family: inherit;
-    font-size: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    
-    &--selected {
-        background-color: $primary-red;
-        color: white;
-    }
+  height: 3rem;
+  width: 6rem;
+  border: 1px solid $border-color;
+  outline: none;
+  border-radius: 5%;
+  font-family: inherit;
+  font-size: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+
+  &--selected {
+    background-color: $primary-red;
+    color: white;
+  }
 }
 
 .portion-option {
@@ -136,7 +136,7 @@
     border-color: $primary-red;
   }
 
-  &__whole{
+  &__whole {
     width: 2rem;
     height: 2rem;
     background-color: grey;
@@ -147,7 +147,7 @@
     }
   }
 
-  &__left{
+  &__left {
     width: 2rem;
     height: 2rem;
     background-color: grey;
@@ -159,7 +159,7 @@
     }
   }
 
-  &__right{
+  &__right {
     width: 2rem;
     height: 2rem;
     background-color: grey;

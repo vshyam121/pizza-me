@@ -1,31 +1,31 @@
-@import "../../sass/abstracts/mixins";
+@import '../../sass/abstracts/mixins';
 
 .order {
-    &__date-address{
-        display: flex;
-        flex-direction: column;
+  &__date-address {
+    display: flex;
+    flex-direction: column;
 
-        @include respond(phone){
-            margin-bottom: 1rem;
-        }
+    @include respond(phone) {
+      margin-bottom: 1rem;
     }
+  }
 
-    &__date {
-        display: flex;
-        margin-bottom: 1rem;
-    }
+  &__date {
+    display: flex;
+    margin-bottom: 1rem;
+  }
 
-    &__address-container {
-        display: flex;
-        flex-direction: column;
-    }
+  &__address-container {
+    display: flex;
+    flex-direction: column;
+  }
 
-    &__address {
-        display: flex;
-        flex-direction: column;
-    }
+  &__address {
+    display: flex;
+    flex-direction: column;
+  }
 
-    &__total {
-        display: flex;
-    }
+  &__total {
+    display: flex;
+  }
 }

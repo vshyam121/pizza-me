@@ -1,15 +1,13 @@
-import React from "react";
-import "./Message.scss";
-import PropTypes from "prop-types";
+import React from 'react';
+import './Message.scss';
+import PropTypes from 'prop-types';
 
 /* Standard message alert to the user component */
 const Message = (props) => {
   return (
-    <div className="item-list-container">
-      <div className="item-list">
-        <div className="message">
-          {props.children}
-        </div>
+    <div className='item-list-container'>
+      <div className='item-list'>
+        <div className='message'>{props.children}</div>
       </div>
     </div>
   );
@@ -17,6 +15,6 @@ const Message = (props) => {
 
 Message.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-}
+};
 
 export default Message;

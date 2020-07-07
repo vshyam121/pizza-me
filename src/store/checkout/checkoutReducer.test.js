@@ -1,6 +1,6 @@
-import checkoutReducer from "./checkoutReducer";
-import { initialState } from "./checkoutReducer";
-import * as actionTypes from "./checkoutActionTypes";
+import checkoutReducer from './checkoutReducer';
+import { initialState } from './checkoutReducer';
+import * as actionTypes from './checkoutActionTypes';
 import {
   CRUST,
   SIZE,
@@ -15,16 +15,16 @@ import {
   WHOLE,
   EXTRA_TOPPING,
   LEFT_HALF,
-} from "../../metadata/pizzaProperties";
-import { CHEESE, REGULAR } from "../../metadata/comboMetadata";
+} from '../../metadata/pizzaProperties';
+import { CHEESE, REGULAR } from '../../metadata/comboMetadata';
 
-describe("Checkout Reducer", () => {
-  it("Should return default state", () => {
+describe('Checkout Reducer', () => {
+  it('Should return default state', () => {
     const newState = checkoutReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
 
-  it("Should return correct new state if receiving type SUBMIT_ORDER_START", () => {
+  it('Should return correct new state if receiving type SUBMIT_ORDER_START', () => {
     const newState = checkoutReducer(undefined, {
       type: actionTypes.SUBMIT_ORDER_START,
     });
@@ -44,11 +44,11 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type SUBMIT_ORDER_SUCCESS", () => {
+  it('Should return correct new state if receiving type SUBMIT_ORDER_SUCCESS', () => {
     const testPayload = {
       type: actionTypes.SUBMIT_ORDER_SUCCESS,
-      orderId: "test order id",
-      order: "test order",
+      orderId: 'test order id',
+      order: 'test order',
     };
     const newState = checkoutReducer(
       { ...initialState, submittingOrder: true },
@@ -69,7 +69,7 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type SUBMIT_ORDER_FAILED", () => {
+  it('Should return correct new state if receiving type SUBMIT_ORDER_FAILED', () => {
     const newState = checkoutReducer(
       { ...initialState, submittingOrder: true },
       {
@@ -92,7 +92,7 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type GET_ORDERS_START", () => {
+  it('Should return correct new state if receiving type GET_ORDERS_START', () => {
     const newState = checkoutReducer(undefined, {
       type: actionTypes.GET_ORDERS_START,
     });
@@ -113,7 +113,7 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type GET_ORDERS_FAILED", () => {
+  it('Should return correct new state if receiving type GET_ORDERS_FAILED', () => {
     const newState = checkoutReducer(
       { ...initialState, gettingOrders: true },
       {
@@ -136,7 +136,7 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type GET_ORDERS_SUCCESS", () => {
+  it('Should return correct new state if receiving type GET_ORDERS_SUCCESS', () => {
     const testPayload = {
       type: actionTypes.GET_ORDERS_SUCCESS,
       orders: { test: test },
@@ -158,7 +158,7 @@ describe("Checkout Reducer", () => {
     expect(newState).toEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type VALIDATE_ADDRESS_START", () => {
+  it('Should return correct new state if receiving type VALIDATE_ADDRESS_START', () => {
     const newState = checkoutReducer(undefined, {
       type: actionTypes.VALIDATE_ADDRESS_START,
     });
@@ -178,10 +178,10 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type VALIDATE_ADDRESS_SUCCESS", () => {
+  it('Should return correct new state if receiving type VALIDATE_ADDRESS_SUCCESS', () => {
     const testPayload = {
       type: actionTypes.VALIDATE_ADDRESS_SUCCESS,
-      deliveryAddress: "test delivery address",
+      deliveryAddress: 'test delivery address',
     };
     const newState = checkoutReducer(undefined, testPayload);
 
@@ -200,10 +200,10 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type VALIDATE_ADDRESS_FAILED", () => {
+  it('Should return correct new state if receiving type VALIDATE_ADDRESS_FAILED', () => {
     const testPayload = {
       type: actionTypes.VALIDATE_ADDRESS_FAILED,
-      error: "test error",
+      error: 'test error',
     };
     const newState = checkoutReducer(undefined, testPayload);
 
@@ -222,7 +222,7 @@ describe("Checkout Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type VALIDATE_ADDRESS_RESET", () => {
+  it('Should return correct new state if receiving type VALIDATE_ADDRESS_RESET', () => {
     const testPayload = {
       type: actionTypes.VALIDATE_ADDRESS_RESET,
     };

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import "./PizzaBuilderPreview.scss";
-import PizzaPreview from "../../PizzaPreview/PizzaPreview";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import './PizzaBuilderPreview.scss';
+import PizzaPreview from '../../PizzaPreview/PizzaPreview';
+import PropTypes from 'prop-types';
 
 /* Pizza preview image section of the pizza builder */
 class PizzaBuilderPreview extends Component {
@@ -12,11 +12,10 @@ class PizzaBuilderPreview extends Component {
     return false;
   }
   render() {
-
     return (
-      <div className="pizza-builder-preview">
-        <h4 className="builder-section__title">Preview</h4>
-        <div className="pizza-builder-preview__preview">
+      <div className='pizza-builder-preview'>
+        <h4 className='builder-section__title'>Preview</h4>
+        <div className='pizza-builder-preview__preview'>
           <PizzaPreview pizza={this.props.pizza} />
         </div>
       </div>
@@ -25,7 +24,7 @@ class PizzaBuilderPreview extends Component {
 }
 
 PizzaBuilderPreview.propTypes = {
-  pizza: PropTypes.object.isRequired
-}
+  pizza: PropTypes.object.isRequired,
+};
 
 export default PizzaBuilderPreview;

@@ -1,12 +1,11 @@
-import React, { Component } from "react";
-import Modal from "../components/UI/Modal/Modal";
-import { connect } from "react-redux";
-import { SIGN_IN, SIGN_UP } from "../store/ui/actionDisplays";
+import React, { Component } from 'react';
+import Modal from '../components/UI/Modal/Modal';
+import { connect } from 'react-redux';
+import { SIGN_IN, SIGN_UP } from '../store/ui/actionDisplays';
 
 /* Axios error handler HOC */
 const withErrorHandler = (WrappedComponent, axios) => {
   class HOComponent extends Component {
-
     state = {
       error: null,
     };
@@ -31,10 +30,13 @@ const withErrorHandler = (WrappedComponent, axios) => {
     };
 
     render() {
-      if(this.props.erroredAction === SIGN_IN || this.props.erroredAction === SIGN_UP){
+      if (
+        this.props.erroredAction === SIGN_IN ||
+        this.props.erroredAction === SIGN_UP
+      ) {
         return <WrappedComponent {...this.props} />;
       }
-      let erroredAction = "perform action";
+      let erroredAction = 'perform action';
       erroredAction = this.props.erroredAction || erroredAction;
 
       return (
@@ -45,7 +47,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             modalClosed={this.handleModalClosed}
           >
             {this.state.error
-              ? "Unable to " + erroredAction + ": " + this.state.error.message
+              ? 'Unable to ' + erroredAction + ': ' + this.state.error.message
               : null}
           </Modal>
           <WrappedComponent {...this.props} />

@@ -1,10 +1,9 @@
 .order-submission {
+  &__thanks {
+    margin-right: 1rem;
+  }
 
-    &__thanks {
-        margin-right: 1rem;
-    }
-
-    &__orders {
-        color: blue;
-    }
+  &__orders {
+    color: blue;
+  }
 }

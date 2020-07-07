@@ -1,33 +1,32 @@
-@import "../../../sass/base/variables";
+@import '../../../sass/base/variables';
 
 .navigation-item {
+  width: 100%;
+  height: 100%;
+  background-color: $primary-black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 0 2rem;
+  cursor: pointer;
+
+  &__text {
     width: 100%;
     height: 100%;
-    background-color: $primary-black;
+    text-decoration: none;
     color: white;
     display: flex;
     justify-content: center;
-    padding: 0 2rem;
-    cursor: pointer;
-   
+    align-items: center;
+    white-space: nowrap;
 
-    &__text {
-        width: 100%;
-        height: 100%;
-        text-decoration: none;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        white-space: nowrap;
-
-        &--vertical {
-            height: 5rem;
-            justify-content: flex-start;
-        }
+    &--vertical {
+      height: 5rem;
+      justify-content: flex-start;
     }
+  }
 
-    &:hover {
-        background-color: $secondary-black;
-    }
+  &:hover {
+    background-color: $secondary-black;
+  }
 }

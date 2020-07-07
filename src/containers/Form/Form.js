@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import Button, { primary } from "../../components/UI/Button/Button";
-import Input from "../../components/UI/Input/Input";
-import { handleInputChange } from "../../shared/formValidation.js";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import Button, { primary } from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
+import { handleInputChange } from '../../shared/formValidation.js';
+import PropTypes from 'prop-types';
 
 /* Standard form component across entire app */
 class Form extends Component {
@@ -42,7 +42,7 @@ class Form extends Component {
             />
           );
         })}
-        <div className="form-component__submit">
+        <div className='form-component__submit'>
           <Button
             type={primary}
             disabled={this.props.formSubmitted && !this.props.formIsValid}
@@ -54,7 +54,7 @@ class Form extends Component {
     );
 
     return (
-      <form className="form-component__form" onSubmit={this.props.onSubmit}>
+      <form className='form-component__form' onSubmit={this.props.onSubmit}>
         {form}
       </form>
     );
