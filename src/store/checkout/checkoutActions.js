@@ -30,7 +30,7 @@ export const submitOrder = (total, items, idToken, userId) => {
       .post("/orders.json?auth=" + idToken, order)
       .then((res) => {
         dispatch({
-          type: actionTypes.SUBMIT_ORDER,
+          type: actionTypes.SUBMIT_ORDER_SUCCESS,
           orderId: res.data.name,
           order: order,
         });

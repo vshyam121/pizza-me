@@ -1,10 +1,10 @@
 import { checkProps, findByTestAttr } from "../../shared/util";
-import { CartIcon } from "./CartIcon";
+import CartIcon from "./CartIcon";
 import React from "react";
 import { shallow } from "enzyme";
 
 const setUp = (props) => {
-  const component = shallow(<CartIcon {...props} />);
+  const component = shallow(<CartIcon.WrappedComponent {...props} />);
   return component;
 };
 
@@ -16,7 +16,7 @@ describe("CartIcon component", () => {
         quantity: 0,
         isAuthenticated: "test",
       };
-      const propsErr = checkProps(CartIcon, expectedProps);
+      const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
       expect(propsErr).toBeUndefined();
     });
 
@@ -26,7 +26,7 @@ describe("CartIcon component", () => {
         quantity: 0,
         isAuthenticated: "test",
       };
-      const propsErr = checkProps(CartIcon, expectedProps);
+      const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
       expect(propsErr).toBeDefined();
     });
 
@@ -36,7 +36,7 @@ describe("CartIcon component", () => {
         quantity: "test",
         isAuthenticated: "test",
       };
-      const propsErr = checkProps(CartIcon, expectedProps);
+      const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
       expect(propsErr).toBeDefined();
     });
 
@@ -46,13 +46,14 @@ describe("CartIcon component", () => {
         quantity: "test",
         isAuthenticated: false,
       };
-      const propsErr = checkProps(CartIcon, expectedProps);
+      const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
       expect(propsErr).toBeDefined();
     });
   });
 
   describe("Have props", () => {
     let component;
+
     beforeEach(() => {
       const props = {
         numItemsAdded: 1,
@@ -62,7 +63,17 @@ describe("CartIcon component", () => {
       component = setUp(props);
     });
 
-    it("Should render without errors", () => {
+    it("Should render container without errors", () => {
+      const wrapper = findByTestAttr(component, "cartIconContainer");
+      expect(wrapper.length).toBe(1);
+    });
+
+    it("Should render navigation item without errors", () => {
+      const wrapper = findByTestAttr(component, "navigationItem");
+      expect(wrapper.length).toBe(1);
+    });
+
+    it("Should render cartIcon without errors", () => {
       const wrapper = findByTestAttr(component, "cartIcon");
       expect(wrapper.length).toBe(1);
     });

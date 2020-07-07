@@ -6,7 +6,7 @@ import Button, { primary } from "../../components/UI/Button/Button";
 import DropdownAlert from "../../components/UI/DropdownAlert/DropdownAlert";
 import PropTypes from "prop-types";
 
-export class CartIcon extends Component {
+class CartIcon extends Component {
   handleClickItemAddedAlert = () => {
     this.props.history.push("/cart");
   };
@@ -71,9 +71,9 @@ export class CartIcon extends Component {
     }
 
     return (
-      <div data-test="cartIcon" >
-        <NavigationItem to="/cart">
-          <div className="header__cart header__icon">
+      <div data-test="cartIconContainer" >
+        <NavigationItem to="/cart" data-test="navigationItem">
+          <div className="header__cart header__icon" data-test="cartIcon">
             <MdShoppingCart />
             {numItemsInCart}
           </div>
