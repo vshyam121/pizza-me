@@ -28,7 +28,7 @@ class CartIcon extends Component {
       numItemsInCart = (
         <div
           data-test='numItems'
-          key={this.props.quantity + '-num-items'}
+          key={`${this.props.quantity}-num-items`}
           className='header__cart-items animate-num-items'
         >
           {this.props.quantity}
@@ -51,7 +51,7 @@ class CartIcon extends Component {
         <DropdownAlert
           data-test='itemAdded'
           onClick={this.handleClickItemAddedAlert}
-          alertKey={this.props.quantity + '-add-items'}
+          alertKey={`${this.props.quantity}-add-items`}
         >
           <h3 className='header__alert-text'>{numItems} added to cart</h3>
           <Link
