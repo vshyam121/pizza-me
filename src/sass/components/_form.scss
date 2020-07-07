@@ -1,48 +1,46 @@
 .form-container {
-    display: flex;
-    justify-content: center;
-    min-width: 25rem;
+  display: flex;
+  justify-content: center;
+  min-width: 25rem;
 }
 
-
-
 .spinner {
-    height: 25rem;
-    display: flex;
-    justify-content: center;
-    align-items:center;
+  height: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-component {
-    width: 40rem;
-    padding: 2rem;
-    border: 1px solid $border-color;
+  width: 40rem;
+  padding: 2rem;
+  border: 1px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 1rem;
+
+  &__title {
+    margin-bottom: 2rem;
+  }
+
+  &__form {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background-color: white;
-    border-radius: 1rem;
+    justify-content: center;
+  }
 
-    &__title {
-        margin-bottom: 2rem;
-    }
+  &__submit {
+    margin: 2rem;
+    width: 50%;
+  }
 
-    &__form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &__submit {
-        margin: 2rem;
-        width: 50%;
-    }
-
-    &__error {
-        color: red;
-        margin-bottom: 2rem;
-    }
+  &__error {
+    color: red;
+    margin-bottom: 2rem;
+  }
 }

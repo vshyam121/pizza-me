@@ -1,17 +1,16 @@
-import React from "react";
-import "./Button.scss";
-import PropTypes from "prop-types";
+import React from 'react';
+import './Button.scss';
+import PropTypes from 'prop-types';
 
-export const primary = "button";
-export const secondary = "button button--secondary"
-export const tertiary = "button button--tertiary";
+export const primary = 'button';
+export const secondary = 'button button--secondary';
+export const tertiary = 'button button--tertiary';
 
 /* Standard button across entire app */
-const Button = props => {
-  
+const Button = (props) => {
   return (
-    <button 
-      data-test="button"
+    <button
+      data-test='button'
       onClick={props.onClick}
       disabled={props.disabled}
       className={props.type}
@@ -24,8 +23,9 @@ const Button = props => {
 Button.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string.isRequired,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
-  onClick: PropTypes.func
-}
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+    .isRequired,
+  onClick: PropTypes.func,
+};
 
 export default Button;

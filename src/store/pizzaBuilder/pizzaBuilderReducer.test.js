@@ -1,6 +1,6 @@
-import pizzaBuilderReducer from "./pizzaBuilderReducer";
-import { initialState } from "./pizzaBuilderReducer";
-import * as actionTypes from "./pizzaBuilderActionTypes";
+import pizzaBuilderReducer from './pizzaBuilderReducer';
+import { initialState } from './pizzaBuilderReducer';
+import * as actionTypes from './pizzaBuilderActionTypes';
 import {
   CRUST,
   SIZE,
@@ -15,33 +15,33 @@ import {
   WHOLE,
   EXTRA_TOPPING,
   LEFT_HALF,
-} from "../../metadata/pizzaProperties";
-import { CHEESE, REGULAR } from "../../metadata/comboMetadata";
+} from '../../metadata/pizzaProperties';
+import { CHEESE, REGULAR } from '../../metadata/comboMetadata';
 
-describe("Pizza Builder Reducer", () => {
-  it("Should return default state", () => {
+describe('Pizza Builder Reducer', () => {
+  it('Should return default state', () => {
     const newState = pizzaBuilderReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
 
-  it("Should return correct new state if receiving type INIT_PIZZA_BUILDER", () => {
+  it('Should return correct new state if receiving type INIT_PIZZA_BUILDER', () => {
     const expectedState = {
       showPizzaBuilder: true,
-      itemId: "test item id",
+      itemId: 'test item id',
       pizza: {
-        [CHEESE_AMOUNT]: "test cheese amount",
-        [COMBO_NAME]: "test combo",
-        [CRUST]: "test crust",
-        [CRUST_FLAVOR]: "test crust flavor",
+        [CHEESE_AMOUNT]: 'test cheese amount',
+        [COMBO_NAME]: 'test combo',
+        [CRUST]: 'test crust',
+        [CRUST_FLAVOR]: 'test crust flavor',
         [MEATS]: { test: test },
         [VEGGIES]: { test: test },
-        [SAUCE]: "test sauce",
-        [SAUCE_AMOUNT]: "test sauce amount",
-        [SIZE]: "test size",
-        price: "test price",
-        priceType: "test price type",
+        [SAUCE]: 'test sauce',
+        [SAUCE_AMOUNT]: 'test sauce amount',
+        [SIZE]: 'test size',
+        price: 'test price',
+        priceType: 'test price type',
       },
-      quantity: "test quantity",
+      quantity: 'test quantity',
     };
     const newState = pizzaBuilderReducer(undefined, {
       type: actionTypes.INIT_PIZZA_BUILDER,
@@ -51,7 +51,7 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type CLOSE_PIZZA_BUILDER", () => {
+  it('Should return correct new state if receiving type CLOSE_PIZZA_BUILDER', () => {
     initialState.showPizzaBuilder = true;
     const newState = pizzaBuilderReducer(initialState, {
       type: actionTypes.CLOSE_PIZZA_BUILDER,
@@ -61,11 +61,11 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state if receiving type SET_PROPERTY", () => {
+  it('Should return correct new state if receiving type SET_PROPERTY', () => {
     const testPayload = {
       type: actionTypes.SET_PROPERTY,
-      property: "test property",
-      value: "test cheese amount",
+      property: 'test property',
+      value: 'test cheese amount',
     };
     const newState = pizzaBuilderReducer(undefined, testPayload);
 
@@ -80,11 +80,11 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state with added topping if receiving type TOGGLE_TOPPING", () => {
+  it('Should return correct new state with added topping if receiving type TOGGLE_TOPPING', () => {
     const testPayload = {
       type: actionTypes.TOGGLE_TOPPING,
       property: MEATS,
-      value: "test value",
+      value: 'test value',
     };
     const newState = pizzaBuilderReducer(undefined, testPayload);
 
@@ -103,12 +103,12 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state with removed topping if receiving type TOGGLE_TOPPING", () => {
-    initialState.pizza[MEATS] = { "test value": test };
+  it('Should return correct new state with removed topping if receiving type TOGGLE_TOPPING', () => {
+    initialState.pizza[MEATS] = { 'test value': test };
     const testPayload = {
       type: actionTypes.TOGGLE_TOPPING,
       property: MEATS,
-      value: "test value",
+      value: 'test value',
     };
     const newState = pizzaBuilderReducer(initialState, {
       ...testPayload,
@@ -121,9 +121,9 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state with modified topping amount if receiving type SET_TOPPING_AMOUNT", () => {
+  it('Should return correct new state with modified topping amount if receiving type SET_TOPPING_AMOUNT', () => {
     initialState.pizza[MEATS] = {
-      "test topping": {
+      'test topping': {
         amount: REGULAR_TOPPING,
         portion: WHOLE,
       },
@@ -131,7 +131,7 @@ describe("Pizza Builder Reducer", () => {
     const testPayload = {
       type: actionTypes.SET_TOPPING_AMOUNT,
       property: MEATS,
-      topping: "test topping",
+      topping: 'test topping',
       value: EXTRA_TOPPING,
     };
     const newState = pizzaBuilderReducer(initialState, testPayload);
@@ -150,11 +150,11 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state with new topping amount if receiving type SET_TOPPING_AMOUNT", () => {
+  it('Should return correct new state with new topping amount if receiving type SET_TOPPING_AMOUNT', () => {
     const testPayload = {
       type: actionTypes.SET_TOPPING_AMOUNT,
       property: MEATS,
-      topping: "test topping",
+      topping: 'test topping',
       value: EXTRA_TOPPING,
     };
     const newState = pizzaBuilderReducer(initialState, {
@@ -173,9 +173,9 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state with modified topping portion if receiving type SET_TOPPING_PORTION", () => {
+  it('Should return correct new state with modified topping portion if receiving type SET_TOPPING_PORTION', () => {
     initialState.pizza[MEATS] = {
-      "test topping": {
+      'test topping': {
         amount: REGULAR_TOPPING,
         portion: WHOLE,
       },
@@ -183,7 +183,7 @@ describe("Pizza Builder Reducer", () => {
     const testPayload = {
       type: actionTypes.SET_TOPPING_PORTION,
       property: MEATS,
-      topping: "test topping",
+      topping: 'test topping',
       value: LEFT_HALF,
     };
     const newState = pizzaBuilderReducer(initialState, testPayload);
@@ -202,27 +202,27 @@ describe("Pizza Builder Reducer", () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it("Should return correct new state with new topping amount if receiving type SET_TOPPING_PORTION", () => {
+  it('Should return correct new state with new topping amount if receiving type SET_TOPPING_PORTION', () => {
     const testPayload = {
       type: actionTypes.SET_TOPPING_PORTION,
       property: MEATS,
-      topping: "test topping",
+      topping: 'test topping',
       value: LEFT_HALF,
     };
     const newState = pizzaBuilderReducer(initialState, testPayload);
 
     const expectedState = {
-        ...initialState,
-        pizza: {
-          ...initialState.pizza,
-          [MEATS]: {
-            [testPayload.topping]: {
-              amount: REGULAR_TOPPING,
-              portion: testPayload.value,
-            },
+      ...initialState,
+      pizza: {
+        ...initialState.pizza,
+        [MEATS]: {
+          [testPayload.topping]: {
+            amount: REGULAR_TOPPING,
+            portion: testPayload.value,
           },
         },
-      };
+      },
+    };
     expect(newState).toStrictEqual(expectedState);
   });
 });

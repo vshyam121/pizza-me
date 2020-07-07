@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Permanent%20Marker');
 
-
 h1 {
   font-size: 2.4rem;
   font-weight: 600;
 
-  @include respond(phone){
+  @include respond(phone) {
     font-size: 2rem;
   }
 }
@@ -13,8 +12,8 @@ h1 {
 h2 {
   font-size: 1.8rem;
   font-weight: 600;
-  
-  @include respond(phone){
+
+  @include respond(phone) {
     font-size: 1.5rem;
   }
 }
@@ -22,7 +21,7 @@ h2 {
 h3 {
   font-size: 1.8rem;
   font-weight: 500;
-  @include respond(phone){
+  @include respond(phone) {
     font-size: 1.5rem;
   }
 }
@@ -31,7 +30,7 @@ h4 {
   font-size: 1.5rem;
   font-weight: 500;
 
-  @include respond(phone){
+  @include respond(phone) {
     font-size: 1.4rem;
   }
 }
@@ -54,5 +53,3 @@ a {
   text-decoration: none;
   color: white;
 }
-
-

@@ -1,4 +1,4 @@
-@import "../../sass/abstracts/mixins";
+@import '../../sass/abstracts/mixins';
 
 .description {
   line-height: 2;
@@ -20,15 +20,13 @@
     margin-right: 2rem;
   }
 
-  
-
   &__price {
     display: block;
-    @include respond(tab-port){
+    @include respond(tab-port) {
       display: none;
     }
 
-    @include respond(phone){
+    @include respond(phone) {
       display: block;
     }
   }
@@ -36,12 +34,11 @@
   &__price--cart {
     display: none;
 
-    @include respond(phone){
+    @include respond(phone) {
       display: block;
     }
   }
 
   &__price--order {
-    
   }
 }

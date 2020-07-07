@@ -1,4 +1,4 @@
-import * as actionTypes from "./authActionTypes";
+import * as actionTypes from './authActionTypes';
 
 const initialState = {
   idToken: null,

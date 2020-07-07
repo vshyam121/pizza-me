@@ -1,20 +1,20 @@
-import React from "react";
-import PizzaBox from "../../../containers/PizzaBox/PizzaBox";
-import CheesePizzaImg from "../../../assets/images/pizza_cheese.jpg";
-import PepperoniPizzaImg from "../../../assets/images/pizza_pepperoni.jpg";
-import MeatLoversPizzaImg from "../../../assets/images/pizza_meat_lovers.png";
-import SupremePizzaImg from "../../../assets/images/pizza_supreme.png";
-import { REGULAR, COMBO } from "../../../metadata/comboMetadata";
+import React from 'react';
+import PizzaBox from '../../../containers/PizzaBox/PizzaBox';
+import CheesePizzaImg from '../../../assets/images/pizza_cheese.jpg';
+import PepperoniPizzaImg from '../../../assets/images/pizza_pepperoni.jpg';
+import MeatLoversPizzaImg from '../../../assets/images/pizza_meat_lovers.png';
+import SupremePizzaImg from '../../../assets/images/pizza_supreme.png';
+import { REGULAR, COMBO } from '../../../metadata/comboMetadata';
 import {
   CHEESE,
   PEPPERONI_PIZZA,
   MEAT_LOVER,
   SUPREME,
-} from "../../../metadata/comboMetadata";
-import OrderSubmission from "../../Messages/OrderSubmissionMessage/OrderSubmissionMessage";
-import SignedOutMessage from "../../Messages/SignedOutMessage/SignedOutMessage";
-import SignedUpMessage from "../../Messages/SignedUpMessage/SignedUpMessage";
-import Message from "../../UI/Message/Message";
+} from '../../../metadata/comboMetadata';
+import OrderSubmission from '../../Messages/OrderSubmissionMessage/OrderSubmissionMessage';
+import SignedOutMessage from '../../Messages/SignedOutMessage/SignedOutMessage';
+import SignedUpMessage from '../../Messages/SignedUpMessage/SignedUpMessage';
+import Message from '../../UI/Message/Message';
 
 /* Displays popular pizzas */
 const Home = (props) => {
@@ -42,9 +42,9 @@ const Home = (props) => {
   return (
     <React.Fragment>
       {message}
-      <div className="pizza-grid">
-        <h1 className="pizza-grid__title">Popular</h1>
-        <div className="pizza-grid__grid">
+      <div className='pizza-grid'>
+        <h1 className='pizza-grid__title'>Popular</h1>
+        <div className='pizza-grid__grid'>
           <PizzaBox
             pizzaType={CHEESE}
             priceType={REGULAR}

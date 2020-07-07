@@ -1,5 +1,5 @@
-@import "../../../sass/base/variables";
-@import "../../../sass/abstracts/mixins";
+@import '../../sass/base/variables';
+@import '../../sass/abstracts/mixins';
 
 .item {
   display: flex;
@@ -8,7 +8,6 @@
   min-height: 15rem;
   width: 100%;
   border-top: 1px solid $border-color;
-
 
   @include respond(phone) {
     flex-direction: column;
@@ -24,8 +23,8 @@
     align-items: flex-start;
     margin-right: 2rem;
 
-    @include respond(phone){
-        margin-right: 0;
+    @include respond(phone) {
+      margin-right: 0;
     }
   }
 
@@ -60,16 +59,15 @@
   }
 
   &__price {
-
-    @include respond(phone){
-        display: none;
+    @include respond(phone) {
+      display: none;
     }
   }
 
   &__actions {
     display: flex;
 
-    span:not(:last-child){
+    span:not(:last-child) {
       margin-right: 2rem;
     }
   }

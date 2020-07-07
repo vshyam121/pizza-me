@@ -1,9 +1,9 @@
-import * as actionTypes from "./pizzaBuilderActionTypes";
-import { CLASSIC_MARINARA, REGULAR_SAUCE } from "../../metadata/sauceMetadata";
-import { HAND_TOSSED } from "../../metadata/crustMetadata";
-import { LARGE } from "../../metadata/sizeMetadata";
-import { REGULAR_CHEESE } from "../../metadata/cheeseMetadata";
-import { NO_CRUST_FLAVOR } from "../../metadata/crustFlavorMetadata";
+import * as actionTypes from './pizzaBuilderActionTypes';
+import { CLASSIC_MARINARA, REGULAR_SAUCE } from '../../metadata/sauceMetadata';
+import { HAND_TOSSED } from '../../metadata/crustMetadata';
+import { LARGE } from '../../metadata/sizeMetadata';
+import { REGULAR_CHEESE } from '../../metadata/cheeseMetadata';
+import { NO_CRUST_FLAVOR } from '../../metadata/crustFlavorMetadata';
 import {
   CRUST,
   SIZE,
@@ -16,8 +16,8 @@ import {
   COMBO_NAME,
   WHOLE,
   REGULAR_TOPPING,
-} from "../../metadata/pizzaProperties";
-import { REGULAR } from "../../metadata/comboMetadata";
+} from '../../metadata/pizzaProperties';
+import { REGULAR } from '../../metadata/comboMetadata';
 
 export const initialState = {
   showPizzaBuilder: false,

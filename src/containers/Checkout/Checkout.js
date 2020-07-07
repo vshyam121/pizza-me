@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import CartItems from "../../components/CartItems/CartItems";
+import React, { Component } from 'react';
+import CartItems from '../../components/CartItems/CartItems';
 import {
   handleEditItem,
   handleChangeItemQuantity,
   handleRemoveItem,
-} from "../../shared/util";
-import Button, { primary } from "../../components/UI/Button/Button";
-import { connect } from "react-redux";
-import { submitOrder } from "../../store/checkout/checkoutActions";
-import { emptyCart } from "../../store/cart/cartActions";
-import { changeItemQuantity, removeItem } from "../../store/cart/cartActions";
-import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
-import { calculateSubTotal, calculateTax } from "../../shared/util";
-import { SyncLoader } from "react-spinners";
-import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
-import PropTypes from "prop-types";
+} from '../../shared/util';
+import Button, { primary } from '../../components/UI/Button/Button';
+import { connect } from 'react-redux';
+import { submitOrder } from '../../store/checkout/checkoutActions';
+import { emptyCart } from '../../store/cart/cartActions';
+import { changeItemQuantity, removeItem } from '../../store/cart/cartActions';
+import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderActions';
+import { calculateSubTotal, calculateTax } from '../../shared/util';
+import { SyncLoader } from 'react-spinners';
+import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';
+import PropTypes from 'prop-types';
 
 /* Order summary and ability to submit an order */
 class Checkout extends Component {
@@ -35,7 +35,7 @@ class Checkout extends Component {
       !this.props.submittingOrder &&
       !this.props.submitOrderError
     ) {
-      this.props.history.push({ pathname: "/", fromCheckout: true });
+      this.props.history.push({ pathname: '/', fromCheckout: true });
       this.props.emptyCart(this.props.userId);
     }
   }
@@ -55,7 +55,7 @@ class Checkout extends Component {
     if (this.props.submittingOrder) {
       submitOrder = (
         <Button type={primary}>
-          <SyncLoader color="white" />
+          <SyncLoader color='white' />
         </Button>
       );
     } else {
@@ -69,7 +69,7 @@ class Checkout extends Component {
     let cart = null;
     if (this.props.loading) {
       cart = (
-        <div className="item-list__empty">
+        <div className='item-list__empty'>
           <SyncLoader />
         </div>
       );
@@ -89,17 +89,17 @@ class Checkout extends Component {
             checkout
             items={this.props.items}
           />
-          <div className="item-list__bottom">
+          <div className='item-list__bottom'>
             {deliveryAddress}
-            <div className="totals">
-              <div className="totals__line-items">
-                <div className="totals__line-item">
+            <div className='totals'>
+              <div className='totals__line-items'>
+                <div className='totals__line-item'>
                   <h3>Subtotal:</h3> <h3>${subTotal}</h3>
                 </div>
-                <div className="totals__line-item">
+                <div className='totals__line-item'>
                   <h3>Tax:</h3> <h3>${tax}</h3>
                 </div>
-                <div className="totals__line-item">
+                <div className='totals__line-item'>
                   <h3>Total:</h3> <h3>${total}</h3>
                 </div>
               </div>
@@ -111,16 +111,16 @@ class Checkout extends Component {
       );
     } else {
       cart = (
-        <div className="item-list__empty">
+        <div className='item-list__empty'>
           <h2>Your cart is empty!</h2>
         </div>
       );
     }
 
     return (
-      <div className="item-list-container">
-        <div className="item-list">
-          <h1 className="item-list__title">Order Summary</h1>
+      <div className='item-list-container'>
+        <div className='item-list'>
+          <h1 className='item-list__title'>Order Summary</h1>
           {cart}
         </div>
       </div>
@@ -135,7 +135,7 @@ Checkout.propTypes = {
   loadingCart: PropTypes.bool,
   submitOrderError: PropTypes.bool,
   submittingOrder: PropTypes.bool,
-  deliveryAddress: PropTypes.string,
+  deliveryAddress: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

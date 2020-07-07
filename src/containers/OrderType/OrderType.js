@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import "./OrderType.scss";
-import { MdDirectionsCar, MdStore } from "react-icons/md";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import AddressForm from "../AddressForm/AddressForm";
-import Message from "../../components/UI/Message/Message";
-import SignedUpMessage from "../../components/Messages/SignedUpMessage/SignedUpMessage";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import './OrderType.scss';
+import { MdDirectionsCar, MdStore } from 'react-icons/md';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import AddressForm from '../AddressForm/AddressForm';
+import Message from '../../components/UI/Message/Message';
+import SignedUpMessage from '../../components/Messages/SignedUpMessage/SignedUpMessage';
+import PropTypes from 'prop-types';
 
 /* Options for choosing either carryout or delivery order */
 class OrderType extends Component {
@@ -15,10 +15,10 @@ class OrderType extends Component {
   };
 
   handleClick = (event) => {
-    if (event.currentTarget.dataset.type === "Delivery") {
+    if (event.currentTarget.dataset.type === 'Delivery') {
       this.setState({ isDelivery: true });
     } else {
-      this.props.history.push("/checkout");
+      this.props.history.push('/checkout');
     }
   };
 
@@ -35,7 +35,7 @@ class OrderType extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/signin",
+            pathname: '/signin',
             fromCheckout: true,
           }}
         />
@@ -48,43 +48,43 @@ class OrderType extends Component {
       form = <AddressForm />;
     }
 
-    let orderTypeClassNames = ["order-type"];
-    let deliveryClassNames = ["order-type__type"];
-    let iconClassNames = ["order-type__icon"];
+    let orderTypeClassNames = ['order-type'];
+    let deliveryClassNames = ['order-type__type'];
+    let iconClassNames = ['order-type__icon'];
     if (this.state.isDelivery) {
-      orderTypeClassNames.push("order-type--extended");
-      deliveryClassNames.push("order-type__type--selected");
-      iconClassNames.push("order-type__icon--selected");
+      orderTypeClassNames.push('order-type--extended');
+      deliveryClassNames.push('order-type__type--selected');
+      iconClassNames.push('order-type__icon--selected');
     }
 
     return (
       <React.Fragment>
         {message}
-        <div className="form-container">
-          <div className="form-component">
-            <h4 className="form-component__title">
+        <div className='form-container'>
+          <div className='form-component'>
+            <h4 className='form-component__title'>
               Please choose an order method
             </h4>
-            <div className={orderTypeClassNames.join(" ")}>
+            <div className={orderTypeClassNames.join(' ')}>
               <div
                 onClick={this.handleClick}
-                data-type="Delivery"
-                className={deliveryClassNames.join(" ")}
+                data-type='Delivery'
+                className={deliveryClassNames.join(' ')}
               >
-                <div className={iconClassNames.join(" ")}>
+                <div className={iconClassNames.join(' ')}>
                   <MdDirectionsCar />
                 </div>
-                <span className="order-type__description">Delivery</span>
+                <span className='order-type__description'>Delivery</span>
               </div>
               <div
                 onClick={this.handleClick}
-                data-type="Carryout"
-                className="order-type__type"
+                data-type='Carryout'
+                className='order-type__type'
               >
-                <div className="order-type__icon">
+                <div className='order-type__icon'>
                   <MdStore />
                 </div>
-                <span className="order-type__description">Carryout</span>
+                <span className='order-type__description'>Carryout</span>
               </div>
             </div>
             {form}
@@ -97,7 +97,7 @@ class OrderType extends Component {
 
 OrderType.propTypes = {
   isAuthenticated: PropTypes.string,
-}
+};
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.idToken,

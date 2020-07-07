@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import "./Orders.scss";
-import { getOrders } from "../../store/checkout/checkoutActions";
-import { connect } from "react-redux";
-import Order from "./Order/Order";
-import { getReadableDate } from "../../shared/util";
-import { SyncLoader } from "react-spinners";
-import DeliveryAddress from "../../components/DeliveryAddress/DeliveryAddress";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import './Orders.scss';
+import { getOrders } from '../../store/checkout/checkoutActions';
+import { connect } from 'react-redux';
+import Order from '../Order/Order';
+import { getReadableDate } from '../../shared/util';
+import { SyncLoader } from 'react-spinners';
+import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';
+import PropTypes from 'prop-types';
 
 /* Contains a list of all submitted orders */
 class Orders extends Component {
@@ -30,12 +30,12 @@ class Orders extends Component {
       }
 
       orders = (
-        <div className="item-list-container">
-          <div className="item-list">
-            <div className="item-list__title">
+        <div className='item-list-container'>
+          <div className='item-list'>
+            <div className='item-list__title'>
               <h1>Orders</h1>
             </div>
-            <div className="item-list__empty">{ordersContent}</div>
+            <div className='item-list__empty'>{ordersContent}</div>
           </div>
         </div>
       );
@@ -59,18 +59,18 @@ class Orders extends Component {
                 orderType = <h2>Carryout Order</h2>;
               }
               return (
-                <div key={orderId} className="item-list-container">
-                  <div className="item-list item-list--order">
-                    <div className="item-list__title">
-                      <span className="order__date-address">
-                        <span className="order__date">
+                <div key={orderId} className='item-list-container'>
+                  <div className='item-list item-list--order'>
+                    <div className='item-list__title'>
+                      <span className='order__date-address'>
+                        <span className='order__date'>
                           <h2>Order placed on:&nbsp;</h2>
                           <h3> {getReadableDate(order.date)}</h3>
                         </span>
                         {orderType}
                       </span>
 
-                      <span className="order__total">
+                      <span className='order__total'>
                         <h2>Total:&nbsp;</h2>
                         <h3>${order.total}</h3>
                       </span>

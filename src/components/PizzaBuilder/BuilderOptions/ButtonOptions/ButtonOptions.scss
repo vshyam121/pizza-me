@@ -1,21 +1,20 @@
-@import "../../../../sass/base/variables";
+@import '../../../../sass/base/variables';
 
 .button-option {
-    cursor: pointer;
-    height: 5rem;
-    width: 10rem;
-    border: 1px solid $border-color;
-    outline: none;
-    border-radius: 5%;
-    font-family: inherit;
-    font-size: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  cursor: pointer;
+  height: 5rem;
+  width: 10rem;
+  border: 1px solid $border-color;
+  outline: none;
+  border-radius: 5%;
+  font-family: inherit;
+  font-size: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    &--selected {
-        background-color: $primary-red;
-        color: white;
-    }
-
+  &--selected {
+    background-color: $primary-red;
+    color: white;
+  }
 }

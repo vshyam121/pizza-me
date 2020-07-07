@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import "./PizzaBox.scss";
-import Dropdown from "../../components/UI/Dropdown/Dropdown";
-import Button from "../../components/UI/Button/Button";
+import React, { Component } from 'react';
+import './PizzaBox.scss';
+import Dropdown from '../../components/UI/Dropdown/Dropdown';
+import Button from '../../components/UI/Button/Button';
 import {
   HAND_TOSSED,
   crustMetadataMapping,
-} from "../../metadata/crustMetadata";
-import { LARGE, sizes } from "../../metadata/sizeMetadata";
-import { toppingMapping } from "../../metadata/comboMetadata";
-import { connect } from "react-redux";
-import { initializePizzaBuilder } from "../../store/pizzaBuilder/pizzaBuilderActions";
-import { addToCart } from "../../store/cart/cartActions";
-import { SIZE, CRUST, COMBO_NAME } from "../../metadata/pizzaProperties";
-import { primary, secondary } from "../../components/UI/Button/Button";
-import { calculatePrice } from "../../shared/util";
-import PropTypes from "prop-types";
+} from '../../metadata/crustMetadata';
+import { LARGE, sizes } from '../../metadata/sizeMetadata';
+import { toppingMapping } from '../../metadata/comboMetadata';
+import { connect } from 'react-redux';
+import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderActions';
+import { addToCart } from '../../store/cart/cartActions';
+import { SIZE, CRUST, COMBO_NAME } from '../../metadata/pizzaProperties';
+import { primary, secondary } from '../../components/UI/Button/Button';
+import { calculatePrice } from '../../shared/util';
+import PropTypes from 'prop-types';
 
 /* UI box container that holds an pizza and lets user customize various pizza properties.
    Can add pizza to order and also build your own pizza from here. */
@@ -111,8 +111,8 @@ class PizzaBox extends Component {
         return (
           crust +
           (crustMetadata.additionalDisplay
-            ? " " + crustMetadata.additionalDisplay
-            : "")
+            ? ' ' + crustMetadata.additionalDisplay
+            : '')
         );
       }
     );
@@ -135,12 +135,12 @@ class PizzaBox extends Component {
           Get Started
         </Button>
       );
-      pizzaName = "Build Your Own";
-      customize = <div className="empty-button"></div>;
+      pizzaName = 'Build Your Own';
+      customize = <div className='empty-button'></div>;
     } else {
       pizzaAdd = (
         <React.Fragment>
-          <div className="pizza-box__quantity">
+          <div className='pizza-box__quantity'>
             <Dropdown
               onChange={this.handleChangeQuantity}
               options={quantityOptions}
@@ -160,7 +160,7 @@ class PizzaBox extends Component {
       );
       customizeSecondary = (
         <span
-          className="pizza-box__customize link"
+          className='pizza-box__customize link'
           onClick={() => this.handleClickBuild(price)}
         >
           Customize
@@ -169,36 +169,36 @@ class PizzaBox extends Component {
     }
 
     return (
-      <div className="pizza-box">
-        <h3 className="pizza-box__name">{pizzaName} Pizza</h3>
-        <div className="pizza-box__container">
-          <div className="pizza-box__details">
+      <div className='pizza-box'>
+        <h3 className='pizza-box__name'>{pizzaName} Pizza</h3>
+        <div className='pizza-box__container'>
+          <div className='pizza-box__details'>
             {customizeSecondary}
 
-            <h4 className="pizza-box__price">
+            <h4 className='pizza-box__price'>
               ${(this.state.quantity * price).toFixed(2)}
             </h4>
-            <div className="pizza-box__options">
-              <div className="pizza-box__crust">
+            <div className='pizza-box__options'>
+              <div className='pizza-box__crust'>
                 <Dropdown
                   options={crustOptions}
                   onChange={this.handleChangeCrust}
                   value={this.state.pizza.crust}
                 />
               </div>
-              <div className="pizza-box__size">
+              <div className='pizza-box__size'>
                 <Dropdown
                   options={sizeOptions}
                   onChange={this.handleChangeSize}
                   value={this.state.pizza.size}
                 />
               </div>
-              <div className="pizza-box__add">{pizzaAdd}</div>
+              <div className='pizza-box__add'>{pizzaAdd}</div>
             </div>
           </div>
-          <div className="pizza-box__right">
+          <div className='pizza-box__right'>
             <img
-              className="pizza-box__image"
+              className='pizza-box__image'
               src={this.props.imageSrc}
               alt={this.props.pizzaName}
             />

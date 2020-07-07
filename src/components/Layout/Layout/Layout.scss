@@ -1,15 +1,15 @@
-@import "../../../sass/base/variables";
-@import "../../../sass/abstracts/mixins";
+@import '../../../sass/base/variables';
+@import '../../../sass/abstracts/mixins';
 
 .main {
-    margin-top: $header-height;
-    padding: 2rem;
-    overflow: hidden;
-    background-color: $color-grey-light-3;
-    min-height: 85vh;
-    position: relative;
+  margin-top: $header-height;
+  padding: 2rem;
+  overflow: hidden;
+  background-color: $color-grey-light-3;
+  min-height: 85vh;
+  position: relative;
 
-    @include respond(phone){
-        min-height:60vh;
-    }
+  @include respond(phone) {
+    min-height: 60vh;
+  }
 }

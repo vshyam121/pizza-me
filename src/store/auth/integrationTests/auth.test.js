@@ -1,12 +1,12 @@
-import moxios from "moxios";
-import { testStore } from "../../../shared/util";
-import { signIn } from "../authActions";
+import moxios from 'moxios';
+import { testStore } from '../../../shared/util';
+import { signIn } from '../authActions';
 import configureMockStore from 'redux-mock-store';
-import { middleware } from "../../store";
+import { middleware } from '../../store';
 
 const mockStore = configureMockStore(middleware);
 
-describe("Sign in action", () => {
+describe('Sign in action', () => {
   beforeEach(() => {
     moxios.install();
   });
@@ -15,10 +15,10 @@ describe("Sign in action", () => {
     moxios.uninstall();
   });
 
-  test("Store is updated correctly", () => {
+  test('Store is updated correctly', () => {
     const mockResponse = {
-      idToken: "test id token",
-      localId: "test user id",
+      idToken: 'test id token',
+      localId: 'test user id',
       expiresIn: 1000,
       loading: false,
     };
@@ -30,18 +30,18 @@ describe("Sign in action", () => {
         status: 200,
         response: mockResponse,
       });
-    });  
+    });
 
     const expectedState = {
-      idToken: "test id token",
-      userId: "test user id",
+      idToken: 'test id token',
+      userId: 'test user id',
       signInError: null,
       signUpError: null,
-      loading: false
-    }
+      loading: false,
+    };
 
-    return store.dispatch(signIn("test email", "test password")).then(() => {
-      const newState = store.getState().auth
+    return store.dispatch(signIn('test email', 'test password')).then(() => {
+      const newState = store.getState().auth;
       expect(newState).toEqual(expectedState);
     });
   });

@@ -1,5 +1,5 @@
-@import "../../../sass/base/variables";
-@import "../../../sass/abstracts/mixins";
+@import '../../../sass/base/variables';
+@import '../../../sass/abstracts/mixins';
 
 .pizza-details {
   display: flex;
@@ -10,12 +10,12 @@
     display: flex;
     flex-direction: column;
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       flex-direction: row;
       justify-content: space-between;
     }
 
-    @include respond(phone){
+    @include respond(phone) {
       flex-direction: column;
     }
   }
@@ -26,12 +26,12 @@
     justify-content: space-around;
     padding: 2rem;
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       flex-direction: column;
       align-items: flex-end;
     }
 
-    @include respond(phone){
+    @include respond(phone) {
       flex-direction: row;
       align-items: center;
       justify-content: space-around;
@@ -41,24 +41,23 @@
   &__price {
     display: none;
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       display: flex;
       margin-bottom: 2rem;
     }
 
-    @include respond(phone){
+    @include respond(phone) {
       display: none;
     }
   }
 
   &__quantity {
-
-    @include respond(tab-port){
+    @include respond(tab-port) {
       margin-right: 0;
       margin-bottom: 2rem;
     }
 
-    @include respond(phone){
+    @include respond(phone) {
       margin-bottom: 0rem;
     }
   }

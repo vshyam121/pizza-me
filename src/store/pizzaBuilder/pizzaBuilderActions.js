@@ -1,4 +1,4 @@
-import * as actionTypes from "./pizzaBuilderActionTypes";
+import * as actionTypes from './pizzaBuilderActionTypes';
 
 /* Initialize pizza builder with properties of given pizza */
 export const initializePizzaBuilder = (pizza, quantity, itemId) => {
@@ -6,13 +6,13 @@ export const initializePizzaBuilder = (pizza, quantity, itemId) => {
     type: actionTypes.INIT_PIZZA_BUILDER,
     pizza: pizza,
     quantity: quantity,
-    itemId: itemId
+    itemId: itemId,
   };
 };
 
 export const closePizzaBuilder = () => {
   return {
-    type: actionTypes.CLOSE_PIZZA_BUILDER
+    type: actionTypes.CLOSE_PIZZA_BUILDER,
   };
 };
 
@@ -21,7 +21,7 @@ export const setProperty = (property, value) => {
   return {
     type: actionTypes.SET_PROPERTY,
     property: property,
-    value: value
+    value: value,
   };
 };
 
@@ -30,7 +30,7 @@ export const toggleTopping = (property, value) => {
   return {
     type: actionTypes.TOGGLE_TOPPING,
     property: property,
-    value: value
+    value: value,
   };
 };
 
@@ -40,7 +40,7 @@ export const setToppingAmount = (property, topping, value) => {
     type: actionTypes.SET_TOPPING_AMOUNT,
     property: property,
     topping: topping,
-    value: value
+    value: value,
   };
 };
 
@@ -50,6 +50,6 @@ export const setToppingPortion = (property, topping, value) => {
     type: actionTypes.SET_TOPPING_PORTION,
     property: property,
     topping: topping,
-    value: value
+    value: value,
   };
 };

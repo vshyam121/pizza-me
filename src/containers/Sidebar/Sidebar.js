@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import "./Sidebar.scss";
-import { connect } from "react-redux";
-import PizzaMenuItems from "../../components/MenuItems/PizzaMenuItems/PizzaMenuItems";
-import AccountMenuItems from "../../components/MenuItems/AccountMenuItems/AccountMenuItems";
-import { closeSidebar } from "../../store/ui/uiActions";
-import NavigationItem from "../../components/UI/NavigationItem/NavigationItem";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import './Sidebar.scss';
+import { connect } from 'react-redux';
+import PizzaMenuItems from '../../components/MenuItems/PizzaMenuItems/PizzaMenuItems';
+import AccountMenuItems from '../../components/MenuItems/AccountMenuItems/AccountMenuItems';
+import { closeSidebar } from '../../store/ui/uiActions';
+import NavigationItem from '../../components/UI/NavigationItem/NavigationItem';
+import PropTypes from 'prop-types';
 
 /* Sidebar menu with pizza menu items and account menu items */
 class Sidebar extends Component {
@@ -14,24 +14,24 @@ class Sidebar extends Component {
   };
 
   render() {
-    let sidebarContainerClassNames = ["sidebar-container"];
-    let sidebarClassNames = ["sidebar"];
+    let sidebarContainerClassNames = ['sidebar-container'];
+    let sidebarClassNames = ['sidebar'];
     if (!this.props.sidebarOpen) {
-      sidebarClassNames.push("sidebar--closed");
-      sidebarContainerClassNames.push("sidebar-container--closed");
+      sidebarClassNames.push('sidebar--closed');
+      sidebarContainerClassNames.push('sidebar-container--closed');
     }
 
     return (
       <div
         onClick={this.handleClickMenuItem}
-        className={sidebarContainerClassNames.join(" ")}
+        className={sidebarContainerClassNames.join(' ')}
       >
-        <div className={sidebarClassNames.join(" ")}>
-          <div className="sidebar__menu-items">
+        <div className={sidebarClassNames.join(' ')}>
+          <div className='sidebar__menu-items'>
             <PizzaMenuItems vertical />
           </div>
-          <div className="sidebar__account">
-            <NavigationItem vertical to="/cart">
+          <div className='sidebar__account'>
+            <NavigationItem vertical to='/cart'>
               Cart
             </NavigationItem>
             <AccountMenuItems vertical />

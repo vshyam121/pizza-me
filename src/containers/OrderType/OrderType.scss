@@ -1,4 +1,4 @@
-@import "../../sass/base/variables";
+@import '../../sass/base/variables';
 
 .order-type {
   display: flex;
@@ -47,7 +47,7 @@
     margin-bottom: 2rem;
 
     &--selected {
-        color: $primary-red;
+      color: $primary-red;
     }
   }
 }

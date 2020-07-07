@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
-import "./PizzaBuilderProgress.scss";
+import React, { useEffect } from 'react';
+import './PizzaBuilderProgress.scss';
 import {
   SIZE_CRUST,
   CHEESE_SAUCE,
   TOPPINGS,
-} from "../../../containers/PizzaBuilder/PizzaBuilder";
-import PropTypes from "prop-types";
+} from '../../../containers/PizzaBuilder/PizzaBuilder';
+import PropTypes from 'prop-types';
 
 /* Shows progress of steps in the pizza builder */
 const PizzaBuilderProgress = (props) => {
   useEffect(() => {}, [props.stage]);
   return (
-    <div className="progress">
+    <div className='progress'>
       <button
         onClick={props.onClick}
         className={
           props.stage === TOPPINGS
-            ? "progress__button progress__button--toppings progress__button--selected"
-            : "progress__button progress__button--toppings"
+            ? 'progress__button progress__button--toppings progress__button--selected'
+            : 'progress__button progress__button--toppings'
         }
         value={TOPPINGS}
       >
@@ -27,8 +27,8 @@ const PizzaBuilderProgress = (props) => {
         onClick={props.onClick}
         className={
           props.stage === CHEESE_SAUCE
-            ? "progress__button progress__button--cheese-sauce progress__button--selected"
-            : "progress__button progress__button--cheese-sauce"
+            ? 'progress__button progress__button--cheese-sauce progress__button--selected'
+            : 'progress__button progress__button--cheese-sauce'
         }
         value={CHEESE_SAUCE}
       >
@@ -36,7 +36,7 @@ const PizzaBuilderProgress = (props) => {
       </button>
       <button
         onClick={props.onClick}
-        className="progress__button progress__button--size-crust"
+        className='progress__button progress__button--size-crust'
         value={SIZE_CRUST}
       >
         Size &amp; Crust
@@ -46,7 +46,7 @@ const PizzaBuilderProgress = (props) => {
 };
 
 PizzaBuilderProgress.propTypes = {
-  stage: PropTypes.oneOf(["SIZE_CRUST", "CHEESE_SAUCE", "TOPPINGS"]).isRequired,
+  stage: PropTypes.oneOf(['SIZE_CRUST', 'CHEESE_SAUCE', 'TOPPINGS']).isRequired,
 };
 
 export default PizzaBuilderProgress;

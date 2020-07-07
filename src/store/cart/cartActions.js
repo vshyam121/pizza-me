@@ -1,19 +1,19 @@
-import * as actionTypes from "./cartActionTypes";
+import * as actionTypes from './cartActionTypes';
 import {
   SAUCE,
   SAUCE_AMOUNT,
   CRUST_FLAVOR,
   CHEESE_AMOUNT,
-} from "../../metadata/pizzaProperties";
-import { CLASSIC_MARINARA, REGULAR_SAUCE } from "../../metadata/sauceMetadata";
-import { NO_CRUST_FLAVOR } from "../../metadata/crustFlavorMetadata";
-import axiosFirebase from "../../shared/axiosFirebase";
-import { v4 as uuidv4 } from "uuid";
-import { REGULAR_CHEESE } from "../../metadata/cheeseMetadata";
-import hash from "object-hash";
-import { secureStorage } from "../../shared/secureStorage";
-import * as actionDisplays from "../ui/actionDisplays";
-import { setErroredAction } from "../ui/uiActions";
+} from '../../metadata/pizzaProperties';
+import { CLASSIC_MARINARA, REGULAR_SAUCE } from '../../metadata/sauceMetadata';
+import { NO_CRUST_FLAVOR } from '../../metadata/crustFlavorMetadata';
+import axiosFirebase from '../../shared/axiosFirebase';
+import { v4 as uuidv4 } from 'uuid';
+import { REGULAR_CHEESE } from '../../metadata/cheeseMetadata';
+import hash from 'object-hash';
+import { secureStorage } from '../../shared/secureStorage';
+import * as actionDisplays from '../ui/actionDisplays';
+import { setErroredAction } from '../ui/uiActions';
 
 /* Create cart in backend for a particular user */
 export const createCart = (idToken, userId) => {
@@ -21,7 +21,7 @@ export const createCart = (idToken, userId) => {
     const cart = {
       userId: userId,
     };
-    axiosFirebase.post("/carts.json?auth=" + idToken, cart).then((res) => {
+    axiosFirebase.post('/carts.json?auth=' + idToken, cart).then((res) => {
       dispatch({
         type: actionTypes.CREATE_CART,
         cartId: res.data.name,
@@ -34,7 +34,7 @@ export const createCart = (idToken, userId) => {
 /* Set cart in redux store from cart in local storage */
 export const getCartFromLocalStorage = () => {
   return (dispatch) => {
-    let cart = secureStorage.getItem("cart");
+    let cart = secureStorage.getItem('cart');
     if (cart.quantity > 0) {
       dispatch(setCartItems(cart));
     }
@@ -65,10 +65,10 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
     //patch REST API call to update backend with changes to items in cart
     if (Object.keys(localItems)) {
       axiosFirebase
-        .patch("/carts/" + cartId + "/items.json?auth=" + idToken, localItems)
+        .patch('/carts/' + cartId + '/items.json?auth=' + idToken, localItems)
         .then(() => {
           let emptyCart = { items: {}, quantity: 0 };
-          secureStorage.setItem("cart", emptyCart);
+          secureStorage.setItem('cart', emptyCart);
           dispatch({
             type: actionTypes.GET_CART_SUCCESS,
             userId: userId,
@@ -128,7 +128,7 @@ export const getCart = (idToken, userId) => {
     let quantity;
     axiosFirebase
       .get(
-        "/carts.json?auth=" +
+        '/carts.json?auth=' +
           idToken +
           '&orderBy="userId"&equalTo="' +
           userId +
@@ -138,7 +138,7 @@ export const getCart = (idToken, userId) => {
         if (Object.entries(res.data).length > 0) {
           items = Object.values(res.data)[0].items || {};
           cartId = Object.keys(res.data)[0];
-          let localCart = secureStorage.getItem("cart");
+          let localCart = secureStorage.getItem('cart');
           //Combine local cart with backend cart if items in local cart
           if (localCart.quantity > 0) {
             dispatch(combineCarts(localCart, items, cartId, userId, idToken));
@@ -188,15 +188,14 @@ export const clearCart = () => {
 /* Add new item to cart, meaning it doesn't have a match in cart already */
 const addNewItemToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
-    
     let item = { pizza: pizza, quantity: quantity };
     //if user is signed in, then add to backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .post(
-          "/carts/" +
+          '/carts/' +
             getState().cart.cartId +
-            "/items.json?auth=" +
+            '/items.json?auth=' +
             getState().auth.idToken,
           item
         )
@@ -212,11 +211,11 @@ const addNewItemToCart = (pizza, quantity) => {
         });
     } else {
       //if user not signed in, add to local storage cart
-      let cart = secureStorage.getItem("cart");
+      let cart = secureStorage.getItem('cart');
       const itemId = uuidv4();
       cart.items[itemId] = item;
       cart.quantity += parseInt(item.quantity);
-      secureStorage.setItem("cart", cart);
+      secureStorage.setItem('cart', cart);
       dispatch({
         type: actionTypes.ADD_TO_CART,
         itemId: itemId,
@@ -289,11 +288,11 @@ export const changeItemQuantity = (itemId, quantity) => {
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
-          "/carts/" +
+          '/carts/' +
             getState().cart.cartId +
-            "/items/" +
+            '/items/' +
             itemId +
-            ".json?auth=" +
+            '.json?auth=' +
             getState().auth.idToken,
           item
         )
@@ -308,14 +307,14 @@ export const changeItemQuantity = (itemId, quantity) => {
           dispatch(setErroredAction(actionDisplays.CHANGE_ITEM_QUANTITY));
           dispatch(changeCartItemFailed());
         });
-    } 
+    }
     //if user not signed in, change item quantity in local storage cart
     else {
-      let cart = secureStorage.getItem("cart");
+      let cart = secureStorage.getItem('cart');
       cart.quantity -= cart.items[itemId].quantity;
       cart.quantity += parseInt(quantity);
       cart.items[itemId].quantity = quantity;
-      secureStorage.setItem("cart", cart);
+      secureStorage.setItem('cart', cart);
       dispatch({
         type: actionTypes.CHANGE_ITEM_QUANTITY,
         itemId: itemId,
@@ -348,11 +347,11 @@ export const removeItem = (itemId, pizza) => {
     if (getState().cart.cartId) {
       axiosFirebase
         .delete(
-          "/carts/" +
+          '/carts/' +
             getState().cart.cartId +
-            "/items/" +
+            '/items/' +
             itemId +
-            ".json?auth=" +
+            '.json?auth=' +
             getState().auth.idToken
         )
         .then(() => {
@@ -368,10 +367,10 @@ export const removeItem = (itemId, pizza) => {
         });
     } else {
       //if user not signed in, remove item from local storage cart
-      let cart = secureStorage.getItem("cart");
+      let cart = secureStorage.getItem('cart');
       cart.quantity -= cart.items[itemId].quantity;
       delete cart.items[itemId];
-      secureStorage.setItem("cart", cart);
+      secureStorage.setItem('cart', cart);
       dispatch({
         type: actionTypes.REMOVE_ITEM_SUCCESS,
         itemId: itemId,
@@ -390,9 +389,9 @@ export const emptyCart = (userId) => {
       };
       axiosFirebase
         .put(
-          "/carts/" +
+          '/carts/' +
             getState().cart.cartId +
-            ".json?auth=" +
+            '.json?auth=' +
             getState().auth.idToken,
           emptyCart
         )
@@ -404,11 +403,11 @@ export const emptyCart = (userId) => {
         .catch(() => {
           dispatch(setErroredAction(actionDisplays.EMPTY_CART));
         });
-    } 
+    }
     //if user not signed in, empty local storage cart
     else {
       let emptyCart = { items: {}, quantity: 0 };
-      secureStorage.setItem("cart", emptyCart);
+      secureStorage.setItem('cart', emptyCart);
       dispatch({
         type: actionTypes.EMPTY_CART,
       });
@@ -425,11 +424,11 @@ export const saveToCart = (pizza, quantity, itemId) => {
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
-          "/carts/" +
+          '/carts/' +
             getState().cart.cartId +
-            "/items/" +
+            '/items/' +
             itemId +
-            ".json?auth=" +
+            '.json?auth=' +
             getState().auth.idToken,
           item
         )
@@ -444,14 +443,14 @@ export const saveToCart = (pizza, quantity, itemId) => {
           dispatch(changeCartItemFailed());
           dispatch(setErroredAction(actionDisplays.SAVE_TO_CART));
         });
-    } 
+    }
     //if user not signed in, make change to local storage cart
     else {
-      let cart = secureStorage.getItem("cart");
+      let cart = secureStorage.getItem('cart');
       cart.quantity -= cart.items[itemId].quantity;
       cart.items[itemId] = item;
       cart.quantity += item.quantity;
-      secureStorage.setItem("cart", cart);
+      secureStorage.setItem('cart', cart);
       dispatch({
         type: actionTypes.SAVE_TO_CART,
         itemId: itemId,

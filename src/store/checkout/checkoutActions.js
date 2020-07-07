@@ -1,8 +1,8 @@
-import * as actionTypes from "./checkoutActionTypes";
-import axiosFirebase from "../../shared/axiosFirebase";
-import axiosGeolocation from "axios";
-import * as actionDisplays from "../ui/actionDisplays";
-import { setErroredAction } from "../ui/uiActions";
+import * as actionTypes from './checkoutActionTypes';
+import axiosFirebase from '../../shared/axiosFirebase';
+import axiosGeolocation from 'axios';
+import * as actionDisplays from '../ui/actionDisplays';
+import { setErroredAction } from '../ui/uiActions';
 
 /* To set loading in UI when starting to submit order */
 export const submitOrderStart = () => {
@@ -27,7 +27,7 @@ export const submitOrder = (total, items, idToken, userId) => {
       order = { ...order, deliveryAddress: deliveryAddress };
     }
     axiosFirebase
-      .post("/orders.json?auth=" + idToken, order)
+      .post('/orders.json?auth=' + idToken, order)
       .then((res) => {
         dispatch({
           type: actionTypes.SUBMIT_ORDER_SUCCESS,
@@ -56,7 +56,8 @@ export const validateAddressReset = () => {
   };
 };
 
-/* Call smarty streets geolocation api to validate delivery address */ 
+/* Call smarty streets geolocation api to validate delivery address */
+
 export const validateAddress = (addressForm) => {
   return (dispatch) => {
     let params = {
@@ -80,7 +81,7 @@ export const validateAddress = (addressForm) => {
       .then((res) => {
         if (res.data.length > 0) {
           const matchCode = res.data[0].analysis.dpv_match_code;
-          if (matchCode === "Y") {
+          if (matchCode === 'Y') {
             dispatch({
               type: actionTypes.VALIDATE_ADDRESS_SUCCESS,
               deliveryAddress: {
@@ -91,21 +92,21 @@ export const validateAddress = (addressForm) => {
                 zipcode: addressForm.zipcode.value,
               },
             });
-          } else if (matchCode === "N") {
+          } else if (matchCode === 'N') {
             dispatch({
               type: actionTypes.VALIDATE_ADDRESS_FAILED,
-              error: "The address you entered is invalid",
+              error: 'The address you entered is invalid',
             });
-          } else if (matchCode === "S" || matchCode === "D") {
+          } else if (matchCode === 'S' || matchCode === 'D') {
             dispatch({
               type: actionTypes.VALIDATE_ADDRESS_FAILED,
-              error: "Missing or incorrect secondary address (apt/unit)",
+              error: 'Missing or incorrect secondary address (apt/unit)',
             });
           }
         } else {
           dispatch({
             type: actionTypes.VALIDATE_ADDRESS_FAILED,
-            error: "The address you entered is invalid",
+            error: 'The address you entered is invalid',
           });
         }
       })
@@ -138,7 +139,7 @@ export const getOrders = (idToken, userId) => {
     dispatch(getOrdersStart());
     axiosFirebase
       .get(
-        "/orders.json?auth=" +
+        '/orders.json?auth=' +
           idToken +
           '&orderBy="userId"&equalTo="' +
           userId +

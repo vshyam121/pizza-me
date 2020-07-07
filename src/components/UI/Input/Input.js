@@ -1,12 +1,12 @@
-import React from "react";
-import "./Input.scss";
-import Dropdown from "../Dropdown/Dropdown";
-import PropTypes from "prop-types";
+import React from 'react';
+import './Input.scss';
+import Dropdown from '../Dropdown/Dropdown';
+import PropTypes from 'prop-types';
 
 /* Standard input element to be included in forms */
 const Input = (props) => {
   let inputElement = null;
-  const inputClasses = ["input__element"];
+  const inputClasses = ['input__element'];
   let validationError = null;
   if (
     props.invalid &&
@@ -14,34 +14,34 @@ const Input = (props) => {
     props.touched &&
     props.formSubmitted
   ) {
-    inputClasses.push("input__invalid");
+    inputClasses.push('input__invalid');
     validationError = (
-      <p className="input__error-message">{props.errorMessage}</p>
+      <p className='input__error-message'>{props.errorMessage}</p>
     );
   }
 
   switch (props.elementType) {
-    case "input":
+    case 'input':
       inputElement = (
         <input
-          className={inputClasses.join(" ")}
+          className={inputClasses.join(' ')}
           {...props.elementConfig}
           value={props.value}
           onChange={props.onChange}
         />
       );
       break;
-    case "textarea":
+    case 'textarea':
       inputElement = (
         <textarea
-          className={inputClasses.join(" ")}
+          className={inputClasses.join(' ')}
           {...props.elementConfig}
           value={props.value}
           onChange={props.onChange}
         />
       );
       break;
-    case "select":
+    case 'select':
       inputElement = (
         <Dropdown
           size={props.elementConfig.size}
@@ -54,7 +54,7 @@ const Input = (props) => {
     default:
       inputElement = (
         <input
-          className={inputClasses.join(" ")}
+          className={inputClasses.join(' ')}
           {...props.elementConfig}
           value={props.value}
           onChange={props.onChange}
@@ -62,7 +62,7 @@ const Input = (props) => {
       );
   }
   return (
-    <div className="input">
+    <div className='input'>
       <label>{props.label}</label>
       {inputElement}
       {validationError}
@@ -74,12 +74,12 @@ Input.propTypes = {
   invalid: PropTypes.bool.isRequired,
   shouldValidate: PropTypes.object.isRequired,
   touched: PropTypes.bool,
-  formSubmitted: PropTypes.bool.isRequired, 
+  formSubmitted: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
   elementConfig: PropTypes.object.isRequired,
   errorMessage: PropTypes.string,
   label: PropTypes.string,
-  elementType: PropTypes.string.isRequired
-}
+  elementType: PropTypes.string.isRequired,
+};
 
 export default Input;

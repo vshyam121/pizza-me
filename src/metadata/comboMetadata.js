@@ -6,7 +6,7 @@ import {
   BACON,
   PEPPERONI,
   GRILLED_CHICKEN,
-} from "./meatMetadata";
+} from './meatMetadata';
 import {
   MUSHROOMS,
   BELL_PEPPERS,
@@ -15,7 +15,7 @@ import {
   ROMA_TOMATOES,
   BANANA_PEPPERS,
   PINEAPPLE,
-} from "./veggiesMetadata";
+} from './veggiesMetadata';
 import {
   MEATS,
   VEGGIES,
@@ -25,28 +25,28 @@ import {
   WHOLE,
   SAUCE,
   CRUST_FLAVOR,
-} from "./pizzaProperties";
-import { EXTRA_CHEESE } from "./cheeseMetadata";
-import { BUFFALO, BARBECUE } from "./sauceMetadata";
-import { TOASTED_PARMESAN } from "./crustFlavorMetadata";
+} from './pizzaProperties';
+import { EXTRA_CHEESE } from './cheeseMetadata';
+import { BUFFALO, BARBECUE } from './sauceMetadata';
+import { TOASTED_PARMESAN } from './crustFlavorMetadata';
 
 /* Holds various combo related display metadata used in multiple components */
 
-export const CHEESE = "Cheese";
-export const PEPPERONI_PIZZA = "Pepperoni";
+export const CHEESE = 'Cheese';
+export const PEPPERONI_PIZZA = 'Pepperoni';
 export const MEAT_LOVER = "Meat Lover's";
-export const SUPREME = "Supreme";
+export const SUPREME = 'Supreme';
 export const PEPPERONI_LOVER = "Pepperoni Lover's";
-export const SUPER_SUPREME = "Super Supreme";
+export const SUPER_SUPREME = 'Super Supreme';
 export const VEGGIE_LOVER = "Veggie Lover's";
 export const ULTIMATE_CHEESE_LOVER = "Ultimate Cheese Lover's";
-export const BUFFALO_CHICKEN = "Buffalo Chicken";
-export const BBQ_CHICKEN = "BBQ Chicken";
-export const HAWAIIAN_CHICKEN = "Hawaiian Chicken";
-export const CHICKEN_BACON_PARMESAN = "Chicken Bacon Parmesan";
+export const BUFFALO_CHICKEN = 'Buffalo Chicken';
+export const BBQ_CHICKEN = 'BBQ Chicken';
+export const HAWAIIAN_CHICKEN = 'Hawaiian Chicken';
+export const CHICKEN_BACON_PARMESAN = 'Chicken Bacon Parmesan';
 
-export const REGULAR = "Regular";
-export const COMBO = "Combo";
+export const REGULAR = 'Regular';
+export const COMBO = 'Combo';
 
 export const toppingMapping = {
   [CHEESE]: {

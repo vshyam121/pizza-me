@@ -1,16 +1,16 @@
-@import "../../sass/base/variables";
-@import "../../sass/abstracts/mixins";
+@import '../../sass/base/variables';
+@import '../../sass/abstracts/mixins';
 
 .totalBuilder {
   display: flex;
   width: 100%;
   height: 100%;
 
-  @include respond(tab-port){
+  @include respond(tab-port) {
     flex-direction: column;
   }
 
-  @include respond(phone){
+  @include respond(phone) {
     flex-direction: column;
     font-size: 1.2rem;
   }
@@ -29,7 +29,7 @@
     border: 1px solid $border-color;
     border-radius: 1rem;
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       width: 100%;
       margin-bottom: 2rem;
     }
@@ -38,7 +38,7 @@
   &__details {
     width: 100%;
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       border: none;
     }
   }
@@ -46,12 +46,10 @@
   &__preview {
     width: 100%;
 
-
-    @include respond(tab-port){
+    @include respond(tab-port) {
       display: none;
     }
   }
-
 
   &__builder {
     background-color: $color-grey-light-1;
@@ -61,7 +59,7 @@
     border-radius: 1rem;
     overflow: hidden;
 
-    @include respond(tab-port){
+    @include respond(tab-port) {
       width: 100%;
     }
   }

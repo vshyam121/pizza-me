@@ -1,14 +1,14 @@
-import * as actionTypes from "./authActionTypes";
+import * as actionTypes from './authActionTypes';
 import {
   clearCart,
   getCart,
   getCartFromLocalStorage,
-} from "../cart/cartActions";
-import { getOrders } from "../checkout/checkoutActions";
-import axios from "axios";
-import { secureStorage } from "../../shared/secureStorage";
-import { setErroredAction } from "../ui/uiActions";
-import * as actionDisplays from "../ui/actionDisplays";
+} from '../cart/cartActions';
+import { getOrders } from '../checkout/checkoutActions';
+import axios from 'axios';
+import { secureStorage } from '../../shared/secureStorage';
+import { setErroredAction } from '../ui/uiActions';
+import * as actionDisplays from '../ui/actionDisplays';
 
 /* To show loading in UI when authentication action has started */
 export const authStart = () => {
@@ -45,9 +45,9 @@ export const signUpFailed = (error) => {
 /* Clear user data and cart on sign out */
 export const signOut = () => {
   return (dispatch) => {
-    localStorage.removeItem("idToken");
-    localStorage.removeItem("expirationTime");
-    localStorage.removeItem("userId");
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('expirationTime');
+    localStorage.removeItem('userId');
     dispatch(clearCart());
     dispatch({
       type: actionTypes.AUTH_SIGNOUT,
@@ -76,18 +76,18 @@ export const signIn = (email, password) => {
     };
     await axios
       .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
           process.env.REACT_APP_FIREBASE_API_KEY,
         authData
       )
       .then((res) => {
-        localStorage.setItem("idToken", res.data.idToken);
+        localStorage.setItem('idToken', res.data.idToken);
 
         localStorage.setItem(
-          "expirationTime",
+          'expirationTime',
           new Date(new Date().getTime() + res.data.expiresIn * 1000)
         );
-        localStorage.setItem("userId", res.data.localId);
+        localStorage.setItem('userId', res.data.localId);
 
         dispatch(authSuccess(res.data.idToken, res.data.localId));
         dispatch(checkAuthTimeout(res.data.expiresIn));
@@ -112,7 +112,7 @@ export const signUp = (email, password) => {
     };
     axios
       .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
           process.env.REACT_APP_FIREBASE_API_KEY,
         authData
       )
@@ -132,23 +132,23 @@ export const initApp = () => {
     const emptyCart = { items: {}, quantity: 0 };
     let localCart = null;
     try {
-      localCart = secureStorage.getItem("cart");
+      localCart = secureStorage.getItem('cart');
     } catch (error) {
-      secureStorage.setItem("cart", emptyCart);
+      secureStorage.setItem('cart', emptyCart);
     }
 
     if (!localCart) {
-      secureStorage.setItem("cart", emptyCart);
+      secureStorage.setItem('cart', emptyCart);
     }
 
-    const idToken = secureStorage.getItem("idToken");
+    const idToken = secureStorage.getItem('idToken');
     let timeToExpire = 0;
     //if user's session still alive, get user's cart and orders
     if (idToken) {
-      const expirationTime = secureStorage.getItem("expirationTime");
+      const expirationTime = secureStorage.getItem('expirationTime');
       timeToExpire = new Date(expirationTime).getTime() - new Date().getTime();
       if (timeToExpire > 0) {
-        const userId = secureStorage.getItem("userId");
+        const userId = secureStorage.getItem('userId');
         dispatch(authSuccess(idToken, userId));
         dispatch(checkAuthTimeout(timeToExpire / 1000));
         dispatch(getCart(idToken, userId));

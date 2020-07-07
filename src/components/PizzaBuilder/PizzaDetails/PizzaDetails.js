@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import Dropdown from "../../UI/Dropdown/Dropdown";
-import Button, { primary } from "../../UI/Button/Button";
-import PizzaDescription from "../../PizzaDescription/PizzaDescription";
-import "./PizzaDetails.scss";
-import { calculatePrice } from "../../../shared/util";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import Dropdown from '../../UI/Dropdown/Dropdown';
+import Button, { primary } from '../../UI/Button/Button';
+import PizzaDescription from '../../PizzaDescription/PizzaDescription';
+import './PizzaDetails.scss';
+import { calculatePrice } from '../../../shared/util';
+import PropTypes from 'prop-types';
 
 /* Shows pizza description, as well as options to change quantity and add/save to cart */
 class PizzaDetails extends Component {
@@ -52,28 +52,28 @@ class PizzaDetails extends Component {
     }
 
     return (
-      <div className="pizza-details">
-        <h3 className="builder-title">My Pizza</h3>
-        <div className="pizza-details__details">
-          <div className="pizza-details__description">
+      <div className='pizza-details'>
+        <h3 className='builder-title'>My Pizza</h3>
+        <div className='pizza-details__details'>
+          <div className='pizza-details__description'>
             <PizzaDescription
               quantity={this.state.quantity}
               pizza={this.props.pizza}
             />
           </div>
-          <div className="pizza-details__options">
-            <h2 className="pizza-details__price">
+          <div className='pizza-details__options'>
+            <h2 className='pizza-details__price'>
               ${(price * this.state.quantity).toFixed(2)}
             </h2>
-            <div className="pizza-details__quantity">
+            <div className='pizza-details__quantity'>
               <Dropdown
-                className="item__size"
+                className='item__size'
                 options={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
                 value={this.state.quantity}
                 onChange={this.handleChangeQuantity}
               />
             </div>
-            <div className="pizza-details__save">{save}</div>
+            <div className='pizza-details__save'>{save}</div>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@ class PizzaDetails extends Component {
 
 PizzaDetails.propTypes = {
   pizza: PropTypes.object.isRequired,
-  quantity: PropTypes.number.isRequired
-}
+  quantity: PropTypes.number.isRequired,
+};
 
 export default PizzaDetails;

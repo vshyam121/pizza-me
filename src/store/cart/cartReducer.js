@@ -1,5 +1,5 @@
-import * as actionTypes from "./cartActionTypes";
-import hash from "object-hash";
+import * as actionTypes from './cartActionTypes';
+import hash from 'object-hash';
 
 const initialState = {
   cartId: null,
@@ -20,7 +20,7 @@ const cartReducer = (state = initialState, action) => {
   let quantity;
   let numItemsAdded = 0;
   switch (action.type) {
-    //set cart id and user id once cart has been created 
+    //set cart id and user id once cart has been created
     case actionTypes.CREATE_CART:
       return {
         ...state,
@@ -31,7 +31,10 @@ const cartReducer = (state = initialState, action) => {
     case actionTypes.ADD_TO_CART:
       items = { ...state.items, [action.itemId]: action.item };
       quantity = state.quantity + +action.item.quantity;
-      itemHashMap = { ...state.itemHashMap, [hash(action.item.pizza)]: action.itemId };
+      itemHashMap = {
+        ...state.itemHashMap,
+        [hash(action.item.pizza)]: action.itemId,
+      };
       return {
         ...state,
         items: items,
@@ -74,7 +77,7 @@ const cartReducer = (state = initialState, action) => {
         itemHashMap: {},
         numItemsAdded: 0,
       };
-    //set cart items 
+    //set cart items
     case actionTypes.SET_CART_ITEMS:
       return {
         ...state,
@@ -82,7 +85,7 @@ const cartReducer = (state = initialState, action) => {
         quantity: action.quantity,
         itemHashMap: action.itemHashMap,
       };
-    //change item quantity 
+    //change item quantity
     case actionTypes.CHANGE_ITEM_QUANTITY:
       items = { ...state.items };
       quantity = state.quantity - items[action.itemId].quantity;
@@ -96,7 +99,7 @@ const cartReducer = (state = initialState, action) => {
         items: items,
         quantity: quantity,
         numItemsAdded: numItemsAdded,
-        loadingCartItem: false
+        loadingCartItem: false,
       };
     //set loading before changing cart item
     case actionTypes.CHANGE_CART_ITEM_START:
@@ -139,7 +142,7 @@ const cartReducer = (state = initialState, action) => {
         items: items,
         quantity: quantity,
         numItemsAdded: 0,
-        loadingCartItem: false
+        loadingCartItem: false,
       };
     //empty cart and all metadata
     case actionTypes.EMPTY_CART:
@@ -148,7 +151,7 @@ const cartReducer = (state = initialState, action) => {
         items: {},
         quantity: 0,
         numItemsAdded: 0,
-        itemHashMap: {}
+        itemHashMap: {},
       };
     default:
       return state;

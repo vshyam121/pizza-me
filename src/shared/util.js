@@ -7,32 +7,32 @@ import {
   CHEESE_AMOUNT,
   SAUCE_AMOUNT,
   EXTRA_TOPPING,
-} from "../metadata/pizzaProperties";
-import { COMBO, toppingMapping } from "../metadata/comboMetadata";
+} from '../metadata/pizzaProperties';
+import { COMBO, toppingMapping } from '../metadata/comboMetadata';
 import {
   sizePriceMapping,
   crustPriceMapping,
   toppingPrice,
   extraToppingPrice,
   propertyPriceMapping,
-} from "../metadata/priceMappings";
-import checkPropTypes from "check-prop-types";
-import { applyMiddleware, createStore } from "redux";
-import rootReducer from "../store/rootReducer";
-import { middleware } from "../store/store";
+} from '../metadata/priceMappings';
+import checkPropTypes from 'check-prop-types';
+import { applyMiddleware, createStore } from 'redux';
+import rootReducer from '../store/rootReducer';
+import { middleware } from '../store/store';
 
 /* Utility functions used across multiple components/containers */
 
 /* Get display message for error code related to authentication */
 export const lookupErrorCode = (errorCode) => {
-  if (errorCode === "INVALID_PASSWORD" || errorCode === "EMAIL_NOT_FOUND") {
-    return "The username or password you entered is incorrect.";
-  } else if (errorCode.includes("TOO_MANY_ATTEMPTS_TRY_LATER")) {
+  if (errorCode === 'INVALID_PASSWORD' || errorCode === 'EMAIL_NOT_FOUND') {
+    return 'The username or password you entered is incorrect.';
+  } else if (errorCode.includes('TOO_MANY_ATTEMPTS_TRY_LATER')) {
     return "You've made too many unsuccessful attempts. Please try again later.";
-  } else if (errorCode === "EMAIL_EXISTS") {
-    return "The email you entered is already taken. Please try another one.";
+  } else if (errorCode === 'EMAIL_EXISTS') {
+    return 'The email you entered is already taken. Please try another one.';
   } else {
-    return "There was an error submitting your credentials.";
+    return 'There was an error submitting your credentials.';
   }
 };
 
@@ -123,35 +123,35 @@ export const calculateTax = (subTotal) => {
 /* Get display date */
 export const getReadableDate = (givenDate) => {
   const monthArray = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
   const date = new Date(givenDate);
   const month = monthArray[date.getMonth()];
   const day = date.getDate();
   const year = date.getFullYear();
-  return month + " " + day + ", " + year;
+  return month + ' ' + day + ', ' + year;
 };
 
 /* Get display address */
 export const getReadableAddress = (givenAddress) => {
-  let address = "";
+  let address = '';
   address += givenAddress.street;
-  if (givenAddress.secondary) address += ", " + givenAddress.secondary;
-  address += "\n";
+  if (givenAddress.secondary) address += ', ' + givenAddress.secondary;
+  address += '\n';
   address += givenAddress.city;
-  address += ", " + givenAddress.state;
-  address += " " + givenAddress.zipcode;
+  address += ', ' + givenAddress.state;
+  address += ' ' + givenAddress.zipcode;
   return address;
 };
 
@@ -164,7 +164,7 @@ export const checkProps = (component, expectedProps) => {
   const propsErr = checkPropTypes(
     component.propTypes,
     expectedProps,
-    "props",
+    'props',
     component.name
   );
   return propsErr;
