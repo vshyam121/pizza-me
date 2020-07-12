@@ -4,8 +4,10 @@ import hash from 'object-hash';
 const initialState = {
   cartId: null,
   userId: null,
+  //key: item id, value: item object (item consists of pizza object and quantity)
   items: {},
   quantity: 0,
+  //hash of pizza object to item id
   itemHashMap: {},
   numItemsAdded: 0,
   loadingCart: false,
@@ -30,7 +32,7 @@ const cartReducer = (state = initialState, action) => {
     //add item to cart, update pizza to item id hashmap and quantity
     case actionTypes.ADD_TO_CART:
       items = { ...state.items, [action.itemId]: action.item };
-      quantity = state.quantity + +action.item.quantity;
+      quantity = parseInt(state.quantity) + parseInt(action.item.quantity);
       itemHashMap = {
         ...state.itemHashMap,
         [hash(action.item.pizza)]: action.itemId,
@@ -136,7 +138,7 @@ const cartReducer = (state = initialState, action) => {
       items = { ...state.items };
       quantity = state.quantity - items[action.itemId].quantity;
       items[action.itemId] = action.item;
-      quantity += +action.item.quantity;
+      quantity += parseInt(action.item.quantity);
       return {
         ...state,
         items: items,

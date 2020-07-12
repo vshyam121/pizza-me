@@ -21,7 +21,7 @@ export const createCart = (idToken, userId) => {
     const cart = {
       userId: userId,
     };
-    axiosFirebase.post('/carts.json?auth=' + idToken, cart).then((res) => {
+    axiosFirebase.post(`/carts.json?auth=${idToken}`, cart).then((res) => {
       dispatch({
         type: actionTypes.CREATE_CART,
         cartId: res.data.name,
@@ -46,52 +46,41 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
   return (dispatch) => {
     const remoteItemsQuantity = getTotalQuantity(items);
     let itemHashMap = generateItemHashMap(items);
-    let localItems = {};
+    let combinedItems = {};
     //Update quantities of matching item in backend cart and add new items
     Object.entries(localCart.items).forEach(([itemId, item]) => {
       const pizzaHash = hash(item.pizza);
       const matchingItemId = itemHashMap[pizzaHash];
       if (matchingItemId) {
-        const matchingItem = items[itemHashMap[pizzaHash]];
+        const matchingItem = items[matchingItemId];
         matchingItem.quantity =
           parseInt(matchingItem.quantity) + parseInt(item.quantity);
-        localItems[matchingItemId] = matchingItem;
+        combinedItems[matchingItemId] = matchingItem;
       } else {
         itemHashMap[pizzaHash] = itemId;
         items[itemId] = item;
-        localItems[itemId] = item;
+        combinedItems[itemId] = item;
       }
     });
     //patch REST API call to update backend with changes to items in cart
-    if (Object.keys(localItems)) {
-      axiosFirebase
-        .patch('/carts/' + cartId + '/items.json?auth=' + idToken, localItems)
-        .then(() => {
-          let emptyCart = { items: {}, quantity: 0 };
-          secureStorage.setItem('cart', emptyCart);
-          dispatch({
-            type: actionTypes.GET_CART_SUCCESS,
-            userId: userId,
-            cartId: cartId,
-            items: items,
-            quantity: parseInt(localCart.quantity) + remoteItemsQuantity,
-            itemHashMap: itemHashMap,
-          });
-        })
-        .catch(() => {
-          dispatch(getCartFailed());
-          dispatch(setErroredAction(actionDisplays.GET_CART));
+    axiosFirebase
+      .patch(`/carts/${cartId}/items.json?auth=${idToken}`, combinedItems)
+      .then(() => {
+        let emptyCart = { items: {}, quantity: 0 };
+        secureStorage.setItem('cart', emptyCart);
+        dispatch({
+          type: actionTypes.GET_CART_SUCCESS,
+          userId: userId,
+          cartId: cartId,
+          items: items,
+          quantity: parseInt(localCart.quantity) + remoteItemsQuantity,
+          itemHashMap: itemHashMap,
         });
-    } else {
-      dispatch({
-        type: actionTypes.GET_CART_SUCCESS,
-        userId: userId,
-        cartId: cartId,
-        items: items,
-        quantity: localCart.quantity + remoteItemsQuantity,
-        itemHashMap: itemHashMap,
+      })
+      .catch(() => {
+        dispatch(getCartFailed());
+        dispatch(setErroredAction(actionDisplays.GET_CART));
       });
-    }
   };
 };
 
@@ -127,14 +116,9 @@ export const getCart = (idToken, userId) => {
     let cartId = null;
     let quantity;
     axiosFirebase
-      .get(
-        '/carts.json?auth=' +
-          idToken +
-          '&orderBy="userId"&equalTo="' +
-          userId +
-          '"'
-      )
+      .get(`/carts.json?auth=${idToken}&orderBy="userId"&equalTo="${userId}"`)
       .then((res) => {
+        //if cart already exists
         if (Object.entries(res.data).length > 0) {
           items = Object.values(res.data)[0].items || {};
           cartId = Object.keys(res.data)[0];
@@ -156,7 +140,9 @@ export const getCart = (idToken, userId) => {
               itemHashMap: itemHashMap,
             });
           }
-        } else {
+        }
+        //if cart doesn't exist yet
+        else {
           dispatch(createCart(idToken, userId));
         }
       })
@@ -193,10 +179,9 @@ const addNewItemToCart = (pizza, quantity) => {
     if (getState().cart.cartId) {
       axiosFirebase
         .post(
-          '/carts/' +
-            getState().cart.cartId +
-            '/items.json?auth=' +
-            getState().auth.idToken,
+          `/carts/${getState().cart.cartId}/items.json?auth=${
+            getState().auth.idToken
+          }`,
           item
         )
         .then((res) => {
@@ -282,18 +267,17 @@ export const setCartItems = (cart) => {
 export const changeItemQuantity = (itemId, quantity) => {
   return (dispatch, getState) => {
     const item = { ...getState().cart.items[itemId] };
-    dispatch(changeCartItemStart(item.pizza));
     item.quantity = quantity;
+
+    dispatch(changeCartItemStart(item.pizza));
+
     //if user signed in, PUT call to change item quantity in backend cart
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
-          '/carts/' +
-            getState().cart.cartId +
-            '/items/' +
-            itemId +
-            '.json?auth=' +
-            getState().auth.idToken,
+          `/carts/${getState().cart.cartId}/items/${itemId}.json?auth=${
+            getState().auth.idToken
+          }`,
           item
         )
         .then(() => {
@@ -347,12 +331,9 @@ export const removeItem = (itemId, pizza) => {
     if (getState().cart.cartId) {
       axiosFirebase
         .delete(
-          '/carts/' +
-            getState().cart.cartId +
-            '/items/' +
-            itemId +
-            '.json?auth=' +
+          `/carts/${getState().cart.cartId}/items/${itemId}.json?auth=${
             getState().auth.idToken
+          }`
         )
         .then(() => {
           dispatch({
@@ -389,10 +370,9 @@ export const emptyCart = (userId) => {
       };
       axiosFirebase
         .put(
-          '/carts/' +
-            getState().cart.cartId +
-            '.json?auth=' +
-            getState().auth.idToken,
+          `/carts/${getState().cart.cartId}.json?auth=${
+            getState().auth.idToken
+          }`,
           emptyCart
         )
         .then(() => {
@@ -424,12 +404,9 @@ export const saveToCart = (pizza, quantity, itemId) => {
     if (getState().cart.cartId) {
       axiosFirebase
         .put(
-          '/carts/' +
-            getState().cart.cartId +
-            '/items/' +
-            itemId +
-            '.json?auth=' +
-            getState().auth.idToken,
+          `/carts/${getState().cart.cartId}/items/${itemId}.json?auth=${
+            getState().auth.idToken
+          }`,
           item
         )
         .then(() => {
@@ -449,7 +426,7 @@ export const saveToCart = (pizza, quantity, itemId) => {
       let cart = secureStorage.getItem('cart');
       cart.quantity -= cart.items[itemId].quantity;
       cart.items[itemId] = item;
-      cart.quantity += item.quantity;
+      cart.quantity += parseInt(item.quantity);
       secureStorage.setItem('cart', cart);
       dispatch({
         type: actionTypes.SAVE_TO_CART,

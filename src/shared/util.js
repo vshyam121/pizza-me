@@ -140,19 +140,7 @@ export const getReadableDate = (givenDate) => {
   const month = monthArray[date.getMonth()];
   const day = date.getDate();
   const year = date.getFullYear();
-  return month + ' ' + day + ', ' + year;
-};
-
-/* Get display address */
-export const getReadableAddress = (givenAddress) => {
-  let address = '';
-  address += givenAddress.street;
-  if (givenAddress.secondary) address += ', ' + givenAddress.secondary;
-  address += '\n';
-  address += givenAddress.city;
-  address += ', ' + givenAddress.state;
-  address += ' ' + givenAddress.zipcode;
-  return address;
+  return `${month} ${day}, ${year}`;
 };
 
 export const findByTestAttr = (component, attr) => {

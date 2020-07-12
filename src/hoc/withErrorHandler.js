@@ -47,7 +47,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             modalClosed={this.handleModalClosed}
           >
             {this.state.error
-              ? 'Unable to ' + erroredAction + ': ' + this.state.error.message
+              ? `Unable to ${erroredAction}: ${this.state.error.message}`
               : null}
           </Modal>
           <WrappedComponent {...this.props} />

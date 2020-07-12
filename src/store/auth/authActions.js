@@ -76,8 +76,7 @@ export const signIn = (email, password) => {
     };
     await axios
       .post(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
-          process.env.REACT_APP_FIREBASE_API_KEY,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
         authData
       )
       .then((res) => {
@@ -112,8 +111,7 @@ export const signUp = (email, password) => {
     };
     axios
       .post(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-          process.env.REACT_APP_FIREBASE_API_KEY,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
         authData
       )
       .then((res) => {
