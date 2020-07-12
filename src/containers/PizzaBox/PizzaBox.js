@@ -111,7 +111,7 @@ class PizzaBox extends Component {
         return (
           crust +
           (crustMetadata.additionalDisplay
-            ? ' ' + crustMetadata.additionalDisplay
+            ? ` ${crustMetadata.additionalDisplay}`
             : '')
         );
       }

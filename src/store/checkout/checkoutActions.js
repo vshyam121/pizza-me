@@ -27,7 +27,7 @@ export const submitOrder = (total, items, idToken, userId) => {
       order = { ...order, deliveryAddress: deliveryAddress };
     }
     axiosFirebase
-      .post('/orders.json?auth=' + idToken, order)
+      .post(`/orders.json?auth=${idToken}`, order)
       .then((res) => {
         dispatch({
           type: actionTypes.SUBMIT_ORDER_SUCCESS,
@@ -138,13 +138,7 @@ export const getOrders = (idToken, userId) => {
   return (dispatch) => {
     dispatch(getOrdersStart());
     axiosFirebase
-      .get(
-        '/orders.json?auth=' +
-          idToken +
-          '&orderBy="userId"&equalTo="' +
-          userId +
-          '"'
-      )
+      .get(`/orders.json?auth=${idToken}&orderBy="userId"&equalTo="${userId}"`)
       .then((res) => {
         const orders = res.data;
         dispatch({

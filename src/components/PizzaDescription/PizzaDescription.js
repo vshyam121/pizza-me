@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 
 /* Description of pizza, including size, toppings and other descriptives */
 const PizzaDescription = (props) => {
-  let sauce = props.pizza[SAUCE_AMOUNT] + ' ' + props.pizza[SAUCE];
+  let sauce = `${props.pizza[SAUCE_AMOUNT]} ${props.pizza[SAUCE]}`;
   if (props.pizza[SAUCE_AMOUNT] === NO_SAUCE) {
     sauce = 'No';
   }
@@ -88,7 +88,7 @@ const PizzaDescription = (props) => {
     overallPrice = (
       <h2 className='description__price--order'>${overallPrice}</h2>
     );
-    quantity = props.quantity + ' ';
+    quantity = `${props.quantity} `;
     if (props.quantity > 1) {
       pizzaText = 'Pizzas';
     }
