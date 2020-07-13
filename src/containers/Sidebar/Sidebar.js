@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Sidebar.scss';
 import { connect } from 'react-redux';
-import PizzaMenuItems from '../../components/MenuItems/PizzaMenuItems/PizzaMenuItems';
-import AccountMenuItems from '../../components/MenuItems/AccountMenuItems/AccountMenuItems';
-import { closeSidebar } from '../../store/ui/uiActions';
+import PizzaMenuItems from '../../components/PizzaMenuItems/PizzaMenuItems';
+import AccountMenuItems from '../../components/AccountMenuItems/AccountMenuItems';
+import { closeSidebar } from '../../store/ui/uiActions/uiActions';
 import NavigationItem from '../../components/UI/NavigationItem/NavigationItem';
 import PropTypes from 'prop-types';
 
@@ -34,7 +34,10 @@ class Sidebar extends Component {
             <NavigationItem vertical to='/cart'>
               Cart
             </NavigationItem>
-            <AccountMenuItems vertical />
+            <AccountMenuItems
+              vertical
+              isAuthenticated={this.props.isAuthenticated}
+            />
           </div>
         </div>
       </div>

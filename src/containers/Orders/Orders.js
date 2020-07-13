@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Orders.scss';
-import { getOrders } from '../../store/checkout/checkoutActions';
+import { getOrders } from '../../store/checkout/checkoutActions/checkoutActions';
 import { connect } from 'react-redux';
-import Order from '../Order/Order';
+import Order from '../../components/Order/Order';
 import { getReadableDate } from '../../shared/util';
 import { SyncLoader } from 'react-spinners';
 import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';

@@ -1,6 +1,6 @@
 import checkoutReducer from './checkoutReducer';
 import { initialState } from './checkoutReducer';
-import * as actionTypes from './checkoutActionTypes';
+import * as actionTypes from '../checkoutActionTypes';
 import {
   CRUST,
   SIZE,
@@ -15,8 +15,8 @@ import {
   WHOLE,
   EXTRA_TOPPING,
   LEFT_HALF,
-} from '../../metadata/pizzaProperties';
-import { CHEESE, REGULAR } from '../../metadata/comboMetadata';
+} from '../../../metadata/pizzaProperties';
+import { CHEESE, REGULAR } from '../../../metadata/comboMetadata';
 
 describe('Checkout Reducer', () => {
   it('Should return default state', () => {

@@ -11,7 +11,7 @@ import Cart from './containers/Cart/Cart';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import SignOut from './containers/Auth/SignOut/SignOut';
 import SignUp from './containers/Auth/SignUp/SignUp';
-import { initApp } from './store/auth/authActions';
+import { initApp } from './store/auth/authActions/authActions';
 import { connect } from 'react-redux';
 import OrderType from './containers/OrderType/OrderType';
 import Checkout from './containers/Checkout/Checkout';

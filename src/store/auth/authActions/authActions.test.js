@@ -1,8 +1,8 @@
 import moxios from 'moxios';
 import { signIn } from './authActions';
-import * as actionTypes from './authActionTypes';
+import * as actionTypes from '../authActionTypes';
 import configureMockStore from 'redux-mock-store';
-import { middleware } from '../store';
+import { middleware } from '../../store';
 
 const mockStore = configureMockStore(middleware);
 

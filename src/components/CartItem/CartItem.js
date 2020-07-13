@@ -3,7 +3,6 @@ import './CartItem.scss';
 import PizzaDescription from '../../components/PizzaDescription/PizzaDescription';
 import Dropdown from '../../components/UI/Dropdown/Dropdown';
 import PizzaPreview from '../../components/PizzaPreview/PizzaPreview';
-import { connect } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
 import { isEqual } from 'lodash';
 import { calculatePrice } from '../../shared/util';
@@ -25,7 +24,8 @@ const CartItem = (props) => {
   let overallPrice = (calculatePrice(props.pizza) * props.quantity).toFixed(2);
 
   let cartItem = null;
-  if (props.loading && isEqual(props.itemBeingChanged, props.pizza)) {
+  console.log(props.loadingCartItem, props.itemBeingChanged);
+  if (props.loadingCartItem && isEqual(props.itemBeingChanged, props.pizza)) {
     cartItem = (
       <div className='item__empty'>
         <SyncLoader />
@@ -72,15 +72,10 @@ const CartItem = (props) => {
 
 CartItem.propTypes = {
   itemBeingChanged: PropTypes.object,
-  loading: PropTypes.bool,
+  loadingCartItem: PropTypes.bool,
   pizza: PropTypes.object.isRequired,
   quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   checkout: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.cart.loadingCartItem,
-  itemBeingChanged: state.cart.itemBeingChanged,
-});
-
-export default connect(mapStateToProps, null)(CartItem);
+export default CartItem;

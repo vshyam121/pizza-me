@@ -1,4 +1,4 @@
-import * as actionTypes from './uiActionTypes';
+import * as actionTypes from '../uiActionTypes';
 
 /* open/close the sidebar menu */
 export const toggleSidebar = () => {

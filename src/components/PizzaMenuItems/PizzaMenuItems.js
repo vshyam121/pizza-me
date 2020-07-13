@@ -1,6 +1,6 @@
 import React from 'react';
 import './PizzaMenuItems.scss';
-import NavigationItem from '../../UI/NavigationItem/NavigationItem';
+import NavigationItem from '../UI/NavigationItem/NavigationItem';
 
 /* Menu items that display links to different categories of pizza */
 

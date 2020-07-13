@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   validateAddress,
   validateAddressReset,
-} from '../../store/checkout/checkoutActions';
+} from '../../store/checkout/checkoutActions/checkoutActions';
 import { SyncLoader } from 'react-spinners';
 import { withRouter } from 'react-router-dom';
 import Form from '../Form/Form';
