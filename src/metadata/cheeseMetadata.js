@@ -14,6 +14,6 @@ export const cheeseAmounts = [
 
 export const cheeseAmountMetadataMapping = {
   [EXTRA_CHEESE]: {
-    price: '+$1.00',
+    additionalDisplay: '+$1.00',
   },
 };
