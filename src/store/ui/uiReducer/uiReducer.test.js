@@ -1,7 +1,7 @@
 import uiReducer from './uiReducer';
 import { initialState } from './uiReducer';
-import * as actionTypes from './uiActionTypes';
-import * as actionDisplays from './actionDisplays';
+import * as actionTypes from '../uiActionTypes';
+import * as actionDisplays from '../actionDisplays';
 
 describe('UI Reducer', () => {
   it('Should return default state', () => {

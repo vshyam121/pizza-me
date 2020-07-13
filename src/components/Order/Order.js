@@ -1,6 +1,6 @@
 import React from 'react';
-import PizzaPreview from '../../components/PizzaPreview/PizzaPreview';
-import PizzaDescription from '../../components/PizzaDescription/PizzaDescription';
+import PizzaPreview from '../PizzaPreview/PizzaPreview';
+import PizzaDescription from '../PizzaDescription/PizzaDescription';
 import PropTypes from 'prop-types';
 
 /* Represents a single submitted order */

@@ -1,6 +1,6 @@
 import pizzaBuilderReducer from './pizzaBuilderReducer';
 import { initialState } from './pizzaBuilderReducer';
-import * as actionTypes from './pizzaBuilderActionTypes';
+import * as actionTypes from '../pizzaBuilderActionTypes';
 import {
   CRUST,
   SIZE,
@@ -15,8 +15,8 @@ import {
   WHOLE,
   EXTRA_TOPPING,
   LEFT_HALF,
-} from '../../metadata/pizzaProperties';
-import { CHEESE, REGULAR } from '../../metadata/comboMetadata';
+} from '../../../metadata/pizzaProperties';
+import { CHEESE, REGULAR } from '../../../metadata/comboMetadata';
 
 describe('Pizza Builder Reducer', () => {
   it('Should return default state', () => {

@@ -7,10 +7,13 @@ import {
 } from '../../shared/util';
 import Button, { primary } from '../../components/UI/Button/Button';
 import { connect } from 'react-redux';
-import { submitOrder } from '../../store/checkout/checkoutActions';
-import { emptyCart } from '../../store/cart/cartActions';
-import { changeItemQuantity, removeItem } from '../../store/cart/cartActions';
-import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderActions';
+import { submitOrder } from '../../store/checkout/checkoutActions/checkoutActions';
+import {
+  emptyCart,
+  changeItemQuantity,
+  removeItem,
+} from '../../store/cart/cartActions/cartActions';
+import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderActions/pizzaBuilderActions';
 import { calculateSubTotal, calculateTax } from '../../shared/util';
 import { SyncLoader } from 'react-spinners';
 import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';

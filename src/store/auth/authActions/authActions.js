@@ -1,14 +1,14 @@
-import * as actionTypes from './authActionTypes';
+import * as actionTypes from '../authActionTypes';
 import {
   clearCart,
   getCart,
   getCartFromLocalStorage,
-} from '../cart/cartActions';
-import { getOrders } from '../checkout/checkoutActions';
+} from '../../cart/cartActions/cartActions';
+import { getOrders } from '../../checkout/checkoutActions/checkoutActions';
 import axios from 'axios';
-import { secureStorage } from '../../shared/secureStorage';
-import { setErroredAction } from '../ui/uiActions';
-import * as actionDisplays from '../ui/actionDisplays';
+import { secureStorage } from '../../../shared/secureStorage';
+import { setErroredAction } from '../../ui/uiActions/uiActions';
+import * as actionDisplays from '../../ui/actionDisplays';
 
 /* To show loading in UI when authentication action has started */
 export const authStart = () => {

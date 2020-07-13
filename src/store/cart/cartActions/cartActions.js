@@ -1,19 +1,22 @@
-import * as actionTypes from './cartActionTypes';
+import * as actionTypes from '../cartActionTypes';
 import {
   SAUCE,
   SAUCE_AMOUNT,
   CRUST_FLAVOR,
   CHEESE_AMOUNT,
-} from '../../metadata/pizzaProperties';
-import { CLASSIC_MARINARA, REGULAR_SAUCE } from '../../metadata/sauceMetadata';
-import { NO_CRUST_FLAVOR } from '../../metadata/crustFlavorMetadata';
-import axiosFirebase from '../../shared/axiosFirebase';
+} from '../../../metadata/pizzaProperties';
+import {
+  CLASSIC_MARINARA,
+  REGULAR_SAUCE,
+} from '../../../metadata/sauceMetadata';
+import { NO_CRUST_FLAVOR } from '../../../metadata/crustFlavorMetadata';
+import axiosFirebase from '../../../shared/axiosFirebase';
 import { v4 as uuidv4 } from 'uuid';
-import { REGULAR_CHEESE } from '../../metadata/cheeseMetadata';
+import { REGULAR_CHEESE } from '../../../metadata/cheeseMetadata';
 import hash from 'object-hash';
-import { secureStorage } from '../../shared/secureStorage';
-import * as actionDisplays from '../ui/actionDisplays';
-import { setErroredAction } from '../ui/uiActions';
+import { secureStorage } from '../../../shared/secureStorage';
+import * as actionDisplays from '../../ui/actionDisplays';
+import { setErroredAction } from '../../ui/uiActions/uiActions';
 
 /* Create cart in backend for a particular user */
 export const createCart = (idToken, userId) => {
@@ -327,6 +330,7 @@ const changeCartItemFailed = () => {
 export const removeItem = (itemId, pizza) => {
   return (dispatch, getState) => {
     dispatch(changeCartItemStart(pizza));
+
     //if user signed in, DELETE call to remove item from backend cart
     if (getState().cart.cartId) {
       axiosFirebase

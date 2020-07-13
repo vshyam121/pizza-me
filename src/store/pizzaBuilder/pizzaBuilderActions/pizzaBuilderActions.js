@@ -1,4 +1,4 @@
-import * as actionTypes from './pizzaBuilderActionTypes';
+import * as actionTypes from '../pizzaBuilderActionTypes';
 
 /* Initialize pizza builder with properties of given pizza */
 export const initializePizzaBuilder = (pizza, quantity, itemId) => {

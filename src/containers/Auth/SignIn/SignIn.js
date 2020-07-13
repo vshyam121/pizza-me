@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './SignIn.scss';
 import Button, { secondary } from '../../../components/UI/Button/Button';
-import { signIn } from '../../../store/auth/authActions';
+import { signIn } from '../../../store/auth/authActions/authActions';
 import { connect } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
 import { lookupErrorCode } from '../../../shared/util';

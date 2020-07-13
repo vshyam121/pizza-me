@@ -1,8 +1,8 @@
-import * as actionTypes from './checkoutActionTypes';
-import axiosFirebase from '../../shared/axiosFirebase';
+import * as actionTypes from '../checkoutActionTypes';
+import axiosFirebase from '../../../shared/axiosFirebase';
 import axiosGeolocation from 'axios';
-import * as actionDisplays from '../ui/actionDisplays';
-import { setErroredAction } from '../ui/uiActions';
+import * as actionDisplays from '../../ui/actionDisplays';
+import { setErroredAction } from '../../ui/uiActions/uiActions';
 
 /* To set loading in UI when starting to submit order */
 export const submitOrderStart = () => {

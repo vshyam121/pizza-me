@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import './PizzaBuilder.scss';
 import { connect } from 'react-redux';
 import PizzaBuilderPreview from '../../components/PizzaBuilder/PizzaBuilderPreview/PizzaBuilderPreview';
-import { addToCart, saveToCart } from '../../store/cart/cartActions';
+import {
+  addToCart,
+  saveToCart,
+} from '../../store/cart/cartActions/cartActions';
 import PizzaDetails from '../../components/PizzaBuilder/PizzaDetails/PizzaDetails';
 import PizzaBuilderProgress from '../../components/PizzaBuilder/PizzaBuilderProgress/PizzaBuilderProgress';
 import Modal from '../../components/UI/Modal/Modal';
@@ -15,7 +18,7 @@ import {
   toggleTopping,
   setToppingAmount,
   setToppingPortion,
-} from '../../store/pizzaBuilder/pizzaBuilderActions';
+} from '../../store/pizzaBuilder/pizzaBuilderActions/pizzaBuilderActions';
 import Button, { primary } from '../../components/UI/Button/Button';
 import PropTypes from 'prop-types';
 

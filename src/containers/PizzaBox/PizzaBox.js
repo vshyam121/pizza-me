@@ -9,8 +9,8 @@ import {
 import { LARGE, sizes } from '../../metadata/sizeMetadata';
 import { toppingMapping } from '../../metadata/comboMetadata';
 import { connect } from 'react-redux';
-import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderActions';
-import { addToCart } from '../../store/cart/cartActions';
+import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderActions/pizzaBuilderActions';
+import { addToCart } from '../../store/cart/cartActions/cartActions';
 import { SIZE, CRUST, COMBO_NAME } from '../../metadata/pizzaProperties';
 import { primary, secondary } from '../../components/UI/Button/Button';
 import { calculatePrice } from '../../shared/util';

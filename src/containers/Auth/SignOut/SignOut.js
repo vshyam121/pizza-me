@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signOut } from '../../../store/auth/authActions';
+import { signOut } from '../../../store/auth/authActions/authActions';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 

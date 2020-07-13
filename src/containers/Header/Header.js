@@ -5,9 +5,9 @@ import { MdMenu } from 'react-icons/md';
 import { connect } from 'react-redux';
 import NavigationItem from '../../components/UI/NavigationItem/NavigationItem';
 import { Link, withRouter } from 'react-router-dom';
-import PizzaMenuItems from '../../components/MenuItems/PizzaMenuItems/PizzaMenuItems';
-import { toggleSidebar } from '../../store/ui/uiActions';
-import AccountMenuItems from '../../components/MenuItems/AccountMenuItems/AccountMenuItems';
+import PizzaMenuItems from '../../components/PizzaMenuItems/PizzaMenuItems';
+import { toggleSidebar } from '../../store/ui/uiActions/uiActions';
+import AccountMenuItems from '../../components/AccountMenuItems/AccountMenuItems';
 import CartIcon from '../../components/CartIcon/CartIcon';
 import PropTypes from 'prop-types';
 
@@ -63,7 +63,7 @@ class Header extends Component {
         </div>
         <div className='header__account'>
           <div className='header__account-actions'>
-            <AccountMenuItems />
+            <AccountMenuItems isAuthenticated={this.props.isAuthenticated} />
           </div>
           <div style={{ position: 'relative' }}>
             <CartIcon

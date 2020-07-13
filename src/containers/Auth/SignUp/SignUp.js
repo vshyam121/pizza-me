@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signUp } from '../../../store/auth/authActions';
+import { signUp } from '../../../store/auth/authActions/authActions';
 import { connect } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
 import { lookupErrorCode } from '../../../shared/util';

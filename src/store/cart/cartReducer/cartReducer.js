@@ -1,7 +1,7 @@
-import * as actionTypes from './cartActionTypes';
+import * as actionTypes from '../cartActionTypes';
 import hash from 'object-hash';
 
-const initialState = {
+export const initialState = {
   cartId: null,
   userId: null,
   //key: item id, value: item object (item consists of pizza object and quantity)
@@ -12,8 +12,8 @@ const initialState = {
   numItemsAdded: 0,
   loadingCart: false,
   loadingCartItem: false,
+  getCartError: false,
   itemBeingChanged: null,
-  erroredAction: null,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -49,13 +49,14 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         loadingCart: true,
-        errorCart: null,
+        getCartError: false,
       };
     //finish loading when getting cart failed
     case actionTypes.GET_CART_FAILED:
       return {
         ...state,
         loadingCart: false,
+        getCartError: true,
       };
     //successfully got cart for user, set cart metadata
     case actionTypes.GET_CART_SUCCESS:
@@ -136,12 +137,17 @@ const cartReducer = (state = initialState, action) => {
     //save item to list of items and update quantity
     case actionTypes.SAVE_TO_CART:
       items = { ...state.items };
-      quantity = state.quantity - items[action.itemId].quantity;
+      itemHashMap = { ...state.itemHashMap };
+      const oldItem = items[action.itemId];
+      quantity = state.quantity - oldItem.quantity;
+      delete itemHashMap[hash(oldItem.pizza)];
+      itemHashMap[[hash(action.item.pizza)]] = action.itemId;
       items[action.itemId] = action.item;
       quantity += parseInt(action.item.quantity);
       return {
         ...state,
         items: items,
+        itemHashMap: itemHashMap,
         quantity: quantity,
         numItemsAdded: 0,
         loadingCartItem: false,
