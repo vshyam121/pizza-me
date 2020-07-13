@@ -7,6 +7,8 @@ import {
   CHEESE_AMOUNT,
   SAUCE_AMOUNT,
   EXTRA_TOPPING,
+  CRUST_FLAVOR,
+  SAUCE,
 } from '../metadata/pizzaProperties';
 import { COMBO, toppingMapping } from '../metadata/comboMetadata';
 import {
@@ -20,6 +22,9 @@ import checkPropTypes from 'check-prop-types';
 import { applyMiddleware, createStore } from 'redux';
 import rootReducer from '../store/rootReducer';
 import { middleware } from '../store/store';
+import { CLASSIC_MARINARA, REGULAR_SAUCE } from '../metadata/sauceMetadata';
+import { REGULAR_CHEESE } from '../metadata/cheeseMetadata';
+import { NO_CRUST_FLAVOR } from '../metadata/crustFlavorMetadata';
 
 /* Utility functions used across multiple components/containers */
 
@@ -87,21 +92,6 @@ const getToppingsPrice = (pizza, toppingType, combo) => {
   return toppingsPrice;
 };
 
-/* Open the pizza builder for editing a pizza */
-export const handleEditItem = (props, pizza, quantity, itemId) => {
-  props.initializePizzaBuilder(pizza, quantity, itemId);
-};
-
-/* Change the quantity of an item in redux store */
-export const handleChangeItemQuantity = (props, itemId, quantity) => {
-  props.changeItemQuantity(itemId, quantity);
-};
-
-/* Remove item from cart */
-export const handleRemoveItem = (props, itemId, pizza) => {
-  props.removeItem(itemId, pizza);
-};
-
 /* Calculate the sum of the price of all pizzas in cart before tax */
 export const calculateSubTotal = (items) => {
   let subTotal = 0;
@@ -143,11 +133,13 @@ export const getReadableDate = (givenDate) => {
   return `${month} ${day}, ${year}`;
 };
 
+/* Find an element by data-test attribute for unit tests */
 export const findByTestAttr = (component, attr) => {
   const wrapper = component.find(`[data-test="${attr}"]`);
   return wrapper;
 };
 
+/* Validate prop types for a component */
 export const checkProps = (component, expectedProps) => {
   const propsErr = checkPropTypes(
     component.propTypes,
@@ -158,6 +150,7 @@ export const checkProps = (component, expectedProps) => {
   return propsErr;
 };
 
+/* Create a test store for unit tests */
 export const testStore = (initialState) => {
   const store = createStore(
     rootReducer,
@@ -165,4 +158,52 @@ export const testStore = (initialState) => {
     applyMiddleware(...middleware)
   );
   return store;
+};
+
+/* Normalize the pizza object before adding to cart.
+   Important for making sure hashes of two different 
+   pizzas with the same attributes are equal */
+export const normalizePizza = (pizza) => {
+  //If coming from pizza box, some attributes won't be set
+  if (!pizza[SAUCE]) {
+    pizza[SAUCE] = CLASSIC_MARINARA;
+  }
+  if (!pizza[SAUCE_AMOUNT]) {
+    pizza[SAUCE_AMOUNT] = REGULAR_SAUCE;
+  }
+  if (!pizza[CHEESE_AMOUNT]) {
+    pizza[CHEESE_AMOUNT] = REGULAR_CHEESE;
+  }
+  if (!pizza[CRUST_FLAVOR]) {
+    pizza[CRUST_FLAVOR] = NO_CRUST_FLAVOR;
+  }
+
+  //Need to delete empty objects because firebase disregards properties with empty objects
+  if (
+    pizza.meats &&
+    Object.keys(pizza.meats).length === 0 &&
+    pizza.meats.constructor === Object
+  ) {
+    delete pizza.meats;
+  }
+  if (
+    pizza.veggies &&
+    Object.keys(pizza.veggies).length === 0 &&
+    pizza.veggies.constructor === Object
+  ) {
+    delete pizza.veggies;
+  }
+
+  return {
+    [CHEESE_AMOUNT]: pizza[CHEESE_AMOUNT],
+    [COMBO_NAME]: pizza[COMBO_NAME],
+    [CRUST]: pizza[CRUST],
+    [CRUST_FLAVOR]: pizza[CRUST_FLAVOR],
+    [MEATS]: pizza[MEATS],
+    [VEGGIES]: pizza[VEGGIES],
+    [SAUCE]: pizza[SAUCE],
+    [SAUCE_AMOUNT]: pizza[SAUCE_AMOUNT],
+    [SIZE]: pizza[SIZE],
+    priceType: pizza.priceType,
+  };
 };

@@ -12,10 +12,25 @@ import PropTypes from 'prop-types';
 const CartItem = (props) => {
   const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+  /* Open the pizza builder for editing a pizza */
+  const handleEditItem = () => {
+    props.initializePizzaBuilder(props.pizza, props.quantity, props.itemId);
+  };
+
+  /* Change the quantity of an item in redux store */
+  const handleChangeItemQuantity = (event) => {
+    props.changeItemQuantity(props.itemId, event.target.value);
+  };
+
+  /* Remove item from cart */
+  const handleRemoveItem = () => {
+    props.removeItem(props.itemId, props.pizza);
+  };
+
   let remove = null;
   if (!props.checkout) {
     remove = (
-      <span className='link' onClick={props.removeItem}>
+      <span className='link' onClick={handleRemoveItem}>
         Remove
       </span>
     );
@@ -24,7 +39,6 @@ const CartItem = (props) => {
   let overallPrice = (calculatePrice(props.pizza) * props.quantity).toFixed(2);
 
   let cartItem = null;
-  console.log(props.loadingCartItem, props.itemBeingChanged);
   if (props.loadingCartItem && isEqual(props.itemBeingChanged, props.pizza)) {
     cartItem = (
       <div className='item__empty'>
@@ -40,7 +54,6 @@ const CartItem = (props) => {
           </div>
           <div className='item__description'>
             <PizzaDescription
-              editItem={props.editItem}
               cart
               pizza={props.pizza}
               quantity={props.quantity}
@@ -51,13 +64,13 @@ const CartItem = (props) => {
           <div className='item__price'>${overallPrice}</div>
           <div className='item__quantity'>
             <Dropdown
-              onChange={props.changeItemQuantity}
+              onChange={handleChangeItemQuantity}
               options={quantityOptions}
               value={props.quantity}
             />
           </div>
           <div className='item__actions'>
-            <span className='item__edit link' onClick={props.editItem}>
+            <span className='item__edit link' onClick={handleEditItem}>
               Edit
             </span>
             {remove}

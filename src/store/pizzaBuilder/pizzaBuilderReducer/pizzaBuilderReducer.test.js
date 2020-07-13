@@ -38,7 +38,6 @@ describe('Pizza Builder Reducer', () => {
         [SAUCE]: 'test sauce',
         [SAUCE_AMOUNT]: 'test sauce amount',
         [SIZE]: 'test size',
-        price: 'test price',
         priceType: 'test price type',
       },
       quantity: 'test quantity',
