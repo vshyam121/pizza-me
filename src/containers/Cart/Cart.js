@@ -8,11 +8,6 @@ import {
 import CartItems from '../../components/CartItems/CartItems';
 import Button, { primary } from '../../components/UI/Button/Button';
 import { Link } from 'react-router-dom';
-import {
-  handleEditItem,
-  handleChangeItemQuantity,
-  handleRemoveItem,
-} from '../../shared/util';
 import { SyncLoader } from 'react-spinners';
 import { calculateSubTotal } from '../../shared/util';
 import PropTypes from 'prop-types';
@@ -33,15 +28,9 @@ class Cart extends Component {
       cart = (
         <React.Fragment>
           <CartItems
-            handleEditItem={(pizza, quantity, itemId) =>
-              handleEditItem(this.props, pizza, quantity, itemId)
-            }
-            handleRemoveItem={(itemId, pizza) =>
-              handleRemoveItem(this.props, itemId, pizza)
-            }
-            handleChangeItemQuantity={(event, itemId) =>
-              handleChangeItemQuantity(this.props, itemId, event.target.value)
-            }
+            initializePizzaBuilder={this.props.initializePizzaBuilder}
+            removeItem={this.props.removeItem}
+            changeItemQuantity={this.props.changeItemQuantity}
             items={this.props.items}
             loadingCartItem={this.props.loadingCartItem}
             itemBeingChanged={this.props.itemBeingChanged}
@@ -99,11 +88,11 @@ Cart.propTypes = {
   itemBeingChanged: PropTypes.object,
   getCartError: PropTypes.bool,
   isAuthenticated: PropTypes.string,
+  cartId: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
-  cartId: state.cart.cartId,
   loadingCart: state.cart.loadingCart,
   loadingCartItem: state.cart.loadingCartItem,
   itemBeingChanged: state.cart.itemBeingChanged,

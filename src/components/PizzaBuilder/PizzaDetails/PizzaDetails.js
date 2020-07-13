@@ -83,7 +83,8 @@ class PizzaDetails extends Component {
 
 PizzaDetails.propTypes = {
   pizza: PropTypes.object.isRequired,
-  quantity: PropTypes.number.isRequired,
+  quantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
 };
 
 export default PizzaDetails;

@@ -1,18 +1,6 @@
 import * as actionTypes from '../cartActionTypes';
-import {
-  SAUCE,
-  SAUCE_AMOUNT,
-  CRUST_FLAVOR,
-  CHEESE_AMOUNT,
-} from '../../../metadata/pizzaProperties';
-import {
-  CLASSIC_MARINARA,
-  REGULAR_SAUCE,
-} from '../../../metadata/sauceMetadata';
-import { NO_CRUST_FLAVOR } from '../../../metadata/crustFlavorMetadata';
 import axiosFirebase from '../../../shared/axiosFirebase';
 import { v4 as uuidv4 } from 'uuid';
-import { REGULAR_CHEESE } from '../../../metadata/cheeseMetadata';
 import hash from 'object-hash';
 import { secureStorage } from '../../../shared/secureStorage';
 import * as actionDisplays from '../../ui/actionDisplays';
@@ -50,22 +38,30 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
     const remoteItemsQuantity = getTotalQuantity(items);
     let itemHashMap = generateItemHashMap(items);
     let combinedItems = {};
-    //Update quantities of matching item in backend cart and add new items
+
+    //Update quantities of matching item in backend cart and add new items from local cart
+    //For each local cart item
     Object.entries(localCart.items).forEach(([itemId, item]) => {
       const pizzaHash = hash(item.pizza);
       const matchingItemId = itemHashMap[pizzaHash];
+
+      //If local cart item already exists in item hash map,
+      //then update quantity and add it to combined items
       if (matchingItemId) {
         const matchingItem = items[matchingItemId];
         matchingItem.quantity =
           parseInt(matchingItem.quantity) + parseInt(item.quantity);
         combinedItems[matchingItemId] = matchingItem;
-      } else {
+      }
+      //If only in local cart, then add it to combined items
+      else {
         itemHashMap[pizzaHash] = itemId;
         items[itemId] = item;
         combinedItems[itemId] = item;
       }
     });
-    //patch REST API call to update backend with changes to items in cart
+    //Patch REST API call to update backend with combined items from local cart
+    //and backend cart
     axiosFirebase
       .patch(`/carts/${cartId}/items.json?auth=${idToken}`, combinedItems)
       .then(() => {
@@ -121,12 +117,13 @@ export const getCart = (idToken, userId) => {
     axiosFirebase
       .get(`/carts.json?auth=${idToken}&orderBy="userId"&equalTo="${userId}"`)
       .then((res) => {
-        //if cart already exists
+        //If cart already exists
         if (Object.entries(res.data).length > 0) {
           items = Object.values(res.data)[0].items || {};
           cartId = Object.keys(res.data)[0];
           let localCart = secureStorage.getItem('cart');
-          //Combine local cart with backend cart if items in local cart
+
+          //Combine local cart with backend cart if there are items in local cart
           if (localCart.quantity > 0) {
             dispatch(combineCarts(localCart, items, cartId, userId, idToken));
           }
@@ -144,7 +141,7 @@ export const getCart = (idToken, userId) => {
             });
           }
         }
-        //if cart doesn't exist yet
+        //If cart doesn't exist yet, then create it
         else {
           dispatch(createCart(idToken, userId));
         }
@@ -178,84 +175,100 @@ export const clearCart = () => {
 const addNewItemToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
     let item = { pizza: pizza, quantity: quantity };
-    //if user is signed in, then add to backend cart
-    if (getState().cart.cartId) {
+    const idToken = secureStorage.getItem('idToken');
+    const cart = { ...getState().cart };
+
+    //If user is signed in, then add to backend cart
+    if (idToken) {
       axiosFirebase
-        .post(
-          `/carts/${getState().cart.cartId}/items.json?auth=${
-            getState().auth.idToken
-          }`,
-          item
-        )
+        .post(`/carts/${cart.cartId}/items.json?auth=${idToken}`, item)
         .then((res) => {
+          //Update cart state with new item if POST call successful
+          const itemId = res.data.name;
+
+          //Add new item to items object
+          const itemsWithNewItem = { ...cart.items, [itemId]: item };
+
+          //Update overall cart quantity
+          const newQuantity = parseInt(cart.quantity) + parseInt(item.quantity);
+
+          //Update item hash map with new item
+          const newItemHashMap = {
+            ...cart.itemHashMap,
+            [hash(item.pizza)]: itemId,
+          };
+
+          //Dispatch to update state
           dispatch({
             type: actionTypes.ADD_TO_CART,
-            itemId: res.data.name,
-            item: item,
+            items: itemsWithNewItem,
+            itemHashMap: newItemHashMap,
+            quantity: newQuantity,
+            numItemsAdded: item.quantity,
           });
         })
         .catch(() => {
           dispatch(setErroredAction(actionDisplays.ADD_ITEM_TO_CART));
         });
     } else {
-      //if user not signed in, add to local storage cart
-      let cart = secureStorage.getItem('cart');
-      const itemId = uuidv4();
-      cart.items[itemId] = item;
-      cart.quantity += parseInt(item.quantity);
-      secureStorage.setItem('cart', cart);
-      dispatch({
-        type: actionTypes.ADD_TO_CART,
-        itemId: itemId,
-        item: item,
-      });
+      dispatch(addNewItemToLocalCart(item, cart));
     }
+  };
+};
+
+/* If user not signed in, add to local storage cart */
+const addNewItemToLocalCart = (item, cart) => {
+  return (dispatch) => {
+    let localCart = secureStorage.getItem('cart');
+
+    //Generate new item id
+    const itemId = uuidv4();
+
+    //Add item and quantity to local cart
+    localCart.items[itemId] = item;
+    localCart.quantity += parseInt(item.quantity);
+    secureStorage.setItem('cart', localCart);
+
+    //Update item hash map with new item
+    const newItemHashMap = {
+      ...cart.itemHashMap,
+      [hash(item.pizza)]: itemId,
+    };
+
+    //Dispatch to update state
+    dispatch({
+      type: actionTypes.ADD_TO_CART,
+      items: localCart.items,
+      itemHashMap: newItemHashMap,
+      quantity: localCart.quantity,
+      numItemsAdded: item.quantity,
+    });
   };
 };
 
 /* Add to cart, either new item or increase quantity for already existing item */
 export const addToCart = (pizza, quantity) => {
   return (dispatch, getState) => {
-    if (!pizza[SAUCE]) {
-      pizza[SAUCE] = CLASSIC_MARINARA;
-    }
-    if (!pizza[SAUCE_AMOUNT]) {
-      pizza[SAUCE_AMOUNT] = REGULAR_SAUCE;
-    }
-    if (!pizza[CHEESE_AMOUNT]) {
-      pizza[CHEESE_AMOUNT] = REGULAR_CHEESE;
-    }
-    if (!pizza[CRUST_FLAVOR]) {
-      pizza[CRUST_FLAVOR] = NO_CRUST_FLAVOR;
-    }
+    const cart = { ...getState().cart };
 
-    //Need to delete empty objects because firebase disregards properties with empty objects
-    if (
-      Object.keys(pizza.meats).length === 0 &&
-      pizza.meats.constructor === Object
-    ) {
-      delete pizza.meats;
-    }
-    if (
-      Object.keys(pizza.veggies).length === 0 &&
-      pizza.veggies.constructor === Object
-    ) {
-      delete pizza.veggies;
-    }
-
-    const matchedItemIdInCart = getState().cart.itemHashMap[hash(pizza)];
+    const matchedItemIdInCart = cart.itemHashMap[hash(pizza)];
+    //If item already in cart
     if (matchedItemIdInCart) {
+      //Get updated quantity for item
       const newQuantity =
-        parseInt(getState().cart.items[matchedItemIdInCart].quantity) +
-        parseInt(quantity);
+        parseInt(cart.items[matchedItemIdInCart].quantity) + parseInt(quantity);
+
+      //Change item's quantity
       dispatch(changeItemQuantity(matchedItemIdInCart, newQuantity));
-    } else {
+    }
+    //Add new item to cart because it's not in cart already
+    else {
       dispatch(addNewItemToCart(pizza, quantity));
     }
   };
 };
 
-/* set cart items and metadata in redux store */
+/* Set cart items and metadata in redux store */
 export const setCartItems = (cart) => {
   let itemHashMap = generateItemHashMap(cart.items);
   return {
@@ -269,25 +282,35 @@ export const setCartItems = (cart) => {
 /* Set new item quantity and update total quantity */
 export const changeItemQuantity = (itemId, quantity) => {
   return (dispatch, getState) => {
-    const item = { ...getState().cart.items[itemId] };
+    const cart = { ...getState().cart };
+    const item = { ...cart.items[itemId] };
     item.quantity = quantity;
 
     dispatch(changeCartItemStart(item.pizza));
 
     //if user signed in, PUT call to change item quantity in backend cart
-    if (getState().cart.cartId) {
+    if (cart.cartId) {
       axiosFirebase
         .put(
-          `/carts/${getState().cart.cartId}/items/${itemId}.json?auth=${
-            getState().auth.idToken
-          }`,
+          `/carts/${
+            cart.cartId
+          }/items/${itemId}.json?auth=${secureStorage.getItem('idToken')}`,
           item
         )
         .then(() => {
+          //update cart state with new quantity
+          let newQuantity = cart.quantity - cart.items[itemId].quantity;
+          cart.items[itemId].quantity = quantity;
+          newQuantity += parseInt(quantity);
+          let numItemsAdded = 0;
+          if (cart.quantity < newQuantity) {
+            numItemsAdded = newQuantity - cart.quantity;
+          }
           dispatch({
             type: actionTypes.CHANGE_ITEM_QUANTITY,
-            itemId: itemId,
-            quantity: quantity,
+            items: cart.items,
+            quantity: newQuantity,
+            numItemsAdded: numItemsAdded,
           });
         })
         .catch(() => {
@@ -297,17 +320,40 @@ export const changeItemQuantity = (itemId, quantity) => {
     }
     //if user not signed in, change item quantity in local storage cart
     else {
-      let cart = secureStorage.getItem('cart');
-      cart.quantity -= cart.items[itemId].quantity;
-      cart.quantity += parseInt(quantity);
-      cart.items[itemId].quantity = quantity;
-      secureStorage.setItem('cart', cart);
-      dispatch({
-        type: actionTypes.CHANGE_ITEM_QUANTITY,
-        itemId: itemId,
-        quantity: quantity,
-      });
+      dispatch(changeItemQuantityInLocalCart(itemId, quantity));
     }
+  };
+};
+
+/* If user not signed in, change item quantity in local storage cart */
+const changeItemQuantityInLocalCart = (itemId, quantity) => {
+  return (dispatch) => {
+    let localCart = secureStorage.getItem('cart');
+
+    //Get old cart quantity
+    let oldQuantity = localCart.quantity;
+
+    //Update cart quantity
+    localCart.quantity -= localCart.items[itemId].quantity;
+    localCart.quantity += parseInt(quantity);
+
+    //Update cart quantity
+    localCart.items[itemId].quantity = quantity;
+    secureStorage.setItem('cart', localCart);
+
+    //Get number of items added from new cart quantity and old cart quantity
+    let numItemsAdded = 0;
+    if (oldQuantity < localCart.quantity) {
+      numItemsAdded = localCart.quantity - oldQuantity;
+    }
+
+    //Dispatch to update cart state
+    dispatch({
+      type: actionTypes.CHANGE_ITEM_QUANTITY,
+      quantity: localCart.quantity,
+      items: localCart.items,
+      numItemsAdded: numItemsAdded,
+    });
   };
 };
 
@@ -326,24 +372,34 @@ const changeCartItemFailed = () => {
   };
 };
 
-/* remove item from cart in backend if user signed in or from cart in local storage if not */
+/* Remove item from cart in backend if user signed in or from cart in local storage if not */
 export const removeItem = (itemId, pizza) => {
   return (dispatch, getState) => {
     dispatch(changeCartItemStart(pizza));
 
-    //if user signed in, DELETE call to remove item from backend cart
-    if (getState().cart.cartId) {
+    const cart = { ...getState().cart };
+    //If user signed in, DELETE call to remove item from backend cart
+    if (cart.cartId) {
       axiosFirebase
         .delete(
-          `/carts/${getState().cart.cartId}/items/${itemId}.json?auth=${
-            getState().auth.idToken
-          }`
+          `/carts/${
+            cart.cartId
+          }/items/${itemId}.json?auth=${secureStorage.getItem('idToken')}`
         )
         .then(() => {
+          //Get new cart quantity
+          let newQuantity = cart.quantity - cart.items[itemId].quantity;
+
+          //Delete from items and item hash map
+          delete cart.items[itemId];
+          delete cart.itemHashMap[hash(pizza)];
+
+          //Dispatch to set new cart state
           dispatch({
             type: actionTypes.REMOVE_ITEM_SUCCESS,
-            itemId: itemId,
-            pizza: pizza,
+            items: cart.items,
+            itemHashMap: cart.itemHashMap,
+            quantity: newQuantity,
           });
         })
         .catch(() => {
@@ -351,32 +407,47 @@ export const removeItem = (itemId, pizza) => {
           dispatch(setErroredAction(actionDisplays.REMOVE_ITEM));
         });
     } else {
-      //if user not signed in, remove item from local storage cart
-      let cart = secureStorage.getItem('cart');
-      cart.quantity -= cart.items[itemId].quantity;
-      delete cart.items[itemId];
-      secureStorage.setItem('cart', cart);
-      dispatch({
-        type: actionTypes.REMOVE_ITEM_SUCCESS,
-        itemId: itemId,
-        pizza: pizza,
-      });
+      dispatch(removeItemFromLocalCart(itemId, pizza, cart));
     }
+  };
+};
+
+/* If user not signed in, remove item from local storage cart */
+const removeItemFromLocalCart = (itemId, pizza, cart) => {
+  return (dispatch) => {
+    let localCart = secureStorage.getItem('cart');
+
+    //Get new cart quantity
+    localCart.quantity -= parseInt(localCart.items[itemId].quantity);
+
+    //Remove from items
+    delete localCart.items[itemId];
+    secureStorage.setItem('cart', localCart);
+
+    //Remove from item hash map
+    delete cart.itemHashMap[hash(pizza)];
+
+    //Dispatch to set cart state
+    dispatch({
+      type: actionTypes.REMOVE_ITEM_SUCCESS,
+      items: localCart.items,
+      itemHashMap: cart.itemHashMap,
+      quantity: localCart.quantity,
+    });
   };
 };
 
 export const emptyCart = (userId) => {
   return (dispatch, getState) => {
-    //if user signed in, PUT call to empty backend cart
-    if (getState().cart.cartId) {
+    const cart = { ...getState().cart };
+    //If user signed in, PUT call to empty backend cart
+    if (cart.cartId) {
       let emptyCart = {
         userId: userId,
       };
       axiosFirebase
         .put(
-          `/carts/${getState().cart.cartId}.json?auth=${
-            getState().auth.idToken
-          }`,
+          `/carts/${cart.cartId}.json?auth=${secureStorage.getItem('idToken')}`,
           emptyCart
         )
         .then(() => {
@@ -388,7 +459,7 @@ export const emptyCart = (userId) => {
           dispatch(setErroredAction(actionDisplays.EMPTY_CART));
         });
     }
-    //if user not signed in, empty local storage cart
+    //If user not signed in, empty local storage cart
     else {
       let emptyCart = { items: {}, quantity: 0 };
       secureStorage.setItem('cart', emptyCart);
@@ -403,21 +474,44 @@ export const emptyCart = (userId) => {
 export const saveToCart = (pizza, quantity, itemId) => {
   return (dispatch, getState) => {
     const item = { pizza: pizza, quantity: quantity };
-    dispatch(changeCartItemStart(getState().cart.items[itemId].pizza));
-    //if user signed in, PUT call to make change to backend cart
-    if (getState().cart.cartId) {
+    const cart = { ...getState().cart };
+    dispatch(changeCartItemStart(cart.items[itemId].pizza));
+    //If user signed in, PUT call to make change to backend cart
+    if (cart.cartId) {
       axiosFirebase
         .put(
-          `/carts/${getState().cart.cartId}/items/${itemId}.json?auth=${
-            getState().auth.idToken
-          }`,
+          `/carts/${
+            cart.cartId
+          }/items/${itemId}.json?auth=${secureStorage.getItem('idToken')}`,
           item
         )
         .then(() => {
+          const oldItem = cart.items[itemId];
+
+          //Get new overall cart quantity
+          let newQuantity = cart.quantity - oldItem.quantity;
+          newQuantity += parseInt(item.quantity);
+
+          //Update item hash map
+          delete cart.itemHashMap[hash(oldItem.pizza)];
+          cart.itemHashMap[[hash(item.pizza)]] = itemId;
+
+          //Update items
+          cart.items[itemId] = item;
+
+          //Get number of items added
+          let numItemsAdded = 0;
+          if (cart.quantity < newQuantity) {
+            numItemsAdded = newQuantity - cart.quantity;
+          }
+
+          //Dispatch to set cart state
           dispatch({
             type: actionTypes.SAVE_TO_CART,
-            itemId: itemId,
-            item: item,
+            items: cart.items,
+            itemHashMap: cart.itemHashMap,
+            quantity: newQuantity,
+            numItemsAdded: numItemsAdded,
           });
         })
         .catch(() => {
@@ -427,16 +521,45 @@ export const saveToCart = (pizza, quantity, itemId) => {
     }
     //if user not signed in, make change to local storage cart
     else {
-      let cart = secureStorage.getItem('cart');
-      cart.quantity -= cart.items[itemId].quantity;
-      cart.items[itemId] = item;
-      cart.quantity += parseInt(item.quantity);
-      secureStorage.setItem('cart', cart);
-      dispatch({
-        type: actionTypes.SAVE_TO_CART,
-        itemId: itemId,
-        item: item,
-      });
+      dispatch(saveToLocalCart(itemId, item, cart));
     }
+  };
+};
+
+/* If user not signed in, make change to local storage cart */
+const saveToLocalCart = (itemId, item, cart) => {
+  return (dispatch) => {
+    let localCart = secureStorage.getItem('cart');
+    let oldQuantity = localCart.quantity;
+    let oldItem = localCart.items[itemId];
+
+    //Update quantity
+    localCart.quantity -= oldItem.quantity;
+    localCart.quantity += parseInt(item.quantity);
+
+    //Update item in local cart
+    localCart.items[itemId] = item;
+
+    //Save back to local storage
+    secureStorage.setItem('cart', localCart);
+
+    //Get num items added
+    let numItemsAdded = 0;
+    if (oldQuantity < localCart.quantity) {
+      numItemsAdded = localCart.quantity - oldQuantity;
+    }
+
+    //Update item hash map
+    delete cart.itemHashMap[hash(oldItem.pizza)];
+    cart.itemHashMap[[hash(item.pizza)]] = itemId;
+
+    //Dispatch to set cart state
+    dispatch({
+      type: actionTypes.SAVE_TO_CART,
+      quantity: localCart.quantity,
+      items: localCart.items,
+      itemHashMap: cart.itemHashMap,
+      numItemsAdded: numItemsAdded,
+    });
   };
 };

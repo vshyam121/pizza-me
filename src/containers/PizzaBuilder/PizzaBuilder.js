@@ -21,6 +21,7 @@ import {
 } from '../../store/pizzaBuilder/pizzaBuilderActions/pizzaBuilderActions';
 import Button, { primary } from '../../components/UI/Button/Button';
 import PropTypes from 'prop-types';
+import { normalizePizza } from '../../shared/util';
 
 /* Stages that are possible for pizza builder.
    Set in state. */
@@ -80,13 +81,17 @@ class PizzaBuilder extends Component {
 
   /* Add current pizza to cart and close pizza builder */
   handleAddToCart = (quantity) => {
-    this.props.addToCart(this.props.pizza, quantity);
+    this.props.addToCart(normalizePizza(this.props.pizza), quantity);
     this.handleCloseBuilder();
   };
 
   /* Save current pizza to cart and close pizza builder */
   handleSaveToCart = (quantity) => {
-    this.props.saveToCart(this.props.pizza, quantity, this.props.itemId);
+    this.props.saveToCart(
+      normalizePizza(this.props.pizza),
+      quantity,
+      this.props.itemId
+    );
     this.handleCloseBuilder();
   };
 
@@ -192,7 +197,7 @@ class PizzaBuilder extends Component {
 PizzaBuilder.propTypes = {
   itemId: PropTypes.string,
   pizza: PropTypes.object,
-  quantity: PropTypes.number,
+  quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   showPizzaBuilder: PropTypes.bool,
 };
 

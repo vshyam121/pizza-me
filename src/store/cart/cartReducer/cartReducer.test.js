@@ -3,23 +3,6 @@ import { initialState } from './cartReducer';
 import * as actionTypes from '../cartActionTypes';
 import hash from 'object-hash';
 
-import {
-  CRUST,
-  SIZE,
-  SAUCE,
-  SAUCE_AMOUNT,
-  CHEESE_AMOUNT,
-  CRUST_FLAVOR,
-  MEATS,
-  VEGGIES,
-  COMBO_NAME,
-  REGULAR_TOPPING,
-  WHOLE,
-  EXTRA_TOPPING,
-  LEFT_HALF,
-} from '../../../metadata/pizzaProperties';
-import { CHEESE, REGULAR } from '../../../metadata/comboMetadata';
-
 describe('Cart Reducer', () => {
   it('Should return default state', () => {
     const newState = cartReducer(undefined, {});
@@ -50,19 +33,23 @@ describe('Cart Reducer', () => {
   });
 
   it('Should return correct new state if receiving type ADD_TO_CART', () => {
+    const testItemId = 'test item id';
+    const testItems = { [testItemId]: { pizza: { test: test }, quantity: 1 } };
     const testPayload = {
       type: actionTypes.ADD_TO_CART,
-      itemId: 'test order',
-      item: { pizza: { test: test }, quantity: 1 },
+      items: testItems,
+      itemHashMap: { [hash(testItems[testItemId].pizza)]: testItemId },
+      quantity: 1,
+      numItemsAdded: 1,
     };
     const newState = cartReducer(initialState, testPayload);
     const expectedState = {
       cartId: null,
       userId: null,
-      items: { [testPayload.itemId]: testPayload.item },
-      quantity: testPayload.item.quantity,
-      itemHashMap: { [hash(testPayload.item.pizza)]: testPayload.itemId },
-      numItemsAdded: testPayload.item.quantity,
+      items: testPayload.items,
+      quantity: testPayload.quantity,
+      itemHashMap: testPayload.itemHashMap,
+      numItemsAdded: testPayload.numItemsAdded,
       loadingCart: false,
       loadingCartItem: false,
       itemBeingChanged: null,
@@ -198,18 +185,25 @@ describe('Cart Reducer', () => {
   });
 
   it('Should return correct new state if receiving type CHANGE_ITEM_QUANTITY', () => {
+    const inputTestItems = {
+      'test item id': { pizza: { test: test }, quantity: 1 },
+    };
+
     const testPayload = {
       type: actionTypes.CHANGE_ITEM_QUANTITY,
-      itemId: 'test item id',
-      quantity: 2,
+      items: inputTestItems,
+      numItemsAdded: 0,
+      quantity: 1,
     };
+
+    const initialTestItems = { ...inputTestItems, quantity: 2 };
 
     let inputInitialState = {
       ...initialState,
       cartId: 'test cart id',
       userId: 'test user id',
-      items: { [testPayload.itemId]: { pizza: { test: test }, quantity: 1 } },
-      quantity: 1,
+      items: initialTestItems,
+      quantity: 2,
       itemHashMap: { test: test },
     };
     const newState = cartReducer(inputInitialState, testPayload);
@@ -217,10 +211,10 @@ describe('Cart Reducer', () => {
     const expectedState = {
       cartId: inputInitialState.cartId,
       userId: inputInitialState.userId,
-      items: inputInitialState.items,
-      quantity: testPayload.quantity,
+      items: inputTestItems,
+      quantity: 1,
       itemHashMap: inputInitialState.itemHashMap,
-      numItemsAdded: 1,
+      numItemsAdded: 0,
       loadingCart: false,
       loadingCartItem: false,
       itemBeingChanged: null,
@@ -272,29 +266,27 @@ describe('Cart Reducer', () => {
   });
 
   it('Should return correct new state if receiving type REMOVE_ITEM_SUCCESS', () => {
+    const testItemId = 'test item id';
+    const testItems = { [testItemId]: { pizza: { test: test }, quantity: 1 } };
     const testPayload = {
       type: actionTypes.REMOVE_ITEM_SUCCESS,
-      itemId: 'test item id',
-      pizza: { test: test },
+      items: testItems,
+      itemHashMap: { [hash(testItems[testItemId].pizza)]: testItemId },
+      quantity: 1,
     };
 
     const inputInitialState = {
       ...initialState,
-      cartId: 'test cart id',
-      userId: 'test user id',
-      items: { [testPayload.itemId]: { pizza: { test: test }, quantity: 2 } },
-      itemHashMap: { [hash(testPayload.pizza)]: testPayload.itemId },
-      quantity: 2,
+      loadingCartItem: true,
+      itemBeingChanged: { test: test },
     };
-
     const newState = cartReducer(inputInitialState, testPayload);
-
     const expectedState = {
-      cartId: inputInitialState.cartId,
-      userId: inputInitialState.userId,
-      items: {},
-      quantity: 0,
-      itemHashMap: {},
+      cartId: null,
+      userId: null,
+      items: testPayload.items,
+      quantity: testPayload.quantity,
+      itemHashMap: testPayload.itemHashMap,
       numItemsAdded: 0,
       loadingCart: false,
       loadingCartItem: false,
@@ -305,36 +297,30 @@ describe('Cart Reducer', () => {
   });
 
   it('Should return correct new state if receiving type SAVE_TO_CART', () => {
+    const testItemId = 'test item id';
+    const testItems = { [testItemId]: { pizza: { test: test }, quantity: 1 } };
     const testPayload = {
       type: actionTypes.SAVE_TO_CART,
-      itemId: 'test item id',
-      item: { pizza: { test: test }, quantity: 1 },
+      items: testItems,
+      itemHashMap: { [hash(testItems[testItemId].pizza)]: testItemId },
+      quantity: 1,
+      numItemsAdded: 1,
     };
 
-    const initialPizza = { initial: 'initial' };
     const inputInitialState = {
       ...initialState,
-      cartId: 'test cart id',
-      userId: 'test user id',
-      items: {
-        [testPayload.itemId]: {
-          pizza: initialPizza,
-          quantity: 2,
-        },
-      },
-      itemHashMap: { [hash(initialPizza)]: testPayload.itemId },
-      quantity: 2,
+      items: { [testItemId]: { test: test } },
+      itemHashMap: { test: test },
+      quantity: 1,
     };
-
-    const newState = cartReducer(inputInitialState, testPayload);
-
+    const newState = cartReducer(initialState, testPayload);
     const expectedState = {
-      cartId: inputInitialState.cartId,
-      userId: inputInitialState.userId,
-      items: { [testPayload.itemId]: testPayload.item },
-      quantity: testPayload.item.quantity,
-      itemHashMap: { [hash(testPayload.item.pizza)]: testPayload.itemId },
-      numItemsAdded: 0,
+      cartId: null,
+      userId: null,
+      items: testPayload.items,
+      quantity: testPayload.quantity,
+      itemHashMap: testPayload.itemHashMap,
+      numItemsAdded: testPayload.numItemsAdded,
       loadingCart: false,
       loadingCartItem: false,
       itemBeingChanged: null,

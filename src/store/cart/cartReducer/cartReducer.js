@@ -1,5 +1,4 @@
 import * as actionTypes from '../cartActionTypes';
-import hash from 'object-hash';
 
 export const initialState = {
   cartId: null,
@@ -17,10 +16,6 @@ export const initialState = {
 };
 
 const cartReducer = (state = initialState, action) => {
-  let items = null;
-  let itemHashMap = null;
-  let quantity;
-  let numItemsAdded = 0;
   switch (action.type) {
     //set cart id and user id once cart has been created
     case actionTypes.CREATE_CART:
@@ -31,18 +26,12 @@ const cartReducer = (state = initialState, action) => {
       };
     //add item to cart, update pizza to item id hashmap and quantity
     case actionTypes.ADD_TO_CART:
-      items = { ...state.items, [action.itemId]: action.item };
-      quantity = parseInt(state.quantity) + parseInt(action.item.quantity);
-      itemHashMap = {
-        ...state.itemHashMap,
-        [hash(action.item.pizza)]: action.itemId,
-      };
       return {
         ...state,
-        items: items,
-        quantity: quantity,
-        itemHashMap: itemHashMap,
-        numItemsAdded: action.item.quantity,
+        items: action.items,
+        quantity: action.quantity,
+        itemHashMap: action.itemHashMap,
+        numItemsAdded: action.numItemsAdded,
       };
     //set loading before getting cart
     case actionTypes.GET_CART_START:
@@ -90,18 +79,11 @@ const cartReducer = (state = initialState, action) => {
       };
     //change item quantity
     case actionTypes.CHANGE_ITEM_QUANTITY:
-      items = { ...state.items };
-      quantity = state.quantity - items[action.itemId].quantity;
-      items[action.itemId].quantity = action.quantity;
-      quantity += parseInt(action.quantity);
-      if (state.quantity < quantity) {
-        numItemsAdded = quantity - state.quantity;
-      }
       return {
         ...state,
-        items: items,
-        quantity: quantity,
-        numItemsAdded: numItemsAdded,
+        items: action.items,
+        quantity: action.quantity,
+        numItemsAdded: action.numItemsAdded,
         loadingCartItem: false,
       };
     //set loading before changing cart item
@@ -120,36 +102,22 @@ const cartReducer = (state = initialState, action) => {
       };
     //update cart metadata with removed item
     case actionTypes.REMOVE_ITEM_SUCCESS:
-      items = { ...state.items };
-      itemHashMap = { ...state.itemHashMap };
-      quantity = state.quantity - items[action.itemId].quantity;
-      delete items[action.itemId];
-      delete itemHashMap[hash(action.pizza)];
       return {
         ...state,
-        items: items,
-        quantity: quantity,
-        itemHashMap: itemHashMap,
-        numItemsAdded: 0,
+        items: action.items,
+        itemHashMap: action.itemHashMap,
+        quantity: action.quantity,
         loadingCartItem: false,
         itemBeingChanged: null,
       };
     //save item to list of items and update quantity
     case actionTypes.SAVE_TO_CART:
-      items = { ...state.items };
-      itemHashMap = { ...state.itemHashMap };
-      const oldItem = items[action.itemId];
-      quantity = state.quantity - oldItem.quantity;
-      delete itemHashMap[hash(oldItem.pizza)];
-      itemHashMap[[hash(action.item.pizza)]] = action.itemId;
-      items[action.itemId] = action.item;
-      quantity += parseInt(action.item.quantity);
       return {
         ...state,
-        items: items,
-        itemHashMap: itemHashMap,
-        quantity: quantity,
-        numItemsAdded: 0,
+        items: action.items,
+        itemHashMap: action.itemHashMap,
+        quantity: action.quantity,
+        numItemsAdded: action.numItemsAdded,
         loadingCartItem: false,
       };
     //empty cart and all metadata

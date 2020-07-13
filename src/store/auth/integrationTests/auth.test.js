@@ -1,10 +1,8 @@
 import moxios from 'moxios';
 import { testStore } from '../../../shared/util';
-import { signIn } from '../authActions';
+import { signIn } from '../authActions/authActions';
 import configureMockStore from 'redux-mock-store';
 import { middleware } from '../../store';
-
-const mockStore = configureMockStore(middleware);
 
 describe('Sign in action', () => {
   beforeEach(() => {

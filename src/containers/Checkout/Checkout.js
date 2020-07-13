@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import CartItems from '../../components/CartItems/CartItems';
-import {
-  handleEditItem,
-  handleChangeItemQuantity,
-  handleRemoveItem,
-} from '../../shared/util';
 import Button, { primary } from '../../components/UI/Button/Button';
 import { connect } from 'react-redux';
 import { submitOrder } from '../../store/checkout/checkoutActions/checkoutActions';
@@ -80,17 +75,13 @@ class Checkout extends Component {
       cart = (
         <React.Fragment>
           <CartItems
-            handleEditItem={(pizza, quantity, itemId) =>
-              handleEditItem(this.props, pizza, quantity, itemId)
-            }
-            handleRemoveItem={(itemId, pizza) =>
-              handleRemoveItem(this.props, itemId, pizza)
-            }
-            handleChangeItemQuantity={(event, itemId) =>
-              handleChangeItemQuantity(this.props, itemId, event.target.value)
-            }
+            initializePizzaBuilder={this.props.initializePizzaBuilder}
+            removeItem={this.props.removeItem}
+            changeItemQuantity={this.props.changeItemQuantity}
             checkout
             items={this.props.items}
+            loadingCartItem={this.props.loadingCartItem}
+            itemBeingChanged={this.props.itemBeingChanged}
           />
           <div className='item-list__bottom'>
             {deliveryAddress}
@@ -136,6 +127,8 @@ Checkout.propTypes = {
   idToken: PropTypes.string,
   userId: PropTypes.string,
   loadingCart: PropTypes.bool,
+  loadingCartItem: PropTypes.bool,
+  itemBeingChanged: PropTypes.object,
   submitOrderError: PropTypes.bool,
   submittingOrder: PropTypes.bool,
   deliveryAddress: PropTypes.object,
@@ -146,6 +139,8 @@ const mapStateToProps = (state) => ({
   idToken: state.auth.idToken,
   userId: state.auth.userId,
   loadingCart: state.cart.loadingCart,
+  loadingCartItem: state.cart.loadingCartItem,
+  itemBeingChanged: state.cart.itemBeingChanged,
   submittingOrder: state.checkout.submittingOrder,
   deliveryAddress: state.checkout.deliveryAddress,
   submitOrderError: state.checkout.submitOrderError,

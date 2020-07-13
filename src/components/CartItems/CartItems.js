@@ -9,11 +9,12 @@ const CartItems = (props) => {
     return (
       <CartItem
         key={itemId}
+        itemId={itemId}
         pizza={item.pizza}
         quantity={item.quantity}
-        changeItemQuantity={(e) => props.handleChangeItemQuantity(e, itemId)}
-        removeItem={() => props.handleRemoveItem(itemId, item.pizza)}
-        editItem={() => props.handleEditItem(item.pizza, item.quantity, itemId)}
+        changeItemQuantity={props.changeItemQuantity}
+        removeItem={props.removeItem}
+        initializePizzaBuilder={props.initializePizzaBuilder}
         checkout={props.checkout}
         loadingCartItem={props.loadingCartItem}
         itemBeingChanged={props.itemBeingChanged}

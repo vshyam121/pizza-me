@@ -67,8 +67,6 @@ const pizzaBuilderReducer = (state = initialState, action) => {
             ? action.pizza[SAUCE_AMOUNT]
             : REGULAR_SAUCE,
           [SIZE]: action.pizza[SIZE],
-
-          price: action.pizza.price,
           priceType: action.pizza.priceType,
         },
         quantity: action.quantity,

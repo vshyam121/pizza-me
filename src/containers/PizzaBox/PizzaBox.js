@@ -13,7 +13,7 @@ import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderAct
 import { addToCart } from '../../store/cart/cartActions/cartActions';
 import { SIZE, CRUST, COMBO_NAME } from '../../metadata/pizzaProperties';
 import { primary, secondary } from '../../components/UI/Button/Button';
-import { calculatePrice } from '../../shared/util';
+import { calculatePrice, normalizePizza } from '../../shared/util';
 import PropTypes from 'prop-types';
 
 /* UI box container that holds an pizza and lets user customize various pizza properties.
@@ -94,14 +94,17 @@ class PizzaBox extends Component {
   handleClickBuild = () => {
     let pizza = { ...this.state.pizza };
     pizza.crust = this.getCrust(pizza.crust);
-    this.props.initializePizzaBuilder(pizza, this.state.quantity);
+    this.props.initializePizzaBuilder(
+      normalizePizza(pizza),
+      this.state.quantity
+    );
     this.resetState();
   };
 
   handleAddToCart = () => {
     let pizza = { ...this.state.pizza };
     pizza.crust = this.getCrust(pizza.crust);
-    this.props.addToCart(pizza, this.state.quantity);
+    this.props.addToCart(normalizePizza(pizza), this.state.quantity);
     this.resetState();
   };
 
@@ -131,7 +134,7 @@ class PizzaBox extends Component {
 
     if (this.props.buildPizza) {
       pizzaAdd = (
-        <Button type={primary} onClick={() => this.handleClickBuild(price)}>
+        <Button type={primary} onClick={() => this.handleClickBuild()}>
           Get Started
         </Button>
       );
@@ -161,7 +164,7 @@ class PizzaBox extends Component {
       customizeSecondary = (
         <span
           className='pizza-box__customize link'
-          onClick={() => this.handleClickBuild(price)}
+          onClick={() => this.handleClickBuild()}
         >
           Customize
         </span>
