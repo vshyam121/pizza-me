@@ -18,7 +18,10 @@ class Header extends Component {
     this.handleClickCheckout = this.handleClickCheckout.bind(this);
   }
   shouldComponentUpdate(nextProps) {
-    if (this.props.quantity !== nextProps.quantity) {
+    if (
+      this.props.quantity !== nextProps.quantity ||
+      this.props.isAuthenticated !== nextProps.isAuthenticated
+    ) {
       return true;
     }
     return false;
