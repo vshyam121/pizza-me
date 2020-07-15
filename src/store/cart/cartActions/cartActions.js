@@ -63,7 +63,7 @@ export const combineCarts = (localCart, items, cartId, userId, idToken) => {
     //Patch REST API call to update backend with combined items from local cart
     //and backend cart
     axiosFirebase
-      .patch(`/carts/${cartId}/items.json?auth=${idToken}`, combinedItems)
+      .put(`/carts/${cartId}/items.json?auth=${idToken}`, combinedItems)
       .then(() => {
         let emptyCart = { items: {}, quantity: 0 };
         secureStorage.setItem('cart', emptyCart);
@@ -283,18 +283,17 @@ export const setCartItems = (cart) => {
 export const changeItemQuantity = (itemId, quantity) => {
   return (dispatch, getState) => {
     const cart = { ...getState().cart };
-    const item = { ...cart.items[itemId] };
-    item.quantity = quantity;
+    const item = { quantity: quantity };
 
-    dispatch(changeCartItemStart(item.pizza));
+    dispatch(changeCartItemStart(cart.items[itemId].pizza));
 
     //if user signed in, PUT call to change item quantity in backend cart
     if (cart.cartId) {
       axiosFirebase
-        .put(
+        .patch(
           `/carts/${
             cart.cartId
-          }/items/${itemId}.json?auth=${secureStorage.getItem('idToken')}`,
+          }/items/${itemId}/.json?auth=${secureStorage.getItem('idToken')}`,
           item
         )
         .then(() => {
