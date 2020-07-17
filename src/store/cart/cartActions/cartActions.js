@@ -285,7 +285,8 @@ export const changeItemQuantity = (itemId, quantity) => {
     const cart = { ...getState().cart };
     const item = { quantity: quantity };
 
-    dispatch(changeCartItemStart(cart.items[itemId].pizza));
+    const currentItem = cart.items[itemId];
+    dispatch(changeCartItemStart(currentItem.pizza));
 
     //if user signed in, PUT call to change item quantity in backend cart
     if (cart.cartId) {
@@ -298,9 +299,13 @@ export const changeItemQuantity = (itemId, quantity) => {
         )
         .then(() => {
           //update cart state with new quantity
-          let newQuantity = cart.quantity - cart.items[itemId].quantity;
-          cart.items[itemId].quantity = quantity;
+          let newQuantity = cart.quantity - currentItem.quantity;
           newQuantity += parseInt(quantity);
+
+          //update current item's quantity
+          currentItem.quantity = quantity;
+
+          //Get number of items added
           let numItemsAdded = 0;
           if (cart.quantity < newQuantity) {
             numItemsAdded = newQuantity - cart.quantity;
