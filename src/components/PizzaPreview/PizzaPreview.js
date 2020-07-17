@@ -79,7 +79,7 @@ class PizzaPreview extends Component {
 
               let imgClassNames = ['pizza-preview__property'];
               if (selectedVeggyProps.portion === LEFT_HALF) {
-                imgClassNames.push('preview__property--left');
+                imgClassNames.push('pizza-preview__property--left');
               } else if (selectedVeggyProps.portion === RIGHT_HALF) {
                 imgClassNames.push('pizza-preview__property--right');
               }
