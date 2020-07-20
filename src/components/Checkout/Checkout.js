@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import CartItems from '../../components/CartItems/CartItems';
 import Button, { primary } from '../../components/UI/Button/Button';
-import { connect } from 'react-redux';
-import { submitOrder } from '../../store/checkout/checkoutActions/checkoutActions';
-import {
-  emptyCart,
-  changeItemQuantity,
-  removeItem,
-} from '../../store/cart/cartActions/cartActions';
-import { initializePizzaBuilder } from '../../store/pizzaBuilder/pizzaBuilderActions/pizzaBuilderActions';
 import { calculateSubTotal, calculateTax } from '../../shared/util';
 import { SyncLoader } from 'react-spinners';
 import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';
@@ -134,22 +126,4 @@ Checkout.propTypes = {
   deliveryAddress: PropTypes.object,
 };
 
-const mapStateToProps = (state) => ({
-  items: state.cart.items,
-  idToken: state.auth.idToken,
-  userId: state.auth.userId,
-  loadingCart: state.cart.loadingCart,
-  loadingCartItem: state.cart.loadingCartItem,
-  itemBeingChanged: state.cart.itemBeingChanged,
-  submittingOrder: state.checkout.submittingOrder,
-  deliveryAddress: state.checkout.deliveryAddress,
-  submitOrderError: state.checkout.submitOrderError,
-});
-
-export default connect(mapStateToProps, {
-  submitOrder,
-  emptyCart,
-  removeItem,
-  initializePizzaBuilder,
-  changeItemQuantity,
-})(Checkout);
+export default Checkout;

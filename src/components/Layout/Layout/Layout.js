@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../../containers/Header/Header';
+import HeaderContainer from '../../../containers/HeaderContainer';
 import Footer from '../Footer/Footer';
 import './Layout.scss';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const Layout = (props) => {
   return (
     <div className='layout' data-test='layout'>
-      <Header data-test='header' />
+      <HeaderContainer data-test='header' />
       <main className='main' data-test='main'>
         {props.children}
       </main>

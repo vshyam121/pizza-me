@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import AddressForm from '../components/AddressForm/AddressForm';
 import {
   validateAddress,
   validateAddressReset,
-} from '../../store/checkout/checkoutActions/checkoutActions';
-import { SyncLoader } from 'react-spinners';
-import { withRouter } from 'react-router-dom';
-import Form from '../Form/Form';
-import PropTypes from 'prop-types';
+} from '../store/checkout/checkoutActions/checkoutActions.js';
 
-/* Delivery address form */
-class AddressForm extends Component {
+class AddressFormContainer extends Component {
   state = {
     form: {
       street: {
@@ -74,10 +71,6 @@ class AddressForm extends Component {
     formIsValid: false,
     formSubmitted: false,
   };
-  constructor(props) {
-    super(props);
-    this.props.validateAddressReset();
-  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -91,51 +84,19 @@ class AddressForm extends Component {
     this.setState(stateUpdate);
   };
 
-  componentDidUpdate() {
-    if (this.props.addressValid) {
-      this.props.history.push('/checkout');
-    }
-  }
-
   render() {
-    let errorMessage = null;
-    let form = null;
-    if (this.props.loading) {
-      form = (
-        <div className='spinner'>
-          <SyncLoader />
-        </div>
-      );
-    } else {
-      form = (
-        <Form
-          {...this.state}
-          onSubmit={this.handleSubmit}
-          updateForm={this.updateForm}
-        />
-      );
-    }
-
-    if (this.props.error) {
-      errorMessage = (
-        <div className='form-component__error'>
-          <p>{this.props.error}</p>
-        </div>
-      );
-    }
     return (
-      <React.Fragment>
-        <h4 className='form-component__title'>
-          Please enter your delivery address
-        </h4>
-        {errorMessage}
-        {form}
-      </React.Fragment>
+      <AddressForm
+        {...this.state}
+        {...this.props}
+        handleSubmit={this.handleSubmit}
+        updateForm={this.updateForm}
+      />
     );
   }
 }
 
-AddressForm.propTypes = {
+AddressFormContainer.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
   addressValid: PropTypes.bool,
@@ -150,4 +111,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   validateAddress,
   validateAddressReset,
-})(withRouter(AddressForm));
+})(AddressFormContainer);

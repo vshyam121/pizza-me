@@ -116,6 +116,8 @@ export const signUp = (email, password) => {
       )
       .then((res) => {
         dispatch(authSuccess(res.data.idToken, res.data.localId));
+        dispatch(checkAuthTimeout(res.data.expiresIn));
+        dispatch(getOrders(res.data.idToken, res.data.localId));
       })
       .catch((err) => {
         dispatch(setErroredAction(actionDisplays.SIGN_UP));
