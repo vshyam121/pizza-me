@@ -1,6 +1,6 @@
 import * as actionTypes from '../authActionTypes';
 
-const initialState = {
+export const initialState = {
   idToken: null,
   userId: null,
   signInError: null,
