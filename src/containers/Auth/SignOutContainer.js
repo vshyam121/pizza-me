@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { signOut } from '../../../store/auth/authActions/authActions';
+import { signOut } from '../../store/auth/authActions/authActions';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /* Signs current user out */
-class SignOut extends Component {
+class SignOutContainer extends Component {
   componentDidMount() {
     this.props.signOut();
   }
@@ -21,4 +21,4 @@ class SignOut extends Component {
   }
 }
 
-export default connect(null, { signOut })(SignOut);
+export default connect(null, { signOut })(SignOutContainer);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Button, { primary } from '../../components/UI/Button/Button';
-import Input from '../../components/UI/Input/Input';
-import { handleInputChange } from '../../shared/formValidation.js';
+import Button, { primary } from '../Button/Button';
+import Input from '../Input/Input';
+import { handleInputChange } from '../../../shared/formValidation.js';
 import PropTypes from 'prop-types';
 
 /* Standard form component across entire app */

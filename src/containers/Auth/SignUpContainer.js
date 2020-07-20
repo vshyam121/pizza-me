@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { signUp } from '../../../store/auth/authActions/authActions';
+import { signUp } from '../../store/auth/authActions/authActions';
 import { connect } from 'react-redux';
-import { SyncLoader } from 'react-spinners';
-import { lookupErrorCode } from '../../../shared/util';
-import { Redirect } from 'react-router-dom';
-import Form from '../../../containers/Form/Form';
 import PropTypes from 'prop-types';
+import SignUp from '../../components/SignUp/SignUp';
 
 /* User sign up form */
-class SignUp extends Component {
+class SignUpContainer extends Component {
   state = {
     form: {
       email: {
@@ -59,57 +56,18 @@ class SignUp extends Component {
   };
 
   render() {
-    let form = (
-      <Form
+    return (
+      <SignUp
         {...this.state}
-        onSubmit={this.handleSubmit}
+        {...this.props}
+        handleSubmit={this.handleSubmit}
         updateForm={this.updateForm}
       />
-    );
-    if (this.props.loading) {
-      form = (
-        <div className='spinner'>
-          <SyncLoader />
-        </div>
-      );
-    }
-
-    let errorMessage = null;
-    if (this.props.error) {
-      errorMessage = (
-        <div className='form-component__error'>
-          <p>{lookupErrorCode(this.props.error.message)}</p>
-        </div>
-      );
-    }
-
-    let redirect = null;
-    if (this.props.isAuthenticated) {
-      if (this.props.location.fromCheckout) {
-        redirect = (
-          <Redirect
-            to={{ pathname: '/checkout/order-type', fromSignUp: 'true' }}
-          />
-        );
-      } else {
-        redirect = <Redirect to={{ pathname: '/', fromSignUp: 'true' }} />;
-      }
-    }
-
-    return (
-      <div className='form-container'>
-        <div className='form-component'>
-          <h3 className='form-component__title'>Sign up for an account</h3>
-          {redirect}
-          {errorMessage}
-          {form}
-        </div>
-      </div>
     );
   }
 }
 
-SignUp.propTypes = {
+SignUpContainer.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
   isAuthenticated: PropTypes.string,
@@ -121,4 +79,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.idToken,
 });
 
-export default connect(mapStateToProps, { signUp })(SignUp);
+export default connect(mapStateToProps, { signUp })(SignUpContainer);

@@ -1,5 +1,5 @@
 import React from 'react';
-import PizzaBox from '../../../containers/PizzaBox/PizzaBox';
+import PizzaBox from '../../PizzaBox/PizzaBox';
 import CheesePizzaImg from '../../../assets/images/pizza_cheese.jpg';
 import HawaiianChickenPizzaImg from '../../../assets/images/pizza_Hawaiian_Chicken.png';
 import ChickenBaconParmesanImg from '../../../assets/images/pizza_Chicken_Bacon_Parmesan.png';

@@ -3,7 +3,7 @@ import './OrderType.scss';
 import { MdDirectionsCar, MdStore } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import AddressForm from '../AddressForm/AddressForm';
+import AddressFormContainer from '../../containers/AddressFormContainer';
 import Message from '../../components/UI/Message/Message';
 import SignedUpMessage from '../../components/Messages/SignedUpMessage/SignedUpMessage';
 import PropTypes from 'prop-types';
@@ -45,7 +45,7 @@ class OrderType extends Component {
     let form = null;
 
     if (this.state.isDelivery) {
-      form = <AddressForm />;
+      form = <AddressFormContainer />;
     }
 
     let orderTypeClassNames = ['order-type'];

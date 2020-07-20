@@ -2,21 +2,15 @@ import React, { Component } from 'react';
 import './Header.scss';
 import PizzaTimeLogo from '../../assets/images/alarm-clock.png';
 import { MdMenu } from 'react-icons/md';
-import { connect } from 'react-redux';
 import NavigationItem from '../../components/UI/NavigationItem/NavigationItem';
 import { Link, withRouter } from 'react-router-dom';
 import PizzaMenuItems from '../../components/PizzaMenuItems/PizzaMenuItems';
-import { toggleSidebar } from '../../store/ui/uiActions/uiActions';
 import AccountMenuItems from '../../components/AccountMenuItems/AccountMenuItems';
 import CartIcon from '../../components/CartIcon/CartIcon';
 import PropTypes from 'prop-types';
 
 /* Header containing logo, app name, main menu, autentication, orders and cart */
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClickCheckout = this.handleClickCheckout.bind(this);
-  }
   shouldComponentUpdate(nextProps) {
     if (
       this.props.quantity !== nextProps.quantity ||
@@ -85,11 +79,4 @@ Header.propTypes = {
   numItemsAdded: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  items: state.cart.items,
-  quantity: state.cart.quantity,
-  numItemsAdded: state.cart.numItemsAdded,
-  isAuthenticated: state.auth.idToken,
-});
-
-export default connect(mapStateToProps, { toggleSidebar })(withRouter(Header));
+export default withRouter(Header);

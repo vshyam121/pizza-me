@@ -4,7 +4,7 @@ import {
   SIZE_CRUST,
   CHEESE_SAUCE,
   TOPPINGS,
-} from '../../../containers/PizzaBuilder/PizzaBuilder';
+} from '../../../containers/PizzaBuilderContainer';
 import PropTypes from 'prop-types';
 
 /* Shows progress of steps in the pizza builder */
