@@ -115,6 +115,13 @@ export const signUp = (email, password) => {
         authData
       )
       .then((res) => {
+        secureStorage.setItem('idToken', res.data.idToken);
+
+        secureStorage.setItem(
+          'expirationTime',
+          new Date(new Date().getTime() + res.data.expiresIn * 1000)
+        );
+        secureStorage.setItem('userId', res.data.localId);
         dispatch(authSuccess(res.data.idToken, res.data.localId));
         dispatch(checkAuthTimeout(res.data.expiresIn));
         dispatch(getOrders(res.data.idToken, res.data.localId));

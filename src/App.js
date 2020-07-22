@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import OrderType from './components/OrderType/OrderType';
 import CheckoutContainer from './containers/CheckoutContainer';
 import SidebarContainer from './containers/SidebarContainer';
-import Orders from './components/Orders/Orders';
+import OrdersContainer from './containers/OrdersContainer';
 import axiosFirebase from './shared/axiosFirebase';
 import axios from 'axios';
 import withErrorHandler from './hoc/withErrorHandler';
@@ -36,7 +36,7 @@ export class App extends Component {
           <Route path='/checkout/order-type' component={OrderType} />
           <Route path='/signin' component={SignInContainer} />
           <Route path='/signup' component={SignUpContainer} />
-          <Route path='/my-orders' component={Orders} />
+          <Route path='/my-orders' component={OrdersContainer} />
           <Route path='/signout' component={SignOutContainer} />
           <Route path='/cart' component={CartContainer} />
           <Route path='/' exact component={Home} />

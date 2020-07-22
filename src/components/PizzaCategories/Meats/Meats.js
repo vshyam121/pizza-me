@@ -1,5 +1,5 @@
 import React from 'react';
-import PizzaBox from '../../PizzaBox/PizzaBox';
+import PizzaBoxContainer from '../../../containers/PizzaBoxContainer';
 import CheesePizzaImg from '../../../assets/images/pizza_cheese.jpg';
 import PepperoniLoversPizzaImg from '../../../assets/images/pizza_Pepperoni_Lovers.png';
 import MeatLoversPizzaImg from '../../../assets/images/pizza_meat_lovers.png';
@@ -19,28 +19,28 @@ const Meats = () => {
     <div className='pizza-grid'>
       <h1 className='pizza-grid__title'>Meats</h1>
       <div className='pizza-grid__grid'>
-        <PizzaBox
+        <PizzaBoxContainer
           pizzaType={CHEESE}
           priceType={REGULAR}
           buildPizza
           imageSrc={CheesePizzaImg}
         />
-        <PizzaBox
+        <PizzaBoxContainer
           pizzaType={SUPREME}
           priceType={COMBO}
           imageSrc={SupremePizzaImg}
         />
-        <PizzaBox
+        <PizzaBoxContainer
           pizzaType={MEAT_LOVER}
           priceType={COMBO}
           imageSrc={MeatLoversPizzaImg}
         />
-        <PizzaBox
+        <PizzaBoxContainer
           pizzaType={PEPPERONI_LOVER}
           priceType={COMBO}
           imageSrc={PepperoniLoversPizzaImg}
         />
-        <PizzaBox
+        <PizzaBoxContainer
           pizzaType={SUPER_SUPREME}
           priceType={COMBO}
           imageSrc={SupremePizzaImg}
