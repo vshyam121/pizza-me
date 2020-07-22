@@ -110,6 +110,13 @@ export const calculateTax = (subTotal) => {
   return (subTotal * 0.1).toFixed(2);
 };
 
+/* Get only crust value from crust display value which includes price */
+export const getCrust = (crustDisplayValue) => {
+  const regexp = /(.*) (\+\$.*)/g;
+  const match = regexp.exec(crustDisplayValue);
+  return match ? match[1] : crustDisplayValue;
+};
+
 /* Get display date */
 export const getReadableDate = (givenDate) => {
   const monthArray = [
@@ -199,11 +206,11 @@ export const normalizePizza = (pizza) => {
     [COMBO_NAME]: pizza[COMBO_NAME],
     [CRUST]: pizza[CRUST],
     [CRUST_FLAVOR]: pizza[CRUST_FLAVOR],
+    priceType: pizza.priceType,
     [MEATS]: pizza[MEATS],
-    [VEGGIES]: pizza[VEGGIES],
     [SAUCE]: pizza[SAUCE],
     [SAUCE_AMOUNT]: pizza[SAUCE_AMOUNT],
     [SIZE]: pizza[SIZE],
-    priceType: pizza.priceType,
+    [VEGGIES]: pizza[VEGGIES],
   };
 };
