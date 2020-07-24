@@ -16,7 +16,7 @@ SidebarContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   sidebarOpen: state.ui.sidebarOpen,
-  isAuthenticated: state.auth.idToken,
+  isAuthenticated: state.auth.userId,
 });
 
 export default connect(mapStateToProps, { closeSidebar })(SidebarContainer);

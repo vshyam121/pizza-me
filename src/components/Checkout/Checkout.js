@@ -9,11 +9,11 @@ import PropTypes from 'prop-types';
 /* Order summary and ability to submit an order */
 class Checkout extends Component {
   handleSubmitOrder = (total) => {
-    if (this.props.idToken) {
+    if (this.props.userId) {
       this.props.submitOrder(
         total,
         this.props.items,
-        this.props.idToken,
+        this.props.cartId,
         this.props.userId
       );
     }
@@ -73,7 +73,8 @@ class Checkout extends Component {
             checkout
             items={this.props.items}
             loadingCartItem={this.props.loadingCartItem}
-            itemBeingChanged={this.props.itemBeingChanged}
+            itemIdBeingChanged={this.props.itemIdBeingChanged}
+            userId={this.props.userId}
           />
           <div className='item-list__bottom'>
             {deliveryAddress}
@@ -115,8 +116,7 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
-  items: PropTypes.object.isRequired,
-  idToken: PropTypes.string,
+  items: PropTypes.array.isRequired,
   userId: PropTypes.string,
   loadingCart: PropTypes.bool,
   loadingCartItem: PropTypes.bool,

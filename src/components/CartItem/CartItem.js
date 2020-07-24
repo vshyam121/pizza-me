@@ -19,12 +19,17 @@ const CartItem = (props) => {
 
   /* Change the quantity of an item in redux store */
   const handleChangeItemQuantity = (event) => {
-    props.changeItemQuantity(props.itemId, event.target.value);
+    props.changeItemQuantity(
+      props.userId,
+      props.itemId,
+      props.pizza,
+      parseInt(event.target.value)
+    );
   };
 
   /* Remove item from cart */
   const handleRemoveItem = () => {
-    props.removeItem(props.itemId, props.pizza);
+    props.removeItem(props.userId, props.itemId, props.pizza);
   };
 
   let remove = null;
@@ -39,7 +44,10 @@ const CartItem = (props) => {
   let overallPrice = (calculatePrice(props.pizza) * props.quantity).toFixed(2);
 
   let cartItem = null;
-  if (props.loadingCartItem && isEqual(props.itemBeingChanged, props.pizza)) {
+  if (
+    props.loadingCartItem &&
+    isEqual(props.itemIdBeingChanged, props.itemId)
+  ) {
     cartItem = (
       <div className='item__empty'>
         <SyncLoader />
@@ -84,7 +92,7 @@ const CartItem = (props) => {
 };
 
 CartItem.propTypes = {
-  itemBeingChanged: PropTypes.object,
+  itemIdBeingChanged: PropTypes.string,
   loadingCartItem: PropTypes.bool,
   pizza: PropTypes.object.isRequired,
   quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

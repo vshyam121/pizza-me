@@ -68,15 +68,15 @@ class SignInContainer extends Component {
 }
 
 SignInContainer.propTypes = {
-  loading: PropTypes.bool,
+  loadingUser: PropTypes.bool,
   error: PropTypes.object,
   isAuthenticated: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
+  loadingUser: state.auth.loadingUser,
   error: state.auth.signInError,
-  isAuthenticated: state.auth.idToken,
+  isAuthenticated: state.auth.userId,
 });
 
 export default connect(mapStateToProps, { signIn })(SignInContainer);

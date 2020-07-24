@@ -1,11 +1,12 @@
 import * as actionTypes from '../authActionTypes';
 import {
-  clearCart,
-  getCart,
+  signOutCart,
+  setCartItems,
   getCartFromLocalStorage,
+  combineCarts,
 } from '../../cart/cartActions/cartActions';
 import { getOrders } from '../../checkout/checkoutActions/checkoutActions';
-import axios from 'axios';
+import axios from '../../../shared/axiosAPI';
 import { secureStorage } from '../../../shared/secureStorage';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 import * as actionDisplays from '../../ui/actionDisplays';
@@ -18,11 +19,10 @@ export const authStart = () => {
 };
 
 /* Successfully authenticated user and received token/userid */
-export const authSuccess = (idToken, userId) => {
+export const authSuccess = (user) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    idToken: idToken,
-    userId: userId,
+    userId: user._id,
   };
 };
 
@@ -45,12 +45,12 @@ export const signUpFailed = (error) => {
 /* Clear user data and cart on sign out */
 export const signOut = () => {
   return (dispatch) => {
-    secureStorage.removeItem('idToken');
-    secureStorage.removeItem('expirationTime');
-    secureStorage.removeItem('userId');
-    dispatch(clearCart());
-    dispatch({
-      type: actionTypes.AUTH_SIGNOUT,
+    axios.post('/auth/logout', {}).then(() => {
+      dispatch(signOutCart());
+
+      dispatch({
+        type: actionTypes.AUTH_SIGNOUT,
+      });
     });
   };
 };
@@ -58,9 +58,12 @@ export const signOut = () => {
 /* Sign out user when expiration time has been reached */
 export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
+    let timeToExpire =
+      new Date(expirationTime).getTime() - new Date().getTime();
     setTimeout(() => {
+      console.log('check auth timeout');
       dispatch(signOut());
-    }, expirationTime * 1000);
+    }, timeToExpire);
   };
 };
 
@@ -72,28 +75,33 @@ export const signIn = (email, password) => {
     const authData = {
       email: email,
       password: password,
-      returnSecureToken: true,
     };
     await axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
-        authData
-      )
+      .post('/auth/login', authData)
       .then((res) => {
-        secureStorage.setItem('idToken', res.data.idToken);
+        //Successful authentication, set user id
+        dispatch(authSuccess(res.data.user));
 
-        secureStorage.setItem(
-          'expirationTime',
-          new Date(new Date().getTime() + res.data.expiresIn * 1000)
-        );
-        secureStorage.setItem('userId', res.data.localId);
+        //Get cart from secure local storage
+        let localCart = secureStorage.getItem('cart');
 
-        dispatch(authSuccess(res.data.idToken, res.data.localId));
-        dispatch(checkAuthTimeout(res.data.expiresIn));
-        dispatch(getCart(res.data.idToken, res.data.localId));
-        dispatch(getOrders(res.data.idToken, res.data.localId));
+        //If items in local cart, combine local cart with backend cart
+        if (localCart.quantity > 0) {
+          dispatch(combineCarts(res.data.user));
+        }
+        //Otherwise, just set cart from backend cart
+        else {
+          dispatch(setCartItems(res.data.user.cart));
+        }
+
+        //Set automatic sign out
+        dispatch(checkAuthTimeout(res.data.expires));
+
+        //Get orders for this user
+        dispatch(getOrders(res.data.user._id));
       })
       .catch((err) => {
+        console.log(err);
         dispatch(setErroredAction(actionDisplays.SIGN_IN));
         dispatch(signInFailed(err.response.data.error));
       });
@@ -107,26 +115,20 @@ export const signUp = (email, password) => {
     const authData = {
       email: email,
       password: password,
-      returnSecureToken: true,
     };
     axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
-        authData
-      )
+      .post('/auth/register', authData)
       .then((res) => {
-        secureStorage.setItem('idToken', res.data.idToken);
-
-        secureStorage.setItem(
-          'expirationTime',
-          new Date(new Date().getTime() + res.data.expiresIn * 1000)
-        );
-        secureStorage.setItem('userId', res.data.localId);
-        dispatch(authSuccess(res.data.idToken, res.data.localId));
-        dispatch(checkAuthTimeout(res.data.expiresIn));
-        dispatch(getOrders(res.data.idToken, res.data.localId));
+        let localCart = secureStorage.getItem('cart');
+        dispatch(authSuccess(res.data.user));
+        if (localCart.quantity > 0) {
+          dispatch(combineCarts(res.data.user));
+        }
+        dispatch(checkAuthTimeout(res.data.expires));
+        dispatch(getOrders(res.data.user._id));
       })
       .catch((err) => {
+        console.log(err.response);
         dispatch(setErroredAction(actionDisplays.SIGN_UP));
         dispatch(signUpFailed(err.response.data.error));
       });
@@ -136,7 +138,7 @@ export const signUp = (email, password) => {
 /* Initialize application upon app load */
 export const initApp = () => {
   return (dispatch) => {
-    const emptyCart = { items: {}, quantity: 0 };
+    const emptyCart = { items: {}, pizzaHashMap: {}, quantity: 0 };
     let localCart = null;
     try {
       localCart = secureStorage.getItem('cart');
@@ -148,23 +150,20 @@ export const initApp = () => {
       secureStorage.setItem('cart', emptyCart);
     }
 
-    const idToken = secureStorage.getItem('idToken');
-    let timeToExpire = 0;
-    //if user's session still alive, get user's cart and orders
-    if (idToken) {
-      const expirationTime = secureStorage.getItem('expirationTime');
-      timeToExpire = new Date(expirationTime).getTime() - new Date().getTime();
-      if (timeToExpire > 0) {
-        const userId = secureStorage.getItem('userId');
-        dispatch(authSuccess(idToken, userId));
-        dispatch(checkAuthTimeout(timeToExpire / 1000));
-        dispatch(getCart(idToken, userId));
-        dispatch(getOrders(idToken, userId));
-      }
-    }
-    //if user's session expired, get local storage cart
-    else if (!idToken || timeToExpire <= 0) {
-      dispatch(getCartFromLocalStorage());
-    }
+    axios
+      .get('/auth/me')
+      .then((res) => {
+        dispatch(authSuccess(res.data.user));
+        if (localCart.quantity > 0) {
+          dispatch(combineCarts(res.data.user));
+        } else {
+          dispatch(setCartItems(res.data.user.cart));
+        }
+        dispatch(checkAuthTimeout(res.data.expires));
+        dispatch(getOrders(res.data.user._id));
+      })
+      .catch(() => {
+        dispatch(getCartFromLocalStorage());
+      });
   };
 };

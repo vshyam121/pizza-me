@@ -24,7 +24,7 @@ class PizzaDetails extends Component {
   }
 
   handleChangeQuantity = (event) => {
-    this.setState({ quantity: event.target.value });
+    this.setState({ quantity: parseInt(event.target.value) });
   };
 
   render() {

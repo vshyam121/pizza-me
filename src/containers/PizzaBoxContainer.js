@@ -51,7 +51,7 @@ class PizzaBoxContainer extends Component {
   handleChangeQuantity = (event) => {
     event.persist();
     this.setState({
-      quantity: event.target.value,
+      quantity: parseInt(event.target.value),
     });
   };
 
@@ -102,12 +102,16 @@ class PizzaBoxContainer extends Component {
 }
 
 PizzaBoxContainer.propTypes = {
+  userId: PropTypes.string,
   priceType: PropTypes.string.isRequired,
   pizzaType: PropTypes.string.isRequired,
   imageSrc: PropTypes.string.isRequired,
   pizzaName: PropTypes.string,
 };
 
-export default connect(null, { initializePizzaBuilder, addToCart })(
+const mapStateToProps = (state) => ({
+  userId: state.auth.userId,
+});
+export default connect(mapStateToProps, { initializePizzaBuilder, addToCart })(
   PizzaBoxContainer
 );

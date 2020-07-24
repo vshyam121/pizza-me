@@ -1,9 +1,10 @@
 import * as actionTypes from '../checkoutActionTypes';
-import axiosFirebase from '../../../shared/axiosFirebase';
+import axios from '../../../shared/axiosAPI';
 import axiosGeolocation from 'axios';
 import * as actionDisplays from '../../ui/actionDisplays';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 
+axios.defaults.withCredentials = true;
 /* To set loading in UI when starting to submit order */
 export const submitOrderStart = () => {
   return {
@@ -12,13 +13,12 @@ export const submitOrderStart = () => {
 };
 
 /* Submit an order for a user */
-export const submitOrder = (total, items, idToken, userId) => {
+export const submitOrder = (total, items, cartId, userId) => {
   return (dispatch, getState) => {
     dispatch(submitOrderStart());
     let order = {
-      userId: userId,
-      items: items,
-      date: new Date(),
+      _id: cartId,
+      orderDate: new Date(),
       total: total,
     };
 
@@ -26,13 +26,12 @@ export const submitOrder = (total, items, idToken, userId) => {
     if (deliveryAddress) {
       order = { ...order, deliveryAddress: deliveryAddress };
     }
-    axiosFirebase
-      .post(`/orders.json?auth=${idToken}`, order)
+    axios
+      .post(`/orders/${userId}`, order)
       .then((res) => {
         dispatch({
           type: actionTypes.SUBMIT_ORDER_SUCCESS,
-          orderId: res.data.name,
-          order: order,
+          order: res.data.order,
         });
       })
       .catch(() => {
@@ -134,16 +133,15 @@ const getOrdersFailed = () => {
 };
 
 /* Get all past orders for a particular user */
-export const getOrders = (idToken, userId) => {
+export const getOrders = (userId) => {
   return (dispatch) => {
     dispatch(getOrdersStart());
-    axiosFirebase
-      .get(`/orders.json?auth=${idToken}&orderBy="userId"&equalTo="${userId}"`)
+    axios
+      .get(`/orders/${userId}`)
       .then((res) => {
-        const orders = res.data;
         dispatch({
           type: actionTypes.GET_ORDERS_SUCCESS,
-          orders: orders,
+          orders: res.data.orders,
         });
       })
       .catch(() => {

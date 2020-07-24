@@ -100,7 +100,7 @@ OrderType.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.idToken,
+  isAuthenticated: state.auth.userId,
 });
 
 export default connect(mapStateToProps, null)(OrderType);

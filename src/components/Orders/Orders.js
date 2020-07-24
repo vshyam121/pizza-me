@@ -10,13 +10,13 @@ import PropTypes from 'prop-types';
 const Orders = (props) => {
   let orders = null;
   if (
-    !props.idToken ||
+    !props.userId ||
     props.gettingOrders ||
     props.getOrdersError ||
     Object.entries(props.orders).length === 0
   ) {
     let ordersContent = null;
-    if (!props.idToken) {
+    if (!props.userId) {
       ordersContent = <h2>Sign in to see your orders!</h2>;
     } else if (props.gettingOrders) {
       ordersContent = <SyncLoader />;
@@ -39,53 +39,47 @@ const Orders = (props) => {
   } else {
     orders = (
       <React.Fragment>
-        {Object.entries(props.orders)
-          .sort(([itemId1, item1], [itemId2, item2]) => {
-            const item1Time = new Date(item1.date).getTime();
-            const item2Time = new Date(item2.date).getTime();
-            return -(item1Time - item2Time);
-          })
-          .map(([orderId, order]) => {
-            let orderType = null;
+        {props.orders.reverse().map((order) => {
+          let orderType = null;
 
-            if (order.deliveryAddress) {
-              orderType = (
-                <DeliveryAddress deliveryAddress={order.deliveryAddress} />
-              );
-            } else {
-              orderType = <h2>Carryout Order</h2>;
-            }
-            return (
-              <div key={orderId} className='item-list-container'>
-                <div className='item-list item-list--order'>
-                  <div className='item-list__title'>
-                    <span className='order__date-address'>
-                      <span className='order__date'>
-                        <h2>Order placed on:&nbsp;</h2>
-                        <h3> {getReadableDate(order.date)}</h3>
-                      </span>
-                      {orderType}
-                    </span>
-
-                    <span className='order__total'>
-                      <h2>Total:&nbsp;</h2>
-                      <h3>${order.total}</h3>
-                    </span>
-                  </div>
-
-                  {Object.entries(order.items).map(([itemId, item]) => {
-                    return (
-                      <Order
-                        key={itemId}
-                        quantity={item.quantity}
-                        pizza={item.pizza}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
+          if (order.deliveryAddress) {
+            orderType = (
+              <DeliveryAddress deliveryAddress={order.deliveryAddress} />
             );
-          })}
+          } else {
+            orderType = <h2>Carryout Order</h2>;
+          }
+          return (
+            <div key={order._id} className='item-list-container'>
+              <div className='item-list item-list--order'>
+                <div className='item-list__title'>
+                  <span className='order__date-address'>
+                    <span className='order__date'>
+                      <h2>Order placed on:&nbsp;</h2>
+                      <h3> {getReadableDate(order.orderDate)}</h3>
+                    </span>
+                    {orderType}
+                  </span>
+
+                  <span className='order__total'>
+                    <h2>Total:&nbsp;</h2>
+                    <h3>${order.total}</h3>
+                  </span>
+                </div>
+
+                {Object.entries(order.items).map(([itemId, item]) => {
+                  return (
+                    <Order
+                      key={itemId}
+                      quantity={item.quantity}
+                      pizza={item.pizza}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </React.Fragment>
     );
   }
@@ -94,9 +88,8 @@ const Orders = (props) => {
 };
 
 Orders.propTypes = {
-  idToken: PropTypes.string,
   userId: PropTypes.string,
-  orders: PropTypes.object.isRequired,
+  orders: PropTypes.array.isRequired,
   gettingOrders: PropTypes.bool,
   getOrdersError: PropTypes.bool,
 };

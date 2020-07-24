@@ -1,8 +1,7 @@
 import * as actionTypes from '../checkoutActionTypes';
 
 export const initialState = {
-  userInfo: null,
-  orders: {},
+  orders: [],
   validatingAddress: false,
   addressValid: false,
   addressValidationError: null,
@@ -24,7 +23,7 @@ const checkoutReducer = (state = initialState, action) => {
       };
     //add submitted order to list of orders
     case actionTypes.SUBMIT_ORDER_SUCCESS:
-      const orders = { ...state.orders, [action.orderId]: action.order };
+      const orders = [...state.orders, action.order];
       return {
         ...state,
         orders: orders,

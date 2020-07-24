@@ -26,7 +26,11 @@ const SignUp = (props) => {
   if (props.error) {
     errorMessage = (
       <div className='form-component__error'>
-        <p>{lookupErrorCode(props.error.message)}</p>
+        <p>
+          {props.error === 'Duplicate field value entered'
+            ? 'The email you entered is already taken. Please try another one.'
+            : props.error}
+        </p>
       </div>
     );
   }
@@ -57,7 +61,7 @@ const SignUp = (props) => {
 };
 
 SignUp.propTypes = {
-  loading: PropTypes.bool,
+  loadingUser: PropTypes.bool,
   error: PropTypes.object,
   isAuthenticated: PropTypes.string,
 };

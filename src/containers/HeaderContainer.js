@@ -19,7 +19,7 @@ const mapStateToProps = (state) => ({
   items: state.cart.items,
   quantity: state.cart.quantity,
   numItemsAdded: state.cart.numItemsAdded,
-  isAuthenticated: state.auth.idToken,
+  isAuthenticated: state.auth.userId,
 });
 
 export default connect(mapStateToProps, { toggleSidebar })(

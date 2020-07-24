@@ -16,12 +16,12 @@ const CheckoutContainer = (props) => {
 };
 
 CheckoutContainer.propTypes = {
-  items: PropTypes.object.isRequired,
-  idToken: PropTypes.string,
+  items: PropTypes.array.isRequired,
   userId: PropTypes.string,
+  cartId: PropTypes.string,
   loadingCart: PropTypes.bool,
   loadingCartItem: PropTypes.bool,
-  itemBeingChanged: PropTypes.object,
+  itemIdBeingChanged: PropTypes.object,
   submitOrderError: PropTypes.bool,
   submittingOrder: PropTypes.bool,
   deliveryAddress: PropTypes.object,
@@ -29,11 +29,11 @@ CheckoutContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
-  idToken: state.auth.idToken,
   userId: state.auth.userId,
+  cartId: state.cart.cartId,
   loadingCart: state.cart.loadingCart,
   loadingCartItem: state.cart.loadingCartItem,
-  itemBeingChanged: state.cart.itemBeingChanged,
+  itemIdBeingChanged: state.cart.itemIdBeingChanged,
   submittingOrder: state.checkout.submittingOrder,
   deliveryAddress: state.checkout.deliveryAddress,
   submitOrderError: state.checkout.submitOrderError,

@@ -11,13 +11,13 @@ const Cart = (props) => {
   const subTotal = calculateSubTotal(props.items);
 
   let cart = null;
-  if (props.loadingCart) {
+  if (props.loadingUser) {
     cart = (
       <div className='item-list__empty'>
         <SyncLoader />
       </div>
     );
-  } else if (Object.keys(props.items).length > 0) {
+  } else if (props.items.length > 0) {
     cart = (
       <React.Fragment>
         <CartItems
@@ -26,7 +26,8 @@ const Cart = (props) => {
           changeItemQuantity={props.changeItemQuantity}
           items={props.items}
           loadingCartItem={props.loadingCartItem}
-          itemBeingChanged={props.itemBeingChanged}
+          itemIdBeingChanged={props.itemIdBeingChanged}
+          userId={props.userId}
         />
         <div className='item-list__bottom'>
           <div className='totals'>
@@ -38,9 +39,7 @@ const Cart = (props) => {
 
             <Link
               to={{
-                pathname: props.isAuthenticated
-                  ? '/checkout/order-type'
-                  : '/signin',
+                pathname: props.userId ? '/checkout/order-type' : '/signin',
                 fromCheckout: true,
               }}
             >
@@ -55,7 +54,7 @@ const Cart = (props) => {
     const errorMessage = <h2>Unable to retrieve your cart!</h2>;
 
     let message = null;
-    if (props.getCartError) {
+    if (props.signInError || props.signUpError) {
       message = errorMessage;
     } else {
       message = emptyCartMessage;
@@ -74,13 +73,13 @@ const Cart = (props) => {
 };
 
 Cart.propTypes = {
-  items: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired,
   loadingCart: PropTypes.bool,
   loadingCartItem: PropTypes.bool,
-  itemBeingChanged: PropTypes.object,
-  getCartError: PropTypes.bool,
-  isAuthenticated: PropTypes.string,
-  cartId: PropTypes.string,
+  itemIdBeingChanged: PropTypes.string,
+  userId: PropTypes.string,
+  signInError: PropTypes.string,
+  signUpError: PropTypes.string,
 };
 
 export default Cart;

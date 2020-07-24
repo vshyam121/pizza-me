@@ -1,5 +1,4 @@
 /* Standard key names used to store data in app */
-
 export const CRUST = 'crust';
 export const SIZE = 'size';
 export const SAUCE = 'sauce';
@@ -9,8 +8,10 @@ export const CRUST_FLAVOR = 'crustFlavor';
 export const MEATS = 'meats';
 export const VEGGIES = 'veggies';
 export const COMBO_NAME = 'comboName';
-export const EXTRA_TOPPING = 'extra';
-export const REGULAR_TOPPING = 'regular';
-export const WHOLE = 'whole';
-export const LEFT_HALF = 'leftHalf';
-export const RIGHT_HALF = 'rightHalf';
+
+/* Standard value names used for topping related data */
+export const EXTRA_TOPPING = 'Extra Topping';
+export const REGULAR_TOPPING = 'Regular Topping';
+export const WHOLE = 'Whole';
+export const LEFT_HALF = 'Left Half';
+export const RIGHT_HALF = 'Right Half';

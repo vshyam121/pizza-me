@@ -5,7 +5,7 @@ export const initialState = {
   userId: null,
   signInError: null,
   signUpError: null,
-  loading: false,
+  loadingUser: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -16,29 +16,29 @@ const authReducer = (state = initialState, action) => {
         ...state,
         signInError: null,
         signUpError: null,
-        loading: true,
+        loadingUser: true,
       };
     //successfully authenticated
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
-        loading: false,
-        idToken: action.idToken,
+        loadingUser: false,
         userId: action.userId,
+        items: action.items,
         signInError: null,
       };
     //set error and reset loading when sign in failed
     case actionTypes.SIGN_IN_FAILED:
       return {
         ...state,
-        loading: false,
+        loadingUser: false,
         signInError: action.error,
       };
     //set error and reset loading when sign up failed
     case actionTypes.SIGN_UP_FAILED:
       return {
         ...state,
-        loading: false,
+        loadingUser: false,
         signUpError: action.error,
       };
     //reset user data on signout

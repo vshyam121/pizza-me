@@ -69,22 +69,20 @@ const getToppingsPrice = (pizza, toppingType, combo) => {
   let toppings = pizza[toppingType];
   let toppingsPrice = 0;
   toppings &&
-    Object.entries(toppings).forEach(([topping, toppingProps]) => {
+    toppings.forEach((topping) => {
       const comboIncludesTopping =
         combo &&
-        Object.keys(toppingMapping[pizza[COMBO_NAME]][toppingType]).includes(
-          topping
+        toppingMapping[pizza[COMBO_NAME]][toppingType].find(
+          (comboTopping) => comboTopping === topping.topping
         );
+
       if (!comboIncludesTopping || !combo) {
-        if (toppingProps.amount === EXTRA_TOPPING) {
+        if (topping.amount === EXTRA_TOPPING) {
           toppingsPrice += extraToppingPrice;
         } else {
           toppingsPrice += toppingPrice;
         }
-      } else if (
-        comboIncludesTopping &&
-        toppingProps.amount === EXTRA_TOPPING
-      ) {
+      } else if (comboIncludesTopping && topping.amount === EXTRA_TOPPING) {
         toppingsPrice += extraToppingPrice - toppingPrice;
       }
     });
@@ -95,11 +93,8 @@ const getToppingsPrice = (pizza, toppingType, combo) => {
 /* Calculate the sum of the price of all pizzas in cart before tax */
 export const calculateSubTotal = (items) => {
   let subTotal = 0;
-  Object.values(items).forEach((item) => {
-    let price = item.pizza.price;
-    if (!price) {
-      price = calculatePrice(item.pizza);
-    }
+  items.forEach((item) => {
+    const price = calculatePrice(item.pizza);
     subTotal += price * item.quantity;
   });
   return subTotal.toFixed(2);
@@ -183,22 +178,6 @@ export const normalizePizza = (pizza) => {
   }
   if (!pizza[CRUST_FLAVOR]) {
     pizza[CRUST_FLAVOR] = NO_CRUST_FLAVOR;
-  }
-
-  //Need to delete empty objects because firebase disregards properties with empty objects
-  if (
-    pizza.meats &&
-    Object.keys(pizza.meats).length === 0 &&
-    pizza.meats.constructor === Object
-  ) {
-    delete pizza.meats;
-  }
-  if (
-    pizza.veggies &&
-    Object.keys(pizza.veggies).length === 0 &&
-    pizza.veggies.constructor === Object
-  ) {
-    delete pizza.veggies;
   }
 
   return {
