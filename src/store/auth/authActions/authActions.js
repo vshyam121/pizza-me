@@ -19,10 +19,26 @@ export const authStart = () => {
 };
 
 /* Successfully authenticated user and received token/userid */
-export const authSuccess = (user) => {
-  return {
-    type: actionTypes.AUTH_SUCCESS,
-    userId: user._id,
+export const authSuccess = (authData) => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.AUTH_SUCCESS, userId: authData.user._id });
+    //Get cart from secure local storage
+    let localCart = secureStorage.getItem('cart');
+
+    //If items in local cart, combine local cart with backend cart
+    if (localCart.quantity > 0) {
+      dispatch(combineCarts(authData.user));
+    }
+    //Otherwise, just set cart from backend cart
+    else {
+      dispatch(setCartItems(authData.user.cart));
+    }
+
+    //Set automatic sign out
+    dispatch(checkAuthTimeout(authData.expires));
+
+    //Get orders for this user
+    dispatch(getOrders(authData.user._id));
   };
 };
 
@@ -58,10 +74,12 @@ export const signOut = () => {
 /* Sign out user when expiration time has been reached */
 export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
+    //Calculate time to expire based on exact time of expiration
     let timeToExpire =
       new Date(expirationTime).getTime() - new Date().getTime();
+
+    //Dispatch sign out action in time to expire
     setTimeout(() => {
-      console.log('check auth timeout');
       dispatch(signOut());
     }, timeToExpire);
   };
@@ -79,29 +97,10 @@ export const signIn = (email, password) => {
     await axios
       .post('/auth/login', authData)
       .then((res) => {
-        //Successful authentication, set user id
-        dispatch(authSuccess(res.data.user));
-
-        //Get cart from secure local storage
-        let localCart = secureStorage.getItem('cart');
-
-        //If items in local cart, combine local cart with backend cart
-        if (localCart.quantity > 0) {
-          dispatch(combineCarts(res.data.user));
-        }
-        //Otherwise, just set cart from backend cart
-        else {
-          dispatch(setCartItems(res.data.user.cart));
-        }
-
-        //Set automatic sign out
-        dispatch(checkAuthTimeout(res.data.expires));
-
-        //Get orders for this user
-        dispatch(getOrders(res.data.user._id));
+        //Successful authentication, get user's data here
+        dispatch(authSuccess(res.data));
       })
       .catch((err) => {
-        console.log(err);
         dispatch(setErroredAction(actionDisplays.SIGN_IN));
         dispatch(signInFailed(err.response.data.error));
       });
@@ -119,16 +118,10 @@ export const signUp = (email, password) => {
     axios
       .post('/auth/register', authData)
       .then((res) => {
-        let localCart = secureStorage.getItem('cart');
-        dispatch(authSuccess(res.data.user));
-        if (localCart.quantity > 0) {
-          dispatch(combineCarts(res.data.user));
-        }
-        dispatch(checkAuthTimeout(res.data.expires));
-        dispatch(getOrders(res.data.user._id));
+        //Successful authentication, get user's data here
+        dispatch(authSuccess(res.data));
       })
       .catch((err) => {
-        console.log(err.response);
         dispatch(setErroredAction(actionDisplays.SIGN_UP));
         dispatch(signUpFailed(err.response.data.error));
       });
@@ -153,16 +146,11 @@ export const initApp = () => {
     axios
       .get('/auth/me')
       .then((res) => {
-        dispatch(authSuccess(res.data.user));
-        if (localCart.quantity > 0) {
-          dispatch(combineCarts(res.data.user));
-        } else {
-          dispatch(setCartItems(res.data.user.cart));
-        }
-        dispatch(checkAuthTimeout(res.data.expires));
-        dispatch(getOrders(res.data.user._id));
+        //Successful authentication, get user's data here
+        dispatch(authSuccess(res.data));
       })
       .catch(() => {
+        //If an error with api, then get cart from secure local storage
         dispatch(getCartFromLocalStorage());
       });
   };
