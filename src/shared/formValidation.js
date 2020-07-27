@@ -62,7 +62,7 @@ const checkValidity = (value, rules) => {
   }
 
   if (rules.isNumeric) {
-    const pattern = /^\d+$/;
+    const pattern = /^\d*$/;
     isValid = pattern.test(value) && isValid;
   }
 

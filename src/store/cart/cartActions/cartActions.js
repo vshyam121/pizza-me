@@ -5,14 +5,14 @@ import hash from 'object-hash';
 import { secureStorage } from '../../../shared/secureStorage';
 import * as actionDisplays from '../../ui/actionDisplays';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
+import { getOrCreateLocalCart } from '../../../shared/util';
 
 /* Set cart in redux store from cart in local storage */
 export const getCartFromLocalStorage = () => {
   return (dispatch) => {
-    let cart = secureStorage.getItem('cart');
-    cart.items = Object.values(cart.items);
-    if (cart.quantity > 0) {
-      dispatch(setCartItems(cart));
+    let localCart = secureStorage.getItem('cart');
+    if (localCart.quantity > 0) {
+      dispatch(setCartItemsFromLocalCart(localCart));
     }
   };
 };
@@ -20,13 +20,18 @@ export const getCartFromLocalStorage = () => {
 /* Combine local cart with backend cart */
 export const combineCarts = (user) => {
   return (dispatch) => {
-    const localCart = secureStorage.getItem('cart');
+    const localCart = getOrCreateLocalCart();
 
     axios
       .post(`/carts/${user._id}/items`, Object.values(localCart.items))
       .then((res) => {
-        //Set combined cart
-        dispatch(setCartItems(res.data.cart));
+        //Dispatch to update state with combined cart
+        dispatch({
+          type: actionTypes.ADD_TO_CART,
+          items: res.data.cart.items,
+          quantity: res.data.cart.quantity,
+          numItemsAdded: res.data.cart.quantity - localCart.quantity,
+        });
 
         //Empty the local cart
         const emptyCart = { items: {}, quantity: 0, pizzaHashMap: {} };
@@ -47,7 +52,7 @@ export const signOutCart = () => {
 const addToLocalCart = (item) => {
   return (dispatch) => {
     //Get local cart
-    let localCart = secureStorage.getItem('cart');
+    let localCart = getOrCreateLocalCart();
 
     //Hash of pizza to be added
     let pizzaHash = hash(item.pizza);
@@ -112,8 +117,26 @@ export const addToCart = (userId, pizza, quantity) => {
 export const setCartItems = (cart) => {
   return {
     type: actionTypes.SET_CART_ITEMS,
-    cart: cart,
+    cartId: cart._id,
+    items: cart.items,
     quantity: cart.quantity,
+  };
+};
+
+/* Set cart items and metadata in redux store */
+export const setCartItemsFromLocalCart = (localCart) => {
+  return {
+    type: actionTypes.SET_CART_ITEMS,
+    items: Object.values(localCart.items),
+    quantity: localCart.quantity,
+  };
+};
+
+export const changeCartItemSuccess = (items, quantity) => {
+  return {
+    type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
+    items: items,
+    quantity: quantity,
   };
 };
 
@@ -129,11 +152,8 @@ export const changeItemQuantity = (userId, itemId, pizza, quantity) => {
       axios
         .patch(`/carts/${userId}/items/${itemId}`, quantityPatch)
         .then((res) => {
-          dispatch({
-            type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
-            items: res.data.cart.items,
-            quantity: res.data.cart.quantity,
-          });
+          const cart = res.data.cart;
+          dispatch(changeCartItemSuccess(cart.items, cart.quantity));
         })
         .catch(() => {
           dispatch(setErroredAction(actionDisplays.CHANGE_ITEM_QUANTITY));
@@ -150,7 +170,19 @@ export const changeItemQuantity = (userId, itemId, pizza, quantity) => {
 /* If user not signed in, change item quantity in local storage cart */
 const changeItemQuantityInLocalCart = (itemId, quantity) => {
   return (dispatch) => {
-    let localCart = secureStorage.getItem('cart');
+    let localCart = getOrCreateLocalCart();
+
+    //If for some reason cart has been deleted from local storage,
+    //reset cart
+    if (Object.keys(localCart.items).length === 0) {
+      dispatch(
+        changeCartItemSuccess(
+          Object.values(localCart.items),
+          localCart.quantity
+        )
+      );
+      return;
+    }
 
     let items = localCart.items;
 
@@ -165,11 +197,7 @@ const changeItemQuantityInLocalCart = (itemId, quantity) => {
     secureStorage.setItem('cart', localCart);
 
     //Dispatch to update cart state
-    dispatch({
-      type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
-      quantity: localCart.quantity,
-      items: Object.values(items),
-    });
+    dispatch(changeCartItemSuccess(Object.values(items), localCart.quantity));
   };
 };
 
@@ -198,11 +226,8 @@ export const removeItem = (userId, itemId, pizza) => {
       axios
         .delete(`/carts/${userId}/items/${itemId}`)
         .then((res) => {
-          dispatch({
-            type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
-            items: res.data.cart.items,
-            quantity: res.data.cart.quantity,
-          });
+          const cart = res.data.cart;
+          dispatch(changeCartItemSuccess(cart.items, cart.quantity));
         })
         .catch(() => {
           dispatch(changeCartItemFailed());
@@ -217,7 +242,14 @@ export const removeItem = (userId, itemId, pizza) => {
 /* If user not signed in, remove item from local storage cart */
 const removeItemFromLocalCart = (itemId, pizza) => {
   return (dispatch) => {
-    let localCart = secureStorage.getItem('cart');
+    let localCart = getOrCreateLocalCart();
+
+    //If for some reason cart has been deleted from local storage,
+    //reset cart
+    if (Object.keys(localCart.items).length === 0) {
+      dispatch(setCartItemsFromLocalCart(localCart));
+      return;
+    }
 
     //Get new cart quantity
     localCart.quantity -= localCart.items[itemId].quantity;
@@ -228,11 +260,9 @@ const removeItemFromLocalCart = (itemId, pizza) => {
     secureStorage.setItem('cart', localCart);
 
     //Dispatch to set cart state
-    dispatch({
-      type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
-      items: Object.values(localCart.items),
-      quantity: localCart.quantity,
-    });
+    dispatch(
+      changeCartItemSuccess(Object.values(localCart.items), localCart.quantity)
+    );
   };
 };
 
@@ -276,12 +306,9 @@ export const saveToCart = (userId, pizza, quantity, cartQuantity, itemId) => {
       axios
         .put(`/carts/${userId}/items/${itemId}`, item)
         .then((res) => {
+          const cart = res.data.cart;
           //Dispatch to set cart state
-          dispatch({
-            type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
-            items: res.data.cart.items,
-            quantity: res.data.cart.quantity,
-          });
+          dispatch(changeCartItemSuccess(cart.items, cart.quantity));
         })
         .catch(() => {
           dispatch(changeCartItemFailed());
@@ -298,7 +325,23 @@ export const saveToCart = (userId, pizza, quantity, cartQuantity, itemId) => {
 /* If user not signed in, make change to local storage cart */
 const saveToLocalCart = (itemId, item) => {
   return (dispatch) => {
-    let localCart = secureStorage.getItem('cart');
+    let localCart = getOrCreateLocalCart();
+
+    //If for some reason cart has been deleted from local storage,
+    //reset cart
+    if (Object.keys(localCart.items).length === 0) {
+      localCart.items = { [itemId]: { _id: itemId, ...item } };
+      localCart.pizzaHashMap[hash(item.pizza)] = itemId;
+      localCart.quantity = item.quantity;
+      secureStorage.setItem('cart', localCart);
+      dispatch(
+        changeCartItemSuccess(
+          Object.values(localCart.items),
+          localCart.quantity
+        )
+      );
+      return;
+    }
 
     //Local cart items
     let items = localCart.items;
@@ -338,10 +381,6 @@ const saveToLocalCart = (itemId, item) => {
     secureStorage.setItem('cart', localCart);
 
     //Dispatch to set cart state
-    dispatch({
-      type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
-      quantity: localCart.quantity,
-      items: Object.values(items),
-    });
+    dispatch(changeCartItemSuccess(Object.values(items), localCart.quantity));
   };
 };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signUp } from '../../store/auth/authActions/authActions';
+import { signUp, authReset } from '../../store/auth/authActions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SignUp from '../../components/SignUp/SignUp';
@@ -55,6 +55,10 @@ class SignUpContainer extends Component {
     this.setState(stateUpdate);
   };
 
+  componentWillUnmount() {
+    this.props.authReset();
+  }
+
   render() {
     return (
       <SignUp
@@ -69,7 +73,7 @@ class SignUpContainer extends Component {
 
 SignUpContainer.propTypes = {
   loadingUser: PropTypes.bool,
-  error: PropTypes.object,
+  error: PropTypes.string,
   isAuthenticated: PropTypes.string,
 };
 
@@ -79,4 +83,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.userId,
 });
 
-export default connect(mapStateToProps, { signUp })(SignUpContainer);
+export default connect(mapStateToProps, { signUp, authReset })(SignUpContainer);

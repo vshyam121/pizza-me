@@ -25,21 +25,9 @@ import { middleware } from '../store/store';
 import { CLASSIC_MARINARA, REGULAR_SAUCE } from '../metadata/sauceMetadata';
 import { REGULAR_CHEESE } from '../metadata/cheeseMetadata';
 import { NO_CRUST_FLAVOR } from '../metadata/crustFlavorMetadata';
+import { secureStorage } from '../shared/secureStorage';
 
 /* Utility functions used across multiple components/containers */
-
-/* Get display message for error code related to authentication */
-export const lookupErrorCode = (errorCode) => {
-  if (errorCode === 'INVALID_PASSWORD' || errorCode === 'EMAIL_NOT_FOUND') {
-    return 'The username or password you entered is incorrect.';
-  } else if (errorCode.includes('TOO_MANY_ATTEMPTS_TRY_LATER')) {
-    return "You've made too many unsuccessful attempts. Please try again later.";
-  } else if (errorCode === 'EMAIL_EXISTS') {
-    return 'The email you entered is already taken. Please try another one.';
-  } else {
-    return 'There was an error submitting your credentials.';
-  }
-};
 
 /* calculate price of a pizza, given its size, crust, toppings and various other properties */
 export const calculatePrice = (pizza) => {
@@ -192,4 +180,21 @@ export const normalizePizza = (pizza) => {
     [SIZE]: pizza[SIZE],
     [VEGGIES]: pizza[VEGGIES],
   };
+};
+
+export const getOrCreateLocalCart = () => {
+  const emptyCart = { items: {}, pizzaHashMap: {}, quantity: 0 };
+  let localCart = null;
+  try {
+    localCart = secureStorage.getItem('cart');
+  } catch (error) {
+    secureStorage.setItem('cart', emptyCart);
+    localCart = emptyCart;
+  }
+
+  if (!localCart) {
+    secureStorage.setItem('cart', emptyCart);
+    localCart = emptyCart;
+  }
+  return localCart;
 };

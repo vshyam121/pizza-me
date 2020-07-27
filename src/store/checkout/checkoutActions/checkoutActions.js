@@ -4,7 +4,6 @@ import axiosGeolocation from 'axios';
 import * as actionDisplays from '../../ui/actionDisplays';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 
-axios.defaults.withCredentials = true;
 /* To set loading in UI when starting to submit order */
 export const submitOrderStart = () => {
   return {
@@ -13,8 +12,8 @@ export const submitOrderStart = () => {
 };
 
 /* Submit an order for a user */
-export const submitOrder = (total, items, cartId, userId) => {
-  return (dispatch, getState) => {
+export const submitOrder = (total, items, deliveryAddress, userId, cartId) => {
+  return (dispatch) => {
     dispatch(submitOrderStart());
     let order = {
       _id: cartId,
@@ -22,7 +21,6 @@ export const submitOrder = (total, items, cartId, userId) => {
       total: total,
     };
 
-    const deliveryAddress = getState().checkout.deliveryAddress;
     if (deliveryAddress) {
       order = { ...order, deliveryAddress: deliveryAddress };
     }
@@ -48,16 +46,26 @@ export const submitOrderFailed = () => {
   };
 };
 
-/* Reset all address validation properties */
-export const validateAddressReset = () => {
+export const clearDeliveryAddress = () => {
   return {
-    type: actionTypes.VALIDATE_ADDRESS_RESET,
+    type: actionTypes.CLEAR_DELIVERY_ADDRESS,
+  };
+};
+/* Reset all address validation properties */
+export const validateDeliveryAddressReset = () => {
+  return {
+    type: actionTypes.VALIDATE_DELIVERY_ADDRESS_RESET,
+  };
+};
+
+export const validateDeliveryAddressStart = () => {
+  return {
+    type: actionTypes.VALIDATE_DELIVERY_ADDRESS_START,
   };
 };
 
 /* Call smarty streets geolocation api to validate delivery address */
-
-export const validateAddress = (addressForm) => {
+export const validateDeliveryAddress = (addressForm) => {
   return (dispatch) => {
     let params = {
       key: process.env.REACT_APP_SMARTY_STREETS_KEY,
@@ -66,55 +74,49 @@ export const validateAddress = (addressForm) => {
       city: addressForm.city.value,
       state: addressForm.state.value,
       zipcode: addressForm.zipcode.value,
-      candidates: 10,
+      candidates: 1,
     };
-
-    dispatch({
-      type: actionTypes.VALIDATE_ADDRESS_START,
-    });
 
     axiosGeolocation
       .get(process.env.REACT_APP_SMARTY_STREETS_BASE_URL, {
         params: params,
       })
       .then((res) => {
-        if (res.data.length > 0) {
-          const matchCode = res.data[0].analysis.dpv_match_code;
-          if (matchCode === 'Y') {
-            dispatch({
-              type: actionTypes.VALIDATE_ADDRESS_SUCCESS,
-              deliveryAddress: {
-                street: addressForm.street.value,
-                secondary: addressForm.unit.value,
-                city: addressForm.city.value,
-                state: addressForm.state.value,
-                zipcode: addressForm.zipcode.value,
-              },
-            });
-          } else if (matchCode === 'N') {
-            dispatch({
-              type: actionTypes.VALIDATE_ADDRESS_FAILED,
-              error: 'The address you entered is invalid',
-            });
-          } else if (matchCode === 'S' || matchCode === 'D') {
-            dispatch({
-              type: actionTypes.VALIDATE_ADDRESS_FAILED,
-              error: 'Missing or incorrect secondary address (apt/unit)',
-            });
-          }
-        } else {
+        const matchCode = res.data[0].analysis.dpv_match_code;
+        if (matchCode === 'Y') {
           dispatch({
-            type: actionTypes.VALIDATE_ADDRESS_FAILED,
-            error: 'The address you entered is invalid',
+            type: actionTypes.VALIDATE_DELIVERY_ADDRESS_SUCCESS,
+            deliveryAddress: {
+              streetAddress: addressForm.street.value,
+              secondaryAddress: addressForm.unit.value,
+              city: addressForm.city.value,
+              state: addressForm.state.value,
+              zipcode: addressForm.zipcode.value,
+            },
           });
+        } else if (matchCode === 'S' || matchCode === 'D') {
+          dispatch(
+            validateDeliveryAddressFailed(
+              'Missing or incorrect secondary address (apt/unit)'
+            )
+          );
+        } else {
+          dispatch(
+            validateDeliveryAddressFailed('The address you entered is invalid')
+          );
         }
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.VALIDATE_ADDRESS));
-        dispatch({
-          type: actionTypes.VALIDATE_ADDRESS_FAILED,
-        });
+        dispatch(setErroredAction(actionDisplays.VALIDATE_DELIVERY_ADDRESS));
+        dispatch(validateDeliveryAddressFailed());
       });
+  };
+};
+
+export const validateDeliveryAddressFailed = (error) => {
+  return {
+    type: actionTypes.VALIDATE_DELIVERY_ADDRESS_FAILED,
+    error: error,
   };
 };
 

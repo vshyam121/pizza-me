@@ -10,11 +10,19 @@ import axios from '../../../shared/axiosAPI';
 import { secureStorage } from '../../../shared/secureStorage';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 import * as actionDisplays from '../../ui/actionDisplays';
+import { getOrCreateLocalCart } from '../../../shared/util';
 
 /* To show loading in UI when authentication action has started */
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START,
+  };
+};
+
+/* Reset auth error after unmounting an auth component */
+export const authReset = () => {
+  return {
+    type: actionTypes.AUTH_RESET,
   };
 };
 
@@ -26,7 +34,7 @@ export const authSuccess = (authData) => {
     let localCart = secureStorage.getItem('cart');
 
     //If items in local cart, combine local cart with backend cart
-    if (localCart.quantity > 0) {
+    if (localCart && localCart.quantity > 0) {
       dispatch(combineCarts(authData.user));
     }
     //Otherwise, just set cart from backend cart
@@ -61,7 +69,7 @@ export const signUpFailed = (error) => {
 /* Clear user data and cart on sign out */
 export const signOut = () => {
   return (dispatch) => {
-    axios.post('/auth/logout', {}).then(() => {
+    axios.post('/auth/signout', {}).then(() => {
       dispatch(signOutCart());
 
       dispatch({
@@ -75,8 +83,7 @@ export const signOut = () => {
 export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
     //Calculate time to expire based on exact time of expiration
-    let timeToExpire =
-      new Date(expirationTime).getTime() - new Date().getTime();
+    let timeToExpire = expirationTime - new Date().getTime();
 
     //Dispatch sign out action in time to expire
     setTimeout(() => {
@@ -86,23 +93,27 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 /* Sign in user with email/password.
-   Also get user's cart and orders onced successfully signed in */
+   Also get user's cart and orders once successfully signed in */
 export const signIn = (email, password) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(authStart());
     const authData = {
       email: email,
       password: password,
     };
-    await axios
-      .post('/auth/login', authData)
+    return axios
+      .post('/auth/signin', authData)
       .then((res) => {
         //Successful authentication, get user's data here
         dispatch(authSuccess(res.data));
       })
       .catch((err) => {
         dispatch(setErroredAction(actionDisplays.SIGN_IN));
-        dispatch(signInFailed(err.response.data.error));
+        if (err.response) {
+          dispatch(signInFailed(err.response.data.error));
+        } else {
+          dispatch(signInFailed(null));
+        }
       });
   };
 };
@@ -115,15 +126,19 @@ export const signUp = (email, password) => {
       email: email,
       password: password,
     };
-    axios
-      .post('/auth/register', authData)
+    return axios
+      .post('/auth/signup', authData)
       .then((res) => {
         //Successful authentication, get user's data here
         dispatch(authSuccess(res.data));
       })
       .catch((err) => {
         dispatch(setErroredAction(actionDisplays.SIGN_UP));
-        dispatch(signUpFailed(err.response.data.error));
+        if (err.response) {
+          dispatch(signUpFailed(err.response.data.error));
+        } else {
+          dispatch(signUpFailed(null));
+        }
       });
   };
 };
@@ -131,19 +146,9 @@ export const signUp = (email, password) => {
 /* Initialize application upon app load */
 export const initApp = () => {
   return (dispatch) => {
-    const emptyCart = { items: {}, pizzaHashMap: {}, quantity: 0 };
-    let localCart = null;
-    try {
-      localCart = secureStorage.getItem('cart');
-    } catch (error) {
-      secureStorage.setItem('cart', emptyCart);
-    }
+    getOrCreateLocalCart();
 
-    if (!localCart) {
-      secureStorage.setItem('cart', emptyCart);
-    }
-
-    axios
+    return axios
       .get('/auth/me')
       .then((res) => {
         //Successful authentication, get user's data here

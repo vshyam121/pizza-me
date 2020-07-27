@@ -41,8 +41,10 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
     render() {
       if (
-        this.props.erroredAction === SIGN_IN ||
-        this.props.erroredAction === SIGN_UP
+        this.state.error &&
+        this.state.error.message !== 'Network Error' &&
+        (this.props.erroredAction === SIGN_IN ||
+          this.props.erroredAction === SIGN_UP)
       ) {
         return <WrappedComponent {...this.props} />;
       }
