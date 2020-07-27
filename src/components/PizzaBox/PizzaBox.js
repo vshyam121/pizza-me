@@ -14,7 +14,7 @@ const PizzaBox = (props) => {
   const handleAddToCart = () => {
     let pizza = { ...props.pizza };
     pizza.crust = getCrust(pizza.crust);
-    props.addToCart(normalizePizza(pizza), props.quantity);
+    props.addToCart(props.userId, normalizePizza(pizza), props.quantity);
     props.resetState();
   };
 

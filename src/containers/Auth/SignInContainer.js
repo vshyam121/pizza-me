@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signIn } from '../../store/auth/authActions/authActions';
+import { signIn, authReset } from '../../store/auth/authActions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SignIn from '../../components/SignIn/SignIn';
@@ -55,6 +55,10 @@ class SignInContainer extends Component {
     this.setState(stateUpdate);
   };
 
+  componentWillUnmount() {
+    this.props.authReset();
+  }
+
   render() {
     return (
       <SignIn
@@ -68,15 +72,15 @@ class SignInContainer extends Component {
 }
 
 SignInContainer.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.object,
+  loadingUser: PropTypes.bool,
+  error: PropTypes.string,
   isAuthenticated: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
+  loadingUser: state.auth.loadingUser,
   error: state.auth.signInError,
-  isAuthenticated: state.auth.idToken,
+  isAuthenticated: state.auth.userId,
 });
 
-export default connect(mapStateToProps, { signIn })(SignInContainer);
+export default connect(mapStateToProps, { signIn, authReset })(SignInContainer);

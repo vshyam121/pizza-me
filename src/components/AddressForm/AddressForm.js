@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 class AddressForm extends Component {
   constructor(props) {
     super(props);
-    this.props.validateAddressReset();
+    this.props.validateDeliveryAddressReset();
   }
 
   componentDidUpdate() {

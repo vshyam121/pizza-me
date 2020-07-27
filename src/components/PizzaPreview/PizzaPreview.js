@@ -42,57 +42,53 @@ class PizzaPreview extends Component {
         ) : null}
         <img className='pizza-preview__property' src={Cheese} alt='Cheese' />
         {this.props.pizza[MEATS] &&
-          Object.entries(this.props.pizza[MEATS]).map(
-            ([meat, selectedMeatProps]) => {
-              let src = null;
-              if (selectedMeatProps.amount === EXTRA_TOPPING) {
-                src = meatImageMapping[meat].previewExtra;
-              } else {
-                src = meatImageMapping[meat].preview;
-              }
-
-              let imgClassNames = ['pizza-preview__property'];
-              if (selectedMeatProps.portion === LEFT_HALF) {
-                imgClassNames.push('pizza-preview__property--left');
-              } else if (selectedMeatProps.portion === RIGHT_HALF) {
-                imgClassNames.push('pizza-preview__property--right');
-              }
-              return (
-                <img
-                  key={meat}
-                  className={imgClassNames.join(' ')}
-                  src={src}
-                  alt={meat}
-                />
-              );
+          this.props.pizza[MEATS].map((meat) => {
+            let src = null;
+            if (meat.amount === EXTRA_TOPPING) {
+              src = meatImageMapping[meat.toppingName].previewExtra;
+            } else {
+              src = meatImageMapping[meat.toppingName].preview;
             }
-          )}
+
+            let imgClassNames = ['pizza-preview__property'];
+            if (meat.portion === LEFT_HALF) {
+              imgClassNames.push('pizza-preview__property--left');
+            } else if (meat.portion === RIGHT_HALF) {
+              imgClassNames.push('pizza-preview__property--right');
+            }
+            return (
+              <img
+                key={meat.toppingName}
+                className={imgClassNames.join(' ')}
+                src={src}
+                alt={meat.toppingName}
+              />
+            );
+          })}
         {this.props.pizza[VEGGIES] &&
-          Object.entries(this.props.pizza[VEGGIES]).map(
-            ([veggy, selectedVeggyProps]) => {
-              let src = null;
-              if (selectedVeggyProps.amount === EXTRA_TOPPING) {
-                src = veggiesImageMapping[veggy].previewExtra;
-              } else {
-                src = veggiesImageMapping[veggy].preview;
-              }
-
-              let imgClassNames = ['pizza-preview__property'];
-              if (selectedVeggyProps.portion === LEFT_HALF) {
-                imgClassNames.push('pizza-preview__property--left');
-              } else if (selectedVeggyProps.portion === RIGHT_HALF) {
-                imgClassNames.push('pizza-preview__property--right');
-              }
-              return (
-                <img
-                  key={veggy}
-                  className={imgClassNames.join(' ')}
-                  src={src}
-                  alt={veggy}
-                />
-              );
+          this.props.pizza[VEGGIES].map((veggy) => {
+            let src = null;
+            if (veggy.amount === EXTRA_TOPPING) {
+              src = veggiesImageMapping[veggy.toppingName].previewExtra;
+            } else {
+              src = veggiesImageMapping[veggy.toppingName].preview;
             }
-          )}
+
+            let imgClassNames = ['pizza-preview__property'];
+            if (veggy.portion === LEFT_HALF) {
+              imgClassNames.push('pizza-preview__property--left');
+            } else if (veggy.portion === RIGHT_HALF) {
+              imgClassNames.push('pizza-preview__property--right');
+            }
+            return (
+              <img
+                key={veggy.toppingName}
+                className={imgClassNames.join(' ')}
+                src={src}
+                alt={veggy.toppingName}
+              />
+            );
+          })}
       </div>
     );
   }

@@ -16,22 +16,23 @@ class CartContainer extends Component {
 }
 
 CartContainer.propTypes = {
-  items: PropTypes.object.isRequired,
-  loadingCart: PropTypes.bool,
+  items: PropTypes.array.isRequired,
+  loadingUser: PropTypes.bool.isRequired,
   loadingCartItem: PropTypes.bool,
-  itemBeingChanged: PropTypes.object,
-  getCartError: PropTypes.bool,
-  isAuthenticated: PropTypes.string,
-  cartId: PropTypes.string,
+  itemIdBeingChanged: PropTypes.string,
+  userId: PropTypes.string,
+  signInError: PropTypes.string,
+  signUpError: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
-  loadingCart: state.cart.loadingCart,
+  loadingUser: state.auth.loadingUser,
   loadingCartItem: state.cart.loadingCartItem,
-  itemBeingChanged: state.cart.itemBeingChanged,
-  getCartError: state.cart.getCartError,
-  isAuthenticated: state.auth.idToken,
+  itemIdBeingChanged: state.cart.itemIdBeingChanged,
+  userId: state.auth.userId,
+  signInError: state.auth.signInError,
+  signUpError: state.auth.signUpError,
 });
 
 export default connect(mapStateToProps, {

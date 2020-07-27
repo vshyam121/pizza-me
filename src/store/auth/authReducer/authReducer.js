@@ -1,51 +1,55 @@
 import * as actionTypes from '../authActionTypes';
 
 export const initialState = {
-  idToken: null,
   userId: null,
   signInError: null,
   signUpError: null,
-  loading: false,
+  loadingUser: false,
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    //set loading to true and reset error
+    //Set loading to true and reset error
     case actionTypes.AUTH_START:
       return {
         ...state,
         signInError: null,
         signUpError: null,
-        loading: true,
+        loadingUser: true,
       };
-    //successfully authenticated
+    //Reset auth errors
+    case actionTypes.AUTH_RESET:
+      return {
+        ...state,
+        signInError: null,
+        signUpError: null,
+      };
+    //Successfully authenticated
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
-        loading: false,
-        idToken: action.idToken,
+        loadingUser: false,
         userId: action.userId,
         signInError: null,
       };
-    //set error and reset loading when sign in failed
+    //Set error and reset loading when sign in failed
     case actionTypes.SIGN_IN_FAILED:
       return {
         ...state,
-        loading: false,
+        loadingUser: false,
         signInError: action.error,
       };
-    //set error and reset loading when sign up failed
+    //Set error and reset loading when sign up failed
     case actionTypes.SIGN_UP_FAILED:
       return {
         ...state,
-        loading: false,
+        loadingUser: false,
         signUpError: action.error,
       };
-    //reset user data on signout
+    //Reset user data on signout
     case actionTypes.AUTH_SIGNOUT:
       return {
         ...state,
-        idToken: null,
         userId: null,
       };
     default:

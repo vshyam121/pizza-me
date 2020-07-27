@@ -39,25 +39,25 @@ const PizzaDescription = (props) => {
 
   const getToppingDescriptions = (toppings) => {
     let toppingDescriptions = [];
-    Object.entries(toppings).forEach(([topping, toppingProps]) => {
+    toppings.forEach((topping) => {
       let toppingDescription = '';
-      if (toppingProps.portion === LEFT_HALF) {
+      if (topping.portion === LEFT_HALF) {
         toppingDescription += 'Left Half ';
-      } else if (toppingProps.portion === RIGHT_HALF) {
+      } else if (topping.portion === RIGHT_HALF) {
         toppingDescription += 'Right Half ';
       }
 
-      if (toppingProps.amount === EXTRA_TOPPING) {
+      if (topping.amount === EXTRA_TOPPING) {
         toppingDescription += 'Extra ';
       }
-      toppingDescriptions.push(toppingDescription + topping);
+      toppingDescriptions.push(toppingDescription + topping.toppingName);
     });
 
     return toppingDescriptions;
   };
 
-  let meats = props.pizza[MEATS] || {};
-  let veggies = props.pizza[VEGGIES] || {};
+  let meats = props.pizza[MEATS];
+  let veggies = props.pizza[VEGGIES];
 
   let toppings = [
     ...getToppingDescriptions(meats),
@@ -86,7 +86,7 @@ const PizzaDescription = (props) => {
     );
   } else if (props.order) {
     overallPrice = (
-      <h2 className='description__price--order'>${overallPrice}</h2>
+      <h3 className='description__price--order'>${overallPrice}</h3>
     );
     quantity = `${props.quantity} `;
     if (props.quantity > 1) {

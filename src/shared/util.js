@@ -25,21 +25,9 @@ import { middleware } from '../store/store';
 import { CLASSIC_MARINARA, REGULAR_SAUCE } from '../metadata/sauceMetadata';
 import { REGULAR_CHEESE } from '../metadata/cheeseMetadata';
 import { NO_CRUST_FLAVOR } from '../metadata/crustFlavorMetadata';
+import { secureStorage } from '../shared/secureStorage';
 
 /* Utility functions used across multiple components/containers */
-
-/* Get display message for error code related to authentication */
-export const lookupErrorCode = (errorCode) => {
-  if (errorCode === 'INVALID_PASSWORD' || errorCode === 'EMAIL_NOT_FOUND') {
-    return 'The username or password you entered is incorrect.';
-  } else if (errorCode.includes('TOO_MANY_ATTEMPTS_TRY_LATER')) {
-    return "You've made too many unsuccessful attempts. Please try again later.";
-  } else if (errorCode === 'EMAIL_EXISTS') {
-    return 'The email you entered is already taken. Please try another one.';
-  } else {
-    return 'There was an error submitting your credentials.';
-  }
-};
 
 /* calculate price of a pizza, given its size, crust, toppings and various other properties */
 export const calculatePrice = (pizza) => {
@@ -69,22 +57,20 @@ const getToppingsPrice = (pizza, toppingType, combo) => {
   let toppings = pizza[toppingType];
   let toppingsPrice = 0;
   toppings &&
-    Object.entries(toppings).forEach(([topping, toppingProps]) => {
+    toppings.forEach((topping) => {
       const comboIncludesTopping =
         combo &&
-        Object.keys(toppingMapping[pizza[COMBO_NAME]][toppingType]).includes(
-          topping
+        toppingMapping[pizza[COMBO_NAME]][toppingType].find(
+          (comboTopping) => comboTopping === topping.topping
         );
+
       if (!comboIncludesTopping || !combo) {
-        if (toppingProps.amount === EXTRA_TOPPING) {
+        if (topping.amount === EXTRA_TOPPING) {
           toppingsPrice += extraToppingPrice;
         } else {
           toppingsPrice += toppingPrice;
         }
-      } else if (
-        comboIncludesTopping &&
-        toppingProps.amount === EXTRA_TOPPING
-      ) {
+      } else if (comboIncludesTopping && topping.amount === EXTRA_TOPPING) {
         toppingsPrice += extraToppingPrice - toppingPrice;
       }
     });
@@ -95,11 +81,8 @@ const getToppingsPrice = (pizza, toppingType, combo) => {
 /* Calculate the sum of the price of all pizzas in cart before tax */
 export const calculateSubTotal = (items) => {
   let subTotal = 0;
-  Object.values(items).forEach((item) => {
-    let price = item.pizza.price;
-    if (!price) {
-      price = calculatePrice(item.pizza);
-    }
+  items.forEach((item) => {
+    const price = calculatePrice(item.pizza);
     subTotal += price * item.quantity;
   });
   return subTotal.toFixed(2);
@@ -185,22 +168,6 @@ export const normalizePizza = (pizza) => {
     pizza[CRUST_FLAVOR] = NO_CRUST_FLAVOR;
   }
 
-  //Need to delete empty objects because firebase disregards properties with empty objects
-  if (
-    pizza.meats &&
-    Object.keys(pizza.meats).length === 0 &&
-    pizza.meats.constructor === Object
-  ) {
-    delete pizza.meats;
-  }
-  if (
-    pizza.veggies &&
-    Object.keys(pizza.veggies).length === 0 &&
-    pizza.veggies.constructor === Object
-  ) {
-    delete pizza.veggies;
-  }
-
   return {
     [CHEESE_AMOUNT]: pizza[CHEESE_AMOUNT],
     [COMBO_NAME]: pizza[COMBO_NAME],
@@ -213,4 +180,21 @@ export const normalizePizza = (pizza) => {
     [SIZE]: pizza[SIZE],
     [VEGGIES]: pizza[VEGGIES],
   };
+};
+
+export const getOrCreateLocalCart = () => {
+  const emptyCart = { items: {}, pizzaHashMap: {}, quantity: 0 };
+  let localCart = null;
+  try {
+    localCart = secureStorage.getItem('cart');
+  } catch (error) {
+    secureStorage.setItem('cart', emptyCart);
+    localCart = emptyCart;
+  }
+
+  if (!localCart) {
+    secureStorage.setItem('cart', emptyCart);
+    localCart = emptyCart;
+  }
+  return localCart;
 };

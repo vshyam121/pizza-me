@@ -31,12 +31,13 @@ const ToppingOptions = (props) => {
   return (
     <div className='builder-list'>
       {Object.keys(props.imageMapping).map((topping) => {
-        const selected = Object.keys(props.itemsSelected).includes(topping);
+        const selection = props.itemsSelected.find(
+          (itemSelected) => itemSelected.toppingName === topping
+        );
         let checkMark = null;
         let toppingOptionClasses = ['topping-option'];
         let amountOptions = null;
         let portionOptions = null;
-        let selection = props.itemsSelected[topping];
         toppingOptionClasses.push('topping-option--selected');
         amountOptions = (
           <div className='topping-option__amount'>
@@ -77,7 +78,7 @@ const ToppingOptions = (props) => {
             </div>
           </div>
         );
-        if (selected) {
+        if (selection) {
           checkMark = <FaCheckCircle className='topping-option__checkmark' />;
 
           let wholeSelection = selection.portion === WHOLE;

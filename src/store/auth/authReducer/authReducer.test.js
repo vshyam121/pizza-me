@@ -13,51 +13,48 @@ describe('Auth Reducer', () => {
     const testPayload = {
       type: actionTypes.AUTH_START,
     };
-    const newState = authReducer(
-      { ...initialState, signInError: {}, signUpError: {} },
-      testPayload
-    );
+
+    const inputInitialState = {
+      ...initialState,
+      signInError: 'test sign in error',
+      signUpError: 'test sign up error',
+    };
+
+    const newState = authReducer(inputInitialState, testPayload);
 
     const expectedState = {
-      idToken: null,
-      userId: null,
-      signInError: null,
-      signUpError: null,
-      loading: true,
+      ...initialState,
+      loadingUser: true,
     };
+
     expect(newState).toStrictEqual(expectedState);
   });
 
   it('Should return correct new state if receiving type AUTH_SUCCESS', () => {
     const testPayload = {
       type: actionTypes.AUTH_SUCCESS,
-      idToken: 'test id token',
       userId: 'test user id',
     };
     const newState = authReducer(initialState, testPayload);
     const expectedState = {
-      idToken: testPayload.idToken,
+      ...initialState,
       userId: testPayload.userId,
-      signInError: null,
-      signUpError: null,
-      loading: false,
     };
+
     expect(newState).toStrictEqual(expectedState);
   });
 
   it('Should return correct new state if receiving type SIGN_IN_FAILED', () => {
     const testPayload = {
       type: actionTypes.SIGN_IN_FAILED,
-      error: { test },
+      error: 'test error',
     };
     const newState = authReducer(initialState, testPayload);
 
     const expectedState = {
-      idToken: null,
-      userId: null,
+      ...initialState,
       signInError: testPayload.error,
-      signUpError: null,
-      loading: false,
+      loadingUser: false,
     };
     expect(newState).toStrictEqual(expectedState);
   });
@@ -65,27 +62,31 @@ describe('Auth Reducer', () => {
   it('Should return correct new state if receiving type SIGN_UP_FAILED', () => {
     const testPayload = {
       type: actionTypes.SIGN_UP_FAILED,
-      error: { test },
+      error: 'test error',
     };
     const newState = authReducer(initialState, testPayload);
 
     const expectedState = {
-      idToken: null,
-      userId: null,
-      signInError: null,
+      ...initialState,
       signUpError: testPayload.error,
-      loading: false,
+      loadingUser: false,
     };
     expect(newState).toStrictEqual(expectedState);
   });
 
   it('Should return correct new state if receiving type AUTH_SIGNOUT', () => {
-    const newState = authReducer(
-      { ...initialState, idToken: 'test id token', userId: 'test user id' },
-      {
-        type: actionTypes.AUTH_SIGNOUT,
-      }
-    );
+    const inputInitialState = {
+      ...initialState,
+      userId: 'test user id',
+    };
+    const newState = authReducer(inputInitialState, {
+      type: actionTypes.AUTH_SIGNOUT,
+    });
+
+    const expectedState = {
+      ...initialState,
+      userId: null,
+    };
 
     expect(newState).toStrictEqual(initialState);
   });

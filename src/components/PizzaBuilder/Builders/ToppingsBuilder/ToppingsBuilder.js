@@ -31,7 +31,7 @@ class ToppingsBuilder extends Component {
             onClickAmount={(e) => this.props.onClickAmount(e, MEATS)}
             onClickPortion={(e) => this.props.onClickPortion(e, MEATS)}
             imageMapping={meatImageMapping}
-            itemsSelected={this.props.pizza[MEATS] || {}} //Need to add empty object because firebase doesn't store empty objects
+            itemsSelected={this.props.pizza[MEATS]}
           />
         </React.Fragment>
       );
@@ -43,7 +43,7 @@ class ToppingsBuilder extends Component {
             onClickAmount={(e) => this.props.onClickAmount(e, VEGGIES)}
             onClickPortion={(e) => this.props.onClickPortion(e, VEGGIES)}
             imageMapping={veggiesImageMapping}
-            itemsSelected={this.props.pizza[VEGGIES] || {}} //Need to add empty object because firebase doesn't store empty objects
+            itemsSelected={this.props.pizza[VEGGIES]}
           />
         </React.Fragment>
       );

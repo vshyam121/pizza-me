@@ -25,11 +25,16 @@ const PizzaBuilder = (props) => {
 
   /* Toggle given topping on current pizza */
   const handleClickTopping = (event, property) => {
-    props.toggleTopping(property, event.currentTarget.dataset.value);
+    props.toggleTopping(
+      props.pizza,
+      property,
+      event.currentTarget.dataset.value
+    );
   };
 
   const handleClickAmount = (event, property) => {
     props.setToppingAmount(
+      props.pizza,
       property,
       event.currentTarget.dataset.topping,
       event.currentTarget.dataset.value
@@ -38,6 +43,7 @@ const PizzaBuilder = (props) => {
 
   const handleClickPortion = (event, property) => {
     props.setToppingPortion(
+      props.pizza,
       property,
       event.currentTarget.dataset.topping,
       event.currentTarget.dataset.value
@@ -46,13 +52,19 @@ const PizzaBuilder = (props) => {
 
   /* Add current pizza to cart and close pizza builder */
   const handleAddToCart = (quantity) => {
-    props.addToCart(normalizePizza(props.pizza), quantity);
+    props.addToCart(props.userId, normalizePizza(props.pizza), quantity);
     props.handleCloseBuilder();
   };
 
   /* Save current pizza to cart and close pizza builder */
   const handleSaveToCart = (quantity) => {
-    props.saveToCart(normalizePizza(props.pizza), quantity, props.itemId);
+    props.saveToCart(
+      props.userId,
+      normalizePizza(props.pizza),
+      quantity,
+      props.cartQuantity,
+      props.itemId
+    );
     props.handleCloseBuilder();
   };
 
@@ -90,6 +102,7 @@ const PizzaBuilder = (props) => {
   } else if (props.stage === TOPPINGS) {
     /* set ToppingsBuilder for TOPPINGS stage
        and appropriate back button */
+
     builder = (
       <ToppingsBuilder
         pizza={props.pizza}
