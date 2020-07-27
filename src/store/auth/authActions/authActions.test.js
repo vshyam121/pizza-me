@@ -1,6 +1,8 @@
 import moxios from 'moxios';
 import * as actions from './authActions';
 import * as actionTypes from '../authActionTypes';
+import * as cartActionTypes from '../../cart/cartActionTypes';
+import * as checkoutActionTypes from '../../checkout/checkoutActionTypes';
 import configureMockStore from 'redux-mock-store';
 import { middleware } from '../../store';
 import axios from '../../../shared/axiosAPI';
@@ -16,7 +18,7 @@ describe('Sign in action', () => {
     moxios.uninstall();
   });
 
-  test('Store is updated correctly', () => {
+  test('Auth success action dispatched', () => {
     const mockResponse = {
       user: { _id: 'test user id', cart: { _id: 'test cart id' } },
       expires: new Date().getTime(),
@@ -40,7 +42,6 @@ describe('Sign in action', () => {
       .dispatch(actions.signIn('test email', 'test password'))
       .then(() => {
         const newActions = store.getActions();
-        console.log(newActions);
         expect(newActions).toEqual(expect.arrayContaining(expectedActions));
       });
   });
@@ -55,7 +56,7 @@ describe('Sign up action', () => {
     moxios.uninstall();
   });
 
-  test('Store is updated correctly', () => {
+  test('Auth success action dispatched', () => {
     const mockResponse = {
       user: {
         _id: 'test user id',
@@ -82,7 +83,6 @@ describe('Sign up action', () => {
       .dispatch(actions.signUp('test email', 'test password'))
       .then(() => {
         const newActions = store.getActions();
-        console.log(newActions);
         expect(newActions).toEqual(expect.arrayContaining(expectedActions));
       });
   });
@@ -97,7 +97,7 @@ describe('Init app action', () => {
     moxios.uninstall();
   });
 
-  test('Store is updated correctly', () => {
+  test('Auth success action dispatched', () => {
     const mockResponse = {
       user: {
         _id: 'test user id',
@@ -121,14 +121,83 @@ describe('Init app action', () => {
 
     return store.dispatch(actions.initApp()).then(() => {
       const newActions = store.getActions();
-      console.log(newActions);
       expect(newActions).toEqual(expect.arrayContaining(expectedActions));
     });
   });
 });
 
+describe('Sign out action', () => {
+  beforeEach(() => {
+    moxios.install(axios);
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  test('Sign out action dispatched for cart and auth', () => {
+    const store = mockStore({});
+
+    moxios.stubRequest('/auth/signout', {
+      status: 200,
+    });
+
+    const expectedActions = [
+      { type: cartActionTypes.SIGN_OUT_CART },
+      {
+        type: actionTypes.AUTH_SIGNOUT,
+      },
+    ];
+
+    return store.dispatch(actions.signOut()).then(() => {
+      const newActions = store.getActions();
+      expect(newActions).toEqual(expectedActions);
+    });
+  });
+});
+
+describe('Auth success action', () => {
+  beforeEach(() => {
+    moxios.install(axios);
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  test('Auth success action dispatched', () => {
+    const store = mockStore({});
+
+    const authData = {
+      user: {
+        _id: 'test user id',
+        cart: { _id: 'test cart id', items: ['test item'], quantity: 1 },
+      },
+    };
+    const expectedActions = [
+      {
+        type: actionTypes.AUTH_SUCCESS,
+        userId: authData.user._id,
+      },
+      {
+        type: cartActionTypes.SET_CART_ITEMS,
+        cartId: authData.user.cart._id,
+        items: authData.user.cart.items,
+        quantity: authData.user.cart.quantity,
+      },
+      {
+        type: checkoutActionTypes.GET_ORDERS_START,
+      },
+    ];
+
+    store.dispatch(actions.authSuccess(authData));
+    const newActions = store.getActions();
+    expect(newActions).toEqual(expectedActions);
+  });
+});
+
 describe('Auth start action', () => {
-  test('Store is updated correctly', () => {
+  test('Auth start action dispatched', () => {
     const store = mockStore({});
 
     const expectedActions = [
@@ -144,7 +213,7 @@ describe('Auth start action', () => {
 });
 
 describe('Auth reset action', () => {
-  test('Store is updated correctly', () => {
+  test('Auth reset action dispatched', () => {
     const store = mockStore({});
 
     const expectedActions = [
@@ -160,7 +229,7 @@ describe('Auth reset action', () => {
 });
 
 describe('Sign in failed action', () => {
-  test('Store is updated correctly', () => {
+  test('Sign in failed action dispatched', () => {
     const store = mockStore({});
 
     const error = 'error';
@@ -173,6 +242,25 @@ describe('Sign in failed action', () => {
     ];
 
     store.dispatch(actions.signInFailed(error));
+    const newActions = store.getActions();
+    expect(newActions).toEqual(expectedActions);
+  });
+});
+
+describe('Sign up failed action', () => {
+  test('Sign up failed action dispatched', () => {
+    const store = mockStore({});
+
+    const error = 'error';
+
+    const expectedActions = [
+      {
+        type: actionTypes.SIGN_UP_FAILED,
+        error: error,
+      },
+    ];
+
+    store.dispatch(actions.signUpFailed(error));
     const newActions = store.getActions();
     expect(newActions).toEqual(expectedActions);
   });

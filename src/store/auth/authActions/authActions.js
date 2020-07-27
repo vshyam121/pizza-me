@@ -69,7 +69,7 @@ export const signUpFailed = (error) => {
 /* Clear user data and cart on sign out */
 export const signOut = () => {
   return (dispatch) => {
-    axios.post('/auth/signout', {}).then(() => {
+    return axios.post('/auth/signout', {}).then(() => {
       dispatch(signOutCart());
 
       dispatch({
