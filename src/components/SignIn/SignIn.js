@@ -2,7 +2,6 @@ import React from 'react';
 import './SignIn.scss';
 import Button, { secondary } from '../../components/UI/Button/Button';
 import { SyncLoader } from 'react-spinners';
-import { lookupErrorCode } from '../../shared/util';
 import { Redirect } from 'react-router-dom';
 import Form from '../../components/UI/Form/Form';
 import { Link } from 'react-router-dom';
@@ -17,7 +16,7 @@ const SignIn = (props) => {
       updateForm={props.updateForm}
     />
   );
-  if (props.loading) {
+  if (props.loadingUser) {
     form = (
       <div className='spinner'>
         <SyncLoader />
@@ -29,7 +28,7 @@ const SignIn = (props) => {
   if (props.error) {
     errorMessage = (
       <div className='form-component__error'>
-        <p>{lookupErrorCode(props.error.message)}</p>
+        <p>{props.error}</p>
       </div>
     );
   }
@@ -69,7 +68,7 @@ const SignIn = (props) => {
 
 SignIn.propTypes = {
   loadingUser: PropTypes.bool,
-  error: PropTypes.object,
+  error: PropTypes.string,
   isAuthenticated: PropTypes.string,
 };
 

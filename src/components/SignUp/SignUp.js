@@ -1,6 +1,5 @@
 import React from 'react';
 import { SyncLoader } from 'react-spinners';
-import { lookupErrorCode } from '../../shared/util';
 import { Redirect } from 'react-router-dom';
 import Form from '../../components/UI/Form/Form';
 import PropTypes from 'prop-types';
@@ -14,7 +13,7 @@ const SignUp = (props) => {
       updateForm={props.updateForm}
     />
   );
-  if (props.loading) {
+  if (props.loadingUser) {
     form = (
       <div className='spinner'>
         <SyncLoader />
@@ -28,7 +27,7 @@ const SignUp = (props) => {
       <div className='form-component__error'>
         <p>
           {props.error === 'Duplicate field value entered'
-            ? 'The email you entered is already taken. Please try another one.'
+            ? 'The email you entered is already taken'
             : props.error}
         </p>
       </div>
@@ -62,7 +61,7 @@ const SignUp = (props) => {
 
 SignUp.propTypes = {
   loadingUser: PropTypes.bool,
-  error: PropTypes.object,
+  error: PropTypes.string,
   isAuthenticated: PropTypes.string,
 };
 

@@ -86,7 +86,7 @@ const PizzaDescription = (props) => {
     );
   } else if (props.order) {
     overallPrice = (
-      <h2 className='description__price--order'>${overallPrice}</h2>
+      <h3 className='description__price--order'>${overallPrice}</h3>
     );
     quantity = `${props.quantity} `;
     if (props.quantity > 1) {

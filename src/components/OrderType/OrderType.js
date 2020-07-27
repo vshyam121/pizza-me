@@ -7,6 +7,7 @@ import AddressFormContainer from '../../containers/AddressFormContainer';
 import Message from '../../components/UI/Message/Message';
 import SignedUpMessage from '../../components/Messages/SignedUpMessage/SignedUpMessage';
 import PropTypes from 'prop-types';
+import { clearDeliveryAddress } from '../../store/checkout/checkoutActions/checkoutActions';
 
 /* Options for choosing either carryout or delivery order */
 class OrderType extends Component {
@@ -18,6 +19,7 @@ class OrderType extends Component {
     if (event.currentTarget.dataset.type === 'Delivery') {
       this.setState({ isDelivery: true });
     } else {
+      this.props.clearDeliveryAddress();
       this.props.history.push('/checkout');
     }
   };
@@ -103,4 +105,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.userId,
 });
 
-export default connect(mapStateToProps, null)(OrderType);
+export default connect(mapStateToProps, { clearDeliveryAddress })(OrderType);
