@@ -19,36 +19,6 @@ describe('CartIcon component', () => {
       const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
       expect(propsErr).toBeUndefined();
     });
-
-    it('Should throw a warning for incorrect numItemsAdded', () => {
-      const expectedProps = {
-        numItemsAdded: 'test',
-        quantity: 0,
-        isAuthenticated: 'test',
-      };
-      const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
-      expect(propsErr).toBeDefined();
-    });
-
-    it('Should throw a warning for incorrect quantity', () => {
-      const expectedProps = {
-        numItemsAdded: 0,
-        quantity: 'test',
-        isAuthenticated: 'test',
-      };
-      const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
-      expect(propsErr).toBeDefined();
-    });
-
-    it('Should throw a warning for incorrect isAuthenticated', () => {
-      const expectedProps = {
-        numItemsAdded: 0,
-        quantity: 'test',
-        isAuthenticated: false,
-      };
-      const propsErr = checkProps(CartIcon.WrappedComponent, expectedProps);
-      expect(propsErr).toBeDefined();
-    });
   });
 
   describe('Have props', () => {

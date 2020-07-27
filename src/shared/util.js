@@ -129,6 +129,12 @@ export const findByTestAttr = (component, attr) => {
   return wrapper;
 };
 
+/* Find an element by element type for unit tests */
+export const findByElementType = (component, elementType) => {
+  const wrapper = component.find(`${elementType}`);
+  return wrapper;
+};
+
 /* Validate prop types for a component */
 export const checkProps = (component, expectedProps) => {
   const propsErr = checkPropTypes(

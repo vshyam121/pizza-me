@@ -34,14 +34,6 @@ describe('Layout component', () => {
       const propsErr = checkProps(Layout, expectedProps);
       expect(propsErr).toBeUndefined();
     });
-
-    it('Should throw a warning for prop children undefined', () => {
-      const expectedProps = {
-        children: undefined,
-      };
-      const propsErr = checkProps(Layout, expectedProps);
-      expect(propsErr).toBeDefined();
-    });
   });
 
   it('Should render without errors', () => {
