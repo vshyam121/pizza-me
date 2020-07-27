@@ -6,17 +6,22 @@ import { SIGN_IN, SIGN_UP } from '../store/ui/actionDisplays';
 /* Axios error handler HOC */
 const withErrorHandler = (WrappedComponent, axios) => {
   class HOComponent extends Component {
+    constructor(props) {
+      super(props);
+      this.requestInterceptor = null;
+      this.responseInterceptor = null;
+    }
     state = {
       error: null,
     };
 
     componentDidMount() {
-      axios.interceptors.request.use((req) => {
+      this.requestInterceptor = axios.interceptors.request.use((req) => {
         this.setState({ error: null });
         return req;
       });
 
-      axios.interceptors.response.use(
+      this.responseInterceptor = axios.interceptors.response.use(
         (res) => res,
         (error) => {
           this.setState({ error: error });
@@ -25,14 +30,21 @@ const withErrorHandler = (WrappedComponent, axios) => {
       );
     }
 
+    componentWillUnmount() {
+      axios.interceptors.request.eject(this.requestInterceptor);
+      axios.interceptors.response.eject(this.responseInterceptor);
+    }
+
     handleModalClosed = () => {
       this.setState({ error: null });
     };
 
     render() {
       if (
-        this.props.erroredAction === SIGN_IN ||
-        this.props.erroredAction === SIGN_UP
+        this.state.error &&
+        this.state.error.message !== 'Network Error' &&
+        (this.props.erroredAction === SIGN_IN ||
+          this.props.erroredAction === SIGN_UP)
       ) {
         return <WrappedComponent {...this.props} />;
       }

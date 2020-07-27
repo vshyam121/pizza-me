@@ -1,4 +1,5 @@
 import * as actionTypes from '../pizzaBuilderActionTypes';
+import { REGULAR_TOPPING, WHOLE } from '../../../metadata/pizzaProperties';
 
 /* Initialize pizza builder with properties of given pizza */
 export const initializePizzaBuilder = (pizza, quantity, itemId) => {
@@ -26,30 +27,77 @@ export const setProperty = (property, value) => {
 };
 
 /* Select/deselect a topping */
-export const toggleTopping = (property, value) => {
+export const toggleTopping = (pizza, property, value) => {
+  let toppings = [...pizza[property]];
+
+  const toppingIndex = toppings.findIndex(
+    (topping) => topping.toppingName === value
+  );
+  if (toppingIndex < 0) {
+    toppings.push({
+      toppingName: value,
+      amount: REGULAR_TOPPING,
+      portion: WHOLE,
+    });
+  } else {
+    toppings.splice(toppingIndex, 1);
+  }
   return {
-    type: actionTypes.TOGGLE_TOPPING,
+    type: actionTypes.SET_PROPERTY,
     property: property,
-    value: value,
+    value: toppings,
   };
 };
 
 /* Set the topping amount, whether regular/extra */
-export const setToppingAmount = (property, topping, value) => {
+export const setToppingAmount = (pizza, property, topping, value) => {
+  let toppings = [...pizza[property]];
+  const toppingIndex = toppings.findIndex(
+    (selectedTopping) => selectedTopping.toppingName === topping
+  );
+
+  if (toppingIndex < 0) {
+    toppings.push({
+      toppingName: topping,
+      amount: value,
+      portion: WHOLE,
+    });
+  } else {
+    toppings[toppingIndex] = {
+      ...toppings[toppingIndex],
+      amount: value,
+    };
+  }
+
   return {
-    type: actionTypes.SET_TOPPING_AMOUNT,
+    type: actionTypes.SET_PROPERTY,
     property: property,
-    topping: topping,
-    value: value,
+    value: toppings,
   };
 };
 
 /* Set the topping portion, whether left/right/whole */
-export const setToppingPortion = (property, topping, value) => {
+export const setToppingPortion = (pizza, property, topping, value) => {
+  let toppings = [...pizza[property]];
+  const toppingIndex = toppings.findIndex(
+    (selectedTopping) => selectedTopping.toppingName === topping
+  );
+
+  if (toppingIndex < 0) {
+    toppings.push({
+      toppingName: topping,
+      amount: REGULAR_TOPPING,
+      portion: value,
+    });
+  } else {
+    toppings[toppingIndex] = {
+      ...toppings[toppingIndex],
+      portion: value,
+    };
+  }
   return {
-    type: actionTypes.SET_TOPPING_PORTION,
+    type: actionTypes.SET_PROPERTY,
     property: property,
-    topping: topping,
-    value: value,
+    value: toppings,
   };
 };

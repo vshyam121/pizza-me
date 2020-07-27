@@ -50,102 +50,112 @@ export const COMBO = 'Combo';
 
 export const toppingMapping = {
   [CHEESE]: {
-    [MEATS]: {},
-    [VEGGIES]: {},
+    [MEATS]: [],
+    [VEGGIES]: [],
   },
   [PEPPERONI_PIZZA]: {
-    [MEATS]: { [PEPPERONI]: { amount: REGULAR_TOPPING, portion: WHOLE } },
-    [VEGGIES]: {},
+    [MEATS]: [
+      { toppingName: PEPPERONI, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [],
   },
   [MEAT_LOVER]: {
-    [MEATS]: {
-      [PEPPERONI]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [HAM]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [PORK]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [BEEF]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [ITALIAN_SAUSAGE]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [BACON]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
-    [VEGGIES]: {},
+    [MEATS]: [
+      { toppingName: PEPPERONI, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: HAM, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: PORK, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: BEEF, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: ITALIAN_SAUSAGE, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: BACON, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [],
   },
   [PEPPERONI_LOVER]: {
-    [MEATS]: { [PEPPERONI]: { amount: EXTRA_TOPPING, portion: WHOLE } },
-    [VEGGIES]: {},
+    [MEATS]: [
+      { toppingName: PEPPERONI, amount: EXTRA_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [],
   },
   [SUPREME]: {
-    [MEATS]: {
-      [PEPPERONI]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [PORK]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [BEEF]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
-    [VEGGIES]: {
-      [MUSHROOMS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [BELL_PEPPERS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [RED_ONIONS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
+    [MEATS]: [
+      { toppingName: PEPPERONI, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: PORK, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: BEEF, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [
+      { toppingName: MUSHROOMS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: BELL_PEPPERS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: RED_ONIONS, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
   },
   [SUPER_SUPREME]: {
-    [MEATS]: {
-      [PEPPERONI]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [PORK]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [BEEF]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [HAM]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [ITALIAN_SAUSAGE]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
-    [VEGGIES]: {
-      [MUSHROOMS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [BELL_PEPPERS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [RED_ONIONS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [OLIVES]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
+    [MEATS]: [
+      { toppingName: PEPPERONI, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: PORK, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: BEEF, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: HAM, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: ITALIAN_SAUSAGE, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [
+      { toppingName: MUSHROOMS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: BELL_PEPPERS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: RED_ONIONS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: OLIVES, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
   },
   [VEGGIE_LOVER]: {
-    [MEATS]: {},
-    [VEGGIES]: {
-      [OLIVES]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [ROMA_TOMATOES]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [BELL_PEPPERS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [MUSHROOMS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [RED_ONIONS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
+    [MEATS]: [],
+    [VEGGIES]: [
+      { toppingName: OLIVES, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: ROMA_TOMATOES, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: BELL_PEPPERS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: MUSHROOMS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: RED_ONIONS, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
   },
   [ULTIMATE_CHEESE_LOVER]: {
     [CHEESE_AMOUNT]: EXTRA_CHEESE,
-    [MEATS]: {},
-    [VEGGIES]: {},
+    [MEATS]: [],
+    [VEGGIES]: [],
   },
   [BUFFALO_CHICKEN]: {
-    [MEATS]: { [GRILLED_CHICKEN]: { amount: REGULAR_TOPPING, portion: WHOLE } },
-    [VEGGIES]: {
-      [BANANA_PEPPERS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [RED_ONIONS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
-    [SAUCE]: [BUFFALO],
+    [MEATS]: [
+      { toppingName: GRILLED_CHICKEN, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [
+      { toppingName: BANANA_PEPPERS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: RED_ONIONS, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [SAUCE]: BUFFALO,
   },
   [BBQ_CHICKEN]: {
-    [MEATS]: {
-      [BACON]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [GRILLED_CHICKEN]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
-    [VEGGIES]: { [RED_ONIONS]: { amount: REGULAR_TOPPING, portion: WHOLE } },
+    [MEATS]: [
+      { toppingName: BACON, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: GRILLED_CHICKEN, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [
+      { toppingName: RED_ONIONS, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
     [SAUCE]: BARBECUE,
   },
   [HAWAIIAN_CHICKEN]: {
-    [MEATS]: {
-      [HAM]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [GRILLED_CHICKEN]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
-    [VEGGIES]: {
-      [BELL_PEPPERS]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [PINEAPPLE]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
+    [MEATS]: [
+      { toppingName: HAM, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: GRILLED_CHICKEN, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [
+      { toppingName: BELL_PEPPERS, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: PINEAPPLE, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
   },
   [CHICKEN_BACON_PARMESAN]: {
-    [MEATS]: {
-      [BACON]: { amount: REGULAR_TOPPING, portion: WHOLE },
-      [GRILLED_CHICKEN]: { amount: REGULAR_TOPPING, portion: WHOLE },
-    },
-    [VEGGIES]: { [ROMA_TOMATOES]: { amount: REGULAR_TOPPING, portion: WHOLE } },
+    [MEATS]: [
+      { toppingName: BACON, amount: REGULAR_TOPPING, portion: WHOLE },
+      { toppingName: GRILLED_CHICKEN, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
+    [VEGGIES]: [
+      { toppingName: ROMA_TOMATOES, amount: REGULAR_TOPPING, portion: WHOLE },
+    ],
     [CRUST_FLAVOR]: TOASTED_PARMESAN,
   },
 };

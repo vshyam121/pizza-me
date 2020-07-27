@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const AccountMenuItems = (props) => {
   let accountMenuItems = (
     <NavigationItem {...props} to='/signin'>
-      <span>Sign In</span>
+      Sign In
     </NavigationItem>
   );
   if (props.isAuthenticated) {

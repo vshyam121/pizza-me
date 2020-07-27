@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AddressForm from '../components/AddressForm/AddressForm';
 import {
-  validateAddress,
-  validateAddressReset,
+  validateDeliveryAddress,
+  validateDeliveryAddressReset,
 } from '../store/checkout/checkoutActions/checkoutActions.js';
 
 class AddressFormContainer extends Component {
@@ -76,7 +76,7 @@ class AddressFormContainer extends Component {
     event.preventDefault();
     this.setState({ formSubmitted: true });
     if (this.state.formIsValid) {
-      this.props.validateAddress(this.state.form);
+      this.props.validateDeliveryAddress(this.state.form);
     }
   };
 
@@ -109,6 +109,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  validateAddress,
-  validateAddressReset,
+  validateDeliveryAddress,
+  validateDeliveryAddressReset,
 })(AddressFormContainer);

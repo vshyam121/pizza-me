@@ -17,7 +17,7 @@ import OrderType from './components/OrderType/OrderType';
 import CheckoutContainer from './containers/CheckoutContainer';
 import SidebarContainer from './containers/SidebarContainer';
 import OrdersContainer from './containers/OrdersContainer';
-import axiosFirebase from './shared/axiosFirebase';
+import axiosAPI from './shared/axiosAPI';
 import axios from 'axios';
 import withErrorHandler from './hoc/withErrorHandler';
 
@@ -50,5 +50,5 @@ export class App extends Component {
 }
 
 export default connect(null, { initApp })(
-  withErrorHandler(withErrorHandler(App, axiosFirebase), axios)
+  withErrorHandler(withErrorHandler(App, axiosAPI), axios)
 );

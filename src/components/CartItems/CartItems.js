@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 
 /* All cart items to display in cart and order summary pages */
 const CartItems = (props) => {
-  return Object.keys(props.items).map((itemId) => {
-    const item = props.items[itemId];
+  return props.items.map((item) => {
     return (
       <CartItem
-        key={itemId}
-        itemId={itemId}
+        key={item._id}
+        itemId={item._id}
         pizza={item.pizza}
         quantity={item.quantity}
         changeItemQuantity={props.changeItemQuantity}
@@ -17,16 +16,17 @@ const CartItems = (props) => {
         initializePizzaBuilder={props.initializePizzaBuilder}
         checkout={props.checkout}
         loadingCartItem={props.loadingCartItem}
-        itemBeingChanged={props.itemBeingChanged}
+        itemIdBeingChanged={props.itemIdBeingChanged}
+        userId={props.userId}
       />
     );
   });
 };
 
 CartItems.propTypes = {
-  items: PropTypes.objectOf(PropTypes.object).isRequired,
+  items: PropTypes.array.isRequired,
   loadingCartItem: PropTypes.bool,
-  itemBeingChanged: PropTypes.object,
+  itemIdBeingChanged: PropTypes.string,
 };
 
 export default CartItems;

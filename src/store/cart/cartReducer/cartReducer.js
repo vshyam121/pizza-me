@@ -2,132 +2,80 @@ import * as actionTypes from '../cartActionTypes';
 
 export const initialState = {
   cartId: null,
-  userId: null,
-  //key: item id, value: item object (item consists of pizza object and quantity)
-  items: {},
+
+  //Array of cart items
+  //Each item contains a pizza object and item quantity
+  items: [],
+
+  //Cart quantity
   quantity: 0,
-  //hash of pizza object to item id
-  itemHashMap: {},
+
+  //Number of items just added. For item add notification.
   numItemsAdded: 0,
-  loadingCart: false,
+
+  //Loading true when changing a cart item. i.e. update or remove
   loadingCartItem: false,
-  getCartError: false,
-  itemBeingChanged: null,
+
+  //Item id of item being changed to know which item to show loading sign
+  itemIdBeingChanged: null,
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    //set cart id and user id once cart has been created
-    case actionTypes.CREATE_CART:
-      return {
-        ...state,
-        cartId: action.cartId,
-        userId: action.userId,
-      };
-    //add item to cart, update pizza to item id hashmap and quantity
+    //Add item to cart, update pizza to item id hashmap and quantity
     case actionTypes.ADD_TO_CART:
       return {
         ...state,
         items: action.items,
         quantity: action.quantity,
-        itemHashMap: action.itemHashMap,
         numItemsAdded: action.numItemsAdded,
       };
-    //set loading before getting cart
-    case actionTypes.GET_CART_START:
-      return {
-        ...state,
-        loadingCart: true,
-        getCartError: false,
-      };
-    //finish loading when getting cart failed
-    case actionTypes.GET_CART_FAILED:
-      return {
-        ...state,
-        loadingCart: false,
-        getCartError: true,
-      };
-    //successfully got cart for user, set cart metadata
-    case actionTypes.GET_CART_SUCCESS:
-      return {
-        ...state,
-        cartId: action.cartId,
-        userId: action.userId,
-        items: action.items,
-        quantity: action.quantity,
-        itemHashMap: action.itemHashMap,
-        loadingCart: false,
-      };
-    //clear cart after logging out
-    case actionTypes.CLEAR_CART:
-      return {
-        ...state,
-        cartId: null,
-        userId: null,
-        items: {},
-        quantity: 0,
-        itemHashMap: {},
-        numItemsAdded: 0,
-      };
-    //set cart items
+    //Set cart items
     case actionTypes.SET_CART_ITEMS:
       return {
         ...state,
+        cartId: action.cartId,
         items: action.items,
         quantity: action.quantity,
-        itemHashMap: action.itemHashMap,
       };
-    //change item quantity
-    case actionTypes.CHANGE_ITEM_QUANTITY:
+    //Change item quantity
+    case actionTypes.CHANGE_CART_ITEM_SUCCESS:
       return {
         ...state,
         items: action.items,
         quantity: action.quantity,
-        numItemsAdded: action.numItemsAdded,
         loadingCartItem: false,
       };
-    //set loading before changing cart item
+    //Set loading before changing cart item
     case actionTypes.CHANGE_CART_ITEM_START:
       return {
         ...state,
         loadingCartItem: true,
-        itemBeingChanged: action.itemBeingChanged,
+        itemIdBeingChanged: action.itemIdBeingChanged,
       };
-    //failed to change cart item, done loading
+    //Failed to change cart item, done loading
     case actionTypes.CHANGE_CART_ITEM_FAILED:
       return {
         ...state,
         loadingCartItem: false,
-        itemBeingChanged: null,
+        itemIdBeingChanged: null,
       };
-    //update cart metadata with removed item
-    case actionTypes.REMOVE_ITEM_SUCCESS:
-      return {
-        ...state,
-        items: action.items,
-        itemHashMap: action.itemHashMap,
-        quantity: action.quantity,
-        loadingCartItem: false,
-        itemBeingChanged: null,
-      };
-    //save item to list of items and update quantity
-    case actionTypes.SAVE_TO_CART:
-      return {
-        ...state,
-        items: action.items,
-        itemHashMap: action.itemHashMap,
-        quantity: action.quantity,
-        numItemsAdded: action.numItemsAdded,
-        loadingCartItem: false,
-      };
-    //empty cart and all metadata
+    //Empty cart and all metadata
     case actionTypes.EMPTY_CART:
       return {
         ...state,
-        items: {},
+        items: [],
         quantity: 0,
         numItemsAdded: 0,
-        itemHashMap: {},
+      };
+    //Clear cart after signing out
+    case actionTypes.SIGN_OUT_CART:
+      return {
+        ...state,
+        cartId: null,
+        items: [],
+        quantity: 0,
+        numItemsAdded: 0,
       };
     default:
       return state;

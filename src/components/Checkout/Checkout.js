@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Checkout.scss';
 import CartItems from '../../components/CartItems/CartItems';
 import Button, { primary } from '../../components/UI/Button/Button';
 import { calculateSubTotal, calculateTax } from '../../shared/util';
@@ -9,12 +10,13 @@ import PropTypes from 'prop-types';
 /* Order summary and ability to submit an order */
 class Checkout extends Component {
   handleSubmitOrder = (total) => {
-    if (this.props.idToken) {
+    if (this.props.userId) {
       this.props.submitOrder(
         total,
         this.props.items,
-        this.props.idToken,
-        this.props.userId
+        this.props.deliveryAddress,
+        this.props.userId,
+        this.props.cartId
       );
     }
   };
@@ -73,20 +75,21 @@ class Checkout extends Component {
             checkout
             items={this.props.items}
             loadingCartItem={this.props.loadingCartItem}
-            itemBeingChanged={this.props.itemBeingChanged}
+            itemIdBeingChanged={this.props.itemIdBeingChanged}
+            userId={this.props.userId}
           />
           <div className='item-list__bottom'>
-            {deliveryAddress}
+            <div className='delivery-address'>{deliveryAddress}</div>
             <div className='totals'>
               <div className='totals__line-items'>
                 <div className='totals__line-item'>
-                  <h3>Subtotal:</h3> <h3>${subTotal}</h3>
+                  <h4>Subtotal:</h4> <h4>${subTotal}</h4>
                 </div>
                 <div className='totals__line-item'>
-                  <h3>Tax:</h3> <h3>${tax}</h3>
+                  <h4>Tax:</h4> <h4>${tax}</h4>
                 </div>
                 <div className='totals__line-item'>
-                  <h3>Total:</h3> <h3>${total}</h3>
+                  <h2>Total:</h2> <h2>${total}</h2>
                 </div>
               </div>
 
@@ -106,7 +109,7 @@ class Checkout extends Component {
     return (
       <div className='item-list-container'>
         <div className='item-list'>
-          <h1 className='item-list__title'>Order Summary</h1>
+          <h1 className='item-list__title'>Checkout</h1>
           {cart}
         </div>
       </div>
@@ -115,8 +118,7 @@ class Checkout extends Component {
 }
 
 Checkout.propTypes = {
-  items: PropTypes.object.isRequired,
-  idToken: PropTypes.string,
+  items: PropTypes.array.isRequired,
   userId: PropTypes.string,
   loadingCart: PropTypes.bool,
   loadingCartItem: PropTypes.bool,

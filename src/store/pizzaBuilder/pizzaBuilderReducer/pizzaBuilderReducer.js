@@ -17,8 +17,6 @@ import {
   MEATS,
   VEGGIES,
   COMBO_NAME,
-  WHOLE,
-  REGULAR_TOPPING,
 } from '../../../metadata/pizzaProperties';
 import { REGULAR } from '../../../metadata/comboMetadata';
 
@@ -30,8 +28,8 @@ export const initialState = {
     [COMBO_NAME]: null,
     [CRUST]: HAND_TOSSED,
     [CRUST_FLAVOR]: NO_CRUST_FLAVOR,
-    [MEATS]: {},
-    [VEGGIES]: {},
+    [MEATS]: [],
+    [VEGGIES]: [],
     [SAUCE]: CLASSIC_MARINARA,
     [SAUCE_AMOUNT]: REGULAR_SAUCE,
     [SIZE]: LARGE,
@@ -40,8 +38,6 @@ export const initialState = {
 };
 
 const pizzaBuilderReducer = (state = initialState, action) => {
-  let toppings = null;
-  let topping = null;
   switch (action.type) {
     //initialize and display pizza builder with given pizza and quantity
     case actionTypes.INIT_PIZZA_BUILDER:
@@ -84,59 +80,6 @@ const pizzaBuilderReducer = (state = initialState, action) => {
         pizza: {
           ...state.pizza,
           [action.property]: action.value,
-        },
-      };
-    //add or remove topping on pizza
-    case actionTypes.TOGGLE_TOPPING:
-      toppings = state.pizza[action.property]
-        ? { ...state.pizza[action.property] }
-        : {};
-      if (toppings[action.value]) {
-        delete toppings[action.value];
-      } else {
-        toppings[action.value] = { amount: REGULAR_TOPPING, portion: WHOLE };
-      }
-      return {
-        ...state,
-        pizza: {
-          ...state.pizza,
-          [action.property]: toppings,
-        },
-      };
-    //set the amount of a topping (WHOLE, LEFT_HALF, or RIGHT_HALF)
-    case actionTypes.SET_TOPPING_AMOUNT:
-      toppings = state.pizza[action.property]
-        ? { ...state.pizza[action.property] }
-        : {};
-
-      topping = toppings[action.topping];
-      if (!topping) {
-        topping = { amount: action.value, portion: WHOLE };
-      } else {
-        topping.amount = action.value;
-      }
-      toppings[action.topping] = topping;
-      return {
-        ...state,
-        pizza: {
-          ...state.pizza,
-          [action.property]: toppings,
-        },
-      };
-    //set portion of a topping (EXTRA, REGULAR)
-    case actionTypes.SET_TOPPING_PORTION:
-      toppings = state.pizza[action.property]
-        ? { ...state.pizza[action.property] }
-        : {};
-
-      topping = toppings[action.topping];
-      topping.portion = action.value;
-      toppings[action.topping] = topping;
-      return {
-        ...state,
-        pizza: {
-          ...state.pizza,
-          [action.property]: toppings,
         },
       };
     default:
