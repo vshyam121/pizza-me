@@ -12,14 +12,14 @@ const OrdersContainer = (props) => {
 OrdersContainer.propTypes = {
   userId: PropTypes.string,
   orders: PropTypes.array.isRequired,
-  gettingOrders: PropTypes.bool,
+  loadingOrders: PropTypes.bool.isRequired,
   getOrdersError: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   userId: state.auth.userId,
   orders: state.checkout.orders,
-  gettingOrders: state.checkout.gettingOrders,
+  loadingOrders: state.checkout.loadingOrders,
   getOrdersError: state.checkout.getOrdersError,
 });
 
