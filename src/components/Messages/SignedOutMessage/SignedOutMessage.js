@@ -4,7 +4,7 @@ import React from 'react';
 const SignedOutMessage = () => {
   return (
     <div className='signed-out' data-test='signed-out'>
-      <h3 style={{ display: 'inline' }}>You have successfully signed out!</h3>
+      <h3 style={{ display: 'inline' }}>You have signed out!</h3>
     </div>
   );
 };
