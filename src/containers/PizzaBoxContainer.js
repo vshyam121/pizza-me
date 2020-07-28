@@ -102,7 +102,7 @@ class PizzaBoxContainer extends Component {
 }
 
 PizzaBoxContainer.propTypes = {
-  userId: PropTypes.string,
+  cartId: PropTypes.string,
   priceType: PropTypes.string.isRequired,
   pizzaType: PropTypes.string.isRequired,
   imageSrc: PropTypes.string.isRequired,
@@ -110,7 +110,7 @@ PizzaBoxContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  userId: state.auth.userId,
+  cartId: state.cart.cartId,
 });
 export default connect(mapStateToProps, { initializePizzaBuilder, addToCart })(
   PizzaBoxContainer

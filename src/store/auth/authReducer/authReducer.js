@@ -17,6 +17,11 @@ const authReducer = (state = initialState, action) => {
         signUpError: null,
         loadingUser: true,
       };
+    case actionTypes.AUTH_TOKEN_FAILED:
+      return {
+        ...state,
+        loadingUser: false,
+      };
     //Reset auth errors
     case actionTypes.AUTH_RESET:
       return {

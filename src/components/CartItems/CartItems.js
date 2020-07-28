@@ -17,13 +17,14 @@ const CartItems = (props) => {
         checkout={props.checkout}
         loadingCartItem={props.loadingCartItem}
         itemIdBeingChanged={props.itemIdBeingChanged}
-        userId={props.userId}
+        cartId={props.cartId}
       />
     );
   });
 };
 
 CartItems.propTypes = {
+  cartId: PropTypes.string,
   items: PropTypes.array.isRequired,
   loadingCartItem: PropTypes.bool,
   itemIdBeingChanged: PropTypes.string,

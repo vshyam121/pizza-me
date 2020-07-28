@@ -1,13 +1,11 @@
 import * as actionTypes from '../authActionTypes';
 import {
   signOutCart,
-  setCartItems,
   getCartFromLocalStorage,
-  combineCarts,
+  getCart,
 } from '../../cart/cartActions/cartActions';
 import { getOrders } from '../../checkout/checkoutActions/checkoutActions';
 import axios from '../../../shared/axiosAPI';
-import { secureStorage } from '../../../shared/secureStorage';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 import * as actionDisplays from '../../ui/actionDisplays';
 import { getOrCreateLocalCart } from '../../../shared/util';
@@ -26,21 +24,20 @@ export const authReset = () => {
   };
 };
 
+/* Failed to initialize app */
+export const authTokenFailed = () => {
+  return {
+    type: actionTypes.AUTH_TOKEN_FAILED,
+  };
+};
+
 /* Successfully authenticated user and received token/userid */
 export const authSuccess = (authData) => {
   return (dispatch) => {
     dispatch({ type: actionTypes.AUTH_SUCCESS, userId: authData.user._id });
-    //Get cart from secure local storage
-    let localCart = secureStorage.getItem('cart');
 
-    //If items in local cart, combine local cart with backend cart
-    if (localCart && localCart.quantity > 0) {
-      dispatch(combineCarts(authData.user));
-    }
-    //Otherwise, just set cart from backend cart
-    else {
-      dispatch(setCartItems(authData.user.cart));
-    }
+    //Get cart for this user
+    dispatch(getCart());
 
     //Set automatic sign out
     dispatch(checkAuthTimeout(authData.expires));
@@ -144,9 +141,11 @@ export const signUp = (email, password) => {
 };
 
 /* Initialize application upon app load */
-export const initApp = () => {
+export const authenticateToken = () => {
   return (dispatch) => {
     getOrCreateLocalCart();
+
+    dispatch(authStart());
 
     return axios
       .get('/auth/me')
@@ -157,6 +156,7 @@ export const initApp = () => {
       .catch(() => {
         //If an error with api, then get cart from secure local storage
         dispatch(getCartFromLocalStorage());
+        dispatch(authTokenFailed());
       });
   };
 };

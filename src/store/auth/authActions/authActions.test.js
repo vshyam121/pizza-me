@@ -3,11 +3,11 @@ import * as actions from './authActions';
 import * as actionTypes from '../authActionTypes';
 import * as cartActionTypes from '../../cart/cartActionTypes';
 import * as checkoutActionTypes from '../../checkout/checkoutActionTypes';
-import configureMockStore from 'redux-mock-store';
+import configureStore from 'redux-mock-store';
 import { middleware } from '../../store';
 import axios from '../../../shared/axiosAPI';
 
-const mockStore = configureMockStore(middleware);
+const mockStore = configureStore(middleware);
 
 describe('Sign in action', () => {
   beforeEach(() => {
@@ -88,7 +88,7 @@ describe('Sign up action', () => {
   });
 });
 
-describe('Init app action', () => {
+describe('Authenticate token action', () => {
   beforeEach(() => {
     moxios.install(axios);
   });
@@ -119,7 +119,7 @@ describe('Init app action', () => {
       },
     ];
 
-    return store.dispatch(actions.initApp()).then(() => {
+    return store.dispatch(actions.authenticateToken()).then(() => {
       const newActions = store.getActions();
       expect(newActions).toEqual(expect.arrayContaining(expectedActions));
     });
@@ -165,28 +165,27 @@ describe('Auth success action', () => {
     moxios.uninstall();
   });
 
-  test('Auth success action dispatched', () => {
+  test('Auth success action dispatched', async () => {
     const store = mockStore({});
+
+    const mockResponse = {
+      cart: { _id: 'test cart id', items: ['test items'], quantity: 1 },
+    };
+    moxios.stubRequest('/carts', {
+      status: 200,
+      response: mockResponse,
+    });
 
     const authData = {
       user: {
         _id: 'test user id',
-        cart: { _id: 'test cart id', items: ['test item'], quantity: 1 },
+        cart: 'test cart id',
       },
     };
     const expectedActions = [
       {
         type: actionTypes.AUTH_SUCCESS,
         userId: authData.user._id,
-      },
-      {
-        type: cartActionTypes.SET_CART_ITEMS,
-        cartId: authData.user.cart._id,
-        items: authData.user.cart.items,
-        quantity: authData.user.cart.quantity,
-      },
-      {
-        type: checkoutActionTypes.GET_ORDERS_START,
       },
     ];
 

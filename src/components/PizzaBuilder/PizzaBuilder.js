@@ -52,14 +52,14 @@ const PizzaBuilder = (props) => {
 
   /* Add current pizza to cart and close pizza builder */
   const handleAddToCart = (quantity) => {
-    props.addToCart(props.userId, normalizePizza(props.pizza), quantity);
+    props.addToCart(props.cartId, normalizePizza(props.pizza), quantity);
     props.handleCloseBuilder();
   };
 
   /* Save current pizza to cart and close pizza builder */
   const handleSaveToCart = (quantity) => {
     props.saveToCart(
-      props.userId,
+      props.cartId,
       normalizePizza(props.pizza),
       quantity,
       props.cartQuantity,

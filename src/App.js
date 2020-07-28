@@ -11,7 +11,7 @@ import CartContainer from './containers/CartContainer';
 import SignInContainer from './containers/Auth/SignInContainer';
 import SignOutContainer from './containers/Auth/SignOutContainer';
 import SignUpContainer from './containers/Auth/SignUpContainer';
-import { initApp } from './store/auth/authActions/authActions';
+import { authenticateToken } from './store/auth/authActions/authActions';
 import { connect } from 'react-redux';
 import OrderType from './components/OrderType/OrderType';
 import CheckoutContainer from './containers/CheckoutContainer';
@@ -23,7 +23,7 @@ import withErrorHandler from './hoc/withErrorHandler';
 
 export class App extends Component {
   componentDidMount() {
-    this.props.initApp();
+    this.props.authenticateToken();
   }
 
   render() {
@@ -49,6 +49,6 @@ export class App extends Component {
   }
 }
 
-export default connect(null, { initApp })(
+export default connect(null, { authenticateToken })(
   withErrorHandler(withErrorHandler(App, axiosAPI), axios)
 );

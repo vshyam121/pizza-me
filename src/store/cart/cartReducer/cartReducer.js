@@ -16,6 +16,9 @@ export const initialState = {
   //Loading true when changing a cart item. i.e. update or remove
   loadingCartItem: false,
 
+  //Loading when getting the cart
+  loadingCart: true,
+
   //Item id of item being changed to know which item to show loading sign
   itemIdBeingChanged: null,
 };
@@ -30,8 +33,14 @@ const cartReducer = (state = initialState, action) => {
         quantity: action.quantity,
         numItemsAdded: action.numItemsAdded,
       };
+    //Done loading cart
+    case actionTypes.GET_CART_DONE:
+      return {
+        ...state,
+        loadingCart: false,
+      };
     //Set cart items
-    case actionTypes.SET_CART_ITEMS:
+    case actionTypes.SET_CART:
       return {
         ...state,
         cartId: action.cartId,

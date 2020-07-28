@@ -20,7 +20,7 @@ const CartItem = (props) => {
   /* Change the quantity of an item in redux store */
   const handleChangeItemQuantity = (event) => {
     props.changeItemQuantity(
-      props.userId,
+      props.cartId,
       props.itemId,
       props.pizza,
       parseInt(event.target.value)
@@ -29,7 +29,7 @@ const CartItem = (props) => {
 
   /* Remove item from cart */
   const handleRemoveItem = () => {
-    props.removeItem(props.userId, props.itemId, props.pizza);
+    props.removeItem(props.cartId, props.itemId, props.pizza);
   };
 
   let remove = null;
@@ -92,6 +92,7 @@ const CartItem = (props) => {
 };
 
 CartItem.propTypes = {
+  cartId: PropTypes.string,
   itemIdBeingChanged: PropTypes.string,
   loadingCartItem: PropTypes.bool,
   pizza: PropTypes.object.isRequired,

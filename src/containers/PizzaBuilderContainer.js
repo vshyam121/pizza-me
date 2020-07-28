@@ -55,7 +55,7 @@ class PizzaBuilderContainer extends Component {
 }
 
 PizzaBuilderContainer.propTypes = {
-  userId: PropTypes.string,
+  cartId: PropTypes.string,
   itemId: PropTypes.string,
   pizza: PropTypes.object,
   quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -64,7 +64,7 @@ PizzaBuilderContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  userId: state.auth.userId,
+  cartId: state.cart.cartId,
   itemId: state.pizzaBuilder.itemId,
   pizza: state.pizzaBuilder.pizza,
   quantity: state.pizzaBuilder.quantity,

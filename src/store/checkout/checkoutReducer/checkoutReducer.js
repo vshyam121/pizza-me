@@ -6,7 +6,7 @@ export const initialState = {
   addressValid: false,
   addressValidationError: null,
   deliveryAddress: null,
-  gettingOrders: false,
+  loadingOrders: true,
   submittingOrder: false,
   submitOrderError: false,
   getOrdersError: false,
@@ -36,25 +36,18 @@ const checkoutReducer = (state = initialState, action) => {
         submittingOrder: false,
         submitOrderError: true,
       };
-    //Set loading before getting orders
-    case actionTypes.GET_ORDERS_START:
-      return {
-        ...state,
-        gettingOrders: true,
-        getOrdersError: false,
-      };
     //Successfully got orders, set orders
     case actionTypes.GET_ORDERS_SUCCESS:
       return {
         ...state,
-        gettingOrders: false,
+        loadingOrders: false,
         orders: action.orders,
       };
     //Finish loading when getting orders failed
     case actionTypes.GET_ORDERS_FAILED:
       return {
         ...state,
-        gettingOrders: false,
+        loadingOrders: false,
         getOrdersError: true,
       };
     //Successfully validated address, stop loading and set address

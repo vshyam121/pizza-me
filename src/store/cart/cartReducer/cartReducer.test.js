@@ -43,9 +43,9 @@ describe('Cart Reducer', () => {
     expect(newState).toStrictEqual(initialState);
   });
 
-  it('Should return correct new state if receiving type SET_CART_ITEMS', () => {
+  it('Should return correct new state if receiving type SET_CART', () => {
     const testPayload = {
-      type: actionTypes.SET_CART_ITEMS,
+      type: actionTypes.SET_CART,
       cartId: 'test cart id',
       items: [{ test }],
       quantity: 1,

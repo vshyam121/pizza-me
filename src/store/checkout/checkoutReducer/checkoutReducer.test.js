@@ -54,22 +54,8 @@ describe('Checkout Reducer', () => {
     expect(newState).toStrictEqual(expectedState);
   });
 
-  it('Should return correct new state if receiving type GET_ORDERS_START', () => {
-    const newState = checkoutReducer(initialState, {
-      type: actionTypes.GET_ORDERS_START,
-    });
-
-    const expectedState = {
-      ...initialState,
-      gettingOrders: true,
-      getOrdersError: false,
-    };
-
-    expect(newState).toStrictEqual(expectedState);
-  });
-
   it('Should return correct new state if receiving type GET_ORDERS_FAILED', () => {
-    const inputInitialState = { ...initialState, gettingOrders: true };
+    const inputInitialState = { ...initialState, loadingOrders: true };
 
     const newState = checkoutReducer(inputInitialState, {
       type: actionTypes.GET_ORDERS_FAILED,
@@ -77,7 +63,7 @@ describe('Checkout Reducer', () => {
 
     const expectedState = {
       ...initialState,
-      gettingOrders: false,
+      loadingOrders: false,
       getOrdersError: true,
     };
 
@@ -94,7 +80,7 @@ describe('Checkout Reducer', () => {
     const expectedState = {
       ...initialState,
       orders: testPayload.orders,
-      gettingOrders: false,
+      loadingOrders: false,
     };
 
     expect(newState).toEqual(expectedState);

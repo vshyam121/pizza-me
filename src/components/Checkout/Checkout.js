@@ -10,15 +10,12 @@ import PropTypes from 'prop-types';
 /* Order summary and ability to submit an order */
 class Checkout extends Component {
   handleSubmitOrder = (total) => {
-    if (this.props.userId) {
-      this.props.submitOrder(
-        total,
-        this.props.items,
-        this.props.deliveryAddress,
-        this.props.userId,
-        this.props.cartId
-      );
-    }
+    this.props.submitOrder(
+      total,
+      this.props.items,
+      this.props.deliveryAddress,
+      this.props.cartId
+    );
   };
 
   componentDidUpdate(prevProps) {
@@ -28,7 +25,7 @@ class Checkout extends Component {
       !this.props.submitOrderError
     ) {
       this.props.history.push({ pathname: '/', fromCheckout: true });
-      this.props.emptyCart(this.props.userId);
+      this.props.emptyCart(this.props.cartId);
     }
   }
 
@@ -47,7 +44,7 @@ class Checkout extends Component {
     if (this.props.submittingOrder) {
       submitOrder = (
         <Button type={primary}>
-          <SyncLoader color='white' />
+          <SyncLoader color='white' size='10px' />
         </Button>
       );
     } else {
@@ -59,7 +56,7 @@ class Checkout extends Component {
     }
 
     let cart = null;
-    if (this.props.loading) {
+    if (this.props.loadingCart) {
       cart = (
         <div className='item-list__empty'>
           <SyncLoader />
@@ -76,7 +73,7 @@ class Checkout extends Component {
             items={this.props.items}
             loadingCartItem={this.props.loadingCartItem}
             itemIdBeingChanged={this.props.itemIdBeingChanged}
-            userId={this.props.userId}
+            cartId={this.props.cartId}
           />
           <div className='item-list__bottom'>
             <div className='delivery-address'>{deliveryAddress}</div>
@@ -119,10 +116,9 @@ class Checkout extends Component {
 
 Checkout.propTypes = {
   items: PropTypes.array.isRequired,
-  userId: PropTypes.string,
   loadingCart: PropTypes.bool,
   loadingCartItem: PropTypes.bool,
-  itemBeingChanged: PropTypes.object,
+  itemIdBeingChanged: PropTypes.string,
   submitOrderError: PropTypes.bool,
   submittingOrder: PropTypes.bool,
   deliveryAddress: PropTypes.object,

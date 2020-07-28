@@ -1,6 +1,7 @@
 export const SUBMIT_ORDER = 'submit your order';
 export const GET_ORDERS = 'retrieve your orders';
 export const ADD_ITEM_TO_CART = 'add item(s) to cart';
+export const CREATE_CART = 'create cart';
 export const GET_CART = 'retrieve cart';
 export const EMPTY_CART = 'empty cart';
 export const CHANGE_ITEM_QUANTITY = 'change item quantity';
