@@ -2,7 +2,11 @@
 
 .description {
   line-height: 2;
-  padding: 2rem;
+  padding: 2rem 0;
+
+  @include respond(tab-port) {
+    padding: 0rem;
+  }
 
   &__title {
     display: flex;
@@ -37,8 +41,5 @@
     @include respond(phone) {
       display: block;
     }
-  }
-
-  &__price--order {
   }
 }
