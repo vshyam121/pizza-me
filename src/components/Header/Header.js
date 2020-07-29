@@ -60,7 +60,10 @@ class Header extends Component {
         </div>
         <div className='header__account'>
           <div className='header__account-actions'>
-            <AccountMenuItems isAuthenticated={this.props.isAuthenticated} />
+            <AccountMenuItems
+              isAuthenticated={this.props.isAuthenticated}
+              signOut={this.props.signOut}
+            />
           </div>
           <div style={{ position: 'relative' }}>
             <CartIcon

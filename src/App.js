@@ -9,7 +9,6 @@ import PizzaBuilderContainer from './containers/PizzaBuilderContainer';
 import { Route, Switch } from 'react-router-dom';
 import CartContainer from './containers/CartContainer';
 import SignInContainer from './containers/Auth/SignInContainer';
-import SignOutContainer from './containers/Auth/SignOutContainer';
 import SignUpContainer from './containers/Auth/SignUpContainer';
 import { authenticateToken } from './store/auth/authActions/authActions';
 import { connect } from 'react-redux';
@@ -34,7 +33,6 @@ export class App extends Component {
           <Route path='/signin' component={SignInContainer} />
           <Route path='/signup' component={SignUpContainer} />
           <Route path='/my-orders' component={OrdersContainer} />
-          <Route path='/signout' component={SignOutContainer} />
           <Route path='/cart' component={CartContainer} />
           <Route path='/' exact component={Home} />
           <Route path='/meats' exact component={Meats} />

@@ -9,16 +9,22 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import ScrollToTop from './hoc/ScrollToTop';
 
+import createBrowserHistory from 'history/createBrowserHistory';
+
+export const history = createBrowserHistory({
+  basename: `${process.env.REACT_APP_BASE_URL}`,
+});
+
 ReactDOM.render(
-  <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
+  <Router history={history}>
     <Provider store={store}>
       <ScrollToTop>
         <App />
       </ScrollToTop>
     </Provider>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );

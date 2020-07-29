@@ -9,6 +9,7 @@ import axios from '../../../shared/axiosAPI';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 import * as actionErrors from '../../../shared/actionErrors';
 import { getOrCreateLocalCart } from '../../../shared/util';
+import { history } from '../../../index';
 
 /* To show loading in UI when authentication action has started */
 export const authStart = () => {
@@ -43,7 +44,7 @@ export const authSuccess = (authData) => {
     dispatch(checkAuthTimeout(authData.expires));
 
     //Get orders for this user
-    dispatch(getOrders(authData.user._id));
+    dispatch(getOrders());
   };
 };
 
@@ -72,6 +73,8 @@ export const signOut = () => {
       dispatch({
         type: actionTypes.AUTH_SIGNOUT,
       });
+
+      history.push({ pathname: '/', fromSignOut: true });
     });
   };
 };

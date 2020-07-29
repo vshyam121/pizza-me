@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 
 /* Menu items that deal with account information, namely authentication and orders */
 const AccountMenuItems = (props) => {
+  const handleSignOut = () => {
+    props.signOut();
+  };
+
   let accountMenuItems = (
     <NavigationItem {...props} to='/signin' data-test='signin'>
       Sign In
@@ -15,7 +19,7 @@ const AccountMenuItems = (props) => {
         <NavigationItem {...props} to='/my-orders' data-test='my-orders'>
           My Orders
         </NavigationItem>
-        <NavigationItem {...props} to='/signout' data-test='signout'>
+        <NavigationItem {...props} onClick={handleSignOut} data-test='signout'>
           Sign Out
         </NavigationItem>
       </Fragment>
