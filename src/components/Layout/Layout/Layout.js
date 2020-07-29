@@ -1,6 +1,5 @@
 import React from 'react';
 import HeaderContainer from '../../../containers/HeaderContainer';
-import Footer from '../Footer/Footer';
 import './Layout.scss';
 import PropTypes from 'prop-types';
 import withErrorHandler from '../../../hoc/withErrorHandler';
@@ -14,7 +13,6 @@ const Layout = (props) => {
       <main className='main' data-test='main'>
         {props.children}
       </main>
-      <Footer data-test='footer' />
     </div>
   );
 };
