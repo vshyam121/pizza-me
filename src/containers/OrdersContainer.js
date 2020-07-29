@@ -1,5 +1,4 @@
 import React from 'react';
-import { getOrders } from '../store/checkout/checkoutActions/checkoutActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Orders from '../components/Orders/Orders';
@@ -23,4 +22,4 @@ const mapStateToProps = (state) => ({
   getOrdersError: state.checkout.getOrdersError,
 });
 
-export default connect(mapStateToProps, { getOrders })(OrdersContainer);
+export default connect(mapStateToProps, null)(OrdersContainer);
