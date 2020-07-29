@@ -6,6 +6,8 @@ import {
   validateDeliveryAddress,
   validateDeliveryAddressReset,
 } from '../store/checkout/checkoutActions/checkoutActions.js';
+import withErrorHandler from '../hoc/withErrorHandler';
+import axios from 'axios';
 
 class AddressFormContainer extends Component {
   state = {
@@ -98,7 +100,7 @@ class AddressFormContainer extends Component {
 
 AddressFormContainer.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.object,
+  error: PropTypes.string,
   addressValid: PropTypes.bool,
 };
 
@@ -111,4 +113,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   validateDeliveryAddress,
   validateDeliveryAddressReset,
-})(AddressFormContainer);
+})(withErrorHandler(AddressFormContainer, axios));
