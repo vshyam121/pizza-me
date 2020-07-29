@@ -46,11 +46,7 @@
     justify-content: space-between;
     width: 15rem;
     align-items: center;
-    padding: 2rem 0;
-
-    @include respond(tab-port) {
-      padding: 0rem;
-    }
+    padding: 2rem;
 
     @include respond(phone) {
       width: 75%;
