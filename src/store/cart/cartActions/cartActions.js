@@ -3,7 +3,7 @@ import axios from '../../../shared/axiosAPI';
 import { v4 as uuidv4 } from 'uuid';
 import hash from 'object-hash';
 import { secureStorage } from '../../../shared/secureStorage';
-import * as actionDisplays from '../../ui/actionDisplays';
+import * as actionErrors from '../../../shared/actionErrors';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 import { getOrCreateLocalCart } from '../../../shared/util';
 
@@ -14,6 +14,7 @@ export const getCartFromLocalStorage = () => {
     if (localCart.quantity > 0) {
       dispatch(setCartFromLocalCart(localCart));
     }
+    dispatch(getCartDone());
   };
 };
 
@@ -25,7 +26,7 @@ export const createCart = () => {
         dispatch(setCart(res.data.cart));
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.CREATE_CART));
+        dispatch(setErroredAction(actionErrors.CREATE_CART));
       });
   };
 };
@@ -57,7 +58,7 @@ export const getCart = () => {
         }
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.GET_CART));
+        dispatch(setErroredAction(actionErrors.GET_CART));
         dispatch(getCartDone());
       });
   };
@@ -152,7 +153,7 @@ export const addToCart = (cartId, pizza, quantity) => {
           });
         })
         .catch(() => {
-          dispatch(setErroredAction(actionDisplays.ADD_ITEM_TO_CART));
+          dispatch(setErroredAction(actionErrors.ADD_ITEM_TO_CART));
         });
     } else {
       dispatch(addToLocalCart(item));
@@ -203,7 +204,7 @@ export const changeItemQuantity = (cartId, itemId, pizza, quantity) => {
           dispatch(changeCartItemSuccess(cart.items, cart.quantity));
         })
         .catch(() => {
-          dispatch(setErroredAction(actionDisplays.CHANGE_ITEM_QUANTITY));
+          dispatch(setErroredAction(actionErrors.CHANGE_ITEM_QUANTITY));
           dispatch(changeCartItemFailed());
         });
     }
@@ -278,7 +279,7 @@ export const removeItem = (cartId, itemId, pizza) => {
         })
         .catch(() => {
           dispatch(changeCartItemFailed());
-          dispatch(setErroredAction(actionDisplays.REMOVE_ITEM));
+          dispatch(setErroredAction(actionErrors.REMOVE_ITEM));
         });
     } else {
       dispatch(removeItemFromLocalCart(itemId, pizza));
@@ -328,7 +329,7 @@ export const emptyCart = (cartId) => {
           });
         })
         .catch(() => {
-          dispatch(setErroredAction(actionDisplays.EMPTY_CART));
+          dispatch(setErroredAction(actionErrors.EMPTY_CART));
         });
     }
     //If user not signed in, empty local storage cart
@@ -359,7 +360,7 @@ export const saveToCart = (cartId, pizza, quantity, cartQuantity, itemId) => {
         })
         .catch(() => {
           dispatch(changeCartItemFailed());
-          dispatch(setErroredAction(actionDisplays.SAVE_TO_CART));
+          dispatch(setErroredAction(actionErrors.SAVE_TO_CART));
         });
     }
     //if user not signed in, make change to local storage cart

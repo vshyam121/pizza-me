@@ -7,7 +7,7 @@ import {
 import { getOrders } from '../../checkout/checkoutActions/checkoutActions';
 import axios from '../../../shared/axiosAPI';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
-import * as actionDisplays from '../../ui/actionDisplays';
+import * as actionErrors from '../../../shared/actionErrors';
 import { getOrCreateLocalCart } from '../../../shared/util';
 
 /* To show loading in UI when authentication action has started */
@@ -105,7 +105,7 @@ export const signIn = (email, password) => {
         dispatch(authSuccess(res.data));
       })
       .catch((err) => {
-        dispatch(setErroredAction(actionDisplays.SIGN_IN));
+        dispatch(setErroredAction(actionErrors.SIGN_IN));
         if (err.response) {
           dispatch(signInFailed(err.response.data.error));
         } else {
@@ -130,7 +130,7 @@ export const signUp = (email, password) => {
         dispatch(authSuccess(res.data));
       })
       .catch((err) => {
-        dispatch(setErroredAction(actionDisplays.SIGN_UP));
+        dispatch(setErroredAction(actionErrors.SIGN_UP));
         if (err.response) {
           dispatch(signUpFailed(err.response.data.error));
         } else {
@@ -157,6 +157,7 @@ export const authenticateToken = () => {
         //If an error with api, then get cart from secure local storage
         dispatch(getCartFromLocalStorage());
         dispatch(authTokenFailed());
+        dispatch(setErroredAction(actionErrors.AUTH_TOKEN));
       });
   };
 };

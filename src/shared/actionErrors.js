@@ -9,4 +9,5 @@ export const REMOVE_ITEM = 'remove item';
 export const SAVE_TO_CART = 'save item to cart';
 export const SIGN_IN = 'sign in';
 export const SIGN_UP = 'sign up';
+export const AUTH_TOKEN = 'authenticate token';
 export const VALIDATE_DELIVERY_ADDRESS = 'validate delivery address';

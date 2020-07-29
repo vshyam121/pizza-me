@@ -1,7 +1,7 @@
 import * as actionTypes from '../checkoutActionTypes';
 import axios from '../../../shared/axiosAPI';
 import axiosGeolocation from 'axios';
-import * as actionDisplays from '../../ui/actionDisplays';
+import * as actionErrors from '../../../shared/actionErrors';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 
 /* To set loading in UI when starting to submit order */
@@ -32,7 +32,7 @@ export const submitOrder = (total, items, deliveryAddress, cartId) => {
         });
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.SUBMIT_ORDER));
+        dispatch(setErroredAction(actionErrors.SUBMIT_ORDER));
         dispatch(submitOrderFailed());
       });
   };
@@ -106,7 +106,7 @@ export const validateDeliveryAddress = (addressForm) => {
         }
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.VALIDATE_DELIVERY_ADDRESS));
+        dispatch(setErroredAction(actionErrors.VALIDATE_DELIVERY_ADDRESS));
         dispatch(validateDeliveryAddressFailed());
       });
   };
@@ -138,7 +138,7 @@ export const getOrders = () => {
         });
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.GET_ORDERS));
+        dispatch(setErroredAction(actionErrors.GET_ORDERS));
         dispatch(getOrdersFailed());
       });
   };
