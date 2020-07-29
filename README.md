@@ -3,7 +3,7 @@
 A pizza shop e-commerce web application built with the following technologies:
 * React
 * Redux
-* HTML 5/CSS 3
+* HTML 5/CSS 3/Sass
 * Flex box
 * CSS Grid
 * Jest/Enzyme for unit and integration tests
