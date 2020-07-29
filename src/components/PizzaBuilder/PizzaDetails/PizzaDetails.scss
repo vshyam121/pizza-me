@@ -9,6 +9,7 @@
   &__details {
     display: flex;
     flex-direction: column;
+    //padding: 0 2rem;
 
     @include respond(tab-port) {
       flex-direction: row;
