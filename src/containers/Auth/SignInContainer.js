@@ -56,7 +56,9 @@ class SignInContainer extends Component {
   };
 
   componentWillUnmount() {
-    this.props.authReset();
+    if (this.props.error) {
+      this.props.authReset();
+    }
   }
 
   render() {
