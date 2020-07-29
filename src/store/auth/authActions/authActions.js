@@ -110,7 +110,7 @@ export const signIn = (email, password) => {
       .catch((err) => {
         dispatch(setErroredAction(actionErrors.SIGN_IN));
         if (err.response) {
-          dispatch(signInFailed(err.response.data.error));
+          dispatch(signInFailed(err.response));
         } else {
           dispatch(signInFailed(null));
         }
@@ -135,7 +135,7 @@ export const signUp = (email, password) => {
       .catch((err) => {
         dispatch(setErroredAction(actionErrors.SIGN_UP));
         if (err.response) {
-          dispatch(signUpFailed(err.response.data.error));
+          dispatch(signUpFailed(err.response));
         } else {
           dispatch(signUpFailed(null));
         }
