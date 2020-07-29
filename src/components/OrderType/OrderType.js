@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import AddressFormContainer from '../../containers/AddressFormContainer';
 import Message from '../../components/UI/Message/Message';
-import SignedUpMessage from '../../components/Messages/SignedUpMessage/SignedUpMessage';
 import PropTypes from 'prop-types';
 import { clearDeliveryAddress } from '../../store/checkout/checkoutActions/checkoutActions';
 
@@ -27,11 +26,7 @@ class OrderType extends Component {
   render() {
     let message = null;
     if (this.props.location.fromSignUp) {
-      message = (
-        <Message>
-          <SignedUpMessage />
-        </Message>
-      );
+      message = <Message>You have successfully created an account!</Message>;
     }
     if (!this.props.isAuthenticated) {
       return (
