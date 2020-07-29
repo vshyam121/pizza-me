@@ -12,7 +12,7 @@ import store from './store/store';
 import { Router } from 'react-router-dom';
 import ScrollToTop from './hoc/ScrollToTop';
 
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 
 export const history = createBrowserHistory({
   basename: `${process.env.REACT_APP_BASE_URL}`,
