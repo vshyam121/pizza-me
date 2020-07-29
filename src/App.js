@@ -17,9 +17,6 @@ import OrderType from './components/OrderType/OrderType';
 import CheckoutContainer from './containers/CheckoutContainer';
 import SidebarContainer from './containers/SidebarContainer';
 import OrdersContainer from './containers/OrdersContainer';
-import axiosAPI from './shared/axiosAPI';
-import axios from 'axios';
-import withErrorHandler from './hoc/withErrorHandler';
 
 export class App extends Component {
   componentDidMount() {
@@ -49,6 +46,4 @@ export class App extends Component {
   }
 }
 
-export default connect(null, { authenticateToken })(
-  withErrorHandler(withErrorHandler(App, axiosAPI), axios)
-);
+export default connect(null, { authenticateToken })(App);
