@@ -53,6 +53,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       if (
         this.state.error &&
         this.state.error.message !== 'Network Error' &&
+        this.state.error.response.status !== 500 &&
         excludeActions.includes(this.props.erroredAction)
       ) {
         return <WrappedComponent {...this.props} />;

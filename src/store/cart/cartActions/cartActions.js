@@ -7,6 +7,60 @@ import * as actionErrors from '../../../shared/actionErrors';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 import { getOrCreateLocalCart } from '../../../shared/util';
 
+/* Create cart for user */
+export const createCart = () => {
+  return (dispatch) => {
+    return axios
+      .post('/carts')
+      .then((res) => {
+        //Get final cart, combined with local cart if local items exist
+        dispatch(getCombinedCart(res.data.cart));
+      })
+      .catch(() => {
+        dispatch(setErroredAction(actionErrors.CREATE_CART));
+      });
+  };
+};
+
+export const getCart = () => {
+  return (dispatch) => {
+    return axios
+      .get('/carts')
+      .then((res) => {
+        //If we get back cart in response
+        if (res.data.cart) {
+          //Get final cart, combined with local cart if local items exist
+          dispatch(getCombinedCart(res.data.cart));
+          //If cart doesn't exist, create one
+        } else {
+          dispatch(createCart());
+        }
+        dispatch(getCartDone());
+      })
+      .catch(() => {
+        dispatch(setErroredAction(actionErrors.GET_CART));
+        dispatch(getCartDone());
+      });
+  };
+};
+
+/* Get final cart, combined with local cart if local items exist */
+export const getCombinedCart = (cart) => {
+  return (dispatch) => {
+    //Get cart from secure local storage
+    let localCart = getOrCreateLocalCart();
+
+    //If items in local cart, combine local cart with backend cart
+    if (localCart && localCart.quantity > 0) {
+      dispatch(combineCarts(cart));
+    }
+    //Otherwise, just set from backend cart
+    else {
+      dispatch(setCart(cart));
+    }
+  };
+};
+
 /* Set cart in redux store from cart in local storage */
 export const getCartFromLocalStorage = () => {
   return (dispatch) => {
@@ -18,49 +72,10 @@ export const getCartFromLocalStorage = () => {
   };
 };
 
-export const createCart = () => {
-  return (dispatch) => {
-    return axios
-      .post('/carts')
-      .then((res) => {
-        dispatch(setCart(res.data.cart));
-      })
-      .catch(() => {
-        dispatch(setErroredAction(actionErrors.CREATE_CART));
-      });
-  };
-};
-
+/* Finish loading cart */
 export const getCartDone = () => {
   return {
     type: actionTypes.GET_CART_DONE,
-  };
-};
-
-export const getCart = () => {
-  return (dispatch) => {
-    return axios
-      .get('/carts')
-      .then((res) => {
-        if (res.data.cart) {
-          dispatch(getCartDone());
-          //Get cart from secure local storage
-          let localCart = getOrCreateLocalCart();
-
-          //If items in local cart, combine local cart with backend cart
-          if (localCart && localCart.quantity > 0) {
-            dispatch(combineCarts(res.data.cart));
-          } else {
-            dispatch(setCart(res.data.cart));
-          }
-        } else {
-          dispatch(createCart());
-        }
-      })
-      .catch(() => {
-        dispatch(setErroredAction(actionErrors.GET_CART));
-        dispatch(getCartDone());
-      });
   };
 };
 
@@ -75,7 +90,8 @@ export const combineCarts = (cart) => {
       .then((res) => {
         //Dispatch to update state with combined cart
         dispatch({
-          type: actionTypes.ADD_TO_CART,
+          type: actionTypes.COMBINE_CARTS,
+          cartId: cartId,
           items: res.data.cart.items,
           quantity: res.data.cart.quantity,
           numItemsAdded: res.data.cart.quantity - localCart.quantity,
@@ -96,53 +112,12 @@ export const signOutCart = () => {
   };
 };
 
-/* If user not signed in, add to local storage cart */
-const addToLocalCart = (item) => {
-  return (dispatch) => {
-    //Get local cart
-    let localCart = getOrCreateLocalCart();
-
-    //Hash of pizza to be added
-    let pizzaHash = hash(item.pizza);
-
-    //Local pizza hash map
-    let pizzaHashMap = localCart.pizzaHashMap;
-    let items = localCart.items;
-
-    //If pizza to be added has hash in hash map
-    if (pizzaHash in pizzaHashMap) {
-      //Update quantity of that item
-      items[pizzaHashMap[pizzaHash]].quantity += item.quantity;
-    }
-    //Otherwise, add new item to local cart
-    else {
-      const itemId = uuidv4();
-      pizzaHashMap[pizzaHash] = itemId;
-      item = { _id: itemId, ...item };
-      items[itemId] = item;
-    }
-
-    let itemsArr = Object.values(items);
-    localCart.quantity += item.quantity;
-
-    secureStorage.setItem('cart', localCart);
-
-    //Dispatch to update state
-    dispatch({
-      type: actionTypes.ADD_TO_CART,
-      items: itemsArr,
-      quantity: localCart.quantity,
-      numItemsAdded: item.quantity,
-    });
-  };
-};
-
 /* Add to cart, either new item or increase quantity for already existing item */
 export const addToCart = (cartId, pizza, quantity) => {
   return (dispatch) => {
     const item = { pizza, quantity };
     if (cartId) {
-      axios
+      return axios
         .post(`/carts/${cartId}/items`, [item])
         .then((res) => {
           dispatch({
@@ -158,6 +133,51 @@ export const addToCart = (cartId, pizza, quantity) => {
     } else {
       dispatch(addToLocalCart(item));
     }
+  };
+};
+
+/* If user not signed in, add to local storage cart */
+const addToLocalCart = (item) => {
+  return (dispatch) => {
+    //Get local cart
+    let localCart = getOrCreateLocalCart();
+
+    //Hash of pizza to be added
+    let pizzaHash = hash(item.pizza);
+
+    //Local pizza hash map
+    let pizzaHashMap = localCart.pizzaHashMap;
+
+    //This is an object, not an array. Easier to manipulate object
+    //when DB is not involved.
+    let items = localCart.items;
+
+    //If pizza to be added has hash in hash map
+    if (pizzaHash in pizzaHashMap) {
+      //Update quantity of that item
+      items[pizzaHashMap[pizzaHash]].quantity += item.quantity;
+    }
+    //Otherwise, add new item to local cart
+    else {
+      const itemId = uuidv4();
+      pizzaHashMap[pizzaHash] = itemId;
+      item = { _id: itemId, ...item };
+      items[itemId] = item;
+    }
+
+    //Convert objects to array to match items array in DB
+    let itemsArr = Object.values(items);
+    localCart.quantity += item.quantity;
+
+    secureStorage.setItem('cart', localCart);
+
+    //Dispatch to update state
+    dispatch({
+      type: actionTypes.ADD_TO_CART,
+      items: itemsArr,
+      quantity: localCart.quantity,
+      numItemsAdded: item.quantity,
+    });
   };
 };
 
@@ -180,11 +200,27 @@ export const setCartFromLocalCart = (localCart) => {
   };
 };
 
+/* To set loading in UI when making change to a cart item */
+const changeCartItemStart = (itemId) => {
+  return {
+    type: actionTypes.CHANGE_CART_ITEM_START,
+    itemIdBeingChanged: itemId,
+  };
+};
+
+/* Successfully changed a cart item. Finish loading that item */
 export const changeCartItemSuccess = (items, quantity) => {
   return {
     type: actionTypes.CHANGE_CART_ITEM_SUCCESS,
     items: items,
     quantity: quantity,
+  };
+};
+
+/* To stop loading cart item in UI if changing cart item failed */
+const changeCartItemFailed = () => {
+  return {
+    type: actionTypes.CHANGE_CART_ITEM_FAILED,
   };
 };
 
@@ -246,21 +282,6 @@ const changeItemQuantityInLocalCart = (itemId, quantity) => {
 
     //Dispatch to update cart state
     dispatch(changeCartItemSuccess(Object.values(items), localCart.quantity));
-  };
-};
-
-/* To set loading in UI when making change to a cart item */
-const changeCartItemStart = (itemId) => {
-  return {
-    type: actionTypes.CHANGE_CART_ITEM_START,
-    itemIdBeingChanged: itemId,
-  };
-};
-
-/* To stop loading cart item in UI if changing cart item failed */
-const changeCartItemFailed = () => {
-  return {
-    type: actionTypes.CHANGE_CART_ITEM_FAILED,
   };
 };
 

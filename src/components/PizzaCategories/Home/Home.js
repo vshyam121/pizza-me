@@ -11,10 +11,8 @@ import {
   MEAT_LOVER,
   SUPREME,
 } from '../../../metadata/comboMetadata';
-import OrderSubmission from '../../Messages/OrderSubmissionMessage/OrderSubmissionMessage';
-import SignedOutMessage from '../../Messages/SignedOutMessage/SignedOutMessage';
-import SignedUpMessage from '../../Messages/SignedUpMessage/SignedUpMessage';
 import Message from '../../UI/Message/Message';
+import { Link } from 'react-router-dom';
 
 /* Displays popular pizzas */
 const Home = (props) => {
@@ -22,21 +20,19 @@ const Home = (props) => {
   if (props.location.fromCheckout) {
     message = (
       <Message>
-        <OrderSubmission />
+        <React.Fragment>
+          Thank you for ordering at PizzaTime! View your{' '}
+          <Link className='link' to='/my-orders' data-test='orders'>
+            orders
+          </Link>
+          .
+        </React.Fragment>
       </Message>
     );
   } else if (props.location.fromSignOut) {
-    message = (
-      <Message>
-        <SignedOutMessage />
-      </Message>
-    );
+    message = <Message>You are now signed out!</Message>;
   } else if (props.location.fromSignUp) {
-    message = (
-      <Message>
-        <SignedUpMessage />
-      </Message>
-    );
+    message = <Message>You have successfully created an account!</Message>;
   }
 
   return (

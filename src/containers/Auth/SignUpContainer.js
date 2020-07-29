@@ -73,7 +73,7 @@ class SignUpContainer extends Component {
 
 SignUpContainer.propTypes = {
   loadingUser: PropTypes.bool,
-  error: PropTypes.string,
+  error: PropTypes.object,
   isAuthenticated: PropTypes.string,
 };
 

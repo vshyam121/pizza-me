@@ -26,11 +26,11 @@ const SignIn = (props) => {
 
   let errorMessage = null;
   if (props.error) {
-    errorMessage = (
-      <div className='form-component__error'>
-        <p>{props.error}</p>
-      </div>
-    );
+    if (props.error.status === 500) {
+      errorMessage = 'Internal server error.';
+    } else {
+      errorMessage = props.error.data.message;
+    }
   }
 
   let redirect = null;
@@ -49,7 +49,7 @@ const SignIn = (props) => {
           Please sign in to your account
         </h3>
         {redirect}
-        {errorMessage}
+        <div className='form-component__error'>{errorMessage}</div>
         {form}
         <div className='signup'>
           <Link
@@ -68,7 +68,7 @@ const SignIn = (props) => {
 
 SignIn.propTypes = {
   loadingUser: PropTypes.bool,
-  error: PropTypes.string,
+  error: PropTypes.object,
   isAuthenticated: PropTypes.string,
 };
 

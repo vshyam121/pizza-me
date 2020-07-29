@@ -33,6 +33,15 @@ const cartReducer = (state = initialState, action) => {
         quantity: action.quantity,
         numItemsAdded: action.numItemsAdded,
       };
+    //Combine local storage cart with backend cart
+    case actionTypes.COMBINE_CARTS:
+      return {
+        ...state,
+        cartId: action.cartId,
+        items: action.items,
+        quantity: action.quantity,
+        numItemsAdded: action.numItemsAdded,
+      };
     //Done loading cart
     case actionTypes.GET_CART_DONE:
       return {

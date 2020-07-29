@@ -23,15 +23,13 @@ const SignUp = (props) => {
 
   let errorMessage = null;
   if (props.error) {
-    errorMessage = (
-      <div className='form-component__error'>
-        <p>
-          {props.error === 'Duplicate field value entered'
-            ? 'The email you entered is already taken'
-            : props.error}
-        </p>
-      </div>
-    );
+    if (props.error.status === 500) {
+      errorMessage = 'Internal server error.';
+    } else if (props.error.data.message === 'Duplicate field value entered') {
+      errorMessage = 'The email you entered is already taken.';
+    } else {
+      errorMessage = props.error.data.message;
+    }
   }
 
   let redirect = null;
@@ -52,7 +50,7 @@ const SignUp = (props) => {
       <div className='form-component'>
         <h3 className='form-component__title'>Sign up for an account</h3>
         {redirect}
-        {errorMessage}
+        <div className='form-component__error'>{errorMessage}</div>
         {form}
       </div>
     </div>
@@ -61,7 +59,7 @@ const SignUp = (props) => {
 
 SignUp.propTypes = {
   loadingUser: PropTypes.bool,
-  error: PropTypes.string,
+  error: PropTypes.object,
   isAuthenticated: PropTypes.string,
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { toggleSidebar } from '../store/ui/uiActions/uiActions';
+import { signOut } from '../store/auth/authActions/authActions';
 import PropTypes from 'prop-types';
 import Header from '../components/Header/Header';
 
@@ -22,6 +23,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.userId,
 });
 
-export default connect(mapStateToProps, { toggleSidebar })(
+export default connect(mapStateToProps, { toggleSidebar, signOut })(
   withRouter(HeaderContainer)
 );
