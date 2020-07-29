@@ -1,4 +1,5 @@
 import React from 'react';
+import './DeliveryAddress.scss';
 import PropTypes from 'prop-types';
 
 /* Displays delivery address in the correct format */
@@ -10,17 +11,17 @@ const DeliveryAddress = (props) => {
     );
   }
   return (
-    <React.Fragment>
-      <h2>Delivery Address:&nbsp;</h2>
-      <span className='address'>
+    <div className='address-container'>
+      <h2>Delivery Address:</h2>
+      <div className='address'>
         <h4>{props.deliveryAddress.streetAddress}</h4>
         {secondaryAddress}
         <h4>
           {props.deliveryAddress.city}, {props.deliveryAddress.state}{' '}
           {props.deliveryAddress.zipcode}
         </h4>
-      </span>
-    </React.Fragment>
+      </div>
+    </div>
   );
 };
 

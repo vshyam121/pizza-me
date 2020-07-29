@@ -1,5 +1,4 @@
 import React from 'react';
-import { getOrders } from '../store/checkout/checkoutActions/checkoutActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Orders from '../components/Orders/Orders';
@@ -12,15 +11,15 @@ const OrdersContainer = (props) => {
 OrdersContainer.propTypes = {
   userId: PropTypes.string,
   orders: PropTypes.array.isRequired,
-  gettingOrders: PropTypes.bool,
+  loadingOrders: PropTypes.bool.isRequired,
   getOrdersError: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   userId: state.auth.userId,
   orders: state.checkout.orders,
-  gettingOrders: state.checkout.gettingOrders,
+  loadingOrders: state.checkout.loadingOrders,
   getOrdersError: state.checkout.getOrdersError,
 });
 
-export default connect(mapStateToProps, { getOrders })(OrdersContainer);
+export default connect(mapStateToProps, null)(OrdersContainer);

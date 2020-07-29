@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from '../components/UI/Modal/Modal';
 import { connect } from 'react-redux';
-import { SIGN_IN, SIGN_UP } from '../store/ui/actionDisplays';
+import { SIGN_IN, SIGN_UP, AUTH_TOKEN } from '../shared/actionErrors';
 
 /* Axios error handler HOC */
 const withErrorHandler = (WrappedComponent, axios) => {
@@ -14,6 +14,13 @@ const withErrorHandler = (WrappedComponent, axios) => {
     state = {
       error: null,
     };
+
+    shouldComponentUpdate(nextProps, nextState) {
+      if (!this.state.error && nextState.error) {
+        return false;
+      }
+      return true;
+    }
 
     componentDidMount() {
       this.requestInterceptor = axios.interceptors.request.use((req) => {
@@ -40,11 +47,13 @@ const withErrorHandler = (WrappedComponent, axios) => {
     };
 
     render() {
+      //Don't show error modal for certain actions
+      //They have their own error handling
+      let excludeActions = [SIGN_UP, SIGN_IN, AUTH_TOKEN];
       if (
         this.state.error &&
         this.state.error.message !== 'Network Error' &&
-        (this.props.erroredAction === SIGN_IN ||
-          this.props.erroredAction === SIGN_UP)
+        excludeActions.includes(this.props.erroredAction)
       ) {
         return <WrappedComponent {...this.props} />;
       }

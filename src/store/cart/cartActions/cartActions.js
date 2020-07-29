@@ -3,7 +3,7 @@ import axios from '../../../shared/axiosAPI';
 import { v4 as uuidv4 } from 'uuid';
 import hash from 'object-hash';
 import { secureStorage } from '../../../shared/secureStorage';
-import * as actionDisplays from '../../ui/actionDisplays';
+import * as actionErrors from '../../../shared/actionErrors';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 import { getOrCreateLocalCart } from '../../../shared/util';
 
@@ -12,18 +12,66 @@ export const getCartFromLocalStorage = () => {
   return (dispatch) => {
     let localCart = secureStorage.getItem('cart');
     if (localCart.quantity > 0) {
-      dispatch(setCartItemsFromLocalCart(localCart));
+      dispatch(setCartFromLocalCart(localCart));
     }
+    dispatch(getCartDone());
+  };
+};
+
+export const createCart = () => {
+  return (dispatch) => {
+    return axios
+      .post('/carts')
+      .then((res) => {
+        dispatch(setCart(res.data.cart));
+      })
+      .catch(() => {
+        dispatch(setErroredAction(actionErrors.CREATE_CART));
+      });
+  };
+};
+
+export const getCartDone = () => {
+  return {
+    type: actionTypes.GET_CART_DONE,
+  };
+};
+
+export const getCart = () => {
+  return (dispatch) => {
+    return axios
+      .get('/carts')
+      .then((res) => {
+        if (res.data.cart) {
+          dispatch(getCartDone());
+          //Get cart from secure local storage
+          let localCart = getOrCreateLocalCart();
+
+          //If items in local cart, combine local cart with backend cart
+          if (localCart && localCart.quantity > 0) {
+            dispatch(combineCarts(res.data.cart));
+          } else {
+            dispatch(setCart(res.data.cart));
+          }
+        } else {
+          dispatch(createCart());
+        }
+      })
+      .catch(() => {
+        dispatch(setErroredAction(actionErrors.GET_CART));
+        dispatch(getCartDone());
+      });
   };
 };
 
 /* Combine local cart with backend cart */
-export const combineCarts = (user) => {
-  return (dispatch) => {
+export const combineCarts = (cart) => {
+  return (dispatch, getState) => {
     const localCart = getOrCreateLocalCart();
 
-    axios
-      .post(`/carts/${user._id}/items`, Object.values(localCart.items))
+    const cartId = cart._id;
+    return axios
+      .post(`/carts/${cartId}/items`, Object.values(localCart.items))
       .then((res) => {
         //Dispatch to update state with combined cart
         dispatch({
@@ -90,12 +138,12 @@ const addToLocalCart = (item) => {
 };
 
 /* Add to cart, either new item or increase quantity for already existing item */
-export const addToCart = (userId, pizza, quantity) => {
+export const addToCart = (cartId, pizza, quantity) => {
   return (dispatch) => {
     const item = { pizza, quantity };
-    if (userId) {
+    if (cartId) {
       axios
-        .post(`/carts/${userId}/items`, [item])
+        .post(`/carts/${cartId}/items`, [item])
         .then((res) => {
           dispatch({
             type: actionTypes.ADD_TO_CART,
@@ -105,7 +153,7 @@ export const addToCart = (userId, pizza, quantity) => {
           });
         })
         .catch(() => {
-          dispatch(setErroredAction(actionDisplays.ADD_ITEM_TO_CART));
+          dispatch(setErroredAction(actionErrors.ADD_ITEM_TO_CART));
         });
     } else {
       dispatch(addToLocalCart(item));
@@ -114,9 +162,9 @@ export const addToCart = (userId, pizza, quantity) => {
 };
 
 /* Set cart items and metadata in redux store */
-export const setCartItems = (cart) => {
+export const setCart = (cart) => {
   return {
-    type: actionTypes.SET_CART_ITEMS,
+    type: actionTypes.SET_CART,
     cartId: cart._id,
     items: cart.items,
     quantity: cart.quantity,
@@ -124,9 +172,9 @@ export const setCartItems = (cart) => {
 };
 
 /* Set cart items and metadata in redux store */
-export const setCartItemsFromLocalCart = (localCart) => {
+export const setCartFromLocalCart = (localCart) => {
   return {
-    type: actionTypes.SET_CART_ITEMS,
+    type: actionTypes.SET_CART,
     items: Object.values(localCart.items),
     quantity: localCart.quantity,
   };
@@ -141,22 +189,22 @@ export const changeCartItemSuccess = (items, quantity) => {
 };
 
 /* Set new item quantity and update total quantity */
-export const changeItemQuantity = (userId, itemId, pizza, quantity) => {
+export const changeItemQuantity = (cartId, itemId, pizza, quantity) => {
   return (dispatch) => {
     const quantityPatch = { quantity: quantity };
 
     dispatch(changeCartItemStart(itemId));
 
     //if user signed in, PUT call to change item quantity in backend cart
-    if (userId) {
+    if (cartId) {
       axios
-        .patch(`/carts/${userId}/items/${itemId}`, quantityPatch)
+        .patch(`/carts/${cartId}/items/${itemId}`, quantityPatch)
         .then((res) => {
           const cart = res.data.cart;
           dispatch(changeCartItemSuccess(cart.items, cart.quantity));
         })
         .catch(() => {
-          dispatch(setErroredAction(actionDisplays.CHANGE_ITEM_QUANTITY));
+          dispatch(setErroredAction(actionErrors.CHANGE_ITEM_QUANTITY));
           dispatch(changeCartItemFailed());
         });
     }
@@ -217,21 +265,21 @@ const changeCartItemFailed = () => {
 };
 
 /* Remove item from cart in backend if user signed in or from cart in local storage if not */
-export const removeItem = (userId, itemId, pizza) => {
+export const removeItem = (cartId, itemId, pizza) => {
   return (dispatch) => {
     dispatch(changeCartItemStart(itemId));
 
     //If user signed in, DELETE call to remove item from backend cart
-    if (userId) {
+    if (cartId) {
       axios
-        .delete(`/carts/${userId}/items/${itemId}`)
+        .delete(`/carts/${cartId}/items/${itemId}`)
         .then((res) => {
           const cart = res.data.cart;
           dispatch(changeCartItemSuccess(cart.items, cart.quantity));
         })
         .catch(() => {
           dispatch(changeCartItemFailed());
-          dispatch(setErroredAction(actionDisplays.REMOVE_ITEM));
+          dispatch(setErroredAction(actionErrors.REMOVE_ITEM));
         });
     } else {
       dispatch(removeItemFromLocalCart(itemId, pizza));
@@ -247,7 +295,7 @@ const removeItemFromLocalCart = (itemId, pizza) => {
     //If for some reason cart has been deleted from local storage,
     //reset cart
     if (Object.keys(localCart.items).length === 0) {
-      dispatch(setCartItemsFromLocalCart(localCart));
+      dispatch(setCartFromLocalCart(localCart));
       return;
     }
 
@@ -266,22 +314,22 @@ const removeItemFromLocalCart = (itemId, pizza) => {
   };
 };
 
-export const emptyCart = (userId) => {
+export const emptyCart = (cartId) => {
   return (dispatch) => {
     //If user signed in, PUT call to empty backend cart
-    if (userId) {
+    if (cartId) {
       let emptyCart = {
         items: [],
       };
       axios
-        .put(`/carts/${userId}`, emptyCart)
+        .put(`/carts/${cartId}`, emptyCart)
         .then(() => {
           dispatch({
             type: actionTypes.EMPTY_CART,
           });
         })
         .catch(() => {
-          dispatch(setErroredAction(actionDisplays.EMPTY_CART));
+          dispatch(setErroredAction(actionErrors.EMPTY_CART));
         });
     }
     //If user not signed in, empty local storage cart
@@ -296,15 +344,15 @@ export const emptyCart = (userId) => {
 };
 
 /* Save item to cart in backend if user signed in or in local storage if not */
-export const saveToCart = (userId, pizza, quantity, cartQuantity, itemId) => {
+export const saveToCart = (cartId, pizza, quantity, cartQuantity, itemId) => {
   return (dispatch) => {
     const item = { pizza: pizza, quantity: quantity };
     dispatch(changeCartItemStart(itemId));
 
     //If user signed in, PUT call to make change to backend cart
-    if (userId) {
+    if (cartId) {
       axios
-        .put(`/carts/${userId}/items/${itemId}`, item)
+        .put(`/carts/${cartId}/items/${itemId}`, item)
         .then((res) => {
           const cart = res.data.cart;
           //Dispatch to set cart state
@@ -312,7 +360,7 @@ export const saveToCart = (userId, pizza, quantity, cartQuantity, itemId) => {
         })
         .catch(() => {
           dispatch(changeCartItemFailed());
-          dispatch(setErroredAction(actionDisplays.SAVE_TO_CART));
+          dispatch(setErroredAction(actionErrors.SAVE_TO_CART));
         });
     }
     //if user not signed in, make change to local storage cart

@@ -20,17 +20,6 @@ describe('Button component', () => {
       const propsErr = checkProps(Button, expectedProps);
       expect(propsErr).toBeUndefined();
     });
-
-    it('Should throw a warning for incorrect prop types', () => {
-      const expectedProps = {
-        disabled: true,
-        type: false,
-        children: <React.Fragment />,
-        onClick: jest.fn(),
-      };
-      const propsErr = checkProps(Button, expectedProps);
-      expect(propsErr).toBeDefined();
-    });
   });
 
   describe('Have props', () => {

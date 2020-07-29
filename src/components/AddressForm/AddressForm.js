@@ -57,7 +57,7 @@ class AddressForm extends Component {
 
 AddressForm.propTypes = {
   loading: PropTypes.bool,
-  error: PropTypes.object,
+  error: PropTypes.string,
   addressValid: PropTypes.bool,
 };
 

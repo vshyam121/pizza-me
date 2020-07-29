@@ -11,7 +11,7 @@ const Cart = (props) => {
   const subTotal = calculateSubTotal(props.items);
 
   let cart = null;
-  if (props.loadingUser) {
+  if (props.loadingCart) {
     cart = (
       <div className='item-list__empty'>
         <SyncLoader />
@@ -27,7 +27,7 @@ const Cart = (props) => {
           items={props.items}
           loadingCartItem={props.loadingCartItem}
           itemIdBeingChanged={props.itemIdBeingChanged}
-          userId={props.userId}
+          cartId={props.cartId}
         />
         <div className='item-list__bottom'>
           <div className='totals'>
@@ -74,10 +74,11 @@ const Cart = (props) => {
 
 Cart.propTypes = {
   items: PropTypes.array.isRequired,
-  loadingCart: PropTypes.bool,
-  loadingCartItem: PropTypes.bool,
+  loadingCart: PropTypes.bool.isRequired,
+  loadingCartItem: PropTypes.bool.isRequired,
   itemIdBeingChanged: PropTypes.string,
   userId: PropTypes.string,
+  cartId: PropTypes.string,
   signInError: PropTypes.string,
   signUpError: PropTypes.string,
 };

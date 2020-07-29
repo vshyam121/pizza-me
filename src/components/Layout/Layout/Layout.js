@@ -3,6 +3,8 @@ import HeaderContainer from '../../../containers/HeaderContainer';
 import Footer from '../Footer/Footer';
 import './Layout.scss';
 import PropTypes from 'prop-types';
+import withErrorHandler from '../../../hoc/withErrorHandler';
+import axiosAPI from '../../../shared/axiosAPI';
 
 /* Overall app layout */
 const Layout = (props) => {
@@ -21,4 +23,4 @@ Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
 };
 
-export default Layout;
+export default withErrorHandler(Layout, axiosAPI);

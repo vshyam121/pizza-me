@@ -1,7 +1,7 @@
 import * as actionTypes from '../checkoutActionTypes';
 import axios from '../../../shared/axiosAPI';
 import axiosGeolocation from 'axios';
-import * as actionDisplays from '../../ui/actionDisplays';
+import * as actionErrors from '../../../shared/actionErrors';
 import { setErroredAction } from '../../ui/uiActions/uiActions';
 
 /* To set loading in UI when starting to submit order */
@@ -12,11 +12,10 @@ export const submitOrderStart = () => {
 };
 
 /* Submit an order for a user */
-export const submitOrder = (total, items, deliveryAddress, userId, cartId) => {
+export const submitOrder = (total, items, deliveryAddress, cartId) => {
   return (dispatch) => {
     dispatch(submitOrderStart());
     let order = {
-      _id: cartId,
       orderDate: new Date(),
       total: total,
     };
@@ -25,7 +24,7 @@ export const submitOrder = (total, items, deliveryAddress, userId, cartId) => {
       order = { ...order, deliveryAddress: deliveryAddress };
     }
     axios
-      .post(`/orders/${userId}`, order)
+      .post('/orders', order)
       .then((res) => {
         dispatch({
           type: actionTypes.SUBMIT_ORDER_SUCCESS,
@@ -33,7 +32,7 @@ export const submitOrder = (total, items, deliveryAddress, userId, cartId) => {
         });
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.SUBMIT_ORDER));
+        dispatch(setErroredAction(actionErrors.SUBMIT_ORDER));
         dispatch(submitOrderFailed());
       });
   };
@@ -107,7 +106,7 @@ export const validateDeliveryAddress = (addressForm) => {
         }
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.VALIDATE_DELIVERY_ADDRESS));
+        dispatch(setErroredAction(actionErrors.VALIDATE_DELIVERY_ADDRESS));
         dispatch(validateDeliveryAddressFailed());
       });
   };
@@ -120,13 +119,6 @@ export const validateDeliveryAddressFailed = (error) => {
   };
 };
 
-/* To set loading in UI when getting orders */
-const getOrdersStart = () => {
-  return {
-    type: actionTypes.GET_ORDERS_START,
-  };
-};
-
 /* To finish loading in UI after getting orders failed */
 const getOrdersFailed = () => {
   return {
@@ -135,11 +127,10 @@ const getOrdersFailed = () => {
 };
 
 /* Get all past orders for a particular user */
-export const getOrders = (userId) => {
+export const getOrders = () => {
   return (dispatch) => {
-    dispatch(getOrdersStart());
-    axios
-      .get(`/orders/${userId}`)
+    return axios
+      .get('/orders')
       .then((res) => {
         dispatch({
           type: actionTypes.GET_ORDERS_SUCCESS,
@@ -147,7 +138,7 @@ export const getOrders = (userId) => {
         });
       })
       .catch(() => {
-        dispatch(setErroredAction(actionDisplays.GET_ORDERS));
+        dispatch(setErroredAction(actionErrors.GET_ORDERS));
         dispatch(getOrdersFailed());
       });
   };

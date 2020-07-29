@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import NavigationItem from '../UI/NavigationItem/NavigationItem';
 import PropTypes from 'prop-types';
 
 /* Menu items that deal with account information, namely authentication and orders */
 const AccountMenuItems = (props) => {
   let accountMenuItems = (
-    <NavigationItem {...props} to='/signin'>
+    <NavigationItem {...props} to='/signin' data-test='signin'>
       Sign In
     </NavigationItem>
   );
   if (props.isAuthenticated) {
     accountMenuItems = (
-      <React.Fragment>
-        <NavigationItem {...props} to='/my-orders'>
+      <Fragment>
+        <NavigationItem {...props} to='/my-orders' data-test='my-orders'>
           My Orders
         </NavigationItem>
-        <NavigationItem {...props} to='/signout'>
+        <NavigationItem {...props} to='/signout' data-test='signout'>
           Sign Out
         </NavigationItem>
-      </React.Fragment>
+      </Fragment>
     );
   }
   return accountMenuItems;

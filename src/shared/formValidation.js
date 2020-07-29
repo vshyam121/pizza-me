@@ -18,10 +18,12 @@ export const handleInputChange = (form, event, inputId) => {
     ...updatedForm[inputId],
   };
 
+  let trimmedValue = event.target.value.trim();
+
   if (updatedFormElement.elementType === 'phonenumber') {
-    updatedFormElement.value = formatPhoneNumber(event.target.value);
+    updatedFormElement.value = formatPhoneNumber(trimmedValue);
   } else {
-    updatedFormElement.value = event.target.value;
+    updatedFormElement.value = trimmedValue;
   }
   updatedFormElement.valid = checkValidity(
     updatedFormElement.value,

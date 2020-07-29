@@ -11,15 +11,15 @@ const Orders = (props) => {
   let orders = null;
   if (
     !props.userId ||
-    props.gettingOrders ||
+    props.loadingOrders ||
     props.getOrdersError ||
     Object.entries(props.orders).length === 0
   ) {
     let ordersContent = null;
-    if (!props.userId) {
-      ordersContent = <h2>Sign in to see your orders!</h2>;
-    } else if (props.gettingOrders) {
+    if (props.loadingOrders) {
       ordersContent = <SyncLoader />;
+    } else if (!props.userId) {
+      ordersContent = <h2>Sign in to see your orders!</h2>;
     } else if (props.getOrdersError) {
       ordersContent = <h2>Unable to retrieve your orders!</h2>;
     } else {
@@ -90,7 +90,7 @@ const Orders = (props) => {
 Orders.propTypes = {
   userId: PropTypes.string,
   orders: PropTypes.array.isRequired,
-  gettingOrders: PropTypes.bool,
+  loadingOrders: PropTypes.bool.isRequired,
   getOrdersError: PropTypes.bool,
 };
 

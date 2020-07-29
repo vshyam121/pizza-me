@@ -3,10 +3,13 @@ import { testStore } from '../../../shared/util';
 import { signIn } from '../authActions/authActions';
 import configureMockStore from 'redux-mock-store';
 import { middleware } from '../../store';
+import axios from '../../../shared/axiosAPI';
+
+const mockStore = configureMockStore(middleware);
 
 describe('Sign in action', () => {
   beforeEach(() => {
-    moxios.install();
+    moxios.install(axios);
   });
 
   afterEach(() => {
@@ -15,27 +18,21 @@ describe('Sign in action', () => {
 
   test('Store is updated correctly', () => {
     const mockResponse = {
-      idToken: 'test id token',
-      localId: 'test user id',
-      expiresIn: 1000,
-      loading: false,
+      user: { _id: 'test user id', cart: { _id: 'test cart id' } },
+      expires: new Date().getTime(),
     };
     const store = testStore();
 
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200,
-        response: mockResponse,
-      });
+    moxios.stubRequest('/auth/signin', {
+      status: 200,
+      response: mockResponse,
     });
 
     const expectedState = {
-      idToken: 'test id token',
       userId: 'test user id',
       signInError: null,
       signUpError: null,
-      loading: false,
+      loadingUser: false,
     };
 
     return store.dispatch(signIn('test email', 'test password')).then(() => {

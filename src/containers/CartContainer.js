@@ -17,20 +17,22 @@ class CartContainer extends Component {
 
 CartContainer.propTypes = {
   items: PropTypes.array.isRequired,
-  loadingUser: PropTypes.bool.isRequired,
+  loadingCart: PropTypes.bool.isRequired,
   loadingCartItem: PropTypes.bool,
   itemIdBeingChanged: PropTypes.string,
   userId: PropTypes.string,
+  cartId: PropTypes.string,
   signInError: PropTypes.string,
   signUpError: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
-  loadingUser: state.auth.loadingUser,
+  loadingCart: state.cart.loadingCart,
   loadingCartItem: state.cart.loadingCartItem,
   itemIdBeingChanged: state.cart.itemIdBeingChanged,
   userId: state.auth.userId,
+  cartId: state.cart.cartId,
   signInError: state.auth.signInError,
   signUpError: state.auth.signUpError,
 });
