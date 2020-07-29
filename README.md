@@ -6,6 +6,7 @@ A pizza shop e-commerce web application built with the following technologies:
 * HTML 5/CSS 3
 * Flex box
 * CSS Grid
+* Jest/Enzyme for unit and integration tests
 
 Demo app is available here: <a href="https://vshyam121.github.io/pizza-time">https://vshyam121.github.io/pizza-time</a>
 
