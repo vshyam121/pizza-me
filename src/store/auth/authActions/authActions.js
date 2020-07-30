@@ -148,8 +148,6 @@ export const authenticateToken = () => {
   return (dispatch) => {
     getOrCreateLocalCart();
 
-    dispatch(authStart());
-
     return axios
       .get('/auth/me')
       .then((res) => {
@@ -159,7 +157,6 @@ export const authenticateToken = () => {
       .catch(() => {
         //If an error with api, then get cart from secure local storage
         dispatch(getCartFromLocalStorage());
-        dispatch(authTokenFailed());
         dispatch(setErroredAction(actionErrors.AUTH_TOKEN));
       });
   };
