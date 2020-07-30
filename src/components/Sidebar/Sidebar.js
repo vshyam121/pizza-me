@@ -34,7 +34,7 @@ const Sidebar = (props) => {
           <AccountMenuItems
             vertical
             isAuthenticated={props.isAuthenticated}
-            signOut={this.props.signOut}
+            signOut={props.signOut}
           />
         </div>
       </div>
