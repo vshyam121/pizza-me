@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { Router } from 'react-router-dom';
 import ScrollToTop from './hoc/ScrollToTop';
+import * as serviceWorker from './serviceWorker';
 
 import { createBrowserHistory } from 'history';
 
@@ -28,3 +29,5 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 );
+
+serviceWorker.unregister();
