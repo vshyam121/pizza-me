@@ -71,6 +71,7 @@ class PizzaDetails extends Component {
                 options={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
                 value={this.state.quantity}
                 onChange={this.handleChangeQuantity}
+                label='quantity'
               />
             </div>
             <div className='pizza-details__save'>{save}</div>

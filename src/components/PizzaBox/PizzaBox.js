@@ -57,6 +57,7 @@ const PizzaBox = (props) => {
             onChange={props.handleChangeQuantity}
             options={quantityOptions}
             value={props.quantity}
+            label='quantity'
           />
         </div>
         <Button type={primary} onClick={handleAddToCart}>
@@ -82,20 +83,21 @@ const PizzaBox = (props) => {
 
   return (
     <div className='pizza-box'>
-      <h3 className='pizza-box__name'>{pizzaName} Pizza</h3>
+      <h2 className='pizza-box__name'>{pizzaName} Pizza</h2>
       <div className='pizza-box__container'>
         <div className='pizza-box__details'>
           {customizeSecondary}
 
-          <h4 className='pizza-box__price'>
+          <h3 className='pizza-box__price'>
             ${(props.quantity * price).toFixed(2)}
-          </h4>
+          </h3>
           <div className='pizza-box__options'>
             <div className='pizza-box__crust'>
               <Dropdown
                 options={crustOptions}
                 onChange={props.handleChangeCrust}
                 value={props.pizza.crust}
+                label='crust'
               />
             </div>
             <div className='pizza-box__size'>
@@ -103,6 +105,7 @@ const PizzaBox = (props) => {
                 options={sizeOptions}
                 onChange={props.handleChangeSize}
                 value={props.pizza.size}
+                label='size'
               />
             </div>
             <div className='pizza-box__add'>{pizzaAdd}</div>
@@ -112,7 +115,7 @@ const PizzaBox = (props) => {
           <img
             className='pizza-box__image'
             src={props.imageSrc}
-            alt={props.pizzaName}
+            alt={pizzaName}
           />
           {customize}
         </div>

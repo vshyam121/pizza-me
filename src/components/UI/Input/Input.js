@@ -48,6 +48,7 @@ const Input = (props) => {
           options={props.elementConfig.options}
           value={props.value}
           onChange={props.onChange}
+          label={props.label}
         />
       );
       break;
