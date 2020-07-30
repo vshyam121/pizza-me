@@ -75,6 +75,7 @@ const CartItem = (props) => {
               onChange={handleChangeItemQuantity}
               options={quantityOptions}
               value={props.quantity}
+              label='quantity'
             />
           </div>
           <div className='item__actions'>

@@ -9,6 +9,7 @@ const Dropdown = (props) => {
       value={props.value ? props.value : 1}
       onChange={props.onChange}
       className='dropdown'
+      aria-label={props.label}
     >
       {props.options.map((option) => {
         return <option key={option}>{option}</option>;
@@ -20,6 +21,7 @@ const Dropdown = (props) => {
 Dropdown.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Dropdown;

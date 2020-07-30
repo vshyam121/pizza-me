@@ -1,7 +1,7 @@
 import React from 'react';
 import PizzaBoxContainer from '../../../containers/PizzaBoxContainer';
-import CheesePizzaImg from '../../../assets/images/pizza_cheese.jpg';
-import PepperoniPizzaImg from '../../../assets/images/pizza_pepperoni.jpg';
+import CheesePizzaImg from '../../../assets/images/pizza_cheese-min.jpg';
+import PepperoniPizzaImg from '../../../assets/images/pizza_pepperoni-min.jpg';
 import MeatLoversPizzaImg from '../../../assets/images/pizza_meat_lovers.png';
 import SupremePizzaImg from '../../../assets/images/pizza_supreme.png';
 import { REGULAR, COMBO } from '../../../metadata/comboMetadata';
