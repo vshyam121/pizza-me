@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { closeSidebar } from '../store/ui/uiActions/uiActions';
 import PropTypes from 'prop-types';
 import Sidebar from '../components/Sidebar/Sidebar';
+import { signOut } from '../store/auth/authActions/authActions';
 
 /* Container for sidebar menu with pizza menu items and account menu items */
 const SidebarContainer = (props) => {
@@ -19,4 +20,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.userId,
 });
 
-export default connect(mapStateToProps, { closeSidebar })(SidebarContainer);
+export default connect(mapStateToProps, { closeSidebar, signOut })(
+  SidebarContainer
+);
