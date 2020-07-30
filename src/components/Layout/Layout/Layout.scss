@@ -8,8 +8,4 @@
   background-color: $color-grey-light-3;
   min-height: 85vh;
   position: relative;
-
-  @include respond(phone) {
-    min-height: 60vh;
-  }
 }
