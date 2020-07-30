@@ -31,7 +31,11 @@ const Sidebar = (props) => {
           <NavigationItem vertical to='/cart'>
             Cart
           </NavigationItem>
-          <AccountMenuItems vertical isAuthenticated={props.isAuthenticated} />
+          <AccountMenuItems
+            vertical
+            isAuthenticated={props.isAuthenticated}
+            signOut={this.props.signOut}
+          />
         </div>
       </div>
     </div>
