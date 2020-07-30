@@ -15,9 +15,7 @@ import * as serviceWorker from './serviceWorker';
 
 import { createBrowserHistory } from 'history';
 
-export const history = createBrowserHistory({
-  basename: `${process.env.REACT_APP_BASE_URL}`,
-});
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={history}>
