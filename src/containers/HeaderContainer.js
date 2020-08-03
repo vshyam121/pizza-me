@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { toggleSidebar } from '../store/ui/uiActions/uiActions';
 import { signOut } from '../store/auth/authActions/authActions';
 import PropTypes from 'prop-types';
-import Header from '../components/Header/Header';
+import Header from '../components/Layout/Header/Header';
 
 /* Header containing logo, app name, main menu, autentication, orders and cart */
 const HeaderContainer = (props) => {
