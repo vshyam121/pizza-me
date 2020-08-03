@@ -7,13 +7,17 @@
   color: white;
   display: flex;
   justify-content: flex-start;
-  padding: 0 1.75rem;
   cursor: pointer;
   list-style-type: none;
   transition: 0.5s;
 
-  &--vertical {
-    padding: 0 2rem;
+  &__link {
+    width: 100%;
+    padding: 0 1.75rem;
+
+    &--vertical {
+      padding: 0 2.5rem;
+    }
   }
 
   &__content {
