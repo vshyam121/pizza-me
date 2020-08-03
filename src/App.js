@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import './App.scss';
-import Layout from './components/Layout/Layout/Layout';
+import Layout from './components/Layout/Layout';
 import Home from './components/PizzaCategories/Home/Home';
 import Meats from './components/PizzaCategories/Meats/Meats';
 import Veggies from './components/PizzaCategories/Veggies/Veggies';
@@ -12,7 +11,7 @@ import SignInContainer from './containers/Auth/SignInContainer';
 import SignUpContainer from './containers/Auth/SignUpContainer';
 import { authenticateToken } from './store/auth/authActions/authActions';
 import { connect } from 'react-redux';
-import OrderType from './components/OrderType/OrderType';
+import OrderType from './components/Checkout/OrderType/OrderType';
 import CheckoutContainer from './containers/CheckoutContainer';
 import SidebarContainer from './containers/SidebarContainer';
 import OrdersContainer from './containers/OrdersContainer';

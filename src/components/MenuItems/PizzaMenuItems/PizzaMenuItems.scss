@@ -1,0 +1,12 @@
+@import '../../../sass/abstracts/mixins';
+@import '../../../sass/base/variables';
+
+.pizza-menu-items {
+  height: 100%;
+  display: flex;
+  list-style: none;
+
+  @include respond(tab-port) {
+    flex-direction: column;
+  }
+}

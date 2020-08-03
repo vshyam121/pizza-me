@@ -1,0 +1,61 @@
+@import '../../../sass/base/variables';
+
+.button {
+  outline: none;
+  border: none;
+  border-radius: 100px;
+  height: 5rem;
+  width: 100%;
+  background-color: $primary-red;
+  font-size: $default-font-size;
+  color: white;
+  transition: all 0.3s;
+  font-family: inherit;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: 0.5s;
+
+  & > * {
+    color: white;
+  }
+
+  &:hover {
+    background-color: $secondary-red;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+
+  &--secondary {
+    background-color: $primary-black;
+    color: white;
+    transition: all 0.5s;
+
+    & > * {
+      color: inherit;
+    }
+
+    &:hover {
+      background-color: $secondary-black;
+    }
+  }
+
+  &--tertiary {
+    height: 3rem;
+    border: 1px solid $primary-red;
+    background-color: transparent;
+    color: $primary-red;
+    transition: all 0.3s;
+    font-size: 1.4rem;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}

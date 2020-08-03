@@ -1,10 +1,10 @@
 import React from 'react';
 import './PizzaBox.scss';
-import Dropdown from '../../components/UI/Dropdown/Dropdown';
-import Button from '../../components/UI/Button/Button';
+import Dropdown from '../../components/Theme/Dropdown/Dropdown';
+import Button from '../../components/Theme/Button/Button';
 import { crustMetadataMapping } from '../../metadata/crustMetadata';
 import { sizes } from '../../metadata/sizeMetadata';
-import { primary, secondary } from '../../components/UI/Button/Button';
+import { primary, secondary } from '../../components/Theme/Button/Button';
 import { calculatePrice, normalizePizza, getCrust } from '../../shared/util';
 import PropTypes from 'prop-types';
 
@@ -83,42 +83,41 @@ const PizzaBox = (props) => {
 
   return (
     <div className='pizza-box'>
-      <h2 className='pizza-box__name'>{pizzaName} Pizza</h2>
-      <div className='pizza-box__container'>
-        <div className='pizza-box__details'>
-          {customizeSecondary}
+      <div className='pizza-box__details'>
+        <h2 className='pizza-box__name'>{pizzaName} Pizza</h2>
 
-          <h3 className='pizza-box__price'>
-            ${(props.quantity * price).toFixed(2)}
-          </h3>
-          <div className='pizza-box__options'>
-            <div className='pizza-box__crust'>
-              <Dropdown
-                options={crustOptions}
-                onChange={props.handleChangeCrust}
-                value={props.pizza.crust}
-                label='crust'
-              />
-            </div>
-            <div className='pizza-box__size'>
-              <Dropdown
-                options={sizeOptions}
-                onChange={props.handleChangeSize}
-                value={props.pizza.size}
-                label='size'
-              />
-            </div>
-            <div className='pizza-box__add'>{pizzaAdd}</div>
+        {customizeSecondary}
+
+        <h3 className='pizza-box__price'>
+          ${(props.quantity * price).toFixed(2)}
+        </h3>
+        <div className='pizza-box__options'>
+          <div className='pizza-box__crust'>
+            <Dropdown
+              options={crustOptions}
+              onChange={props.handleChangeCrust}
+              value={props.pizza.crust}
+              label='crust'
+            />
           </div>
+          <div className='pizza-box__size'>
+            <Dropdown
+              options={sizeOptions}
+              onChange={props.handleChangeSize}
+              value={props.pizza.size}
+              label='size'
+            />
+          </div>
+          <div className='pizza-box__add'>{pizzaAdd}</div>
         </div>
-        <div className='pizza-box__right'>
-          <img
-            className='pizza-box__image'
-            src={props.imageSrc}
-            alt={pizzaName}
-          />
-          {customize}
-        </div>
+      </div>
+      <div className='pizza-box__right'>
+        <img
+          className='pizza-box__image'
+          src={props.imageSrc}
+          alt={pizzaName}
+        />
+        {customize}
       </div>
     </div>
   );

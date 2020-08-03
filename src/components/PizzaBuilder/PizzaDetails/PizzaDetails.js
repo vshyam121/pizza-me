@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Dropdown from '../../UI/Dropdown/Dropdown';
-import Button, { primary } from '../../UI/Button/Button';
+import Dropdown from '../../Theme/Dropdown/Dropdown';
+import Button, { primary } from '../../Theme/Button/Button';
 import PizzaDescription from '../../PizzaDescription/PizzaDescription';
 import './PizzaDetails.scss';
 import { calculatePrice } from '../../../shared/util';
@@ -53,7 +53,7 @@ class PizzaDetails extends Component {
 
     return (
       <div className='pizza-details'>
-        <h3 className='builder-title'>My Pizza</h3>
+        <h2 className='builder-title'>My Pizza</h2>
         <div className='pizza-details__details'>
           <div className='pizza-details__description'>
             <PizzaDescription

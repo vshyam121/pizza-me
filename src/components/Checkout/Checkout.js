@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './Checkout.scss';
-import CartItems from '../../components/CartItems/CartItems';
-import Button, { primary } from '../../components/UI/Button/Button';
+import CartItems from '../Cart/CartItems/CartItems';
+import Button, { primary } from '../../components/Theme/Button/Button';
 import { calculateSubTotal, calculateTax } from '../../shared/util';
 import { SyncLoader } from 'react-spinners';
-import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';
+import DeliveryAddress from '../DeliveryAddress/DeliveryAddress';
 import PropTypes from 'prop-types';
 
 /* Order summary and ability to submit an order */
@@ -80,10 +80,10 @@ class Checkout extends Component {
             <div className='totals'>
               <div className='totals__line-items'>
                 <div className='totals__line-item'>
-                  <h4>Subtotal:</h4> <h4>${subTotal}</h4>
+                  <span>Subtotal:</span> <span>${subTotal}</span>
                 </div>
                 <div className='totals__line-item'>
-                  <h4>Tax:</h4> <h4>${tax}</h4>
+                  <span>Tax:</span> <span>${tax}</span>
                 </div>
                 <div className='totals__line-item'>
                   <h2>Total:</h2> <h2>${total}</h2>

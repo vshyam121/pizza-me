@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Cheese from '../../assets/images/cheese_mozz_ML.png';
+import Cheese from '../../images/cheese_mozz_ML.png';
 import './PizzaPreview.scss';
 import { crustMetadataMapping } from '../../metadata/crustMetadata';
 import { meatImageMapping } from '../../metadata/meatMetadata';

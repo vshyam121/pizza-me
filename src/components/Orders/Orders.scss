@@ -12,10 +12,14 @@
 
   &__date {
     display: flex;
+    align-items: baseline;
     margin-bottom: 1rem;
+    font-size: 1.6rem;
   }
 
   &__total {
     display: flex;
+    align-items: baseline;
+    font-size: 1.6rem;
   }
 }

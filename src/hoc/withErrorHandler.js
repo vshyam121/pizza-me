@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Modal from '../components/UI/Modal/Modal';
+import Modal from '../components/Theme/Modal/Modal';
 import { connect } from 'react-redux';
 import { SIGN_IN, SIGN_UP, AUTH_TOKEN } from '../shared/actionErrors';
 

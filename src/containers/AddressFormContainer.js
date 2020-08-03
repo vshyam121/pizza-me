@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import AddressForm from '../components/AddressForm/AddressForm';
+import AddressForm from '../components/Forms/AddressForm/AddressForm';
 import {
   validateDeliveryAddress,
   validateDeliveryAddressReset,

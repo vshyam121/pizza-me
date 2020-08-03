@@ -1,0 +1,12 @@
+@import '../../../sass/abstracts/mixins';
+@import '../../../sass/base/variables';
+
+.account-menu-items {
+  height: 100%;
+  display: flex;
+  list-style: none;
+
+  @include respond(phone) {
+    flex-direction: column;
+  }
+}

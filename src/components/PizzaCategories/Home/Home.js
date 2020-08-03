@@ -1,9 +1,9 @@
 import React from 'react';
 import PizzaBoxContainer from '../../../containers/PizzaBoxContainer';
-import CheesePizzaImg from '../../../assets/images/pizza_cheese-min.jpg';
-import PepperoniPizzaImg from '../../../assets/images/pizza_pepperoni-min.jpg';
-import MeatLoversPizzaImg from '../../../assets/images/pizza_meat_lovers.png';
-import SupremePizzaImg from '../../../assets/images/pizza_supreme.png';
+import CheesePizzaImg from '../../../images/pizza_cheese-min.jpg';
+import PepperoniPizzaImg from '../../../images/pizza_pepperoni-min.jpg';
+import MeatLoversPizzaImg from '../../../images/pizza_meat_lovers.png';
+import SupremePizzaImg from '../../../images/pizza_supreme.png';
 import { REGULAR, COMBO } from '../../../metadata/comboMetadata';
 import {
   CHEESE,
@@ -11,7 +11,7 @@ import {
   MEAT_LOVER,
   SUPREME,
 } from '../../../metadata/comboMetadata';
-import Message from '../../UI/Message/Message';
+import Message from '../../Theme/Message/Message';
 import { Link } from 'react-router-dom';
 
 /* Displays popular pizzas */

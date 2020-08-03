@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { signUp, authReset } from '../../store/auth/authActions/authActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import SignUp from '../../components/SignUp/SignUp';
+import SignUp from '../../components/Forms/SignUp/SignUp';
 
 /* User sign up form */
 class SignUpContainer extends Component {
