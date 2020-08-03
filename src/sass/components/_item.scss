@@ -4,7 +4,6 @@
   min-height: 15rem;
   width: 100%;
   border-top: 1px solid $border-color;
-  padding: 2rem;
 
   @include respond(phone) {
     flex-direction: column;
