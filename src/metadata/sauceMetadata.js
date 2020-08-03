@@ -1,7 +1,7 @@
-import ClassicMarinaraIcon from '../assets/images/icon_sauce_Marinara.png';
-import CreamyGarlicParmesanIcon from '../assets/images/icon_sauce_CreamyGarlicParm.png';
-import BarbequeIcon from '../assets/images/icon_sauce_BBQ.png';
-import BuffaloIcon from '../assets/images/icon_sauce_Buffalo.png';
+import ClassicMarinaraIcon from '../images/icon_sauce_Marinara.png';
+import CreamyGarlicParmesanIcon from '../images/icon_sauce_CreamyGarlicParm.png';
+import BarbequeIcon from '../images/icon_sauce_BBQ.png';
+import BuffaloIcon from '../images/icon_sauce_Buffalo.png';
 
 /* All metadata related to the display of sauce options */
 
