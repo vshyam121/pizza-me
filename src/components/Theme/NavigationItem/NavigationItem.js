@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 /* Standard navigation item that is part of either the header or sidebar menus */
 const NavigationItem = (props) => {
   let contentClassNames = ['navigation-item__content'];
-  let itemClassNames = ['navigation-item'];
+  let linkClassNames = ['navigation-item__link'];
   if (props.vertical) {
     contentClassNames.push('navigation-item__content--vertical');
-    itemClassNames.push('navigation-item--vertical');
+    linkClassNames.push('navigation-item__link--vertical');
   }
   let navigationItemContent = null;
 
@@ -22,17 +22,23 @@ const NavigationItem = (props) => {
   let navigationItem = null;
   if (props.to) {
     navigationItem = (
-      <Link onClick={props.onClick} to={props.to}>
+      <Link
+        className={linkClassNames.join(' ')}
+        onClick={props.onClick}
+        to={props.to}
+      >
         {navigationItemContent}
       </Link>
     );
   } else {
     navigationItem = (
-      <span onClick={props.onClick}>{navigationItemContent}</span>
+      <span className={linkClassNames.join(' ')} onClick={props.onClick}>
+        {navigationItemContent}
+      </span>
     );
   }
 
-  return <div className={itemClassNames.join(' ')}>{navigationItem}</div>;
+  return <li className='navigation-item'>{navigationItem}</li>;
 };
 
 NavigationItem.propTypes = {
