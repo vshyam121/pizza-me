@@ -1,6 +1,6 @@
 import React from 'react';
 import './Orders.scss';
-import Order from '../../components/Order/Order';
+import Order from '../../components/Orders/Order/Order';
 import { getReadableDate } from '../../shared/util';
 import { SyncLoader } from 'react-spinners';
 import DeliveryAddress from '../../components/DeliveryAddress/DeliveryAddress';
@@ -56,14 +56,14 @@ const Orders = (props) => {
                   <span className='order__date-address'>
                     <span className='order__date'>
                       <h2>Order placed on:&nbsp;</h2>
-                      <h3> {getReadableDate(order.orderDate)}</h3>
+                      <span> {getReadableDate(order.orderDate)}</span>
                     </span>
                     {orderType}
                   </span>
 
                   <span className='order__total'>
                     <h2>Total:&nbsp;</h2>
-                    <h3>${order.total}</h3>
+                    <span>${order.total}</span>
                   </span>
                 </div>
 

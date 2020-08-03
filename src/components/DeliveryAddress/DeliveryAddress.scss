@@ -3,5 +3,7 @@
 }
 
 .address {
-  line-height: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 2.8rem;
 }

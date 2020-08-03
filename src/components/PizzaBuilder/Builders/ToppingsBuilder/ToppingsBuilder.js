@@ -4,7 +4,7 @@ import ToppingOptions from '../../BuilderOptions/ToppingOptions/ToppingOptions';
 import { meatImageMapping } from '../../../../metadata/meatMetadata';
 import { veggiesImageMapping } from '../../../../metadata/veggiesMetadata';
 import { MEATS, VEGGIES } from '../../../../metadata/pizzaProperties';
-import OptionsButton from '../../../UI/OptionsButton/OptionsButton';
+import OptionsButton from '../../../Theme/OptionsButton/OptionsButton';
 import PropTypes from 'prop-types';
 
 /* Pizza builder section with topping options */

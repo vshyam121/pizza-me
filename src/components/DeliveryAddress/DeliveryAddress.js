@@ -7,19 +7,19 @@ const DeliveryAddress = (props) => {
   let secondaryAddress = null;
   if (props.deliveryAddress.secondaryAddress) {
     secondaryAddress = (
-      <h4> Apt/Unit #{props.deliveryAddress.secondaryAddress}</h4>
+      <span> Apt/Unit #{props.deliveryAddress.secondaryAddress}</span>
     );
   }
   return (
     <div className='address-container'>
       <h2>Delivery Address:</h2>
       <div className='address'>
-        <h4>{props.deliveryAddress.streetAddress}</h4>
+        <span>{props.deliveryAddress.streetAddress}</span>
         {secondaryAddress}
-        <h4>
+        <span>
           {props.deliveryAddress.city}, {props.deliveryAddress.state}{' '}
           {props.deliveryAddress.zipcode}
-        </h4>
+        </span>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ class PizzaBuilderPreview extends Component {
   render() {
     return (
       <div className='pizza-builder-preview'>
-        <h4 className='builder-section__title'>Preview</h4>
+        <h2 className='builder-section__title'>Preview</h2>
         <div className='pizza-builder-preview__preview'>
           <PizzaPreview pizza={this.props.pizza} />
         </div>

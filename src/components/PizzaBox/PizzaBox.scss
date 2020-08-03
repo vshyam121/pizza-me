@@ -6,13 +6,8 @@
   padding: 2rem;
   border-radius: 1rem;
   display: flex;
-  flex-direction: column;
   transition: all 0.2s;
   background-color: white;
-
-  &__container {
-    display: flex;
-  }
 
   &__details {
     width: 70%;
@@ -73,14 +68,13 @@
   }
 
   &__quantity {
-    width: 7rem;
+    width: 5rem;
     margin-right: 2rem;
   }
 
   &__right {
     height: 100%;
     width: 30%;
-    font-size: 1.5rem;
     align-self: flex-end;
 
     @include respond(phone) {

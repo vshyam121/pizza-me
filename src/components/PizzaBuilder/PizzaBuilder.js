@@ -3,11 +3,11 @@ import './PizzaBuilder.scss';
 import PizzaBuilderPreview from './PizzaBuilderPreview/PizzaBuilderPreview';
 import PizzaDetails from './PizzaDetails/PizzaDetails';
 import PizzaBuilderProgress from './PizzaBuilderProgress/PizzaBuilderProgress';
-import Modal from '../../components/UI/Modal/Modal';
+import Modal from '../../components/Theme/Modal/Modal';
 import SizeCrustBuilder from '../../components/PizzaBuilder/Builders/SizeCrustBuilder/SizeCrustBuilder';
 import CheeseSauceBuilder from '../../components/PizzaBuilder/Builders/CheeseSauceBuilder/CheeseSauceBuilder';
 import ToppingsBuilder from '../../components/PizzaBuilder/Builders/ToppingsBuilder/ToppingsBuilder';
-import Button, { primary } from '../../components/UI/Button/Button';
+import Button, { primary } from '../../components/Theme/Button/Button';
 import PropTypes from 'prop-types';
 import { normalizePizza } from '../../shared/util';
 import {
@@ -133,7 +133,7 @@ const PizzaBuilder = (props) => {
           </div>
         </div>
         <div className='totalBuilder__builder'>
-          <h3 className='builder-title'>Pizza Builder</h3>
+          <h2 className='builder-title'>Pizza Builder</h2>
           <div className='builder-progress'>
             <PizzaBuilderProgress
               stage={props.stage}

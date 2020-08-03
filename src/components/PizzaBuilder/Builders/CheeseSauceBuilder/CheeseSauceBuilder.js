@@ -23,7 +23,7 @@ class CheeseSauceBuilder extends Component {
     return (
       <div className='builder'>
         <div className='builder-section'>
-          <h2 className='builder-section__title'>Sauce</h2>
+          <h3 className='builder-section__title'>Sauce</h3>
           <ImageOptions
             itemSelected={this.props.pizza[SAUCE]}
             imageMapping={sauceImageMapping}
@@ -31,7 +31,7 @@ class CheeseSauceBuilder extends Component {
           />
         </div>
         <div className='builder-section'>
-          <h2 className='builder-section__title'>Amount of Sauce</h2>
+          <h3 className='builder-section__title'>Amount of Sauce</h3>
           <ButtonOptions
             selectionMetadata={sauceAmountMetadataMapping}
             selectionOptions={sauceAmounts}
@@ -40,7 +40,7 @@ class CheeseSauceBuilder extends Component {
           />
         </div>
         <div className='builder-section'>
-          <h2 className='builder-section__title'>Amount of Cheese</h2>
+          <h3 className='builder-section__title'>Amount of Cheese</h3>
           <ButtonOptions
             selectionMetadata={cheeseAmountMetadataMapping}
             selectionOptions={cheeseAmounts}

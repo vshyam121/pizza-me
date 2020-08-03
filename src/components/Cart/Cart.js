@@ -1,6 +1,6 @@
 import React from 'react';
-import CartItems from '../../components/CartItems/CartItems';
-import Button, { primary } from '../../components/UI/Button/Button';
+import CartItems from './CartItems/CartItems';
+import Button, { primary } from '../../components/Theme/Button/Button';
 import { Link } from 'react-router-dom';
 import { SyncLoader } from 'react-spinners';
 import { calculateSubTotal } from '../../shared/util';
@@ -33,7 +33,7 @@ const Cart = (props) => {
           <div className='totals'>
             <div className='totals__line-items'>
               <div className='totals__line-item'>
-                <h3>Subtotal:</h3> <h3>${subTotal}</h3>
+                <h2>Subtotal:</h2> <h2>${subTotal}</h2>
               </div>
             </div>
 
