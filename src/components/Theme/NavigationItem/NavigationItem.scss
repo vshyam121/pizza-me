@@ -7,8 +7,10 @@
   color: white;
   display: flex;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   cursor: pointer;
+  list-style-type: none;
+  transition: 0.5s;
 
   &__text {
     width: 100%;

@@ -8,7 +8,7 @@ const Message = (props) => {
     <div className='item-list-container'>
       <div className='item-list'>
         <div className='message'>
-          <h4 style={{ display: 'inline' }}>{props.children} </h4>
+          <span>{props.children} </span>
         </div>
       </div>
     </div>

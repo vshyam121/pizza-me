@@ -7,14 +7,13 @@
   height: 5rem;
   width: 100%;
   background-color: $primary-red;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
+  font-size: $default-font-size;
   color: white;
   transition: all 0.3s;
   font-family: inherit;
+  font-size: 1.4rem;
   cursor: pointer;
+  transition: 0.5s;
 
   & > * {
     color: white;
@@ -34,19 +33,16 @@
   }
 
   &--secondary {
-    border: 1px solid $primary-red;
-    background-color: transparent;
-    color: $primary-red;
-    transition: all 0.1s;
+    background-color: $primary-black;
+    color: white;
+    transition: all 0.5s;
 
     & > * {
       color: inherit;
     }
 
     &:hover {
-      background-color: transparent;
-      border: 2px solid $primary-red;
-      font-weight: bold;
+      background-color: $secondary-black;
     }
   }
 

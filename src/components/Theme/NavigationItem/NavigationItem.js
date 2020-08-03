@@ -13,26 +13,24 @@ const NavigationItem = (props) => {
 
   navigationItemContent = (
     <span className={classNames.join(' ')}>
-      <h3>{props.children}</h3>
+      <h2>{props.children}</h2>
     </span>
   );
 
   let navigationItem = null;
   if (props.to) {
     navigationItem = (
-      <Link onClick={props.onClick} to={props.to} className='navigation-item'>
+      <Link onClick={props.onClick} to={props.to}>
         {navigationItemContent}
       </Link>
     );
   } else {
     navigationItem = (
-      <span onClick={props.onClick} className='navigation-item'>
-        {navigationItemContent}
-      </span>
+      <span onClick={props.onClick}>{navigationItemContent}</span>
     );
   }
 
-  return navigationItem;
+  return <li className='navigation-item'>{navigationItem}</li>;
 };
 
 NavigationItem.propTypes = {
