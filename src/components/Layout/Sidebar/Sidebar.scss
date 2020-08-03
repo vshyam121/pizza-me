@@ -22,7 +22,7 @@
   left: 0;
   top: $header-height;
   height: 100%;
-  width: 25rem;
+  width: 20rem;
   background-color: $primary-black;
   transition: all 0.3s;
   z-index: 1000;
@@ -43,5 +43,10 @@
 
   &__account {
     border-top: 1px solid $secondary-black;
+    display: none;
+
+    @include respond(phone) {
+      display: block;
+    }
   }
 }

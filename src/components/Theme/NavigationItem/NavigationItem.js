@@ -5,14 +5,16 @@ import PropTypes from 'prop-types';
 
 /* Standard navigation item that is part of either the header or sidebar menus */
 const NavigationItem = (props) => {
-  let classNames = ['navigation-item__text'];
+  let contentClassNames = ['navigation-item__content'];
+  let itemClassNames = ['navigation-item'];
   if (props.vertical) {
-    classNames.push('navigation-item__text--vertical');
+    contentClassNames.push('navigation-item__content--vertical');
+    itemClassNames.push('navigation-item--vertical');
   }
   let navigationItemContent = null;
 
   navigationItemContent = (
-    <span className={classNames.join(' ')}>
+    <span className={contentClassNames.join(' ')}>
       <h2>{props.children}</h2>
     </span>
   );
@@ -30,7 +32,7 @@ const NavigationItem = (props) => {
     );
   }
 
-  return <li className='navigation-item'>{navigationItem}</li>;
+  return <div className={itemClassNames.join(' ')}>{navigationItem}</div>;
 };
 
 NavigationItem.propTypes = {
