@@ -11,7 +11,7 @@ const Input = (props) => {
   if (
     props.invalid &&
     props.shouldValidate &&
-    props.touched &&
+    //props.touched &&
     props.formSubmitted
   ) {
     inputClasses.push('input__invalid');
