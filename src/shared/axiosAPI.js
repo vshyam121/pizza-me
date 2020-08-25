@@ -1,11 +1,17 @@
 import axios from 'axios';
 
-//axios.defaults.withCredentials = true;
-
-/* Axios instance used to call firebase api */
-const instance = axios.create({
+/* Axios instance used to call api */
+let instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
-  withCredentials: true,
+});
+
+instance.interceptors.request.use(function (config) {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
 });
 
 axios.interceptors.response.use(

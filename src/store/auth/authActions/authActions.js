@@ -35,6 +35,9 @@ export const authTokenFailed = () => {
 /* Successfully authenticated user and received token/userid */
 export const authSuccess = (authData) => {
   return (dispatch) => {
+    if (authData.token) {
+      localStorage.setItem('token', authData.token);
+    }
     dispatch({ type: actionTypes.AUTH_SUCCESS, userId: authData.user._id });
 
     //Get cart for this user
@@ -67,15 +70,15 @@ export const signUpFailed = (error) => {
 /* Clear user data and cart on sign out */
 export const signOut = () => {
   return (dispatch) => {
-    return axios.post('/auth/signout', {}).then(() => {
-      dispatch(signOutCart());
+    localStorage.removeItem('token');
 
-      dispatch({
-        type: actionTypes.AUTH_SIGNOUT,
-      });
+    dispatch(signOutCart());
 
-      history.push({ pathname: '/', fromSignOut: true });
+    dispatch({
+      type: actionTypes.AUTH_SIGNOUT,
     });
+
+    history.push({ pathname: '/', fromSignOut: true });
   };
 };
 
@@ -87,6 +90,7 @@ export const checkAuthTimeout = (expirationTime) => {
 
     //Dispatch sign out action in time to expire
     setTimeout(() => {
+      dispatch(signOutCart());
       dispatch(signOut());
     }, timeToExpire);
   };
